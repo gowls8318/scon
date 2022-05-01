@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>con001</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- sidebar include -->
+        <div th:replace="/common/adminSidebar.html"></div>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- topbar include -->
+            <div th:replace="/common/adminTopbar.html"></div>
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">상담 관리</h1>
+                    </div>
+                    <hr class="border-bottom-primary">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">상담 신청 내역</h6>
+                        </div>
+                        <br>
+                        <form class="form-inline" action="" method="get">
+                            <div class="col-lg-9"></div>
+                            <div class="search-area col-lg-3">
+                                <div class="form-group mx-sm-3">
+                                    <label for="search" class="sr-only"></label>
+                                    <input type="text" class="form-control" id="accSearch" placeholder="원생 이름을 입력하세요">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
+                            </div>
+                        </form>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered-yj dataTable-yj" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>상담 신청일</th>
+                                            <th>원생</th>
+                                            <th>상담 제목</th>
+                                            <th>처리 현황</th>
+                                            <th>관리</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="accTbody">
+                                        <tr>
+                                            <td>10</td>
+                                            <td>2022-04-08</td>
+                                            <td>박수호</td>
+                                            <td class="conHTitle">
+                                                영어가 너무 재미있는데 심화 학습으로 무엇을 하면 좋을까요?
+                                            </td>
+                                            <td>미완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>2022-04-04</td>
+                                            <td>김유준</td>
+                                            <td class="conHTitle">문법이 헷갈려요.</td>
+                                            <td>미완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                            <td>2022-03-27</td>
+                                            <td>박예준</td>
+                                            <td class="conHTitle">오늘 배운 내용이 이해가 안 가요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>2022-03-19</td>
+                                            <td>한지호</td>
+                                            <td class="conHTitle">학원이 멀어서 다니기 힘들어요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>2022-03-10</td>
+                                            <td>서이준</td>
+                                            <td class="conHTitle">국어가 어려워요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>2022-03-06</td>
+                                            <td>이시우</td>
+                                            <td class="conHTitle">친구들이랑 너무 많이 노는 것 같아요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>2022-03-01</td>
+                                            <td>이은우</td>
+                                            <td class="conHTitle">다음주에 여행 가서 수업을 못 들을 것 같아요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>2022-02-26</td>
+                                            <td>최하준</td>
+                                            <td class="conHTitle">학원 책상 바꿔주세요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>2022-02-15</td>
+                                            <td>박서준</td>
+                                            <td class="conHTitle">일찍 못 일어나겠어요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2022-02-10</td>
+                                            <td>김도윤</td>
+                                            <td class="conHTitle">공부가 어려워요.</td>
+                                            <td>완료</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 페이징 -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination mt-1 mb-0">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- footer include -->
+            <div th:replace="/common/footer.html"></div>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- 입력 검색 -->
+    <script>
+        $(document).ready(function() {
+            $("#accSearch").keyup(function() {
+                var value = $(this).val().toLowerCase();
+                $(".accTbody tr").filter(function() {
+                    // 찾는 문자 없을 시 -1 반환
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
+    <script src="/js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>

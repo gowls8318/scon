@@ -1,0 +1,236 @@
+@charset "UTF-8";
+
+/* yj 코드 --------------------------------------------------------------------------------------------------------------- */
+/* textarea 길이 제한, 크기 조절 불가 */
+.con-input-group textarea{
+  height: 150px!important;
+  resize: none;
+}
+
+/* 테이블 th 색상, 정렬 */
+.con-table-center table th{
+  background-color: rgba(0,0,0,.03);
+  vertical-align: middle!important;   /* 글자 중앙 정렬 */
+}
+.con-table-center table td{
+  vertical-align: middle!important;
+  text-align: left;
+}
+.conContentD,
+.conHContentD{
+  height: 150px;
+}
+
+/* 테이블 가운데 정렬 */
+.con-table-center{
+  margin: auto;            /* 테이블 자체 가운데 정렬 */
+  text-align: center;      /* 글자 가운데 정렬 */
+}
+
+/* 테이블 줄 제거 */
+.table-bordered-yj td, .table-bordered-yj th{
+  border: none!important;
+}
+
+/* 테이블 th 줄 삽입 */
+.table-bordered-yj thead th{
+  border-top: 2px solid #e3e6f0 !important;
+  border-bottom: 2px solid #e3e6f0 !important;
+}
+
+/* 테이블 border */
+.table-bordered-yj td,.table-bordered-yj th{
+  border-bottom: 1px solid #e3e6f0 !important;
+  border-top: 1px solid #e3e6f0 !important;
+}
+
+/* 보라색 글자 깨지는 것 */
+.py-3 h6,
+.modal-title{
+  color: #8B169E!important;
+}
+
+/* 수납, 상담, 수강 등록 */
+.btn-acc1,
+.btn-con,
+.btn-lec1 {
+  border: none!important;
+  background-color: #8B169E !important;
+  font-size: 14px!important;
+}
+.btn-acc1:hover,
+.btn-con:hover,
+.btn-lec1:hover {
+  border: none;
+  background-color: #651C70 !important;
+}
+.btn-acc1:focus,
+.btn-con:focus,
+.btn-lec1:focus {
+  box-shadow: none !important;
+}
+/* 환불, 수강 취소 */
+.btn-acc2,
+.btn-lec2 {
+  border: none!important;
+  background-color: #D4D4D4 !important;
+  font-size: 14px!important;
+}
+.btn-acc2:hover,
+.btn-lec2:hover {
+  border: none;
+  background-color: #ADADAD !important;
+}
+.btn-acc2:focus,
+.btn-lec2:focus {
+  box-shadow: none !important;
+}
+.refContent textarea{
+  height: 100px;
+  resize: none;
+}
+
+/* 수납, 환불, 등록 모달 */
+.accModal2 .modal-header,
+.accModal2 .modal-footer,
+.refModal2 .modal-header,
+.refModal2 .modal-footer,
+.modal-dml .modal-header,
+.modal-dml .modal-footer{
+  border: none;
+}
+.accModal2,
+.refModal2,
+.modal-dml{
+  text-align: center;
+  font-size: 20px;
+}
+
+/* 모달 위치 정렬, 그림자 */
+.acc-modal-content,
+.ref-modal-content,
+.modal-content-yj{
+  margin-top: 50%;
+  box-shadow: 0px 2px 30px 10px rgba(0,0,0,0.3);
+}
+.acc-modal-content2,
+.ref-modal-content2{
+  margin: 60% 10%;
+  box-shadow: 0px 2px 30px 10px rgba(0,0,0,0.3);
+}
+
+.modal-bg-acc{
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* list 제목 hover */
+.conHTitle,
+.conTitle {
+  color: #858796;
+}
+.conHTitle:link,
+.conTitle:link {
+  text-decoration: none;
+}
+.conHTitle:visited,
+.conTitle:visited {
+  text-decoration: none;
+}
+.conHTitle:hover,
+.conTitle:hover {
+  text-decoration: underline;
+  color: #8B169E;
+  cursor: pointer;
+} 
+
+/* 테이블 정렬 */
+.dataTable-yj th,
+.dataTable-yj td{
+  vertical-align: middle!important;
+  text-align: center;
+}
+
+/* 상담 제목 왼쪽 정렬 */
+.conHTitle,
+.conTitle{
+  text-align: left!important;
+}
+
+/* 카운트 글자 얇게 */
+.textCnt{
+  font-weight: lighter;
+}
+
+/* 페이징 정렬 */
+.pagination{
+  display: flex;
+  justify-content: center;
+}
+
+/* 수납 내역 검색 버튼, 수강 등록 버튼 */
+.search-area{
+  display: flex;
+  justify-content: right;
+}
+.btn-search:hover,
+.btn-lec:hover{
+  background-color: #651C70 !important;
+}
+
+/* 상담 placeholder 색 연하게 */
+.conHContent::placeholder,
+.conContent::placeholder{
+  color: #c8c8c8!important;
+}
+
+/* 수납 내역 기간 검색 */
+.accDate{
+  display: flex;
+}
+
+/* 수납내역 기간 조회 */
+.accDateSearch{
+  max-width: 75px!important;
+}
+
+/* 돋보기 아이콘 */
+.fa-searchicon button{
+  border: none;
+  background: none;
+  font-size: 22px;
+  color: #8B169E;
+}
+
+/* 원생 수강 강의 --------------------------------------------------------------------------------------- */
+/* 수강 내역 스크롤 맞게 높이 조절 */
+.table-responsive-lec2{
+  height: 250px;
+}
+
+/* 수강 내역 높이 조절 */
+.table-responsive-lec2 th,
+.table-responsive-lec2 td{
+  padding: 5px 0 !important;
+}
+
+/* 수강 등록 높이 조절 */
+.table-responsive-lec1{
+  height: 280px;
+}
+
+/* 수강 등록 테이블 줄 */
+.table-responsive-lec1 th,
+.table-responsive-lec1 td{
+  border-top: 1px solid #e3e6f0 !important;
+}
+
+/* 수강 등록 버튼 오른쪽 정렬 */
+.btn-lec{
+  display: flex;
+  justify-content: right;
+}
+
+/* 수강 기간 정렬 */
+.clsDate{
+  display: flex;
+}

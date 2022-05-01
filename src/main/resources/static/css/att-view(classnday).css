@@ -1,0 +1,83 @@
+.stuformbox {
+    width: 100em;
+    margin-bottom: 8em;
+}
+
+.stusearchrow {
+    background-color: #f6f6f6;
+}
+
+
+.selectclasstext {
+    width: 5em;
+    margin-left: 4em;
+}
+
+.selectclassbox {
+    border-radius: 0px !important;
+}
+
+.selectstudenttext {
+    padding-left: 4em;
+    width: 6em;
+}
+
+.stusearchbox {
+    border-radius: 0px !important;
+}
+
+
+.dayselectbox {
+    border-radius: 0px !important;
+    margin-right: 3em !important;
+    margin-left: 3em;
+}
+
+
+.stusearchbutton {
+    margin-left: 3em;
+    border-radius: 0px !important;
+    padding: 8px !important;
+
+}
+
+.downloadbuttonbox {
+    width: 13em;
+    border-radius: 0px !important;
+    border: none;
+    margin-right: 4em;
+    margin-left: 5em;
+    padding: 8px !important;
+}
+
+.studenttable {
+    background-color: #FFFFFF;
+    margin-bottom: 0rem;
+}
+
+#attstatusbox {
+    width: 5em !important;
+}
+
+.attstatusbutton {
+    width: 5em !important;
+    border-color: #c2c2c2;
+    background-color: white;
+}
+
+
+.attformbox {
+    text-align: center;
+    border-radius: 0px !important;
+}
+
+#nosearchstudent {
+    height: 30em;
+}
+
+.attandancestatusbox {
+    border: 2px #c2c2c2 solid;
+    padding: 2px;
+    margin-right: 1em;
+    background-color: #f6f6f6;
+}

@@ -1,0 +1,89 @@
+/* .radio {
+    margin-top: 20px;
+}
+
+.infoformbox,
+.stu-btn {
+    margin-top: 5px;
+} */
+
+.ma-reft {
+    margin-left: 150px;
+}
+
+.registbtn {
+    text-align: center;
+}
+
+.profile {
+    width: 100%;
+    object-fit: cover;
+}
+
+.content-stu {
+    float: none;
+    margin: 0 auto;
+}
+
+.text-area {
+    resize: none;
+    border-radius: 0px;
+    margin-left: 10px;
+}
+
+.list-box{
+    height: 95%;
+}
+
+.submenu-box{
+    height: 300px;
+}
+
+table, th, td, tr {
+    vertical-align: middle;
+}
+
+
+.p-left{
+    text-align: right;
+    font-size: x-small;
+}
+
+.sel {
+    width: 100px;
+}
+
+.a-bold:hover, .a-bold:focus {
+    font-weight: bold;
+}
+
+.active {
+    font-weight: bold;
+    color: red;
+}
+
+.colbox {
+    width: 150px !important;
+    height: 40px !important;
+}
+
+.addr {
+    margin-left: 10px;
+}
+
+option {
+	font-size: xx-small;
+}
+
+.sub-btn, sub-btn:hover, sub-btn:focus{
+	color : #8B169E !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+
+.checkNO{
+	width: 10px !important;
+}
+
+

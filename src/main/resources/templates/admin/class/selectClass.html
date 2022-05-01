@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>강의조회</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+	<!-- 채팅 cs -->
+	<link href="/css/chat.css" rel="stylesheet">
+
+    <!-- bootstrap-icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+
+<style>
+
+.bi{
+color: purple;
+}
+
+</style>
+
+
+
+</head>
+
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- navbar include -->
+        <div th:replace="/common/adminSidebar.html"></div>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- header include -->
+            <div th:replace="/common/adminTopbar.html"></div>
+    
+    
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Begin Page Content -->
+          
+            <div class="container-fluid">
+            
+                <!-- Page Heading -->
+
+
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-2 text-gray-800">강의조회</h1>
+                </div>
+                <hr class="border-bottom-primary">
+
+
+
+                <!-- DataTales Example -->
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">강의조회목록</h6>
+                    </div>
+
+                    <!-- 검색창 -->
+                    <form class="form-inline" style="margin-left: auto; margin-right: 1em; margin-top: 1em;">
+                        <input class="form-control mr-sm-2" type="search" placeholder="검색 키워드를 입력하세요"
+                            aria-label="Search" style="font-size: small;">
+                        <button class="btn btn-outline-success my-2 my-sm-0" name="getSearch()" type="submit" style=" color: #8B169E;
+                        background-color: white; 
+                        border-color: #8B169E;
+                        font-size: small;">검색</button>
+                    </form>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center">과목</th>
+                                        <th style="text-align: center">강사</th>
+                                        <th style="text-align: center">강의명</th>
+                                        <th style="text-align: center">수업일</th>
+                                        <th style="text-align: center">강의실</th>
+                                        <th style="text-align: center">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="text-align: center">
+                                    <tr>
+                                        <td>다</td>
+                                        <td>우별림</td>
+                                        <td>
+                                            <!-- 클릭 시 상세보기 모달창 -->
+                                            <text type="text" data-toggle="modal" data-target=".bd-example-modal-lg">모달창테스트 클릭하세요.</text>
+
+                                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content"> 
+
+                                                        <!-- 과목정보 -->
+                                                        <div class="card shadow mb-4">
+                                                            <div class="card-body">
+                                                                <h5
+                                                                    style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E; text-align: left">
+                                                                    과목정보</h5>
+                                                                <div class="mx-auto  row">
+                                                                    <div class=" mx-auto row align-items-center">
+
+                                                                        <div class="col-auto" style="margin-top: 1em;">
+                                                                            <span class="coloumnamebox input-group-text"
+                                                                                id="basic-addon1"
+                                                                                style="width: 8em">과목명</span>
+                                                                        </div>
+                                                                        <div class="col-8" style="margin-top: 1em;">
+                                                                            <input type="text"
+                                                                                class="infoformbox form-control"
+                                                                                aria-label="Username"
+                                                                                placeholder="스프링프레임워크"
+                                                                                aria-describedby="basic-addon1">
+                                                                        </div>
+                                                                        <div class="col-auto" style="margin-top: 1em;">
+                                                                            <span class="coloumnamebox input-group-text"
+                                                                                id="basic-addon1"
+                                                                                style="width: 8em" >강사명</span>
+                                                                        </div>
+                                                                        <div class="col-8" style="margin-top: 1em;">
+                                                                            <input type="text"
+                                                                                class="infoformbox form-control"
+                                                                                aria-label="Username" placeholder="우별림쌤"
+                                                                                aria-describedby="basic-addon1">
+                                                                        </div>
+                                                                        <div class="col-auto" style="margin-top: 1em;">
+                                                                            <span class="coloumnamebox input-group-text"
+                                                                                id="basic-addon1"
+                                                                                style="width: 8em">실수강생 <span
+                                                                                    id="pointtext">*</span></span>
+                                                                        </div>
+                                                                        <div class="col-8" style="margin-top: 1em;">
+                                                                            <input type="text"
+                                                                                class="infoformbox form-control"
+                                                                                aria-label="Username" placeholder="32"
+                                                                                aria-describedby="basic-addon1">
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="col-auto" style="margin-top: 1em;">
+                                                                        <span class="coloumnamebox input-group-text"
+                                                                            id="basic-addon1" style="width: 8em">강의명
+                                                                            <span id="pointtext">*</span></span>
+                                                                    </div>
+                                                                    <div class="col-8" style="margin-top: 1em;">
+                                                                        <input type="text"
+                                                                            class="infoformbox form-control"
+                                                                            aria-label="Username"
+                                                                            placeholder="너에게도 봄이다..스프링.."
+                                                                            aria-describedby="basic-addon1">
+                                                                    </div>
+
+                                                                    <div class="col-auto" style="margin-top: 1em;">
+                                                                        <span class="coloumnamebox input-group-text"
+                                                                            id="basic-addon1" style="width: 8em">대상학년
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-8" style="margin-top: 1em;">
+                                                                        <input type="text"
+                                                                            class="infoformbox form-control"
+                                                                            aria-label="Username" placeholder="성인"
+                                                                            aria-describedby="basic-addon1">
+                                                                    </div>
+
+                                                                    <div class="col-auto" style="margin-top: 1em;">
+                                                                        <span class="coloumnamebox input-group-text"
+                                                                            id="basic-addon1" style="width: 8em">수업료
+                                                                            <span id="pointtext">*</span></span>
+                                                                    </div>
+                                                                    <div class="col-8" style="margin-top: 1em;">
+                                                                        <input type="text"
+                                                                            class="infoformbox form-control"
+                                                                            aria-label="Username" placeholder="35582394"
+                                                                            aria-describedby="basic-addon1">
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                <div class="mx-auto row">
+																	<h5 style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E;">
+                                                                    수업정보</h5>
+                                                                    <div class=" mx-auto row align-items-center">
+                                                                        <div class="col-auto" style="margin-top: 1em">
+                                                                            <span class="coloumnamebox input-group-text"
+                                                                                id="basic-addon1"
+                                                                                style="width: 8em">수업일</span>
+                                                                        </div>
+                                                                        <div class="col-4" style="margin-top: 1em;">
+                                                                            <input type="text"
+                                                                                class="infoformbox form-control"
+                                                                                aria-label="Username"
+                                                                                placeholder="2021-01-08"
+                                                                                aria-describedby="basic-addon1">
+                                                                        </div> ~
+                                                                        <div class="col-4" style="margin-top: 1em;">
+                                                                            <input type="text"
+                                                                                class="infoformbox form-control"
+                                                                                aria-label="Username"
+                                                                                placeholder="2022-05-26"
+                                                                                aria-describedby="basic-addon1">
+                                                                        </div>
+                                                                        <div class="col-auto" style="margin-top: 1em;">
+                                                                            <span class="coloumnamebox input-group-text"
+                                                                                id="basic-addon1"
+                                                                                style="width: 8em">강의실</span>
+                                                                        </div>
+                                                                        <div class="col-8" style="margin-top: 1em;">
+                                                                            <input type="text"
+                                                                                class="infoformbox form-control"
+                                                                                aria-label="Username" placeholder="L강의실"
+                                                                                aria-describedby="basic-addon1">
+                                                                        </div>
+
+
+                                                                        <div class="col-2" style="margin-top: 1em;">
+                                                                            <span class="coloumnamebox input-group-text"
+                                                                                id="basic-addon1" style="width: 8em">
+                                                                                수업요일 <span
+                                                                                    id="pointtext">*</span></span>
+                                                                        </div>
+                                                                        <div class="col-10" style="margin-top: 1em; text-align: left">
+                                                                            <!-- 인풋박스 -->
+                                                                            <div class="col-12"
+                                                                                style="margin-top: 1em;">
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox1"
+                                                                                        value="option1" checked>
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox1">월</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox2"
+                                                                                        value="option2" checked>
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox2">화</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox1"
+                                                                                        value="option1">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox1">수</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox2"
+                                                                                        value="option2">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox2">목</label>
+                                                                                    <div
+                                                                                        class="form-check form-check-inline">
+                                                                                    </div>
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox1"
+                                                                                        value="option1">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox1">금</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox2"
+                                                                                        value="option2">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox2">토</label>
+                                                                                    <div
+                                                                                        class="form-check form-check-inline">
+                                                                                    </div>
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox1"
+                                                                                        value="option1">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox1">일</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-2" style="margin-top: 1em;">
+                                                                            <span class="coloumnamebox input-group-text"
+                                                                                id="basic-addon1" style="width: 8em">
+                                                                                교시 <span id="pointtext">*</span></span>
+                                                                        </div>
+                                                                        <div class="col-auto" style="margin-top: 1em;">
+                                                                            <!-- 인풋박스 -->
+                                                                            <div class="col-12"
+                                                                                style="margin-top: 1em;">
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox1"
+                                                                                        value="option1">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox1">1교시</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox2"
+                                                                                        value="option2" checked>
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox2">2교시</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox1"
+                                                                                        value="option1">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox1">3교시</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox2"
+                                                                                        value="option2" checked>
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox2">4교시</label>
+                                                                                    <div
+                                                                                        class="form-check form-check-inline">
+                                                                                    </div>
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id="inlineCheckbox1"
+                                                                                        value="option1">
+                                                                                    <label class="form-check-label"
+                                                                                        for="inlineCheckbox1">5교시</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            
+                                                        <!-- 전체 section end -->
+                                                        <!-- 비고란 -->
+                                                        	<br>
+                                                                <form clas="form-inline ">
+                                                                    <div class="input-group input-group-lg">
+                                                                        <span class="input-group-text"
+                                                                            style="margin: 2em; height: 3em;">비고</span>
+                                                                        <textarea class="form-control"
+                                                                            aria-label="With textarea"
+                                                                            placeholder="눈감고 스프링 100줄 코드 작성 가능할 정도로 집중수업!"
+                                                                            style="font-size: medium;"></textarea>
+                                                                    </div>
+                                                                </form>
+                                                         </div>
+                                                    </div>
+                                        		</td>
+                                                        <!-- 과목정보 -->
+
+                                                           
+
+
+
+                                        <td>2021-03-01~2022-05-26</td>
+                                        <td>L강의실</td>
+                                        <td>
+                                            <!-- 강의실 입장 -->
+                                            <text onclick="location.href='/common/class/selectClass'"><i class="bi bi-arrow-right-square-fill"></i>&nbsp;</text>
+                                            <!-- 강의 수정-->
+                                            <text onclick="location.href='/common/class/updateClass'"><i class="bi bi-pencil-square"></i>&nbsp;</text>
+                                            <!-- 강의 삭제 -->
+                                            <text class="" data-toggle="modal" data-target="#classdelModal" ><i class="bi bi-trash"></i>&nbsp;</text>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+
+                            </table>
+                            <!-- 페이징 -->
+                            <nav aria-label="Page navigation example" style="margin-left: 45%;">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+		</div>
+            <!-- End of Main Content -->
+            <!-- footer include -->
+            <div th:replace="/common/footer.html"></div>
+
+        </div>
+        <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+   <!-- 강의 삭제 Modal-->
+    <div class="modal fade" id="classdelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">강의삭제</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">정말로 삭제하시겠습니까?</div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" onclick="location.href='/common/class/selectClass'">취소</a>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!--모달-->
+    <script>$('#myModal').modal(options)</script>
+    
+    
+    <!-- 검색기능 -->
+ <!--     
+ <script>
+    function getSearchList(){
+	$.ajax({
+		type: 'GET',
+		url : "/getSearch",
+		data : $("form[name=form-inline]").serialize(),
+		success : function(result){
+			//테이블 초기화
+			$('#boardtable > tbody').empty();
+			if(result.length>=1){
+				result.forEach(function(item){
+					str='<tr>'
+					str += "<td>"+item.idx+"</td>";
+					str+="<td>"+item.writer+"</td>";
+					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
+					str+="<td>"+item.date+"</td>";
+					str+="<td>"+item.hit+"</td>";
+					str+="</tr>"
+					$('#boardtable').append(str);
+        		})				 
+			}
+		}
+	})
+}
+    </script>
+-->
+</body>
+
+</html>

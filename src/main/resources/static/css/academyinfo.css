@@ -1,0 +1,73 @@
+
+/* 컬럼박스 */
+.coloumnamebox {
+    width: 200px;
+    height: 60px;
+    border-radius: 0px !important;
+    font-size: 15px !important;
+}
+
+/* 주소컬럼박스 */
+.addcoloumnamebox {
+    width: 200px;
+    height: 80px;
+    border-radius: 0px !important;
+    font-size: 15px !important;
+  }
+
+/* 보라색별표텍스트 */
+#pointtext {
+    color: #8B169E;
+    font-weight: bolder;
+    text-align: right;
+}
+
+/* 폼 전체 박스 */
+.acaformbox {
+    width: 1648px;
+    border-radius: 0%;
+}
+
+/* 폼의 줄 */
+.acaformrow {
+    width: 1350px;
+}
+
+/* 내용기입박스 */
+.infoformbox {
+    border-radius: 0px !important;
+    height: 30px !important;
+    font-size: 12px !important;
+    font-weight: lighter !important;
+}
+
+/* 취소저장 버튼 그룹 */
+.buttonbox {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    justify-content: center;
+}
+
+/* 저장 버튼 */
+.submitbuttonbox {
+    padding: 10px !important;
+    margin: 10px !important;
+}
+
+.submitbuttonbox:hover {
+    background-color: #651c70 !important;
+}
+
+/* 취소 버튼 */
+.resetbuttonbox {
+    padding: 10px !important;
+    margin: 10px !important;
+    background-color: #D4D4D4 !important;
+    border-color: #D4D4D4 !important;
+}
+
+.resetbuttonbox:hover {
+    background-color: hsl(0, 1%, 56%) !important;
+    border-color: hsl(0, 1%, 56%) !important;
+}

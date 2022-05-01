@@ -1,0 +1,160 @@
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Chat</title>
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- chat css -->
+    <link href="/css/chatList.css" rel="stylesheet">
+
+
+    <!-- 부트아이콘 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+    <!-- 채팅방 내부 logout 등등 버튼 (보류)-->
+    <script>	$(document).ready(function () {
+            $('#action_menu_btn2').click(function () {
+                $('.action_menu2').toggle();
+            });
+        });
+
+    </script>
+    
+    
+        <!-- 채팅리스트 css -->
+    <style>
+        .chatmake {
+         font-size: smaller; 
+         background: whitesmoke; 
+         border: none; 
+         border-radius: 6px;
+         opacity: 60%;
+         font-weight: bold;
+        }
+
+        .chatmake:hover {
+            background-color: white;
+            opacity: 100%;
+            color: purple;
+        }
+
+    </style>
+    
+    
+</head>
+
+<body>
+                        <!--채팅리스트-->
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                            </a>
+                            <!-- message view단 -->
+                        
+                        
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <div class="container-fluid container-fluid2 h-100">
+                                    <div class="row justify-content-center h-100">
+                                        <div class="col-md-8 col-xl-5 col-xl-5-new chat caht2">
+                        
+                                            <div class="card card2 mb-sm-3 mb-md-0 contacts_card contacts_card2">
+                                                <div class=" card-header card-header2">
+                                                    <div class="input-group">
+                                                        <input type="text" placeholder="채팅방 제목을 입력하세요" name=""
+                                                            class="form-control search search2">
+                                                        <div class="input-group-prepend">
+                                                            <!-- <span><button style="margin-left: 1em; margin-top: 3px;">만들기</button></span> -->
+                                                            <!--<i class="bi bi-arrow-bar-right"></i>-->
+                                                            <span type="button" class="input-group-text search_btn2"><button onclick=""
+                                                                    class="chatmake">채팅방 생성</button></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="card-body contacts_body contacts_body2">
+                                                    <ui class="contacts contacts2">
+                                                        <div class="active active2">
+                                                            <div class="d-flex bd-highlight">
+                                                                <div class="img_cont img_cont2"></div>
+                                                                <div class="user_info user_info2">
+                                                                    <span>마를린을 사랑하는 방 <button type="submit"  class="enterbtn" onclick="location.href='common/chat/chat.html'"><i
+                                                                                class="bi bi-arrow-bar-right"></i></button></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body contacts_body contacts_body2">
+                                                            <ui class="contacts contacts2">
+                                                                <div class="active active2">
+                                                                    <div class="d-flex bd-highlight">
+                                                                        <div class="img_cont img_cont2"></div>
+                                                                        <div class="user_info user_info2">
+                                                                            <span>마를린을 사랑하는 방 <button type="submit" class="enterbtn"><i
+                                                                                        class="bi bi-arrow-bar-right"></i></button></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body contacts_body contacts_body2">
+                                                                    <ui class="contacts contacts2">
+                                                                        <div class="active active2">
+                                                                            <div class="d-flex bd-highlight">
+                                                                                <div class="img_cont img_cont2"></div>
+                                                                                <div class="user_info user_info2">
+                                                                                    <span>마를린을 사랑하는 방 <button type="submit" class="enterbtn"><i
+                                                                                                class="bi bi-arrow-bar-right"></i></button></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </ui>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <!-- <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
+</body>
+
+</html>

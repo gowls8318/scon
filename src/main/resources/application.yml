@@ -1,0 +1,15 @@
+# server port config
+server:
+  port: 8001
+  
+# oracle driver config
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@180.71.210.172:1521:xe
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: C##GREEDY
+    password: GREEDY
+
+# Mybatis config
+mybatis:
+  mapper-locations: mappers/**/*.xml

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>성적 관리</title>
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- BootStrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<style>
+    #place-center{
+        padding-left: 5%;
+    }
+
+    #small-btn{
+        width: 65px;
+        height: 20px;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .pagination{ float: right; }
+
+
+</style>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        	<!-- navbar include -->
+        	<div th:replace="/common/adminSidebar"></div>
+        	<div id="content-wrapper" class="d-flex flex-column">
+            
+            <!-- header include -->
+            <div th:replace="/common/adminTopbar"></div>
+
+            <!-- Main Content -->
+            <div id="content">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">성적</h1>
+            </div>
+                <hr class="border-bottom-primary">
+
+                <button type="button" class="btn btn-primary" onclick="location.href='성적 추가.html';">성적 추가 하기</button>
+
+
+                    <br><br>
+                    <!--   성적관리 시작 부분 -->
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">성적 관리</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="notiCheck">
+                                                <div class="form-check">
+                                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                 <label class="form-check-label" for="flexCheckDefault"></label>
+                                               </div>
+                                             </th>
+                                            <th>이름</th>
+                                            <th>수업</th>
+                                            <th>점수</th>
+                                            <th>등록일</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                    </label>
+                                            </td>
+                                            <td>김유나</td>
+                                            <td>영어기초1반</td>
+                                            <td>90</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                    </label>
+                                            </td>
+                                            <td>한재성</td>
+                                            <td>영어기초1반</td>
+                                            <td>88</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                    </label>
+                                            </td>
+                                            <td>이진아</td>
+                                            <td>영어기초1반</td>
+                                            <td>99</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                    </label>
+                                            </td>
+                                            <td>박하윤</td>
+                                            <td>영어기초1반</td>
+                                            <td>87</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                    </label>
+                                            </td>
+                                            <td>이진수</td>
+                                            <td>영어기초1반</td>
+                                            <td>60</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                    </label>
+                                            </td>
+                                            <td>김유미</td>
+                                            <td>영어기초1반</td>
+                                            <td>100</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!--- 수정 삭제 버튼 --->
+                                <div class="container">
+                                    <div class="row">
+                                    <div class="col text-center">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#accModal1">수정</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                        style="background-color: red; border: none;">
+                                            삭제
+                                        </button>
+                                    </div>
+                                    </div>
+                                </div>
+                                
+                        	<!-- 페이징 -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+               </div>
+               <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+            <!-- footer include -->
+            <div th:replace="/common/footer"></div>
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+
+            <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">성적 삭제</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                                </div>
+                                    <div class="modal-body">
+                                        삭제 하시겠습니까?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-primary">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+        <!-- accModal1-->
+        <div class="modal fade" id="accModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">성적 수정</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <div class="col-lg-1"></div>
+                            <label for="std" class="col-sm-2 col-form-label col-lg-3">원생</label>
+                            <div class="col-sm-10 col-lg-7">
+                                <input type="text" class="form-control" id="std" readonly>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-1"></div>
+                            <label for="clsId" class="col-sm-2 col-form-label col-lg-3">수강 강의</label>
+                            <div class="col-sm-10 col-lg-7">
+                                <input type="text" class="form-control" id="clsId" readonly>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-1"></div>
+                            <label for="lecPay" class="col-sm-2 col-form-label col-lg-3">점수 입력</label>
+                            <div class="col-sm-10 col-lg-7">
+                                <input type="text" class="form-control" id="lecPay">
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-7">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                    <button type="submit" class="btn btn-primary">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /accModal1 -->
+            
+
+
+
+	</div>
+</div>
+
+    <!-- Bootstrap core JavaScript-->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins --><script src="vendor/chart.js/Chart.min.js"></script>
+ <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
+    <script src="/js/demo/datatables-demo.js"></script>  
+
+    <!-- Sweet Alert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+</body>
+
+
+
+</html>

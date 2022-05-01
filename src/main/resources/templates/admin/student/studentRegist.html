@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="원생등록페이지">
+<meta name="author" content="임태미">
+
+<title>원생 등록</title>
+
+<!-- Custom fonts for this template-->
+<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+<!-- bootstrap-icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+<link href="/css/student.css" rel="stylesheet">
+
+
+</head>
+
+<body id="page-top">
+	<div id="wrapper">
+		<!-- navbar include -->
+		<div th:replace="/common/admSidebar.html"></div>
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- header include -->
+			<div th:replace="/common/admTopbar.html"></div>
+
+			<!-- Main Content -->
+			<div id="content">
+				<div class="container-fluid">
+					<!-- Page Heading -->
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">원생 등록</h1>
+					</div>
+					<hr class="border-bottom-primary">
+
+					<!-- Content Row -->
+					<div class="row content-stu">
+						<form method="post" name="form"
+							class="row col-12 formcenter needs-validation" novalidate
+							onsubmit="return checkAll()">
+							<!-- form태그 시작-->
+
+							<!-- Area Chart -->
+							<div class="col-lg-2">
+								<div class="card shadow mb-4">
+									<!-- Card Header - Dropdown -->
+									<div
+										class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+										<h6 class="m-0 font-weight-bold text-primary">프로필 사진</h6>
+									</div>
+									<!-- Card Body -->
+									<div class="card-body col-lg-12">
+										<div>
+											<img class="profile" src="img\profile (2).jpg" alt="프로필 사진"><br>
+											<br> <input type="file" class="" value="" />
+											<!-- 프로필 사진 등록 -->
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+
+							<!-- Pie Chart -->
+							<div class="card shadow mb-4 col-lg-10">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">원생 필수 정보</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body row">
+									<fieldset class="row col-lg-12">
+										<div class="form-group col-lg-6 row">
+
+											<label for="" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox">이름 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7 row">
+												<input type="text" class="form-control infoformbox" maxlength="6"
+													id="name">
+											</div>
+
+											<label for="" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox">아이디 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7 row">
+												<div class="col-sm-9 col-lg-8 row">
+													<input type="text" class="form-control infoformbox"
+														id="userId" name="userId"> <small id="idHelp"
+														class="text-danger"></small>
+												</div>
+												<div class="col-sm-2">
+													<input type="button"
+														class="btn btn-secondary btn-sm stu-btn" value=" 중복 확인 " />
+												</div>
+											</div>
+
+
+											<label for="" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox">비밀번호 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7 row">
+												<input type="password" class="form-control infoformbox"
+													id="password" name="password" maxlength="20"> <small
+													id="passwordHelp" class="text-danger"></small>
+											</div>
+											<label for="" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox">이메일 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7 row">
+												<input type="email" class="form-control infoformbox"
+													id="email" name="email">
+												 <small
+													id="emailHelp" class="text-danger"></small>	
+											</div>
+										</div>
+
+										<div class="form-group col-lg-6 row">
+
+											<label for="gender" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox"
+												id="basic-addon1">성별<span id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7 row">
+
+												<label class="radio-inline col-6"> <input
+													type="radio" class="radio" name="gender" id="F" value="F"
+													checked> 여자
+												</label> <label class="radio-inline col-6"> <input
+													type="radio" class="radio" name="gender" id="M" value="M">
+													남자
+												</label>
+
+											</div>
+
+											<label for="" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox">생년월일 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7">
+												<input type="date" id="birthDay" name="birthDay" class="infoformbox form-control">
+											</div>
+											<label for="" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox">전화번호 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7">
+												<input type="tel" class="infoformbox form-control" placeholder="(-) 하이픈 포함"
+												id="phone" name="phone">
+												 <small
+													id="phoneHelp" class="text-danger"></small>
+											</div>
+											<label for="" class="col-lg-3"> <span
+												class="coloumnamebox input-group-text colbox">입원일 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-7 col-lg-7">
+												<input type="date" class="infoformbox form-control">
+											</div>
+
+										</div>
+
+										<div class="col-lg-10 row">
+											<label for="" class="col-lg-1"> <span
+												class="coloumnamebox input-group-text colbox">주소 <span
+													id="pointtext">*</span></span>
+											</label>
+											<div class="col-lg-2"></div>
+											<div class="col-lg-8 row">
+												<div class="col-lg-4 row">
+													<input type="text" class="form-control infoformbox"
+														id="zipcode">
+												</div>
+												<div class="col-lg-4">
+													<input type="button"
+														class="btn btn-secondary btn-sm stu-btn" value="우편번호 찾기" />
+												</div>
+												<input type="text" class="form-control infoformbox"
+													id="exaddress"> <input type="text"
+													class="form-control infoformbox" id="">
+											</div>
+
+										</div>
+
+									</fieldset>
+
+								</div>
+							</div>
+
+							<!-- Content Row -->
+							<div class="row">
+
+								<!-- Content Column -->
+								<div class="col-lg-12 mb-4">
+
+									<!-- Project Card Example -->
+									<div class="card shadow mb-4">
+										<div class="card-header py-3">
+											<h6 class="m-0 font-weight-bold text-primary">원생 추가 정보</h6>
+										</div>
+										<div class="card-body">
+											<fieldset class="row col-lg-10">
+												<div class="form-group col-lg-6 row">
+
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">학생 유형</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														<select
+															class="form-control form-select-lg mb-3 infoformbox col-lg-5">
+
+															<option selected>학생 유형</option>
+															<option value="1">초등학생</option>
+															<option value="2">중학생</option>
+															<option value="3">고등학생</option>
+															<option value="4">대학생</option>
+															<option value="5">성인</option>
+														</select>
+													</div>
+
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">학교</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														<input type="text" class="form-control infoformbox"
+															id="name">
+													</div>
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">학년</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														<input type="text" class="form-control infoformbox"
+															id="name">
+													</div>
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">학급(반)</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														<input type="text" class="form-control infoformbox"
+															id="name">
+													</div>
+
+
+												</div>
+												<div class="form-group col-lg-6 row">
+													<label for="" class="col-lg-3 stu-btn"> 대표 학부모 정보 </label>
+													<div class="col-sm-7 col-lg-7 row"></div>
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">학부모
+															성함</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														<input type="text" class="form-control infoformbox"
+															id="name">
+													</div>
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">가족 관계</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														<input type="text" class="form-control infoformbox"
+															id="name">
+													</div>
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">비상
+															연락처</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														<input type="text" class="form-control infoformbox"
+															id="name">
+													</div>
+
+
+												</div>
+
+												<label for="" class="col-lg-1"> <span
+													class="coloumnamebox input-group-text colbox">상담 내용
+														(비고)</span>
+												</label>
+												<div class="col-lg-2"></div>
+												<div class="col-sm-8 col-lg-8 row ma-reft ">
+													<textarea class="form-control text-area" rows="3" id=""></textarea>
+												</div>
+
+											</fieldset>
+											<br>
+											<div class="registbtn">
+												<button type="submit"
+													class="btn btn-primary submitbuttonbox">등록 하기</button>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- /.container-fluid -->
+				</div>
+				<!-- End of Main Content -->
+			</div>
+			<!-- End of Content Wrapper -->
+
+			<!-- footer include -->
+			<div th:replace="/common/footer.html"></div>
+		</div>
+		<!-- End of Page Wrapper -->
+
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top"> <i
+			class="fas fa-angle-up"></i>
+		</a>
+
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="sb-admin-2.min.js"></script>
+		<!-- Page level plugins -->
+		<script src="vendor/chart.js/Chart.min.js"></script>
+		<!-- <script src="/js/vendor/datatables/jquery.dataTables.min.js"></script> -->
+		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<!-- Page level custom scripts -->
+		<script src="demo/chart-area-demo.js"></script>
+		<script src="demo/chart-pie-demo.js"></script>
+		<script src="demo/datatables-demo.js"></script>
+
+		<!-- 원생 관리 자바스크립트 -->
+		<script src="js/student.js"></script>
+</body>
+
+</html>
