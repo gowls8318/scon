@@ -1,4 +1,4 @@
-package com.scon.project.model.dao.classDao;
+package com.scon.project.admin.Class.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
