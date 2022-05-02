@@ -303,13 +303,24 @@
 
                                             <div class="card-body submenu-box" id="test_div">
                                                 <!--  작성 영역 -->
-                                                <div class="row mb-2">
-                                                    <div class="col-lg-11"></div>
-                                                    <button type="submit" class="btn btn-primary btn-lec p-2">수강
-                                                        등록</button>
+                                                <div class="lec-flex">
+                                                    <div class="row mb-2 ml-1">
+                                                        <div class="col-lg-11"></div>
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-lec">수강
+                                                            등록</button>
+                                                    </div>
+                                                    <div class="search-area col-lg-5 pr-0">
+                                                        <div class="form-group mx-sm-3">
+                                                            <input type="text" class="form-control" id="accSearch"
+                                                                onkeyup='searchTable()' placeholder="검색어를 입력하세요">
+                                                        </div>
+                                                        <button type="button"
+                                                            class="btn btn-primary btn-search">검색</button>
+                                                    </div>
                                                 </div>
                                                 <div class="table-responsive table-responsive-lec2">
-                                                    <table class="table table-bordered-yj dataTable-yj" id="dataTable"
+                                                    <table class="table table-bordered-yj dataTable-yj" id="accDataTable"
                                                         width="100%" cellspacing="0">
                                                         <thead>
                                                             <tr>
@@ -532,29 +543,32 @@
                                                     </div>
                                                 </div>
                                                 <!-- /삭제 모달 -->
-
-                                                <div class="pagebtn">
-                                                    <!-- 페이징 -->
-                                                    <!-- <nav aria-label="Page navigation">
-                                                <ul class="pagination pagination2 m-2">
-                                                    <li class="page-item">
-                                                        <a class="page-link p-2" href="#" aria-label="Previous">
-                                                            <span aria-hidden="true">&laquo;</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="page-item"><a class="page-link p-2" href="#">1</a></li>
-                                                    <li class="page-item"><a class="page-link p-2" href="#">2</a></li>
-                                                    <li class="page-item"><a class="page-link p-2" href="#">3</a></li>
-                                                    <li class="page-item"><a class="page-link p-2" href="#">4</a></li>
-                                                    <li class="page-item"><a class="page-link p-2" href="#">5</a></li>
-                                                    <li class="page-item">
-                                                        <a class="page-link p-2" href="#" aria-label="Next">
-                                                            <span aria-hidden="true">&raquo;</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </nav> -->
-                                                </div>
+                                                
+                                                <!-- 입력 검색 -->
+                                                <!-- 원하는 td만 검색 -->
+                                                <script>
+                                                    function searchTable() {
+                                                        var input, filter, table, tr, td, i, j, found;
+                                                        input = document.getElementById("accSearch");
+                                                        filter = input.value.toLowerCase();
+                                                        table = document.getElementById("accDataTable");
+                                                        tr = table.getElementsByTagName("tr");
+                                                        for (i = 1; i < tr.length; i++) {
+                                                            td = tr[i].getElementsByTagName("td");
+                                                            for (j = 0; j < td.length - 1; j++) {
+                                                                if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
+                                                                    found = true;
+                                                                }
+                                                            }
+                                                            if (found) {
+                                                                tr[i].style.display = "";
+                                                                found = false;
+                                                            } else {
+                                                                tr[i].style.display = "none";
+                                                            }
+                                                        }
+                                                    }
+                                                </script>
 
                                                 <!-- /작성 영역 -->
                                             </div>

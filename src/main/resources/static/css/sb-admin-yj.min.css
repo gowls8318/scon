@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /* yj 코드 --------------------------------------------------------------------------------------------------------------- */
 /* textarea 길이 제한, 크기 조절 불가 */
 .con-input-group textarea{
@@ -50,6 +48,26 @@
   color: #8B169E!important;
 }
 
+/* 폼디자인 */
+.form-control:focus {
+  border: 1px solid #8B169E !important;
+  box-shadow: none !important;
+}
+/* 저장 */
+.submitbuttonbox {
+  border: none !important;
+  background-color: #8B169E !important;
+  padding: 10px !important;
+  margin: 10px !important;
+}
+/* 취소 */
+.resetbuttonbox {
+  border: none !important;
+  background-color: #D4D4D4 !important;
+  padding: 10px !important;
+  margin: 10px !important;
+}
+
 /* 수납, 상담, 수강 등록 */
 .btn-acc1,
 .btn-con,
@@ -88,6 +106,14 @@
 .refContent textarea{
   height: 100px;
   resize: none;
+}
+/* 검색 버튼 */
+.btn-search {
+  border: none!important;
+  background-color: #8B169E !important;
+}
+.btn-search:focus {
+  box-shadow: none !important;
 }
 
 /* 수납, 환불, 등록 모달 */
@@ -167,7 +193,7 @@
   justify-content: center;
 }
 
-/* 수납 내역 검색 버튼, 수강 등록 버튼 */
+/* 수납 내역 검색 버튼, 수강 등록 버튼, 수강 검색 버튼 */
 .search-area{
   display: flex;
   justify-content: right;
@@ -175,6 +201,10 @@
 .btn-search:hover,
 .btn-lec:hover{
   background-color: #651C70 !important;
+}
+.btn-search,
+.btn-lec{
+  height: 37px;
 }
 
 /* 상담 placeholder 색 연하게 */
@@ -224,10 +254,10 @@
   border-top: 1px solid #e3e6f0 !important;
 }
 
-/* 수강 등록 버튼 오른쪽 정렬 */
-.btn-lec{
+/* 수강 등록 버튼, 검색 정렬 */
+.lec-flex{
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 
 /* 수강 기간 정렬 */
