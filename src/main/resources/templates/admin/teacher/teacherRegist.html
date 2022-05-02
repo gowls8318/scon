@@ -10,7 +10,7 @@
 <meta name="description" content="원생등록페이지">
 <meta name="author" content="임태미">
 
-<title>원생 등록</title>
+<title>강사 등록</title>
 
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -45,7 +45,7 @@
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">원생 등록</h1>
+						<h1 class="h3 mb-0 text-gray-800">강사 등록</h1>
 					</div>
 					<hr class="border-bottom-primary">
 
@@ -82,7 +82,7 @@
 								<!-- Card Header - Dropdown -->
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">원생 필수 정보</h6>
+									<h6 class="m-0 font-weight-bold text-primary">강사 필수 정보</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body row">
@@ -180,7 +180,7 @@
 													id="phoneHelp" class="text-danger"></small>
 											</div>
 											<label for="" class="col-lg-3"> <span
-												class="coloumnamebox input-group-text colbox">입원일 <span
+												class="coloumnamebox input-group-text colbox">입사일 <span
 													id="pointtext">*</span></span>
 											</label>
 											<div class="col-sm-2"></div>
@@ -226,90 +226,56 @@
 									<!-- Project Card Example -->
 									<div class="card shadow mb-4">
 										<div class="card-header py-3">
-											<h6 class="m-0 font-weight-bold text-primary">원생 추가 정보</h6>
+											<h6 class="m-0 font-weight-bold text-primary">강사 추가 정보</h6>
 										</div>
-										<div class="card-body">
+								<div class="card-body ">
 											<fieldset class="row col-lg-12">
 												<div class="form-group col-lg-6 row">
 
 													<label for="" class="col-lg-3"> <span
-														class="coloumnamebox input-group-text colbox">학생 유형</span>
+														class="coloumnamebox input-group-text colbox">직급</span>
 													</label>
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<select
 															class="form-control form-select-lg mb-3 infoformbox col-lg-5" name="">
-															<option selected>학생 유형</option>
-															<option value="1">초등학생</option>
-															<option value="2">중학생</option>
-															<option value="3">고등학생</option>
-															<option value="4">대학생</option>
-															<option value="5">성인</option>
+															<option selected>일반 강사</option>
+															<option value="1">담당 강사</option>
+															<option value="2">팀장</option>
+															<option value="3">교수부장</option>
+															<option value="4">부원장</option>
+															<option value="5">원장</option>
 														</select>
 													</div>
+													<label for="" class="col-lg-3"> <span
+														class="coloumnamebox input-group-text colbox">근무 상태</span>
+													</label>
+													<div class="col-sm-2"></div>
+													<div class="col-sm-7 col-lg-7 row">
+														 <select class="form-control form-select-lg mb-3 infoformbox">
+                                                            <option value="1" selected>근무</option>
+                                                            <option value="2">휴직</option>
+                                                            <option value="3">퇴직</option>
+                                                        </select>
 
+													</div>
 													<label for="" class="col-lg-3"> <span
-														class="coloumnamebox input-group-text colbox">학교</span>
+														class="coloumnamebox input-group-text colbox">퇴직일</span>
 													</label>
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
-														<input type="text" class="form-control infoformbox"
-															id="" name="">
+														  <input type="date" class="form-control infoformbox" id="">
 													</div>
-													<label for="" class="col-lg-3"> <span
-														class="coloumnamebox input-group-text colbox">학년</span>
-													</label>
-													<div class="col-sm-2"></div>
-													<div class="col-sm-7 col-lg-7 row">
-														<input type="text" class="form-control infoformbox"
-															id="" name="">
-													</div>
-													<label for="" class="col-lg-3"> <span
-														class="coloumnamebox input-group-text colbox">학급(반)</span>
-													</label>
-													<div class="col-sm-2"></div>
-													<div class="col-sm-7 col-lg-7 row">
-														<input type="text" class="form-control infoformbox"
-															id="" name="">
-													</div>
-
 
 												</div>
 												<div class="form-group col-lg-6 row">
-													<label for="" class="col-lg-3 stu-btn"> 대표 학부모 정보 </label>
+													<label for="" class="col-lg-5 stu-btn"></label>
 													<div class="col-sm-7 col-lg-7 row"></div>
-													<label for="" class="col-lg-3"> <span
-														class="coloumnamebox input-group-text colbox">학부모
-															성함</span>
-													</label>
-													<div class="col-sm-2"></div>
-													<div class="col-sm-7 col-lg-7 row">
-														<input type="text" class="form-control infoformbox"
-															id="" name="">
-													</div>
-													<label for="" class="col-lg-3"> <span
-														class="coloumnamebox input-group-text colbox">가족 관계</span>
-													</label>
-													<div class="col-sm-2"></div>
-													<div class="col-sm-7 col-lg-7 row">
-														<input type="text" class="form-control infoformbox"
-															id="" name="">
-													</div>
-													<label for="" class="col-lg-3"> <span
-														class="coloumnamebox input-group-text colbox">비상
-															연락처</span>
-													</label>
-													<div class="col-sm-2"></div>
-													<div class="col-sm-7 col-lg-7 row">
-														<input type="text" class="form-control infoformbox"
-															id="" name="">
-													</div>
-
-
+						
 												</div>
 
 												<label for="" class="col-lg-1"> <span
-													class="coloumnamebox input-group-text colbox">상담 내용
+													class="coloumnamebox input-group-text colbox">이력 사항
 														(비고)</span>
 												</label>
 												
@@ -323,6 +289,7 @@
 												<button type="submit"
 													class="btn btn-primary submitbuttonbox">등록 하기</button>
 											</div>
+
 
 										</div>
 

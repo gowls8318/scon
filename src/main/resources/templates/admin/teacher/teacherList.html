@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>원생 조회</title>
+    <title>강사 조회</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -40,7 +40,7 @@
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">원생 조회</h1>
+                    <h1 class="h3 mb-0 text-gray-800">강사 조회</h1>
                 </div>
                 <hr class="border-bottom-primary">
 
@@ -65,9 +65,9 @@
                                                 <td class="sel">
                                                     <select name="student-"
                                                         class="form-control form-select-lg infoformbox">
-                                                        <option value="" selected>수강생</option>
-                                                        <option value="">대기생</option>
-                                                        <option value="">퇴원생</option>
+                                                        <option value="" selected>근무</option>
+                                                        <option value="">휴직</option>
+                                                        <option value="">퇴직</option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -98,7 +98,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <p class="p-left pt-3">전체 학생수 : 52명</p>
+                                <p class="p-left pt-3">전체 강사수 : 52명</p>
                                 <div class="table-responsive tb-h">
                                     <table class="table table-bordered small text-xs" id="">
 
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
 
-                        </div><!-- 원생 목록 끝! -->
+                        </div><!-- 강사 목록 끝! -->
                     </div>
 
                     <!-- 상단 원생 정보+ 하단 서브메뉴 원생 추가정보 form 태그로 감싸져 있음 (원생 정보 수정하기 위해서) -->
@@ -146,7 +146,7 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">원생 필수 정보</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">강사 필수 정보</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body row">
@@ -249,7 +249,7 @@
 													id="phoneHelp" class="text-danger"></small>
 											</div>
 											<label for="" class="col-lg-3"> <span
-												class="coloumnamebox input-group-text colbox">입원일<span
+												class="coloumnamebox input-group-text colbox">입사일<span
 													id="pointtext">*</span></span>
 											</label>
 											<div class="col-sm-2"></div>
@@ -294,15 +294,10 @@
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3" id="menu-btns">
                                             <button type="button"
-                                                class="btn btn-sm sub-btn font-weight-bold font-md">원생 정보</button>
+                                                class="btn btn-sm sub-btn font-weight-bold font-md">강사 정보</button>
                                             <button type="button"
-                                                class="btn btn-sm sub-btn font-weight-bold font-md">강의 등록</button>
-                                            <button type="button"
-                                                class="btn btn-sm sub-btn font-weight-bold font-md">수강 강의</button>
-                                            <button type="button" 
-                                                class="btn btn-sm sub-btn font-weight-bold font-md">성적</button>
-                                            <button type="button"
-                                                class="btn btn-sm sub-btn font-weight-bold font-md">출석부</button>
+                                                class="btn btn-sm sub-btn font-weight-bold font-md">담당 강의</button>
+
 
                                         </div>
 
@@ -310,15 +305,7 @@
                                         <div class="card-body submenu-box">
 
                                             <div class="menu">
-                                            	<div th:replace="/admin/student/subMenu"></div>
-                                            </div>
-                                            
-                                            <div class="menu d-none">
-                                            	<div th:replace="/admin/student/subMenu2"></div>
-                                            </div>
-                                            
-                                            <div class="menu d-none">
-                                            	<div th:replace="/admin/student/subMenu3"></div>
+                                            	<div th:replace="/admin/teacher/subMenu"></div>
                                             </div>
                                            
                                            
