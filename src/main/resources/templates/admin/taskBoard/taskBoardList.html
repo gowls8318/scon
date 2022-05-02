@@ -13,6 +13,9 @@
 
     <title>과제</title>
 
+ 	<!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -22,11 +25,11 @@
 
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <!-- Awesome Font -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
 
 </head>
@@ -54,21 +57,20 @@
 
 
 <body id="page-top">
-	<div th:replace="/common/adminSidebar.html"></div>
-        <!-- Page Wrapper -->
-        <div id="wrapper">
-
-            <!-- Content Wrapper -->
-            <div id="content-wrapper" class="d-flex flex-column">
-
-
-	        <!-- Main Content -->
-            <div id="content">
+    <div id="wrapper">
+        	<!-- navbar include -->
+        	<div th:replace="/common/adminSidebar.html"></div>
+        	<div id="content-wrapper" class="d-flex flex-column">
+            
+            <!-- header include -->
             <div th:replace="/common/adminTopbar.html"></div>
 
-                <!-- Begin Page Content -->
-                <div th:replace="/fragments/navbar.html :: navbar"></div> 
-                <div class="container-fluid  col-lg-11">
+            <!-- Main Content -->
+            <div id="content">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+            
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">과제 게시판</h1>
@@ -82,7 +84,7 @@
                           <div class="input-group-prepend border-0">
                               <button id="button-addon4" type="button" class="btn btn-link text-warning"><i class="fa fa-search"></i></button>
                           </div>
-                          <input type="search" placeholder="검색" aria-describedby="button-addon4" class="form-control bg-none border-0" style="margin-right: 20px; background-color: ghostwhite;">
+                          <input type="search" placeholder="검색" aria-describedby="button-addon4" class="form-control bg-none border-0" id="search-input" style="margin-right: 20px; background-color: ghostwhite;">
                       </div>
                     </form>
                   </div>
@@ -178,6 +180,17 @@
 
 	</div>
 </div>
+
+	<script>
+	      $(document).ready(function(){
+	          $("#search-input").keyup(function(){
+	              var k = $(this).val();
+	              $("tr").hide();
+	              var temp = $("tr:contains('" + k + "')");
+	              $(temp).show();
+	          });
+	      });
+	    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
