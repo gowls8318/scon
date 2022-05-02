@@ -1,4 +1,4 @@
-package com.scon.project.model.service.classService;
+package com.scon.project.admin.Class.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
