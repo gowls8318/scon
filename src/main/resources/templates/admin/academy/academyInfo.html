@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>교육원 정보 관리</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/css/academyinfo.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <style>
+    .notiCheck { width: 1rem; }
+    .notiNo { width : 4rem; }
+    .notiWriter, .notiDate, .notiviewCount { width : 8rem; }
+    .notiTitle { width : auto; }
+    
+    /* 공지 제목 */
+    .notiTitleDetail { 
+        color: #858796; 
+    }
+    .notiTitleDetail:link { 
+        text-decoration: none;
+    }
+    .notiTitleDetail:visited { 
+        text-decoration: none;
+    }
+    .notiTitleDetail:hover { 
+        text-decoration: underline;
+        color: #8B169E;
+    }
+
+    /* 페이지네이션 */
+    .page-item:first-child .page-link {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .page-item:last-child .page-link {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .pagination {
+        justify-content: center;
+    }
+    .page-link {
+        padding: 5px 12px;
+    }
+
+    </style>
+
+
+</head>
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+	<div th:replace="/common/adminSidebar.html"></div> 
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                <div th:replace="/common/adminTopbar.html"></div>
+                <!-- 채팅 -->
+                <!-- <div th:replace="/admin/chat/chatList.html"></div>  -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">교육원 정보 관리</h1>
+                    </div>
+                    <hr class="border-bottom-primary">
+
+                    <!-- Content Row -->
+                    <div class="mx-auto acaformbox">
+                        <div class="acaformrow mx-auto row g-3 align-items-center">
+                            <div class="col-auto">
+                                <span class="coloumnamebox input-group-text" id="basic-addon1">교육원명 <span id="pointtext">*</span></span>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="infoformbox form-control" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-auto">
+                                <span class="coloumnamebox input-group-text" id="basic-addon1">교육원 코드 <span id="pointtext">*</span></span>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="infoformbox form-control" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="acaformrow mx-auto row g-3 align-items-center">
+                            <div class="col-auto">
+                                <span class="coloumnamebox input-group-text" id="basic-addon1">대표자 <span id="pointtext">*</span></span>
+                            </div>
+                            <div class="col-3 inputinfo">
+                                <input type="text" class="infoformbox form-control" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-auto">
+                                <span class="coloumnamebox input-group-text" id="basic-addon1">사업자등록번호 </span>
+                            </div>
+                            <div class="col-3 inputinfo">
+                                <input type="text" class="infoformbox form-control" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="acaformrow mx-auto row g-3 align-items-center">
+                            <div class="col-auto">
+                                <span class="coloumnamebox input-group-text" id="basic-addon1">전화번호 <span id="pointtext">*</span></span>
+                            </div>
+                            <div class="col-3 inputinfo">
+                                <input type="text" class="infoformbox form-control" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-auto">
+                                <span class="coloumnamebox input-group-text" id="basic-addon1">팩스번호 </span>
+                            </div>
+                            <div class="col-3 inputinfo">
+                                <input type="text" class="infoformbox form-control" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="acaformrow mx-auto row g-3 align-items-center">
+                            <div class="col-auto">
+                                <span class="addcoloumnamebox input-group-text" id="basic-addon1">주소 <span id="pointtext">*</span></span>
+                            </div>
+                            <div class="col-auto row">
+                                <div class="col-3 inputinfo">
+                                    <input type="text" class="infoformbox form-control" placeholder="우편번호" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="col-3">
+                                    <input type="button" class="postbutton btn btn-user btn-sm stu-btn " value="우편번호 찾기" />
+                                </div>
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6 inputinfo">
+                                    <input type="text" class="infoformbox form-control" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="col-6 inputinfo">
+                                    <input type="text" class="infoformbox form-control" placeholder="(상세주소)" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="acaformrow mx-auto row g-3 align-items-center">
+                            <div class="col-auto">
+                                <span class="coloumnamebox input-group-text" id="basic-addon1">학원 홈페이지 <span id="pointtext">*</span></span>
+                            </div>
+                            <div class="col-10 inputinfo">
+                                <input type="text" class="infoformbox form-control" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <br><br><br>
+                        <div class="row buttonbox">
+                            <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset">취소</button>
+                            <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="submit">저장</button>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <div th:replace="/common/footer.html"></div>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
+    <script src="/js/demo/datatables-demo.js"></script>
+
+    
+
+</body>
+
+</html>
