@@ -37,7 +37,19 @@
     .datetime {
         display: flex;
     }
+    
+    
+    input[type="checkbox"]::before {
+    content: "\2713";
+    position: absolute;
+    top: 60% !important;
+    left: 10px !important;
+    overflow: hidden;
+    transform: scale(0) translate(-50%, -50%);
+    line-height: 1;
     </style>
+    
+
 
 
 </head>
@@ -62,7 +74,7 @@
 
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-2 text-gray-800">강의수정</h1>
-                    <text type="reset" id="resetbtn" onclick="location.href='/common/class/updateClass'"><i class="bi bi-arrow-repeat"></i></text>
+                    <text type="reset" id="resetbtn" onclick="location.href='/admin/classUpdate'"><i class="bi bi-arrow-repeat"></i></text>
                 </div>
                 <hr class="border-bottom-primary">
 

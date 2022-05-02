@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.Class.dao.ClassMapper">
+
+	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
+		<id property="clsId" column="CLS_ID"/>
+		<result property="clsName" column="CLS_NAME"/>
+		<result property="clsStuNum" column="CLS_STUNUM"/>
+		<result property="clsGrade" column="CLS_GRADE"/>
+		<result property="clsPay" column="CLS_PAY"/>
+		<result property="clsRoom" column="CLS_ROOM"/>
+		<result property="clsStart" column="CLS_START"/>
+		<result property="clsEnd" column="CLS_END"/>
+		<result property="clsNote" column="CLS_NOTE"/>
+		<result property="clsStatus" column="CLS_STATUS"/>
+		
+		<!-- 태미님 mapper 작성 후 추후 수정 -->
+		<!-- <association property="memberId" resultMap -->
+	</resultMap>
+	
+	
+	<!-- TB_TEACHER 리절트맵 추후 작성 -->
+<!-- 	
+	<resultMap type="com.scon.project.admin.teacherDTO??" id="태미님작성id">
+	
+	</resultMap>
+ -->
+ 
+ 	
+	
+	<!-- 강의등록 
+	   [추후수정] TB_TEACHER 테이블에서 강사명 JOIN 필요 --> 
+	<insert id="registClass">
+		INSERT
+		  INTO TB_CLASS
+		 (
+		 	CLS_ID
+		  , CLS_NAME
+		  , CLS_STUNUM
+		  , CLS_GRADE
+		  , CLS_PAY
+		  , CLS_ROOM
+		  , CLS_START
+		  , CLS_END
+		  , CLS_NOTE
+		  , CLS_STATUS
+		 )
+		 VALUES
+		 (
+		   CLS_ID.NEXTVAL
+		 , #{ clsName }
+		 , #{ clsStuNum }
+		 , #{ clsGrade }
+		 , #{ clsPay }
+		 , #{ clsRoom }
+		 , #{ clsStart }
+		 , #{ clsEnd }
+		 , #{ clsNote }
+		 , #{ clsStatus }
+		 )
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
