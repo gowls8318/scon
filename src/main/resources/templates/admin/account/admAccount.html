@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>acc001</title>
+    <title>원생 수납 내역 조회</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -73,9 +73,10 @@
                             </div>
                             <div class="search-area col-lg-3">
                                 <div class="form-group mx-sm-3">
-                                    <input type="text" class="form-control" id="accSearch" placeholder="검색어를 입력하세요">
+                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()'
+                                        placeholder="검색어를 입력하세요">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
+                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
                             </div>
                         </form>
                         <div class="card-body">
@@ -543,16 +544,29 @@
     </script> -->
 
     <!-- 입력 검색 -->
+    <!-- 원하는 td만 검색 -->
     <script>
-        $(document).ready(function() {
-            $("#accSearch").keyup(function() {
-                var value = $(this).val().toLowerCase();
-                $(".accTbody tr").filter(function() {
-                    // 찾는 문자 없을 시 -1 반환
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
+        function searchTable() {
+            var input, filter, table, tr, td, i, j, found;
+            input = document.getElementById("accSearch");
+            filter = input.value.toLowerCase();
+            table = document.getElementById("accDataTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length - 1; j++) {
+                    if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        found = true;
+                    }
+                }
+                if (found) {
+                    tr[i].style.display = "";
+                    found = false;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     </script>
 
     <!-- Bootstrap core JavaScript-->
