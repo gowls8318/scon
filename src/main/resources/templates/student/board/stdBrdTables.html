@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>공지사항</title>
+    <title>자유게시판</title>
 
     <!-- Custom fonts for this template -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,28 +22,30 @@
 
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
+
+
+
     <style>
-    .notiCheck { width: 1rem; }
-    .notiNo { width : 4rem; }
-    .notiWriter, .notiDate, .notiviewCount { width : 8rem; }
-    .notiTitle { width : auto; }
+    .brdNo { width : 4rem; }
+    .brdHead { width : 5rem; }
+    .brdWriter, .brdDate, .brdviewCount { width : 8rem; }
+    .brdTitle { width : auto; }
     
-    /* 공지 제목 */
-    .notiTitleDetail { 
+    /* 게시글 제목 */
+    .brdTitleDetail { 
         color: #858796; 
     }
-    .notiTitleDetail:link { 
+    .brdTitleDetail:link { 
         text-decoration: none;
     }
-    .notiTitleDetail:visited { 
+    .brdTitleDetail:visited { 
         text-decoration: none;
     }
-    .notiTitleDetail:hover { 
+    .brdTitleDetail:hover { 
         text-decoration: underline;
         color: #8B169E;
     }
-
+    
     /* 페이지네이션 */
     .page-item:first-child .page-link {
         border-top-left-radius: 0;
@@ -82,39 +84,38 @@
         /* background-color: #8B169E !important; */
     }
 
-
-
     </style>
 
 
 </head>
+
 <body id="page-top">
+
     <!-- Page Wrapper -->
     <div id="wrapper">
-	<div th:replace="/common/adminSidebar.html"></div> 
+    <div th:replace="/common/adminSidebar.html"></div> 
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
+
                 <div th:replace="/common/adminTopbar.html"></div>
-                <!-- 채팅 -->
-                <!-- <div th:replace="/admin/chat/chatList.html"></div>  -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">공지사항</h1>                        
+                        <h1 class="h3 mb-0 text-gray-800">자유게시판</h1>                        
                     </div>
                     <hr class="border-bottom-primary">
 
-                    <!-- 공지사항 테이블 -->
+                    <!-- 자유게시판 테이블 -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">공지사항 조회</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">자유게시판 조회</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -122,159 +123,103 @@
                                     <!-- 테이블 제목 -->
                                     <thead>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault"></label>
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
-                                            <th class="notiNo">NO</th>
-                                            <th class="notiTitle">제목</th>
-                                            <th class="notiWriter">작성자</th>
-                                            <th class="notiDate">작성일</th>
-                                            <th class="notiviewCount">조회수</th>
+                                            <th class="brdNo">NO</th>
+                                            <th class="brdHead">말머리</th>
+                                            <th class="brdTitle">제목</th>
+                                            <th class="brdWriter">작성자</th>
+                                            <th class="brdDate">작성일</th>
+                                            <th class="brdviewCount">조회수</th>
                                         </tr>
                                     </thead>
                                     <!-- 테이블 내용 -->
                                     <tbody>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>10</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>9</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>8</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>7</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>6</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>5</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>4</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>3</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>2</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
                                             <!-- 내용 -->
                                             <td>1</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
+                                            <td>[과제]</td>
+                                            <td><a href="#" class="brdTitleDetail">자유게시판 제목 입니다.</a></td>
                                             <td>관리자</td>
                                             <td>2020.12.04</td>
                                             <td>52</td>
@@ -284,7 +229,7 @@
                             </div>
 
                             <!-- 페이지네이션 -->
-                            <nav aria-label="">
+                            <nav aria-label="...">
                                 <ul class="pagination">
                                     <li class="page-item disabled">
                                         <a class="page-link"><</a>
@@ -300,9 +245,9 @@
                                 </ul>
                             </nav>
 
+                            <!-- 삭제/등록 버튼 -->
                             <div class="row buttonbox">
-                                <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal" type="delete">삭제</button>
-                                <a class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="button" onclick="location.href='notice/notiForm'">등록</a>
+                                <a class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="button" href="/board/brdForm.html">등록</a>
                             </div>
 
                         </div>
@@ -328,28 +273,6 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- 삭제 확인 Modal-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">삭제하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">삭제하시려면 확인버튼을 눌러주세요.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" href="/notiTables.html">확인</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -371,8 +294,6 @@
     <script src="/js/demo/chart-pie-demo.js"></script>
     <script src="/js/demo/datatables-demo.js"></script>
 
-    <!--모달-->
-    <script>$('#myModal').modal(options)</script>
     
 
 </body>
