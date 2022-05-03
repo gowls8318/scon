@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.taskBoard.dao.TaskBoardMapper">
+
+<resultMap id="gradeResultMap" type="com.scon.project.admin.grade.model.dto.GradeDTO">
+	<id property="taskId" column="TASK_ID"/>
+	<result property="taskTitle" column="TASK_TITLE"/>
+	<result property="taskContent" column="TASK_CONTENT"/>
+	<result property="taskDate" column="TASK_DATE"/>
+	<result property="taskUpdate" column="TASK_UPDATE"/>
+	<result property="taskDelete" column="TASK_DELETE"/>
+	<result property="taskView" column="TASK_VIEW"/>
+	
+	<association property="clsId" resultMap="classResultMap"/>
+	<!-- <association property="memberId" resultMap=""/> 태미님 작성 후 채우기 -->
+</resultMap>
+
+<!-- class (소영님) -->
+<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
+		<id property="clsId" column="CLS_ID"/>
+		<result property="clsName" column="CLS_NAME"/>
+		<result property="clsStuNum" column="CLS_STUNUM"/>
+		<result property="clsGrade" column="CLS_GRADE"/>
+		<result property="clsPay" column="CLS_PAY"/>
+		<result property="clsRoom" column="CLS_ROOM"/>
+		<result property="clsStart" column="CLS_START"/>
+		<result property="clsEnd" column="CLS_END"/>
+		<result property="clsNote" column="CLS_NOTE"/>
+		<result property="clsStatus" column="CLS_STATUS"/>
+</resultMap>
+
+<!-- member (태미님)
+  <resultMap id="" type="">
+  </resultMap>           -->
+
+
+</mapper>

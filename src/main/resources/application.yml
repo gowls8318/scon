@@ -5,10 +5,10 @@ server:
 # oracle driver config
 spring:
   datasource:
-    url: jdbc:oracle:thin:@180.71.210.172:1521:xe
+    url: jdbc:oracle:thin:@localhost:1521:xe
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    username: C##GREEDY
-    password: GREEDY
+    username: C##SCON
+    password: SCON
 
 # Mybatis config
 mybatis:
