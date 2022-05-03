@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>con001</title>
+    <title>상담 신청 내역</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -81,106 +81,15 @@
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr>
-                                            <td>10</td>
-                                            <td>2022-04-08</td>
-                                            <td>박수호</td>
-                                            <td class="conHTitle">
-                                                영어가 너무 재미있는데 심화 학습으로 무엇을 하면 좋을까요?
-                                            </td>
-                                            <td>미완료</td>
+                                        <tr th:each="conH : ${ consultantHopeList }">
+                                            <td th:text="${ conH.conNo }">번호</td>
+                                            <td th:text="${ conH.conWriteDate }">상담 신청일</td>
+                                            <td th:text="${ conH.member.memberName }">원생</td>
+                                            <td th:text="${ conH.conHTitle }" class="conHTitle">상담 제목</td>
+                                            <td th:text="${ conH.conHandle }">처리 현황</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>2022-04-04</td>
-                                            <td>김유준</td>
-                                            <td class="conHTitle">문법이 헷갈려요.</td>
-                                            <td>미완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>2022-03-27</td>
-                                            <td>박예준</td>
-                                            <td class="conHTitle">오늘 배운 내용이 이해가 안 가요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>2022-03-19</td>
-                                            <td>한지호</td>
-                                            <td class="conHTitle">학원이 멀어서 다니기 힘들어요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>2022-03-10</td>
-                                            <td>서이준</td>
-                                            <td class="conHTitle">국어가 어려워요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>2022-03-06</td>
-                                            <td>이시우</td>
-                                            <td class="conHTitle">친구들이랑 너무 많이 노는 것 같아요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>2022-03-01</td>
-                                            <td>이은우</td>
-                                            <td class="conHTitle">다음주에 여행 가서 수업을 못 들을 것 같아요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>2022-02-26</td>
-                                            <td>최하준</td>
-                                            <td class="conHTitle">학원 책상 바꿔주세요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>2022-02-15</td>
-                                            <td>박서준</td>
-                                            <td class="conHTitle">일찍 못 일어나겠어요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2022-02-10</td>
-                                            <td>김도윤</td>
-                                            <td class="conHTitle">공부가 어려워요.</td>
-                                            <td>완료</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con">등록</button>
+                                                <button type="button" class="btn btn-primary btn-con"
+                                                onclick="location.href='/admin/conregist'">등록</button>
                                             </td>
                                         </tr>
                                     </tbody>
