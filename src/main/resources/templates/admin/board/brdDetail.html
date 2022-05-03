@@ -219,7 +219,7 @@
                                 </div>
                                 <form>
                                     <div class="card-body">
-                                        <input type="hidden" id="boardId" th:value="${board.id}">
+                                     <!--    <input type="hidden" id="boardId" th:value="${board.id}"> -->
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item">
                                                 <textarea class="form-control" id="reply-content" rows="1">댓글 작성 하는 중 |</textarea>
@@ -231,7 +231,7 @@
                             </div>
                             <br/>
                             <div class="card">
-                                <!-- 등록된 댓글 -->
+<!--                                 등록된 댓글
                                 <div class="card-header">댓글</div>
                                 <ul id="reply--box" class="list-group" th:each="reply : ${board.replyList}">
                                     <li th:id="'reply--' + ${reply.id}" class="list-group-item d-flex justify-content-between">
@@ -240,7 +240,7 @@
                                             <div class="text-monospace mr-1" th:text="${reply.content}">댓글내용입니다.</div>
                                         </div>
                                         <div class="d-flex">
-                                            <!-- <button class="cmtReple">답글</button>&nbsp -->
+                                            <button class="cmtReple">답글</button>&nbsp
                                             <button class="cmtModify">수정</button>&nbsp
                                             <button class="cmtDelete">삭제</button>
                                         </div>
@@ -251,7 +251,7 @@
                                             <div class="text-monospace mr-1" th:text="${reply.content}">댓글내용입니다.</div>
                                         </div>
                                         <div class="d-flex">
-                                            <!-- <button class="cmtReple">답글</button>&nbsp -->
+                                            <button class="cmtReple">답글</button>&nbsp
                                             <button class="cmtModify">수정</button>&nbsp
                                             <button class="cmtDelete">삭제</button>
                                         </div>
@@ -262,13 +262,13 @@
                                             <div class="text-monospace mr-1" th:text="${reply.content}">댓글내용입니다.</div>
                                         </div>
                                         <div class="d-flex">
-                                            <!-- <button class="cmtReple">답글</button>&nbsp -->
+                                            <button class="cmtReple">답글</button>&nbsp
                                             <button class="cmtModify">수정</button>&nbsp
                                             <button class="cmtDelete">삭제</button>
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                         
 
                             
