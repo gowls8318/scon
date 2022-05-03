@@ -52,15 +52,18 @@
 
                                         <br>
                                         <h1 class="h4 text-gray-900 mb-4 font-bold">로그인</h1>
+                                        <div>
+											<small class="text-danger">[[${errorMessage}]]</small>
+										</div>
                                     </div>
-                                    <form class="user">
+                                    <form th:action="@{/member/login}" method="post">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="username" placeholder="User Id">
+                                                id="username" name="username" placeholder="User Id">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="Password" placeholder="Password">
+                                                id="Password" name="password" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small text-center">
@@ -69,15 +72,15 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn bg-scon btn-user btn-block font-bold">
+                                        <button type="submit" class="btn bg-scon btn-user btn-block font-bold">
                                            Login
-                                        </a>
+                                        </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgotId.html"><b>아이디 찾기</b></a>
+                                        <a class="small" href="/member/forgotId"><b>아이디 찾기</b></a>
                                         &nbsp&nbsp&nbsp&nbsp&nbsp
-                                        <a class="small" href="forgotPwd.html"><b>비밀번호 찾기</b></a>
+                                        <a class="small" href="/member/forgotPwd"><b>비밀번호 찾기</b></a>
                                     </div>
                                 </div>
                             </div>

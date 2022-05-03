@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.member.model.dao.MemberMapper">
+
+	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="address" column="GENDER"/>
+		<result property="gender" column="ADDRESS"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="status" column="MEMBER_ST"/>
+		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+		
+	</resultMap>
+
+	<resultMap id="memberRoleResultMap" type="com.scon.project.member.model.dto.MemberRoleDTO">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<id property="authorityCode" column="REF_AUTHORITY_CODE"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap id="authorityResultMap" type="com.scon.project.member.model.dto.AuthorityDTO">
+		<id property="code" column="REF_AUTHORITY_CODE2"/>
+		<result property="name" column="AUTHORITY_NAME"/>
+		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
+
+	<insert id="insertMember">
+		INSERT
+		  INTO TB_MEMBER
+		(
+		  MEMBER_ID
+		, MEMBER_NAME
+		, MEMBER_PWD
+		, TEMP_PWD_YN
+		, PHONE
+		, EMAIL
+		, BIRTHDAY
+		, ADDRESS
+		, GENDER
+		, ENROLL_DATE
+		, DEL_DATE
+		, MEMBER_ST
+		)
+		VALUES
+		(
+		, #{ id }
+		, #{ name }
+		, #{ pwd }
+		, DEFAULT
+		, #{ phone }
+		, #{ email }
+		, #{ birthDay }
+		, #{ address }
+		, #{ gender }
+		, #{ enrollDate }
+		, NULL
+		, #{ status }
+		)
+	</insert>
+	
+	
+	<select id="findMemberById" resultMap="memberResultMap">
+		SELECT
+		       A.MEMBER_ID
+		     , A.MEMBER_NAME  
+		     , A.MEMBER_PWD
+		     , A.TEMP_PWD_YN
+		     , A.PHONE
+		     , A.EMAIL
+		     , A.BIRTHDAY
+		     , A.ADDRESS
+		     , A.GENDER
+		     , A.ENROLL_DATE
+		     , A.DEL_DATE
+		     , A.MEMBER_ST
+		     , B.MEMBER_ID REF_MEMBER_ID
+		     , B.AUTHORITY_CODE REF_AUTHORITY_CODE
+		     , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
+		     , C.AUTHORITY_NAME
+		     , C.AUTHORITY_DESC
+		  FROM TB_MEMBER A
+		  LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		 WHERE A.MEMBER_ID = #{ username }
+	</select>
+	
+	
+	
+	
+
+
+</mapper>
