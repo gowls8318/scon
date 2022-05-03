@@ -78,7 +78,8 @@
 }
 .btn-acc1:hover,
 .btn-con:hover,
-.btn-lec1:hover {
+.btn-lec1:hover,
+.btn-conh:hover {
   border: none;
   background-color: #651C70 !important;
 }
@@ -107,12 +108,14 @@
   height: 100px;
   resize: none;
 }
-/* 검색 버튼 */
-.btn-search {
+/* 검색 버튼, 상담 등록 버튼 */
+.btn-search,
+.btn-conh {
   border: none!important;
   background-color: #8B169E !important;
 }
-.btn-search:focus {
+.btn-search:focus,
+.btn-conh:focus {
   box-shadow: none !important;
 }
 

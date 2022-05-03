@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.consultant.model.dao.ConsultantMapper">
+
+	<resultMap id="consultantResultMap" type="com.scon.project.admin.consultant.model.dto.ConsultantDTO">
+		<id property="conNo" column="CON_NO"></id>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="conWriteDate" column="CON_WRITE_DATE"/>
+		<result property="conHDate" column="CON_HDATE"/>
+		<result property="conHTime" column="CON_HTIME"/>
+		<result property="conHTitle" column="CON_HTITLE"/>
+		<result property="conHContent" column="CON_HCONTENT"/>
+		<result property="conHUpdate" column="CON_HUPDATE"/>
+		<result property="conHDelete" column="CON_HDELETE"/>
+		<result property="conHandle" column="CON_HANDLE"/>
+		<result property="conDate" column="CON_DATE"/>
+		<result property="conType" column="CON_TYPE"/>
+		<result property="conWay" column="CON_WAY"/>
+		<result property="conImp" column="CON_IMP"/>
+		<result property="conContent" column="CON_CONTENT"/>
+		<result property="conUpdate" column="CON_UPDATE"/>
+		<result property="conDelete" column="CON_DELETE"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+	
+	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
+		<id property="memberId" column="MEMBER_ID"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberPwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYn" column="PHONE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="gender" column="GENDER"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
+		<result property="memberSt" column="MEMBER_ST"/>
+	</resultMap>
+
+	<!-- 상담 신청 내역 조회용 -->
+	<select id="selectAllConsultantHopeList" resultMap="consultantResultMap">
+		SELECT
+			   A.CON_NO
+			 , B.MEMBER_NAME
+			 , A.CON_WRITE_DATE
+			 , A.CON_HTITLE
+			 , A.CON_HANDLE
+		  FROM TB_CONSULTANT A
+		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE A.CON_HDELETE = 'N'
+		 ORDER BY A.CON_NO DESC
+	</select>
+
+</mapper>
