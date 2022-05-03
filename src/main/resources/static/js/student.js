@@ -19,6 +19,36 @@
 
  	  }
 });
+
+/* 수정하기 메뉴 이동 함수 */
+ 	const upbtn = document.querySelectorAll('.btn-acc1');
+
+ 	upbtn.forEach((el, index) => {
+ 	  el.onclick = () => {
+
+ 		let subMenuList = document.querySelectorAll(".menu");
+ 		  
+ 		subMenuList.forEach((el, index) => {
+ 			subMenuList[index].classList.add('d-none');
+ 		});
+ 		
+ 		subMenuList[2].classList.remove('d-none');
+
+ 	  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 		//아이디
  		var msg1 = document.getElementById('userId');
 		var result1 = document.getElementById('idHelp');

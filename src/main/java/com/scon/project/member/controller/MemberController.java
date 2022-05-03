@@ -1,16 +1,24 @@
 package com.scon.project.member.controller;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Configuration
 @RequestMapping("/member")
-public class MembarController {
+public class MemberController {
 	
-	@GetMapping("/login")
-	public String memberLogin() {
-		return "/member/login";
+	@GetMapping("/login") 
+	public String memberLogin() { 
+		return "/member/login"; 
+	}
+	
+	@PostMapping("/login")
+	public void loginForm(@RequestParam(required=false) String errorMessage, Model model) {
+		model.addAttribute("errorMessage", errorMessage );
 	}
 	
 	@GetMapping("/forgotId")

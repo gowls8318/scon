@@ -18,6 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
     
     <!-- bootstrap-icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
@@ -296,30 +297,30 @@
                                             <button type="button"
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">원생 정보</button>
                                             <button type="button"
-                                                class="btn btn-sm sub-btn font-weight-bold font-md">강의 등록</button>
-                                            <button type="button"
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">수강 강의</button>
+                                                <button type="button"
+                                                class="btn btn-sm sub-btn font-weight-bold font-md d-none">강의 수정(hidden)</button>
                                             <button type="button" 
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">성적</button>
                                             <button type="button"
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">출석부</button>
-
                                         </div>
 
                                         <!-- 아래 서브 메뉴 -->
                                         <div class="card-body submenu-box">
-
+											<!--  원생 추가정보 -->
                                             <div class="menu">
                                             	<div th:replace="/admin/student/subMenu"></div>
                                             </div>
-                                            
+                                            <!-- 수강 강의 목록 조회/등록 -->
                                             <div class="menu d-none">
                                             	<div th:replace="/admin/student/subMenu2"></div>
                                             </div>
-                                            
-                                            <div class="menu d-none">
+                                            <!-- 수강 강의 수정 -->
+                                          <div class="menu d-none">
                                             	<div th:replace="/admin/student/subMenu3"></div>
                                             </div>
+											
                                            
                                            
                                             <br>
