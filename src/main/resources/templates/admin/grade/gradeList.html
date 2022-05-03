@@ -76,7 +76,7 @@
                                         <tr>
                                             <th class="notiCheck">
                                                 <div class="form-check">
-                                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                  <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                  <label class="form-check-label" for="flexCheckDefault"></label>
                                                </div>
                                              </th>
@@ -90,7 +90,7 @@
                                         <tr>
                                             <td>
                                                 <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                     </label>
                                             </td>
@@ -102,7 +102,7 @@
                                         <tr>
                                             <td>
                                                 <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                     </label>
                                             </td>
@@ -114,7 +114,7 @@
                                         <tr>
                                             <td>
                                                 <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                     </label>
                                             </td>
@@ -126,7 +126,7 @@
                                         <tr>
                                             <td>
                                                 <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                     </label>
                                             </td>
@@ -138,7 +138,7 @@
                                         <tr>
                                             <td>
                                                 <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                     </label>
                                             </td>
@@ -150,7 +150,7 @@
                                         <tr>
                                             <td>
                                                 <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                     </label>
                                             </td>
@@ -167,7 +167,7 @@
                                 <div class="container">
                                     <div class="row">
                                     <div class="col text-center">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#accModal1">수정</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="beforeCheck();">수정</button>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" 
                                         style="background-color: red; border: none;">
                                             삭제
@@ -223,7 +223,7 @@
                                     </div>
                                     <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                    <button type="button" class="btn btn-primary">삭제</button>
+                                    <button type="submit" class="btn btn-primary delete-btn">삭제</button>
                                 </div>
                             </div>
                         </div>
@@ -278,15 +278,29 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-                    <button type="submit" class="btn btn-primary">확인</button>
+                    <button type="button" class="btn btn-light" onclick="closeModal();">취소</button>
+                    <button type="submit" class="btn btn-primary update-btn">확인</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- /accModal1 -->
             
+	<script>
+        function beforeCheck(){
+            if($("input:checkbox[name=checked]").is(":checked") && $("input:checkbox[name=checked]:checked").length == 1) {
+            $("#accModal1").modal("show");
+        } else if($("input:checkbox[name=checked]").is(":checked") && $("input:checkbox[name=checked]:checked").length > 1) {
+            alert("학생을 한명만 선택 해주세요.");
+        } else {
+            alert("선택된 학생이 없습니다.");
+        }
+    };
 
+    function closeModal() {
+        $("#accModal1").modal("hide");
+    }
+ </script>
 
 
 	</div>
