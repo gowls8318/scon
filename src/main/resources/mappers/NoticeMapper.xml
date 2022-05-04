@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.notice.model.dao.NoticeMapper">
+
+	<resultMap id="noticeResultMap" type="com.scon.project.admin.notice.model.dto.NoticeDTO">
+		<id property="notiNo" column="NOTI_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="clsId" column="CLS_ID"/>
+		<result property="notiTitle" column="NOTI_TITLE"/>
+		<result property="notiContent" column="NOTI_CONTENT"/>
+		<result property="notiDate" column="NOTI_DATE"/>
+		<result property="notiUpdate" column="NOTI_UPDATE"/>
+		<result property="notiView" column="NOTI_VIEW"/>
+		<result property="notiDelete" column="NOTI_DELETE"/>
+	</resultMap>
+	
+
+	<select id="findAllNoticeList" resultMap="noticeResultMap">
+		SELECT
+		       NOTI_NO
+		     , NOTI_TITLE
+		     , MEMBER_ID
+		     , NOTI_DATE
+		     , NOTI_VIEW
+		     , NOTI_DELETE
+		  FROM TB_NOTICE
+		 WHERE NOTI_DELETE = 'N'
+		 ORDER BY NOTI_NO
+	</select>
+	
+	
+
+
+</mapper>
