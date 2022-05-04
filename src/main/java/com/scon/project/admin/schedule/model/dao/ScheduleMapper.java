@@ -9,8 +9,10 @@ import com.scon.project.admin.schedule.model.dto.ScheduleDTO;
 @Mapper
 public interface ScheduleMapper {
 
-	List<ScheduleDTO> findAllMenu();
+	List<ScheduleDTO> findSchedule();
 
 	int registSchedule(ScheduleDTO schedule);
+
+	
 
 }

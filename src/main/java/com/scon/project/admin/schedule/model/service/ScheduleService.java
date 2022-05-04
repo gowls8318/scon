@@ -6,8 +6,8 @@ import com.scon.project.admin.schedule.model.dto.ScheduleDTO;
 
 public interface ScheduleService {
 
-	List<ScheduleDTO> findAllSchedule();
+	List<ScheduleDTO> findSchedule();
 
-	boolean registSchedule(ScheduleDTO schedule) throws Exception;
+
 
 }

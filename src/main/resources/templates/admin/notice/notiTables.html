@@ -99,8 +99,6 @@
             <!-- Main Content -->
             <div id="content">
                 <div th:replace="/common/adminTopbar.html"></div>
-                <!-- 채팅 -->
-                <!-- <div th:replace="/admin/chat/chatList.html"></div>  -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -139,7 +137,7 @@
                                     </thead>
                                     <!-- 테이블 내용 -->
                                     <tbody>
-                                        <tr>
+                                        <tr th:each="notice : ${ noticeList }">
                                             <!-- 체크박스 -->
                                             <th class="notiCheck">
                                                 <div class="form-check">
@@ -147,138 +145,13 @@
                                                 </div>
                                             </th>
                                             <!-- 내용 -->
-                                            <td>10</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
+                                            <td th:text="${ notice.notiNo }"></td>
+                                            <td><a href="#" class="notiTitleDetail" th:text="${ notice.notiTitle }"></a></td>
+                                            <td th:text="${ notice.memberId }"></td>
+                                            <td th:text="${ notice.notiDate }"></td>
+                                            <td th:text="${ notice.notiView }"></td>
                                         </tr>
                                         <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>9</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>8</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>7</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>6</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>5</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>4</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>3</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>2</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 체크박스 -->
-                                            <th class="notiCheck">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                </div>
-                                            </th>
-                                            <!-- 내용 -->
-                                            <td>1</td>
-                                            <td><a href="#" class="notiTitleDetail">공지사항 제목 입니다.</a></td>
-                                            <td>관리자</td>
-                                            <td>2020.12.04</td>
-                                            <td>52</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

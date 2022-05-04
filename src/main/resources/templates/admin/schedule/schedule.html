@@ -28,6 +28,9 @@
     <!-- 캘린더 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src='fullcalendar/core/main.js'></script>
+    <script src='fullcalendar/core/locales/es.js'></script>
+    
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -39,12 +42,13 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 timeZone: 'UTC',
+                locale: 'ko',
                 initialView: 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할  수 있다.
                 events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
                     {
-                        title:'일정',
-                        start:'2022-05-26 00:00:00',
-                        end:'2022-05-27 24:00:00' 
+                        title:'content',
+                        start:'start_date',
+                        end:'end_date' 
                         // color 값을 추가해 색상도 변경 가능 자세한 내용은 하단의 사이트 참조
                     }
                 ], headerToolbar: {
@@ -59,6 +63,8 @@
                                 var content = $("#calendar_content").val();
                                 var start_date = $("#calendar_start_date").val();
                                 var end_date = $("#calendar_end_date").val();
+                                
+                                console.log(content)
                                 
                                 //내용 입력 여부 확인
                                 if(content == null || content == ""){
@@ -90,7 +96,8 @@
     <style>
         /* 캘린더 */
     #calendarBox{
-        padding: 5%;
+        padding-left : 30%; 
+        padding-right: 30%;
         border-radius: 2;
     }
 
@@ -211,16 +218,17 @@
 
                             <!-- 일정 추가 모달 -->
                             <!-- modal 추가 -->
-                            <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                            <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="registModalLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+                                            <h5 class="modal-title" id="registModalLabel">일정을 입력하세요.</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        <form id="calendarForm">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="taskId" class="col-form-label">일정 내용</label>
@@ -236,6 +244,7 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                                 id="sprintSettingModalClose">취소</button>
                                         </div>
+                                        </form>
                             
                                     </div>
                                 </div>
