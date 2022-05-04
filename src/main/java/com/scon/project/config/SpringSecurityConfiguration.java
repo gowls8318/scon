@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.scon.project.handler.LoginFailHandler;
+import com.scon.project.handler.LoginSuccessHandler;
 import com.scon.project.member.model.service.MemberService;
 
 @Configuration
@@ -45,8 +46,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.formLogin()
 				/* 로그인 페이지 설정 */
 				.loginPage("/member/login")
-				/* 성공 시 랜딩 페이지 설정 */
-				.successForwardUrl("/")
+				/* 로그인 성공 시의 핸들러 설정 */
+				.successHandler(loginSuccessHandler())
 				/* 로그인 실패 시의 핸들러 설정 */
 				.failureHandler(loginFailHandler())
 				.and()
@@ -59,12 +60,12 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				/* 세션 만료 */
 				.invalidateHttpSession(true)
 				/* 성공 시 랜딩 페이지 */
-				.logoutSuccessUrl("/");
-//	.and()
+				.logoutSuccessUrl("/")
+	.and()
 		/* 인증/인가 예외 처리 */
-		// .exceptionHandling()
+		 .exceptionHandling()
 		/* 인가 되지 않았을 때 - 권한이 없을 때 이동할 페이지 */
-		// .accessDeniedPage("/common/denied");
+		 .accessDeniedPage("/denied");
 	}
 
 	@Override
@@ -79,6 +80,12 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 public LoginFailHandler loginFailHandler() { 
 		 return new LoginFailHandler(); 
 	 }
+	 
+	 @Bean
+	 public LoginSuccessHandler loginSuccessHandler() {
+		 return new LoginSuccessHandler();
+	 }
+	 
 
 
 }

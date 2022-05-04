@@ -28,7 +28,6 @@
 
 <link href="/css/student.css" rel="stylesheet">
 
-
 </head>
 
 <body id="page-top">
@@ -53,7 +52,7 @@
 					<div class="row content-stu">
 						<form method="post" name="form"
 							class="row col-12 formcenter needs-validation" novalidate
-							onsubmit="return checkAll()">
+							 enctype="multipart/form-data">
 							<!-- form태그 시작-->
 
 							<!-- Area Chart -->
@@ -67,9 +66,10 @@
 									<!-- Card Body -->
 									<div class="card-body col-lg-12">
 										<div>
-											<img class="profile" src="/img/profile.jpg" alt="프로필 사진"><br>
-											<br> <input type="file" class="" value="" />
+											<img class="profile" src="/img/profile.jpg" id="img" alt="프로필 사진"><br>
+											<br> <input type="file" name="profile" id="profile" accept=".gif, .jpg, .png"  onchange="readFile(event);"/>
 											<!-- 프로필 사진 등록 -->
+
 										</div>
 									</div>
 
@@ -185,7 +185,7 @@
 											</label>
 											<div class="col-sm-2"></div>
 											<div class="col-sm-7 col-lg-7">
-												<input type="date" class="infoformbox form-control">
+												<input type="date" id="enrollDate" name="enrollDate" class="infoformbox form-control">
 											</div>
 
 										</div>
@@ -199,15 +199,15 @@
 											<div class="col-lg-8 row">
 												<div class="col-lg-4 row">
 													<input type="text" class="form-control infoformbox"
-														id="zipcode">
+														id="zipCode" name="zipCode">
 												</div>
 												<div class="col-lg-4">
 													<input type="button"
-														class="btn btn-secondary btn-sm stu-btn" value="우편번호 찾기" />
+														class="btn btn-secondary btn-sm stu-btn" value="우편번호 찾기" onclick="execDaumPostcode()"/>
 												</div>
 												<input type="text" class="form-control infoformbox"
-													id="exaddress"> <input type="text"
-													class="form-control infoformbox" id="">
+													id="address" name="address"> 
+												<input type="text" class="form-control infoformbox" id="extraAddress" name="extraAddress">
 											</div>
 
 										</div>
@@ -238,13 +238,13 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<select
-															class="form-control form-select-lg mb-3 infoformbox col-lg-5" name="">
-															<option selected>학생 유형</option>
-															<option value="1">초등학생</option>
-															<option value="2">중학생</option>
-															<option value="3">고등학생</option>
-															<option value="4">대학생</option>
-															<option value="5">성인</option>
+															class="form-control form-select-lg mb-3 infoformbox col-lg-5" name="studentType">
+															<option disabled>학생 유형</option>
+															<option value="초등학생">초등학생</option>
+															<option value="중학생">중학생</option>
+															<option value="고등학생">고등학생</option>
+															<option value="대학생">대학생</option>
+															<option value="성인">성인</option>
 														</select>
 													</div>
 
@@ -254,7 +254,7 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<input type="text" class="form-control infoformbox"
-															id="" name="">
+															name="schoolName">
 													</div>
 													<label for="" class="col-lg-3"> <span
 														class="coloumnamebox input-group-text colbox">학년</span>
@@ -262,7 +262,7 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<input type="text" class="form-control infoformbox"
-															id="" name="">
+															name="schoolGrade">
 													</div>
 													<label for="" class="col-lg-3"> <span
 														class="coloumnamebox input-group-text colbox">학급(반)</span>
@@ -270,7 +270,7 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<input type="text" class="form-control infoformbox"
-															id="" name="">
+															name="schoolClass">
 													</div>
 
 
@@ -285,7 +285,7 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<input type="text" class="form-control infoformbox"
-															id="" name="">
+															name="parentsName">
 													</div>
 													<label for="" class="col-lg-3"> <span
 														class="coloumnamebox input-group-text colbox">가족 관계</span>
@@ -293,7 +293,7 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<input type="text" class="form-control infoformbox"
-															id="" name="">
+															name="parentsType">
 													</div>
 													<label for="" class="col-lg-3"> <span
 														class="coloumnamebox input-group-text colbox">비상
@@ -302,7 +302,7 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<input type="text" class="form-control infoformbox"
-															id="" name="">
+															name="parentsPhone">
 													</div>
 
 
@@ -314,14 +314,14 @@
 												</label>
 												
 												<div class="col-sm-8 col-lg-8 row ma-reft">
-													<textarea class="form-control" rows="3" id="" name=""></textarea>
+													<textarea class="form-control" rows="3" name="consult"></textarea>
 												</div>
 
 											</fieldset>
 											<br>
 											<div class="registbtn">
-												<button type="submit"
-													class="btn btn-primary submitbuttonbox">등록 하기</button>
+												<button type="button"
+													class="btn btn-primary submitbuttonbox" onclick="checkAll()">등록 하기</button>
 											</div>
 
 										</div>
@@ -365,6 +365,10 @@
 
 		<!-- 원생 관리 자바스크립트 -->
 		<script src="/js/student.js"></script>
+		
+		<!-- 다음 주소 api-->
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </body>
 
 </html>

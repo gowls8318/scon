@@ -16,50 +16,50 @@ import com.scon.project.member.model.dto.MemberDTO;
 @ContextConfiguration(classes = {SconApplication.class})
 public class MemberMapperTest {
 	
-	@Autowired
-	private MemberMapper memberMapper;
-
-	@Test
-	@Disabled
-	public void 멤버_등록_매퍼_테스트() {
-		
-		//given
-		MemberDTO member = new MemberDTO();
-		member.setId("user01");
-		member.setName("유관순");
-		member.setPwd("pass01");
-		member.setPhone("010-1234-5678");
-		member.setEmail("you123@gmail.com");
-		
-		String  day = "1990-01-01"; 
-		java.sql.Date brithDay = java.sql.Date.valueOf(day);
-		
-		member.setBirthDay(brithDay);
-		member.setAddress("서울시 강남구 역삼동");
-		member.setGender("F");
-		member.setStatus("대기생");
-
-		//when
-		int result = memberMapper.insertMember(member);
-
-		//then
-		assertEquals(1, result); 
-		
-	}
-	
-	
-	@Test
-	public void 멤버_조회용_매퍼_테스트() {
-		
-		//given
-		String username = "director";
-		
-		//when
-		MemberDTO member = new MemberDTO();
-		member = memberMapper.findMemberById(username);
-		
-		assertNotNull(member);
-		
-
-	}
+//	@Autowired
+//	private MemberMapper memberMapper;
+//
+//	@Test
+//	@Disabled
+//	public void 멤버_등록_매퍼_테스트() {
+//		
+//		//given
+//		MemberDTO member = new MemberDTO();
+//		member.setId("user01");
+//		member.setName("유관순");
+//		member.setPwd("pass01");
+//		member.setPhone("010-1234-5678");
+//		member.setEmail("you123@gmail.com");
+//		
+//		String  day = "1990-01-01"; 
+//		java.sql.Date brithDay = java.sql.Date.valueOf(day);
+//		
+//		member.setBirthDay(brithDay);
+//		member.setAddress("서울시 강남구 역삼동");
+//		member.setGender("F");
+//		member.setStatus("대기생");
+//
+//		//when
+//		int result = memberMapper.insertMember(member);
+//
+//		//then
+//		assertEquals(1, result); 
+//		
+//	}
+//	
+//	
+//	@Test
+//	public void 멤버_조회용_매퍼_테스트() {
+//		
+//		//given
+//		String username = "director";
+//		
+//		//when
+//		MemberDTO member = new MemberDTO();
+//		member = memberMapper.findMemberById(username);
+//		
+//		assertNotNull(member);
+//		
+//
+//	}
 }

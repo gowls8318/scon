@@ -3,18 +3,20 @@ package com.scon.project.admin.main.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class AdminMainController {
 	
-	@GetMapping(value = {"/", "/main"})
+	@GetMapping("/admin")
 	public String main() {
-		return "admin/main/admMain";
+		return "/admin/main/admMain";
 	}
 	
-	@PostMapping(value="/")
-	public String redirectMain() {
-		return "redirect:/";
+	@GetMapping("/denied")
+	public String denied() {
+		return "/common/denied";
 	}
 	
 }
