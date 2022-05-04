@@ -3,13 +3,17 @@
 <mapper namespace="com.scon.project.admin.student.model.dao.StudentMapper">
 
 	<resultMap id="studentResultMap" type="com.scon.project.admin.student.model.dto.StudentDTO">
-		<id property="id" column="REF_MEMBER_ID"/>
+		<id property="id" column="REF_MEMBER_ID2"/>
 		<result property="studentType" column="STUDENT_TYPE"/>
 		<result property="schoolName" column="SCHOOL_NAME"/>
 		<result property="schoolGrade" column="SCHOOL_GRADE"/>
 		<result property="schoolClass" column="SCHOOL_CLASS"/>
 		<result property="consult" column="CONSULT"/>
-
+		
+		<association property="member" resultMap="memberResultMap"/> <!-- 회원 기본정보  -->
+		<association property="profile" resultMap="profileResultMap"/> <!-- 프로필 사진 -->
+		<association property="parents" resultMap="parentsResultMap"/> <!-- 학부모 정보 -->
+		
 	</resultMap>
 	
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
@@ -42,46 +46,31 @@
 		<result property="name" column="AUTHORITY_NAME"/>
 		<result property="desc" column="AUTHORITY_DESC"/>
 	</resultMap>
-
-	<insert id="insertMember">
-		INSERT
-		  INTO TB_MEMBER
-		(
-		  MEMBER_ID
-		, MEMBER_NAME
-		, MEMBER_PWD
-		, TEMP_PWD_YN
-		, PHONE
-		, EMAIL
-		, BIRTHDAY
-		, ADDRESS
-		, GENDER
-		, ENROLL_DATE
-		, DEL_DATE
-		, MEMBER_ST
-		)
-		VALUES
-		(
-		, #{ id }
-		, #{ name }
-		, #{ pwd }
-		, DEFAULT
-		, #{ phone }
-		, #{ email }
-		, #{ birthDay }
-		, #{ address }
-		, #{ gender }
-		, #{ enrollDate }
-		, NULL
-		, #{ status }
-		)
-	</insert>
 	
+
+	<resultMap id="fileResultMap" type="com.scon.project.member.model.dto.AuthorityDTO">
+		<id property="fileId" column="FILE_ID"/>
+		<result property="fileOrginName" column="FILE_ORGNAME"/>
+		<result property="fileSaveName" column="FILE_SAVENAME"/>
+		<result property="filePathName" column="FILE_PATH"/>
+		<result property="fileTypeName" column="FILE_TYPE"/>
+		<result property="fileThumnailPathName" column="FILE_THUM_PATH"/>
+		<result property="fileThumnailName" column="FILE_THUM.NAME"/>
+	</resultMap>
+	
+	<resultMap id="parentsResultMap" type="com.scon.project.admin.student.model.dto.ParentsDTO">
+		<id property="id" column="REF_MEMBER_ID3"/>
+		<result property="parentsType" column="PARENTS_TYPE"/>
+		<result property="parentsName" column="PARENTS_NAME"/>
+		<result property="phone" column="PHONE"/>
+	</resultMap>
+	
+
 	<insert id="insertStudent">
 		INSERT
 		  INTO TB_STUDENT
 		(
-		 MEMBER_ID
+		  MEMBER_ID
 		, STUDENT_TYPE
 		, SCHOOL_NAME
 		, SCHOOL_GRADE
@@ -121,7 +110,55 @@
 		     , C.AUTHORITY_DESC
 		  FROM TB_MEMBER A
 		  LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
-		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)  
+		 WHERE A.MEMBER_ID = #{ username }
+	</select>
+	
+	
+		<select id="findStudentById" resultMap="studentResultMap">
+		SELECT
+		       A.MEMBER_ID
+		     , A.MEMBER_NAME  
+		     , A.MEMBER_PWD
+		     , A.TEMP_PWD_YN
+		     , A.PHONE
+		     , A.EMAIL
+		     , A.BIRTHDAY
+		     , A.ADDRESS
+		     , A.GENDER
+		     , A.ENROLL_DATE
+		     , A.DEL_DATE
+		     , A.MEMBER_ST
+		     , B.MEMBER_ID REF_MEMBER_ID
+		     , B.AUTHORITY_CODE REF_AUTHORITY_CODE
+		     , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
+		     , C.AUTHORITY_NAME
+		     , C.AUTHORITY_DESC
+		     , S.MEMBER_ID
+			 , S.STUDENT_TYPE REF_MEMBER_ID2
+			 , S.SCHOOL_NAME
+			 , S.SCHOOL_GRADE
+			 , S.SCHOOL_CLASS
+			 , S.CONSULT
+			 , D.MEMBER_ID REF_MEMBER_ID3
+			 , D.PARENTS_TYPE
+			 , D.PARENTS_NAME
+			 , D.PHONE
+			 , P.MEMBER_ID REF_MEMBER_ID4
+			 , F.FILE_ID
+			 , F.FILE_ORGNAME
+			 , F.FILE_SAVENAME
+			 , F.FILE_PATH
+			 , F.FILE_TYPE
+			 , F.FILE_THUM_PATH
+			 , F.FILE_THUM_NAME
+		  FROM TB_MEMBER A
+		  LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE) 
+		  LEFT JOIN TB_STUDENT S ON (A.MEMBER_ID = S.MEMBER_ID)
+		  LEFT JOIN TB_PARENTS D ON (A.MEMBER_ID = D.MEMBER_ID) 
+		  LEFT JOIN TB_PROFILE P ON (A.MEMBER_ID = P.MEMBER_ID) 
+		  LEFT JOIN TB_FILE F ON (P.FILE_ID = F.FILE_ID) 
 		 WHERE A.MEMBER_ID = #{ username }
 	</select>
 	

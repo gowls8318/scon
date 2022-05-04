@@ -13,5 +13,7 @@ public interface StudentMapper {
 		int insertStudent(StudentDTO student);
 		
 		MemberDTO findMemberById(String username);
+
+		StudentDTO findStudentById(String username);
 		
 }
