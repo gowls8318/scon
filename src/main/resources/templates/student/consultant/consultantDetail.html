@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>con010</title>
+    <title>상담 신청</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +34,7 @@
     <div id="wrapper">
 
         <!-- sidebar include -->
-        <div th:replace="/common/adminSidebar.html"></div>
+        <div th:replace="/common/studentSidebar.html"></div>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -58,10 +58,10 @@
                             <h6 class="m-0 font-weight-bold text-primary">상담 신청 조회</h6>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="/student/consultant/updateForm" method="post">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
-                                        <tbody>
+                                        <tbody th:object="${ consultantDetail }">
                                             <tr>
                                                 <th class="col-lg-3">
                                                     <label for="clsName" class="col-form-label">강의명</label>
@@ -83,15 +83,15 @@
                                                     <label for="conHDate" class="col-form-label">상담 희망일</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10 col-lg-4">2022-04-30</div>
+                                                    <div th:text="*{ conHDate }" class="col-sm-10 col-lg-4">2022-05-05</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>
                                                     <label for="conHTime" class="col-form-label">상담 희망시간</label>
                                                 </th>
-                                                <td>
-                                                    <div class="col-sm-10 col-lg-4">17:00 ~ 17:50</div>
+                                                <td >
+                                                    <div th:text="*{ conHTime }" class="col-sm-10 col-lg-4">17:00 ~ 17:50</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -99,7 +99,7 @@
                                                     <label for="conHTitle" class="col-form-label">제목</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10 col-lg-10">안녕하세요</div>
+                                                    <div th:text="*{ conHTitle }" class="col-sm-10 col-lg-10">상담 신청 제목</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -108,7 +108,7 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-10">
-                                                        <div class="con-input-group conHContentD">상담 신청 내용</div>
+                                                        <div th:text="*{ conHContent }" class="con-input-group conHContentD">상담 신청 내용</div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -117,9 +117,11 @@
                                 </div>
 
                                 <div class="buttonbox">
-                                    <button type="button" class="btn btn-light resetbuttonbox">돌아가기</button>
+                                    <button type="button" class="btn btn-light resetbuttonbox"
+                                    onclick="location.href='/student/consultant/consultantList'">돌아가기</button>
                                     <button type="button"
-                                        class="btn btn-primary btn-margin submitbuttonbox">수정하기</button>
+                                        class="btn btn-primary btn-margin submitbuttonbox"
+                                        th:onclick="'location.href=\'' + @{/student/consultant/updateForm/{conNo} (conNo=*{conNo})} + '\';'">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     data-toggle="modal" data-target="#deleteConH">삭제하기</button>
                                 </div>

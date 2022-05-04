@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.scon.project.admin.consultant.model.dao.ConsultantMapper">
+<mapper namespace="com.scon.project.student.consultant.model.dao.ConsultantHopeMapper">
 
 	<resultMap id="consultantResultMap" type="com.scon.project.admin.consultant.model.dto.ConsultantDTO">
 		<id property="conNo" column="CON_NO"></id>
@@ -38,19 +38,65 @@
 		<result property="deleteDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 	</resultMap>
-
+	
 	<!-- 상담 신청 내역 조회용 -->
-	<select id="selectAllConsultantHopeList" resultMap="consultantResultMap">
+	<select id="selectAllConsultantList" resultMap="consultantResultMap">
 		SELECT
-			   A.CON_NO
-			 , B.MEMBER_NAME
-			 , A.CON_WRITE_DATE
-			 , A.CON_HTITLE
-			 , A.CON_HANDLE
-		  FROM TB_CONSULTANT A
-		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
-		 WHERE A.CON_HDELETE = 'N'
-		 ORDER BY A.CON_NO DESC
+			   CON_NO
+			 , CON_WRITE_DATE
+			 , CON_HTITLE
+		  FROM TB_CONSULTANT
+		 WHERE CON_HDELETE = 'N'
+		 ORDER BY CON_NO DESC
 	</select>
+	
+	<!-- 상담 신청 등록용 -->
+	<insert id="insertConsultant">
+		INSERT
+		  INTO TB_CONSULTANT
+		(
+		  CON_NO
+		, MEMBER_ID
+		, CON_WRITE_DATE
+		, CON_HDATE
+		, CON_HTIME
+		, CON_HTITLE
+		, CON_HCONTENT
+		)
+		VALUES
+		(
+		  SEQ_CON_NO.NEXTVAL
+		, 'user01'
+		, SYSDATE
+		, #{ conHDate }
+		, #{ conHTime }
+		, #{ conHTitle }
+		, #{ conHContent }
+		)
+	</insert>
+	
+	<!-- 상담 신청 상세 조회용 -->
+	<select id="selectConsultantDetail" resultMap="consultantResultMap">
+		SELECT
+			   CON_HDATE
+			 , CON_HTIME
+			 , CON_HTITLE
+			 , CON_HCONTENT
+		  FROM TB_CONSULTANT
+		 WHERE CON_HDELETE = 'N'
+		   AND CON_NO = #{ conNo }
+	</select>
+	
+	<!-- 상담 신청 수정용 -->
+	<update id="modifyConsultant">
+		UPDATE
+			   TB_CONSULTANT
+		   SET CON_HDATE = #{ conHDate }
+		     , CON_HTIME = #{ conHTime }
+		     , CON_HTITLE = #{ conHTitle }
+		     , CON_HCONTENT = #{ conHContent }
+		     , CON_HUPDATE = SYSDATE
+		 WHERE CON_NO = #{ conNo }
+	</update>
 
 </mapper>

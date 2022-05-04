@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>con009</title>
+    <title>상담 신청</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,6 +25,13 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
+    <script>
+    	const successMessage = '[[${successMessage}]]'
+    	if(successMessage) {
+    		alert(successMessage);
+    	}
+    </script>
 
 </head>
 
@@ -32,7 +39,7 @@
     <div id="wrapper">
 
         <!-- sidebar include -->
-        <div th:replace="/common/adminSidebar.html"></div>
+        <div th:replace="/common/studentSidebar.html"></div>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -57,13 +64,17 @@
                         </div>
                         <br>
                         <form class="form-inline" action="" method="get">
-                            <div class="col-lg-9"></div>
-                            <div class="search-area col-lg-3">
-                                <div class="form-group mx-sm-3">
-                                    <label for="search" class="sr-only"></label>
-                                    <input type="text" class="form-control" id="accSearch" placeholder="검색어를 입력하세요">
+                            <div class="lec-flex col-12">
+                                <div class="row ml-2">
+                                    <button type="button" class="btn btn-primary btn-conh"
+                                    onclick="location.href='/student/consultant/insertForm'">상담 등록</button>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
+                                <div class="search-area col-lg-6">
+                                    <div class="form-group mx-sm-3">
+                                        <input type="text" class="form-control" id="accSearch" placeholder="검색어를 입력하세요">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-search">검색</button>
+                                </div>
                             </div>
                         </form>
                         <div class="card-body">
@@ -78,67 +89,12 @@
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr>
-                                            <td>10</td>
-                                            <td>2022-04-08</td>
-                                            <td>김아윤</td>
-                                            <td>
-                                                <div class="conHTitle">영어가 너무 재미있는데 심화 학습으로 무엇을 하면 좋을까요?</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>2022-04-04</td>
-                                            <td>최수아</td>
-                                            <td class="conHTitle">문법이 헷갈려요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>2022-03-27</td>
-                                            <td>서하윤</td>
-                                            <td class="conHTitle">오늘 배운 내용이 이해가 안 가요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>2022-03-19</td>
-                                            <td>이하린</td>
-                                            <td class="conHTitle">학원이 멀어서 다니기 힘들어요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>2022-03-10</td>
-                                            <td>최수아</td>
-                                            <td class="conHTitle">국어가 어려워요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>2022-03-06</td>
-                                            <td>이서아</td>
-                                            <td class="conHTitle">친구들이랑 너무 많이 노는 것 같아요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>2022-03-01</td>
-                                            <td>김아윤</td>
-                                            <td class="conHTitle">다음주에 여행 가서 수업을 못 들을 것 같아요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>2022-02-26</td>
-                                            <td>이하린</td>
-                                            <td class="conHTitle">학원 책상 바꿔주세요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>2022-02-15</td>
-                                            <td>서하윤</td>
-                                            <td class="conHTitle">일찍 못 일어나겠어요.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2022-02-10</td>
-                                            <td>이서아</td>
-                                            <td class="conHTitle">공부가 어려워요.</td>
+                                        <tr th:each="conH : ${ consultantList }">
+                                            <td th:text="${ conH.conNo }">번호</td>
+                                            <td th:text="${ conH.conWriteDate }">상담 신청일</td>
+                                            <td>담당 강사</td>
+                                            <td th:text="${ conH.conHTitle }" class="conHTitle"
+                                            th:onclick="'location.href=\'' + @{/student/consultant/consultantDetail/{conNo} (conNo=${conH.conNo})} + '\';'">상담 제목</td>
                                         </tr>
                                     </tbody>
                                 </table>
