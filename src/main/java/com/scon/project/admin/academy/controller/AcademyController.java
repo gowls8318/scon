@@ -12,5 +12,6 @@ public class AcademyController {
 	public String academyInfo() {
 		return "admin/academy/academyInfo";
 	}
+	
 
 }
