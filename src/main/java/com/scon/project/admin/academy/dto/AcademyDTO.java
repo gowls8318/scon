@@ -13,5 +13,6 @@ public class AcademyDTO {
 	private int busFax;
 	private String busAdr;
 	private String busHompy;
+	
 
 }

@@ -8,5 +8,6 @@ import com.scon.project.admin.academy.dto.AcademyDTO;
 public interface AcademyMapper {
 	
 	AcademyDTO selectAcademyInfo();
+	
 
 }
