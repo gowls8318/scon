@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.grade.model.dao.GradeMapper">
+
+<!-- grade -->
+<resultMap id="gradeResultMap" type="com.scon.project.admin.grade.model.dto.GradeDTO">
+	<id property="gradeId" column="GRADE_ID"/>
+	<result property="gradeDate" column="GRADE_DATE"/>
+	<result property="grade" column="GRADE"/>
+	<result property="memberId" column="MEMBER_ID" />
+	<result property="clsId" column="CLS_ID"/>
+</resultMap>
+<!-- 
+<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
+	<id property="clsId" column="CLS_ID"/>
+	<result property="clsName" column="CLS_NAME"/>
+	<result property="clsStuNum" column="CLS_STUNUM"/>
+	<result property="clsGrade" column="CLS_GRADE"/>
+	<result property="clsPay" column="CLS_PAY"/>
+	<result property="clsRoom" column="CLS_ROOM"/>
+	<result property="clsStart" column="CLS_START"/>
+	<result property="clsEnd" column="CLS_END"/>
+	<result property="clsNote" column="CLS_NOTE"/>
+	<result property="clsStatus" column="CLS_STATUS"/>
+	
+ <association property="memberId" resultMap="memberResultMap"/>
+</resultMap> -->
+
+
+<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="address" column="GENDER"/>
+		<result property="gender" column="ADDRESS"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="status" column="MEMBER_ST"/>
+		
+</resultMap>
+
+		<!--  성적 조회 (gradeList) -->
+		<select id="findAllGrade" resultMap="gradeResultMap">
+				SELECT
+					*
+				FROM TB_GRADE
+				WHERE CLS_ID = #{ clsId }
+		</select>
+		
+		<!--  성적 입력 학생 조회(insertGrade) -->
+		<select id="findAllStudent" resultMap="memberResultMap">
+			SELECT
+				M.MEMBER_ID
+			  , M.MEMBER_NAME
+			 FROM TB_MEMBER M
+		  LEFT JOIN TB_CLASS C ON (M.MEMBER_ID = C.MEMBER_ID)
+		  WHERE C.CLS_ID = #{ clsId }
+		</select>
+
+		<!--  성적 입력 (insertGrade) -->
+		<insert id="insertGradeList" parameterType="com.scon.project.admin.grade.model.dto.GradeDTO">
+			INSERT
+				INTO TB_GRADE
+				(
+				 GRADE_ID 
+			   , MEMBER_ID 
+			   , CLS_ID 
+			   , GRADE_DATE 
+			   , GRADE 
+				)
+			VALUES			
+				(
+				 SEQ_GRADE.NEXTVAL
+			   , #{ memberId } <!-- jdbcType=VARCHAR -->
+			   , CLS_ID.NEXTVAL
+			   , #{ gradeDate }
+			   , #{ grade }
+				)				
+		</insert>
+
+
+</mapper>
