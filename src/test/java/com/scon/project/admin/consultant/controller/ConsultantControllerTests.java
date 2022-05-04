@@ -45,12 +45,12 @@ public class ConsultantControllerTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 신청 내역 조회용 컨트롤러 테스트")
-	public void testSelectConH() throws Exception {
+	public void testSelectConsultantHope() throws Exception {
 		
 		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin/conhopelist"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/consultant-hope-list"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/consultant/admConHopeList"))
+				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/consultant/hopeList"))
 				.andDo(MockMvcResultHandlers.print());
 		
 	}

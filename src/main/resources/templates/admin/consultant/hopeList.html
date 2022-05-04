@@ -84,7 +84,7 @@
                                         <tr th:each="conH : ${ consultantHopeList }">
                                             <td th:text="${ conH.conNo }">번호</td>
                                             <td th:text="${ conH.conWriteDate }">상담 신청일</td>
-                                            <td th:text="${ conH.member.memberName }">원생</td>
+                                            <td th:text="${ conH.member.name }">원생</td>
                                             <td th:text="${ conH.conHTitle }" class="conHTitle">상담 제목</td>
                                             <td th:text="${ conH.conHandle }">처리 현황</td>
                                             <td>

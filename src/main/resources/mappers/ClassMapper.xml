@@ -5,6 +5,7 @@
 	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
 		<id property="clsId" column="CLS_ID"/>
 		<result property="clsName" column="CLS_NAME"/>
+		<result property="clsSubject" column="CLS_SUBJECT"/>
 		<result property="clsStuNum" column="CLS_STUNUM"/>
 		<result property="clsGrade" column="CLS_GRADE"/>
 		<result property="clsPay" column="CLS_PAY"/>
@@ -14,28 +15,58 @@
 		<result property="clsNote" column="CLS_NOTE"/>
 		<result property="clsStatus" column="CLS_STATUS"/>
 		
-		<!-- 태미님 mapper 작성 후 추후 수정 -->
-		<!-- <association property="memberId" resultMap -->
+		
+		<!--  태미님 mapper 작성 후 추후 수정  -->
+		 <association property="member" resultMap="memberResultMap"/>
+		 <!-- 수업요일 -->
+		 <collection property="dayList" resultMap="dayResultMap"/>
+		 <!--  교시 --> 
+		 <collection property="time" resultMap="timeResultMap"/>
 	</resultMap>
 	
 	
-	<!-- TB_TEACHER 리절트맵 추후 작성 -->
-<!-- 	
-	<resultMap type="com.scon.project.admin.teacherDTO??" id="태미님작성id">
-	
+	<!-- TB_TEACHER 리절트맵 추후 작성 (태미님) -->
+	<resultMap id="memberResultMap" type="com.scon.project.admin.Class.dto.MemberDTO">
+		<id property="memberId" column="MEMBER_ID"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberPwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYn" column="TEMP_PWD_YN"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="gender" column="GENDER"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
+		<result property="memberSt" column="MEMBER_ST"/>
 	</resultMap>
- -->
- 
- 	
 	
-	<!-- 강의등록 
-	   [추후수정] TB_TEACHER 테이블에서 강사명 JOIN 필요 --> 
+	
+	<!-- 요일 checkbox -->
+	<resultMap id="dayResultMap" type="com.scon.project.admin.Class.dto.DayDTO">
+		<id property="clsDayId" column="CLS_DAY_ID"/>
+		<result property="clsDayName" column="CLS_DAY_NAME"/>
+	</resultMap>
+	
+	<!-- 교시 checkbox -->
+	<resultMap id="timeResultMap" type="com.scon.project.admin.Class.dto.TimeDTO">
+		<id property="clsTimeId" column="CLS_TIME_ID"/>
+		<result property="clsTimeName" column="CLS_TIME_NAME"/>
+	</resultMap>
+	
+	
+	
+	<!-- 강의등록 : [추후수정] 태미님 테이블에서 강사명 JOIN 필요 
+		@ 요일과 교시는 강의1개당 여러개를 가져야함	
+	--> 
 	<insert id="registClass">
 		INSERT
 		  INTO TB_CLASS
 		 (
 		 	CLS_ID
+		  , MEMBER_ID
 		  , CLS_NAME
+		  , CLS_SUBJECT
 		  , CLS_STUNUM
 		  , CLS_GRADE
 		  , CLS_PAY
@@ -48,7 +79,9 @@
 		 VALUES
 		 (
 		   CLS_ID.NEXTVAL
+		 , #{ member.memberId }
 		 , #{ clsName }
+		 , #{ clsSubject }
 		 , #{ clsStuNum }
 		 , #{ clsGrade }
 		 , #{ clsPay }
@@ -56,28 +89,87 @@
 		 , #{ clsStart }
 		 , #{ clsEnd }
 		 , #{ clsNote }
-		 , #{ clsStatus }
+		 , 'N'
 		 )
 	</insert>
+	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- 강의와요일 -->
+	<insert id="insertClsAndDay">
+		INSERT
+			 INTO TB_CLANDDA
+	      (
+	      	CLS_ID
+	      , CLS_DAY_ID
+	      )
+	      VALUES
+	      (
+	      	CLS_ID.CURRVAL
+	      , #{ clsDayId }
+	      )
+	
+	</insert>
+	
+	<!-- 강의와교시 -->
+	<insert id="insertClsAndTime">
+		INSERT
+			 INTO TB_CLANDTI
+	      (
+	      	CLS_ID
+	      , CLS_TIME_ID
+	      )
+	      VALUES
+	      (
+	      	CLS_ID.CURRVAL
+	      , #{ clsTimeId }
+	      )
+	
+	</insert>
+	
+	
+	<!-- 강의리스트조회 -->
+	<!--  JOIN TB_MEMBER : 태미님 테이블 연결할 때 사용 -->
+	<select id="selectClass" resultMap="classResultMap">
+		SELECT
+			   A.CLS_ID
+		     , A.CLS_SUBJECT
+		     , B.MEMBER_ID 
+		     , A.CLS_NAME
+		     , A.CLS_START
+		 	 , A.CLS_END
+		 	 , A.CLS_ROOM
+		  FROM TB_CLASS A
+		  JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE A.CLS_STATUS = 'N'
+		 ORDER BY A.CLS_ID DESC
+	</select>
+	
+	<!-- rownum : 기본적으로 작성시간으로 입력 -->
+	
+	
+	<!-- 강의상세조회 -->
+	<select id="selectAllClass" resultMap="classResultMap">
+	SELECT
+		    A.CLS_ID
+		  , B.MEMBER_ID
+		  , A.CLS_NAME
+		  , A.CLS_SUBJECT
+		  , A.CLS_STUNUM
+		  , A.CLS_GRADE
+		  , A.CLS_PAY
+		  , A.CLS_ROOM
+		  , A.CLS_START
+		  , A.CLS_END
+		  , A.CLS_NOTE
+		  , A.CLS_STATUS
+		  , C.CLS_DAY_ID
+		  , D.CLS_TIME_ID
+	   FROM TB_CLASS A
+	   JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+	   JOIN TB_CLANDDA C ON (C.CLS_ID = A.CLS_ID)
+	   JOIN TB_CLANDTI D ON (D.CLS_ID = A.CLS_ID)
+	  WHERE A.CLS_STATUS = 'N'
+	  ORDER BY A.CLS_ID DESC
+	</select>
 
 </mapper>

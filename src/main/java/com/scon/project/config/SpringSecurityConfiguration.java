@@ -1,3 +1,4 @@
+
 package com.scon.project.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +86,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 public LoginSuccessHandler loginSuccessHandler() {
 		 return new LoginSuccessHandler();
 	 }
-	 
-
-
+	
 }
+

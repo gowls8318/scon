@@ -32,10 +32,24 @@
         text-align: center;
     }
 
-    .pagination{ float: right; }
+     .pagination{ float: right; }
 
-
+	 #table-scroll{
+        height: 500px;
+        overflow: auto;
+    }
+    
+    #btn-collection{
+    	padding-bottom: 10px;
+    }
+    
 </style>
+<script>
+	const successMessage = '[[${successMessage}]]';
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
 </head>
 
 <body id="page-top">
@@ -59,18 +73,19 @@
             </div>
                 <hr class="border-bottom-primary">
 
-                <button type="button" class="btn btn-primary" onclick="location.href='성적 추가.html';">성적 추가 하기</button>
+                <button type="button" class="btn btn-primary" th:onclick="|loation.href='@{/admin/insertGrade}'|">성적 추가 하기</button>
 
 
                     <br><br>
                     <!--   성적관리 시작 부분 -->
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4" style="overflow: auto;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">성적 관리</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive" id="table-scroll">
+                        <!--  <div class="table-wrapper">   -->
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -87,88 +102,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr th:each="grade : ${ gradeList }">
                                             <td>
                                                 <span class="form-check">
                                                     <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                     </label>
                                             </td>
-                                            <td>김유나</td>
-                                            <td>영어기초1반</td>
-                                            <td>90</td>
-                                            <td>2011/04/25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                    </label>
-                                            </td>
-                                            <td>한재성</td>
-                                            <td>영어기초1반</td>
-                                            <td>88</td>
-                                            <td>2011/04/25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                    </label>
-                                            </td>
-                                            <td>이진아</td>
-                                            <td>영어기초1반</td>
-                                            <td>99</td>
-                                            <td>2011/04/25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                    </label>
-                                            </td>
-                                            <td>박하윤</td>
-                                            <td>영어기초1반</td>
-                                            <td>87</td>
-                                            <td>2011/04/25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                    </label>
-                                            </td>
-                                            <td>이진수</td>
-                                            <td>영어기초1반</td>
-                                            <td>60</td>
-                                            <td>2011/04/25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                    </label>
-                                            </td>
-                                            <td>김유미</td>
-                                            <td>영어기초1반</td>
-                                            <td>100</td>
-                                            <td>2011/04/25</td>
+                                            <td th:text="${ grade.memberId}"></td>
+                                            <td th:text="${ grade.clsId }"></td>
+                                            <td th:text="${ grade.grade}"></td>
+                                            <td th:text="${ grade.gradeDate}"></td>
                                         </tr>
                                     </tbody>
+                                <!--  </div>  -->
                                 </table>
                             </div>
+                         </div>
+                        
+                         
                             
                             <!--- 수정 삭제 버튼 --->
-                                <div class="container">
+                                <div class="container" id="btn-collection">
                                     <div class="row">
                                     <div class="col text-center">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" onclick="beforeCheck();">수정</button>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="beforeCheck2();" data-bs-target="#exampleModal" 
                                         style="background-color: red; border: none;">
                                             삭제
                                         </button>
@@ -177,7 +136,7 @@
                                 </div>
                                 
                         	<!-- 페이징 -->
-                            <nav aria-label="Page navigation example">
+                     <!--        <nav aria-label="Page navigation example">
                                 <ul class="pagination">
                                     <li class="page-item">
                                         <a class="page-link" href="#" aria-label="Previous">
@@ -195,8 +154,8 @@
                                 </ul>
                             </nav>
                         </div>
-                    </div>
-
+                    </div> -->
+			
                </div>
                <!-- /.container-fluid -->
             </div>
@@ -209,8 +168,9 @@
     <!-- End of Page Wrapper -->
 
 
-            <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <!-- Modal (삭제 모달)-->
+                <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -231,7 +191,7 @@
 
 
 
-        <!-- accModal1-->
+        <!-- accModal1 (수정 모달)-->
         <div class="modal fade" id="accModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -285,7 +245,7 @@
         </div>
     </div>
     <!-- /accModal1 -->
-            
+          
 	<script>
         function beforeCheck(){
             if($("input:checkbox[name=checked]").is(":checked") && $("input:checkbox[name=checked]:checked").length == 1) {
@@ -300,6 +260,14 @@
     function closeModal() {
         $("#accModal1").modal("hide");
     }
+    
+    function beforeCheck2(){
+        if($("input:checkbox[name=checked]").is(":checked") && $("input:checkbox[name=checked]:checked").length >= 1) {
+        $("#delete-modal").modal("show");
+    }  else {
+        alert("선택된 학생이 없습니다.");
+    }
+};
  </script>
 
 

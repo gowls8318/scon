@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>con008</title>
+    <title>상담 신청</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -28,14 +28,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-
 </head>
 
 <body id="page-top">
     <div id="wrapper">
 
         <!-- sidebar include -->
-        <div th:replace="/common/adminSidebar.html"></div>
+        <div th:replace="/common/studentSidebar.html"></div>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -56,13 +55,14 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">상담 신청</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">상담 신청 수정</h6>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="/student/consultant/updateForm" method="post" th:object="${ consultant }">
+                            	<input type="hidden" name="conNo" value="*{ conNo }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
-                                        <tbody>
+                                        <tbody >
                                             <tr>
                                                 <th class="col-lg-3">
                                                     <label for="clsName" class="col-form-label">강의명 <span
@@ -71,11 +71,12 @@
                                                 <td class="col-lg-9">
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="clsName">
-                                                            <option selected>강의 선택</option>
-                                                            <option value="1">국어</option>
-                                                            <option value="2">영어</option>
-                                                            <option value="3">수학</option>
+                                                            aria-label=".form-select-lg example" id="clsName" name="clsName">
+                                                            <optgroup label="강의 선택">
+	                                                            <option value="1">국어</option>
+	                                                            <option value="2">영어</option>
+	                                                            <option value="3">수학</option>
+                                                            </optgroup>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -87,7 +88,7 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
-                                                        <input type="text" class="form-control" id="memName" readonly>
+                                                        <input type="text" class="form-control" id="memName" name="memName" readonly>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -97,7 +98,8 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
-                                                        <input type="date" class="form-control" id="conHDate">
+                                                        <input type="date" class="form-control" id="conHDate" name="conHDate"
+                                                        th:value="*{ conHDate }">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -108,15 +110,17 @@
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conHTime">
-                                                            <option selected>희망시간 선택</option>
-                                                            <option value="1">09:00 ~ 09:50</option>
-                                                            <option value="2">10:00 ~ 10:50</option>
-                                                            <option value="3">11:00 ~ 11:50</option>
-                                                            <option value="4">14:00 ~ 14:50</option>
-                                                            <option value="5">15:00 ~ 15:50</option>
-                                                            <option value="6">16:00 ~ 16:50</option>
-                                                            <option value="7">17:00 ~ 17:50</option>
+                                                            aria-label=".form-select-lg example" id="conHTime" name="conHTime"
+                                                            th:value="*{ conHTime }">
+                                                            <optgroup label="희망시간 선택">
+	                                                            <option value="09:00 ~ 09:50">09:00 ~ 09:50</option>
+	                                                            <option value="10:00 ~ 10:50">10:00 ~ 10:50</option>
+	                                                            <option value="11:00 ~ 11:50">11:00 ~ 11:50</option>
+	                                                            <option value="14:00 ~ 14:50">14:00 ~ 14:50</option>
+	                                                            <option value="15:00 ~ 15:50">15:00 ~ 15:50</option>
+	                                                            <option value="16:00 ~ 16:50">16:00 ~ 16:50</option>
+	                                                            <option value="17:00 ~ 17:50">17:00 ~ 17:50</option>
+                                                            </optgroup>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -128,7 +132,8 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="conHTitle">
+                                                        <input type="text" class="form-control" id="conHTitle" name="conHTitle"
+                                                        th:value="*{ conHTitle }" required>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -142,8 +147,8 @@
                                                     <div class="col-sm-10 col-lg-10">
                                                         <div class="con-input-group">
                                                             <textarea class="form-control conHContent" aria-label="With textarea"
-                                                                id="conHContent"
-                                                                placeholder="상담 내용은 최소 10글자 이상 입력해주시기 바랍니다."
+                                                                id="conHContent" name="conHContent"
+                                                                th:text="*{ conHContent }"
                                                                 minlength="10" required></textarea>
                                                         </div>
                                                     </div>
@@ -168,9 +173,11 @@
                                 </div>
 
                                 <div class="buttonbox">
-                                    <button type="button" class="btn btn-light resetbuttonbox">취소하기</button>
-                                    <button type="submit" class="btn btn-primary submitbuttonbox"
-                                    data-toggle="modal" data-target="#insertConH">등록하기</button>
+                                    <button type="button" class="btn btn-light resetbuttonbox"
+                                    onclick="location.href='/student/consultant/consultantList'">취소하기</button>
+                                    <button type="submit"
+                                        class="btn btn-primary btn-margin submitbuttonbox"
+                                        data-toggle="modal" data-target="#updateConH">수정하기</button>
                                 </div>
                             </form>
                         </div>
@@ -196,8 +203,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- 등록 모달 -->
-    <div class="modal fade modal-bg-acc" id="insertConH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- 수정 모달 -->
+    <!-- <div class="modal fade modal-bg-acc" id="updateConH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content modal-dml modal-content-yj">
@@ -206,7 +213,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">상담을 등록하시겠습니까?</div>
+                <div class="modal-body">상담 신청을 수정하시겠습니까?</div>
                 <form action="" method="post">
                     <div class="modal-footer">
                         <button class="btn btn-secondary resetbuttonbox" type="button" data-dismiss="modal">취소</button>
@@ -215,8 +222,8 @@
                 </form>
             </div>
         </div>
-    </div>
-    <!-- /등록 모달 -->
+    </div> -->
+    <!-- /수정 모달 -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

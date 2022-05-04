@@ -3,52 +3,54 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>강의수정</title>
+<title>강의수정</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom fonts for this template-->
+<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
 
-    <!-- Custom styles for this template-->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
 
 
-    <!-- bootstrap-icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<!-- bootstrap-icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
-    <style>
-    .table-sy table td,
-    .table-sy table th{
-    border: none;
-    vertical-align: middle;
-    }
-    
-    
-    .bi {
-    	color:purple;
-    }
-    
-    .datetime {
-        display: flex;
-    }
-    
-    
-    input[type="checkbox"]::before {
-    content: "\2713";
-    position: absolute;
-    top: 60% !important;
-    left: 10px !important;
-    overflow: hidden;
-    transform: scale(0) translate(-50%, -50%);
-    line-height: 1;
-    </style>
-    
+<style>
+.table-sy table td, .table-sy table th {
+	border: none;
+	vertical-align: middle;
+}
+
+.bi {
+	color: purple;
+}
+
+.datetime {
+	display: flex;
+}
+
+input[type="checkbox"]::before {
+	content: "\2713";
+	position: absolute;
+	top: 60% !important;
+	left: 10px !important;
+	overflow: hidden;
+	transform: scale(0) translate(-50%, -50%);
+	line-height: 1;
+}
+</style>
+
 
 
 
@@ -56,296 +58,307 @@
 
 
 <body id="page-top">
-    <div id="wrapper">
-        <!-- navbar include -->
-        <div th:replace="/common/adminSidebar.html"></div>
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- header include -->
-            <div th:replace="/common/adminTopbar.html"></div>
-    
-    
-        <!-- Main Content -->
-        <div id="content">
-            <!-- Begin Page Content -->
-          
-            <div class="container-fluid">
-            
-                <!-- Page Heading -->
-
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-2 text-gray-800">강의수정</h1>
-                    <text type="reset" id="resetbtn" onclick="location.href='/admin/classUpdate'"><i class="bi bi-arrow-repeat"></i></text>
-                </div>
-                <hr class="border-bottom-primary">
+	<div id="wrapper">
+		<!-- navbar include -->
+		<div th:replace="/common/adminSidebar.html"></div>
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- header include -->
+			<div th:replace="/common/adminTopbar.html"></div>
 
 
-                <!-- 과목정보 -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">과목정보</h6>
-                        </div>
-                        
-                        <div class="card-body">
-                            <form>
-                                <div class="col-lg-12 table-center table-sy">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <th class="col-lg-1">
-                                                    <label><span for="std" class="col-form-label">과목명 <span
-                                                            id="pointtext">*</span></span></label>
-                                                </th>
-                                                <td class="col-lg-3">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="std">
-                                                    </div>
-                                                </td>
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label">강사 <span
-                                                            id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-3">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conImp">
-                                                            <option selected>강사 선택</option>
-                                                            <option value="1">우별림</option>
-                                                            <option value="2">우별림</option>
-                                                            <option value="3">우별림</option>
-                                                            <option value="4">우별림</option>
-                                                            <option value="5">우별림</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label"> 실강생 수 </label>
-                                                </th>
-                                                <td class="col-lg-3">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="std">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label">강의명 <span id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-3">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="std">
-                                                    </div>
-                                                </td>
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label">대상 학년</label>
-                                                </th>
-                                                <td class="col-lg-3">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="std">
-                                                    </div>
-                                                </td>
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label">수업료 <span id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-3">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="std">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-    
-                            </form>
-                        </div>
-                    </div>
-                <!-- 과목정보 -->
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Begin Page Content -->
 
-                     <!-- 수업정보 -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">수업정보</h6>
-                        </div>
-                        
-                        <div class="card-body">
-                            <form>
-                                <div class="col-lg-12 table-center table-sy">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <th class="col-lg-1 classdatetime">
-                                                    <label for="std" class="col-form-label">수업일 <span
-                                                            id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-5 classdatetime2">
-                                                <div class="datetime">
-                                                     <div class="col-lg-4">
-                                                        <input type="date" class="form-control" id="std">
-                                                    </div>
-                                                   <span class="mt-2">~</span>
-                                                    <div class="col-lg-4">
-                                                        <input type="date" class="form-control" id="std">
-                                                    </div>
-                                                </div>
-                                                </td>
-                                              
-                                                
-                                                
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label"> 강의실<span
-                                                            id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-5">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="std">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                        
-                                        
-	                                   <div class="col-lg-12 table-center table-sy">
-	                                    <table class="table">
-	                                        <tbody>
-	                                            <tr>
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label">수업요일 <span id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-5">
-                                                    <!-- 인풋박스 -->
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">월</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">화</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">수</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">목</label>
-                                                        <div class="form-check form-check-inline"></div>
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">금</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">토</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">일</label>
-                                                    </div>                                        
-                                                </td>
-                                               
+				<div class="container-fluid">
 
-                                                <th class="col-lg-1">
-                                                    <label for="std" class="col-form-label">교시 <span id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-5">
-                                                    <!-- 인풋박스 -->
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">1교시</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">2교시</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">3교시</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">4교시</label>
-                                                        <div class="form-check form-check-inline"></div>
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">5교시</label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                            </form>
-                        </div>
-                    </div>
-                <!-- 수업정보 -->
+					<!-- Page Heading -->
 
-                            <!-- 비고란 -->
-                            <div class="card shadow mb-4">
-                                <div class="card-body">
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-text">비고</span>
-                                            <textarea class="form-control" aria-label="With textarea"
-                                                style="font-size: medium;"></textarea>
-                                        </div>
-                                </div>
-                            </div>
-                            <!-- 비고란 -->
-                
-                    <div class="row buttonbox">
-                        <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#classupdateModal">수정</button>
-                        <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset">취소</button>
-                    </div>
-                    </div>
-       
-            
-        </div>
-            <!-- End of Main Content -->
-            <!-- footer include -->
-            <div th:replace="/common/Footer.html"></div>
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-2 text-gray-800">강의수정</h1>
+						<text type="reset" id="resetbtn"
+							onclick="location.href='/admin/classUpdate'">
+						<i class="bi bi-arrow-repeat"></i></text>
+					</div>
+					<hr class="border-bottom-primary">
 
-        </div>
-        <!-- End of Main Content -->
 
-    </div>
-    <!-- End of Content Wrapper -->
+					<!-- 과목정보 -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">과목정보</h6>
+						</div>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-    
-    <!-- 강의 수정 Modal-->
-    <div class="modal fade" id="classupdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">강의수정</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">강의를 수정하시겠습니까?</div>
-                <div class="modal-footer">
-                    <a class="btn btn-secondary" onclick="location.href='/common/class/updateClass'">취소</a>
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="location.href='/common/class/selectClass'">수정</button>
-                </div>
-            </div>
-        </div>
-    </div>
+						<div class="card-body">
+							<form>
+								<div class="col-lg-12 table-center table-sy">
+									<table class="table">
+										<tbody>
+											<tr>
+												<th class="col-lg-1"><label><span for="std"
+														class="col-form-label">과목명 <span id="pointtext">*</span></span></label>
+												</th>
+												<td class="col-lg-3">
+													<div class="col-sm-10 col-lg-10">
+														<input type="text" class="form-control" id="std">
+													</div>
+												</td>
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label">강사 <span id="pointtext">*</span></label>
+												</th>
+												<td class="col-lg-3">
+													<div class="col-sm-10 col-lg-10">
+														<select class="form-control form-select-lg"
+															aria-label=".form-select-lg example" id="conImp">
+															<option selected>강사 선택</option>
+															<option value="1">우별림</option>
+															<option value="2">우별림</option>
+															<option value="3">우별림</option>
+															<option value="4">우별림</option>
+															<option value="5">우별림</option>
+														</select>
+													</div>
+												</td>
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label"> 실강생 수 </label></th>
+												<td class="col-lg-3">
+													<div class="col-sm-10 col-lg-10">
+														<input type="text" class="form-control" id="std">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label">강의명 <span id="pointtext">*</span></label>
+												</th>
+												<td class="col-lg-3">
+													<div class="col-sm-10 col-lg-10">
+														<input type="text" class="form-control" id="std">
+													</div>
+												</td>
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label">대상 학년</label></th>
+												<td class="col-lg-3">
+													<div class="col-sm-10 col-lg-10">
+														<input type="text" class="form-control" id="std">
+													</div>
+												</td>
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label">수업료 <span id="pointtext">*</span></label>
+												</th>
+												<td class="col-lg-3">
+													<div class="col-sm-10 col-lg-10">
+														<input type="text" class="form-control" id="std">
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+							</form>
+						</div>
+					</div>
+					<!-- 과목정보 -->
+
+					<!-- 수업정보 -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">수업정보</h6>
+						</div>
+
+						<div class="card-body">
+							<form>
+								<div class="col-lg-12 table-center table-sy">
+									<table class="table">
+										<tbody>
+											<tr>
+												<th class="col-lg-1 classdatetime"><label for="std"
+													class="col-form-label">수업일 <span id="pointtext">*</span></label>
+												</th>
+												<td class="col-lg-5 classdatetime2">
+													<div class="datetime">
+														<div class="col-lg-4">
+															<input type="date" class="form-control" id="std">
+														</div>
+														<span class="mt-2">~</span>
+														<div class="col-lg-4">
+															<input type="date" class="form-control" id="std">
+														</div>
+													</div>
+												</td>
 
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label"> 강의실<span id="pointtext">*</span></label>
+												</th>
+												<td class="col-lg-5">
+													<div class="col-sm-10 col-lg-10">
+														<input type="text" class="form-control" id="std">
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+								<div class="col-lg-12 table-center table-sy">
+									<table class="table">
+										<tbody>
+											<tr>
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label">수업요일 <span id="pointtext">*</span></label>
+												</th>
+												<td class="col-lg-5">
+													<!-- 인풋박스 -->
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox1" value="option1"> <label
+															class="form-check-label" for="inlineCheckbox1">월</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox2" value="option2"> <label
+															class="form-check-label" for="inlineCheckbox2">화</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox1" value="option1"> <label
+															class="form-check-label" for="inlineCheckbox1">수</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox2" value="option2"> <label
+															class="form-check-label" for="inlineCheckbox2">목</label>
+														<div class="form-check form-check-inline"></div>
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox1" value="option1"> <label
+															class="form-check-label" for="inlineCheckbox1">금</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox1" value="option1"> <label
+															class="form-check-label" for="inlineCheckbox1">토</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox2" value="option2"> <label
+															class="form-check-label" for="inlineCheckbox2">일</label>
+													</div>
+												</td>
 
+
+												<th class="col-lg-1"><label for="std"
+													class="col-form-label">교시 <span id="pointtext">*</span></label>
+												</th>
+												<td class="col-lg-5">
+													<!-- 인풋박스 -->
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox1" value="option1"> <label
+															class="form-check-label" for="inlineCheckbox1">1교시</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox2" value="option2"> <label
+															class="form-check-label" for="inlineCheckbox2">2교시</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox1" value="option1"> <label
+															class="form-check-label" for="inlineCheckbox1">3교시</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox2" value="option2"> <label
+															class="form-check-label" for="inlineCheckbox2">4교시</label>
+														<div class="form-check form-check-inline"></div>
+														<input class="form-check-input" type="checkbox"
+															id="inlineCheckbox1" value="option1"> <label
+															class="form-check-label" for="inlineCheckbox1">5교시</label>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- 수업정보 -->
+
+					<!-- 비고란 -->
+					<div class="card shadow mb-4">
+						<div class="card-body">
+							<div class="input-group input-group-lg">
+								<span class="input-group-text">비고</span>
+								<textarea class="form-control text-md"
+									aria-label="With textarea"></textarea>
+							</div>
+						</div>
+					</div>
+					<!-- 비고란 -->
+
+					<div class="row buttonbox">
+						<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm"
+							data-toggle="modal" data-target="#classupdateModal">등록</button>
+						<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm"
+							type="reset">취소</button>
+					</div>
+
+
+				</div>
+				<!-- End of Main Content -->
+				<!-- footer include -->
+				<div th:replace="/common/Footer.html"></div>
+
+			</div>
+			<!-- End of Main Content -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top"> <i
+			class="fas fa-angle-up"></i>
+		</a>
+
+		<!-- 강의 수정 Modal-->
+		<div class="modal fade" id="classupdateModal" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">강의수정</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">강의를 수정하시겠습니까?</div>
+					<div class="modal-footer">
+						<a class="btn btn-secondary"
+							onclick="location.href='/common/class/updateClass'">취소</a>
+						<button class="btn btn-primary" type="button" data-dismiss="modal"
+							onclick="location.href='/common/class/selectClass'">수정</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- Bootstrap core JavaScript-->
+		<script src="/vendor/jquery/jquery.min.js"></script>
+		<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="/js/sb-admin-2.min.js"></script>
 </body>
-
 </html>

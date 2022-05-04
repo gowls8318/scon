@@ -25,18 +25,18 @@
 	</resultMap>
 	
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
-		<id property="memberId" column="MEMBER_ID"/>
-		<result property="memberName" column="MEMBER_NAME"/>
-		<result property="memberPwd" column="MEMBER_PWD"/>
-		<result property="tempPwdYn" column="PHONE"/>
+		<id property="id" column="MEMBER_ID"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
-		<result property="birthday" column="BIRTHDAY"/>
-		<result property="address" column="ADDRESS"/>
-		<result property="gender" column="GENDER"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="address" column="GENDER"/>
+		<result property="gender" column="ADDRESS"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="delDate" column="DEL_DATE"/>
-		<result property="memberSt" column="MEMBER_ST"/>
+		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="status" column="MEMBER_ST"/>
 	</resultMap>
 
 	<!-- 상담 신청 내역 조회용 -->
