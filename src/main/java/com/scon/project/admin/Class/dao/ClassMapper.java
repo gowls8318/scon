@@ -24,4 +24,5 @@ public interface ClassMapper {
 	int insertClsAndDay(DayDTO dayDTO);
 	
 	int insertClsAndTime(TimeDTO timeDTO);
+
 }

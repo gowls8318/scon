@@ -15,9 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
-import com.scon.project.admin.Class.dto.MemberDTO;
+
 import com.scon.project.admin.Class.dto.TimeDTO;
 import com.scon.project.config.SconApplication;
+import com.scon.project.member.model.dto.MemberDTO;
 
 @SpringBootTest
 @ContextConfiguration(classes = { SconApplication.class })
@@ -70,7 +71,7 @@ public class classServiceTests {
 		MemberDTO member = new MemberDTO();
 		List<DayDTO> day = new ArrayList<DayDTO>();
 		List<TimeDTO> time = new ArrayList<TimeDTO>();
-		member.setMemberId("director");
+		member.setId("director");
 		classDTO.setMember(member); // classDTO에 memberDTO(member)가 담겨야 함
 		day.add(new DayDTO(1, null));
 		day.add(new DayDTO(3, null));
@@ -107,7 +108,7 @@ public class classServiceTests {
 			MemberDTO member = new MemberDTO();
 			List<DayDTO> day = new ArrayList<DayDTO>();
 			List<TimeDTO> time = new ArrayList<TimeDTO>();
-			member.setMemberId("director");
+			member.setId("director");
 			classDTO.setMember(member); // classDTO에 memberDTO(member)가 담겨야 함
 			day.add(new DayDTO(1, null));
 			day.add(new DayDTO(3, null));

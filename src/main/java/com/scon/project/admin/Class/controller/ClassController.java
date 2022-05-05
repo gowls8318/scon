@@ -14,8 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
-import com.scon.project.admin.Class.dto.MemberDTO;
+
 import com.scon.project.admin.Class.service.ClassService;
+import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,42 +34,56 @@ public class ClassController {
 		this.messageSource = messageSource;
 	}
 	
-
+	
 	// 강의 등록용 화면 이동
 	@GetMapping("/classRegist")
 	public String getDashBoard2() {
 
 		return "admin/class/insertClass";
 	}
+	
 
+	/*
 	@GetMapping("/classList")
 	public String getDashBoard3() {
 
 		return "admin/class/selectClass";
 	}
+	*/
 
 	@GetMapping("/classUpdate")
 	public String getDashBoard4() {
 
 		return "admin/class/updateClass";
 	}
+	
 
 	/*----------------------------------------------------*/
 
 	
-	// 강의조회
+	// 강의리스트조회
+	@GetMapping("classList")
+	public ModelAndView selectClass (ModelAndView mv) {
+		
+		List<ClassDTO> classList = classService.selectClass();
+		
+		mv.addObject("classList", classList);
+		mv.setViewName("admin/class/selectClass");
+		return mv;
+	}
+	
+	
+	//강의상세조회
 	@PostMapping("classList")
 	public ModelAndView selectAllClass (ModelAndView mv) {
 		
-		List<ClassDTO> classList = classService.selectAllClass();
+		List<ClassDTO> classAllList = classService.selectAllClass();
 		
-		mv.addObject("classList", classList);
-		mv.setViewName("admin/classList");
+		mv.addObject("classAllList", classAllList);
+		mv.setViewName("admin/class/selectClass");
 		return mv;
-		
-
 	}
-	
+
 	
 	
 	
@@ -78,7 +93,7 @@ public class ClassController {
 
 		log.info("등록 요청 강의 : {}", classDTO);
 		MemberDTO member = new MemberDTO();
-		member.setMemberId("director");
+		member.setId("director");
 		classDTO.setMember(member);
 		classService.registClass(classDTO);
 
