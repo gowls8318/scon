@@ -1,4 +1,4 @@
-package com.scon.project.admin.academy.dto;
+package com.scon.project.admin.academy.model.dto;
 
 import lombok.Data;
 
