@@ -5,7 +5,7 @@
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="name" column="MEMBER_NAME"/>
-		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="password" column="MEMBER_PWD"/>
 		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
@@ -52,9 +52,9 @@
 		)
 		VALUES
 		(
-		, #{ id }
+		  #{ id }
 		, #{ name }
-		, #{ pwd }
+		, #{ password }
 		, DEFAULT
 		, #{ phone }
 		, #{ email }
@@ -63,7 +63,7 @@
 		, #{ gender }
 		, #{ enrollDate }
 		, NULL
-		, #{ status }
+		, '대기생'
 		)
 	</insert>
 	
@@ -92,10 +92,6 @@
 		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
 		 WHERE A.MEMBER_ID = #{ username }
 	</select>
-	
-	
-	
-	
 
 
 </mapper>

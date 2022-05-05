@@ -23,8 +23,8 @@ public class ProfileDTO {
 	private int fileId;							// 첨부파일 아이디
 	private String fileOrginName;				// 파일 원본명
 	private String fileSaveName;				// 파일 저장명
-	private String filePathName;				// 파일저장경로
-	private String fileTypeName;				// 파일타입
+	private String filePath;				// 파일저장경로
+	private String fileType;				// 파일타입
 	private String fileThumnailPathName;		// 파일 썸네일 경로
 	private String fileThumnailName;			// 썸네일 파일명
 

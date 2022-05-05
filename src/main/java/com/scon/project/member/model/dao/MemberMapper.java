@@ -1,5 +1,7 @@
 package com.scon.project.member.model.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.scon.project.member.model.dto.MemberDTO;

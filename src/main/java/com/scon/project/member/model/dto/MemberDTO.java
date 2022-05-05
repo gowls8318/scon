@@ -2,6 +2,8 @@ package com.scon.project.member.model.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +32,7 @@ public class MemberDTO {
 	
 	private String id;								//회원아이디
 	private String name;							//회원명
-	private String pwd;								//비밀번호
+	private String password;								//비밀번호
 	private String tempPwdYN;
 	private String phone;							//연락처
 	private String email;							//이메일
