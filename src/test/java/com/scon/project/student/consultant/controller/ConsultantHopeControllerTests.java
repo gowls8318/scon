@@ -73,9 +73,25 @@ public class ConsultantHopeControllerTests {
 		mockMvc.perform(MockMvcRequestBuilders.post("/student/consultant/insertForm").params(params))
 				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
-				.andExpect(MockMvcResultMatchers.redirectedUrl("/student/consultant/consultantList"))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/student/consultant/list"))
 				.andDo(MockMvcResultHandlers.print());
 	}
+	
+	// success
+//	@Test
+//	@Disabled
+//	@DisplayName("상담 신청 상세 조회용 컨트롤러 테스트")
+//	public void testSelectConsultantDetail() throws Exception {
+//		
+//		// given
+//		int conNo = 22;
+//		
+//		// when & then
+//		mockMvc.perform(MockMvcRequestBuilders.get("/student/consultant/detail/" + conNo))
+//				.andExpect(MockMvcResultMatchers.status().isOk())
+//				.andExpect(MockMvcResultMatchers.forwardedUrl("student/consultant/detail"))
+//				.andDo(MockMvcResultHandlers.print());
+//	}
 	
 	// success
 	@Test
@@ -84,12 +100,12 @@ public class ConsultantHopeControllerTests {
 	public void testSelectConsultantDetail() throws Exception {
 		
 		// given
-		int conNo = 22;
+		int no = 22;
 		
 		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/consultant/consultantDetail/" + conNo))
+		mockMvc.perform(MockMvcRequestBuilders.get("/student/consultant/detail/?no=" + no))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.forwardedUrl("student/consultant/consultantDetail"))
+				.andExpect(MockMvcResultMatchers.forwardedUrl("student/consultant/detail"))
 				.andDo(MockMvcResultHandlers.print());
 	}
 	
@@ -106,13 +122,31 @@ public class ConsultantHopeControllerTests {
 		params.add("conHTitle", "상담 신청 테스트 제목 수정입니다.");
 		params.add("conHContent", "상담 신청 테스트 내용 수정합니다.");
 		
-		int conNo = 22;
+		// url에 상담 신청 게시글 번호를 같이 넘기므로 DB에 존재하는 변수 하나를 선언해 준다.
+		int no = 22;
 		
 		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.post("/student/consultant/updateForm/" + conNo).params(params))
+		mockMvc.perform(MockMvcRequestBuilders.post("/student/consultant/updateForm/?no=" + no).params(params))
 				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
-				.andExpect(MockMvcResultMatchers.redirectedUrl("/student/consultant/consultantList"))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/student/consultant/list"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("상담 신청 삭제용 컨트롤러 테스트")
+	public void testDeleteConsultant() throws Exception {
+		
+		// given
+		int no = 40;
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.post("/student/consultant/delete/?no=" + no))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/student/consultant/list"))
 				.andDo(MockMvcResultHandlers.print());
 	}
 	

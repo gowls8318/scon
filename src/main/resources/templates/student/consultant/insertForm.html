@@ -63,38 +63,8 @@
                                     <table class="table table-bordered-yj">
                                         <tbody>
                                             <tr>
-                                                <th class="col-lg-3">
-                                                    <label for="clsName" class="col-form-label">강의명 <span
-                                                            id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-9">
-                                                    <div class="col-sm-10 col-lg-4">
-                                                        <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="clsName"
-                                                            name="clsName">
-                                                            <optgroup label="강의 선택">
-	                                                            <option value="1">국어</option>
-	                                                            <option value="2">영어</option>
-	                                                            <option value="3">수학</option>
-                                                            </optgroup>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
                                                 <th>
-                                                    <label for="memName" class="col-form-label">강사명 <span
-                                                            id="pointtext">*</span></label>
-                                                </th>
-                                                <td>
-                                                    <div class="col-sm-10 col-lg-4">
-                                                        <input type="text" class="form-control" id="memName" name="memName" readonly>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label for="conHDate" class="col-form-label">상담 희망일</label>
+                                                    <label for="conHDate" class="col-form-label">희망일</label>
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
@@ -104,14 +74,14 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="conHTime" class="col-form-label">상담 희망시간</label>
+                                                    <label for="conHTime" class="col-form-label">희망 시간</label>
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
                                                             aria-label=".form-select-lg example" id="conHTime"
                                                             name="conHTime">
-                                                            <optgroup label="희망시간 선택">
+                                                            <optgroup label="희망 시간 선택">
 	                                                            <option value="09:00 ~ 09:50">09:00 ~ 09:50</option>
 	                                                            <option value="10:00 ~ 10:50">10:00 ~ 10:50</option>
 	                                                            <option value="11:00 ~ 11:50">11:00 ~ 11:50</option>
@@ -172,9 +142,8 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    onclick="location.href='/student/consultant/consultantList'">취소하기</button>
-                                    <button type="submit" class="btn btn-primary submitbuttonbox"
-                                    data-toggle="modal" data-target="#insertConH">등록하기</button>
+                                    	th:onclick="cancelRegist()">취소하기</button>
+                                    <button type="submit" class="btn btn-primary submitbuttonbox">등록하기</button>
                                 </div>
                             </form>
                         </div>
@@ -199,30 +168,14 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- 등록 모달 -->
-    <!-- <div class="modal fade modal-bg-acc" id="insertConH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content modal-dml modal-content-yj">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">상담을 등록하시겠습니까?</div>
-                <form action="" method="post">
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary resetbuttonbox" type="button" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary submitbuttonbox">확인</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-    <!-- /등록 모달 -->
     
-    
+    <script>
+    	function cancelRegist() {
+    		if(confirm('작성 중인 내용은 저장되지 않습니다. \n상담 신청 등록을 취소하시겠습니까?')) {
+    			location.href = "/student/consultant/list";
+    		}
+    	}
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

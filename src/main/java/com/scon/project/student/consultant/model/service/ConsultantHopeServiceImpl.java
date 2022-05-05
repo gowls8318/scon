@@ -54,4 +54,11 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 		return consultantHopeMapper.modifyConsultant(con);
 	}
 
+	/* 상담 신청 삭제용 */
+	@Override
+	public int deleteConsultant(int no) {
+		
+		return consultantHopeMapper.deleteConsultant(no);
+	}
+
 }

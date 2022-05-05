@@ -48,11 +48,38 @@ public class ConsultantControllerTests {
 	public void testSelectConsultantHope() throws Exception {
 		
 		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin/consultant-hope-list"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/consultant/hopeList"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/consultant/hopeList"))
 				.andDo(MockMvcResultHandlers.print());
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("상담 신청 상세 조회용 컨트롤러 테스트")
+	public void testSelectConsultantHopeDetail() throws Exception {
 		
+		// given
+		int no = 22;
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/consultant/hopeDetail/?no=" + no))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/consultant/hopeDetail"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	
+	// success
+	@Test
+	@DisplayName("상담 일지 내역 조회용 컨트롤러 테스트")
+	public void testSelectConsultantList() throws Exception {
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/consultant/list"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/consultant/list"))
+				.andDo(MockMvcResultHandlers.print());
 	}
 	
 }

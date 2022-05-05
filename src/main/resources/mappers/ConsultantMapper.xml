@@ -52,5 +52,48 @@
 		 WHERE A.CON_HDELETE = 'N'
 		 ORDER BY A.CON_NO DESC
 	</select>
+	
+	<!-- 상담 신청 상세 조회용 -->
+	<select id="selectConsultantHopeDetail" resultMap="consultantResultMap">
+		SELECT
+			   CON_NO
+			 , CON_WRITE_DATE
+			 , CON_HDATE
+			 , CON_HTIME
+			 , CON_HTITLE
+			 , CON_HCONTENT
+			 , CON_HUPDATE
+		  FROM TB_CONSULTANT
+		 WHERE CON_HDELETE = 'N'
+		   AND CON_NO = #{ conNo }
+	</select>
+	
+	<!-- 상담 일지 내역 조회용 -->
+	<select id="selectAllConsultantList" resultMap="consultantResultMap">
+		SELECT
+			   A.CON_NO
+			 , B.MEMBER_NAME
+			 , A.CON_HTITLE
+			 , CON_DATE
+			 , CON_IMP
+			 , CON_CONTENT
+		  FROM TB_CONSULTANT A
+		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE CON_DELETE = 'N'
+		 ORDER BY A.CON_NO DESC
+	</select>
+	
+	<!-- 상담 일지 등록용 -->
+	<update id="insertConsultant">
+		UPDATE
+			   TB_CONSULTANT
+		   SET CON_HANDLE = '완료'
+		   	 , CON_DATE = #{ conDate }
+		     , CON_TYPE = #{ conType }
+		     , CON_WAY = #{ conWay }
+		     , CON_IMP = #{ conImp }
+		     , CON_CONTENT = #{ conContent }
+		 WHERE CON_NO = #{ conNo }
+	</update>
 
 </mapper>

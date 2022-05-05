@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>con004</title>
+    <title>상담 관리</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -64,8 +64,7 @@
                                         <tbody>
                                             <tr>
                                                 <th class="col-lg-3">
-                                                    <label for="std" class="col-form-label">원생 <span
-                                                            id="pointtext">*</span></label>
+                                                    <label for="std" class="col-form-label">원생</label>
                                                 </th>
                                                 <td class="col-lg-9">
                                                     <div class="col-sm-10 col-lg-4">
@@ -79,7 +78,7 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
-                                                        <input type="date" class="form-control" id="conDate">
+                                                        <input type="date" class="form-control" id="conDate" name="conDate">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -90,14 +89,15 @@
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conType">
-                                                            <option selected>상담 유형</option>
-                                                            <option value="1">학업 문제</option>
-                                                            <option value="2">진로 문제</option>
-                                                            <option value="3">교우 문제</option>
-                                                            <option value="4">가정 문제</option>
-                                                            <option value="5">교육원 문제</option>
-                                                            <option value="6">기타</option>
+                                                            aria-label=".form-select-lg example" id="conType" name="conType">
+                                                            <optgroup label="상담 유형 선택">
+	                                                            <option value="학업 문제">학업 문제</option>
+	                                                            <option value="진로 문제">진로 문제</option>
+	                                                            <option value="교우 문제">교우 문제</option>
+	                                                            <option value="가정 문제">가정 문제</option>
+	                                                            <option value="교육원 문제">교육원 문제</option>
+	                                                            <option value="기타">기타</option>
+                                                            </optgroup>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -109,13 +109,13 @@
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conWay">
-                                                            <option selected>상담 방법</option>
-                                                            <option value="1">개인 면담</option>
-                                                            <option value="2">전화 면담</option>
-                                                            <option value="3">방문 상담</option>
-                                                            <option value="4">인터넷 상담</option>
-                                                            <option value="5">기타</option>
+                                                            aria-label=".form-select-lg example" id="conWay" name="conWay">
+                                                            <optgroup label="상담 방법">
+	                                                            <option value="개인 면담">개인 면담</option>
+	                                                            <option value="전화 면담">전화 면담</option>
+	                                                            <option value="방문 상담">방문 상담</option>
+	                                                            <option value="기타">기타</option>
+                                                            </optgroup>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -127,7 +127,7 @@
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conImp">
+                                                            aria-label=".form-select-lg example" id="conImp" name="conImp">
                                                             <option selected>중요도</option>
                                                             <option value="5">★★★★★</option>
                                                             <option value="4">★★★★☆</option>
@@ -140,37 +140,6 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="conHContent" class="col-form-label">상담 내용 <span
-                                                            id="pointtext">*</span></label>
-                                                    <p class="textCnt"><span id="conHCounter">0</span>/1000</p>
-                                                </th>
-                                                <td>
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <div class="con-input-group">
-                                                            <textarea class="form-control conHContent"
-                                                                aria-label="With textarea" id="conHContent"
-                                                                placeholder="상담 내용은 최소 10글자 이상 입력해주시기 바랍니다."
-                                                                minlength="10" required></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <script>
-                                                        $(".conHContent").keyup(function () {
-                                                            let inputLength = $(this).val().length;
-                                                            $("#conHCounter").text(inputLength);
-
-                                                            let remain = 1000 - inputLength;
-
-                                                            if (remain >= 0) {
-                                                                $("#conHCounter").css("color", "#8B169E");
-                                                            } else {
-                                                                $("#conHCounter").css("color", "#e03131");
-                                                            }
-                                                        });
-                                                    </script>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
                                                     <label for="conContent" class="col-form-label">상담 일지 내용 <span
                                                             id="pointtext">*</span></label>
                                                     <p class="textCnt"><span id="conCounter">0</span>/1000</p>
@@ -179,7 +148,7 @@
                                                     <div class="col-sm-10 col-lg-10">
                                                         <div class="con-input-group">
                                                             <textarea class="form-control conContent"
-                                                                aria-label="With textarea" id="conContent"
+                                                                aria-label="With textarea" id="conContent" name="conContent"
                                                                 placeholder="상담 일지 내용은 최소 20글자 이상 입력해주시기 바랍니다."
                                                                 minlength="20" required></textarea>
                                                         </div>
@@ -206,8 +175,7 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox">취소하기</button>
-                                    <button type="submit" class="btn btn-primary submitbuttonbox"
-                                    data-toggle="modal" data-target="#insertCon">등록하기</button>
+                                    <button type="submit" class="btn btn-primary submitbuttonbox">등록하기</button>
                                 </div>
                             </form>
                         </div>
@@ -232,28 +200,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- 등록 모달 -->
-    <div class="modal fade modal-bg-acc" id="insertCon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content modal-dml modal-content-yj">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">상담 일지를 등록하시겠습니까?</div>
-                <form action="" method="post">
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary resetbuttonbox" type="button" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary submitbuttonbox">확인</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- /등록 모달 -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

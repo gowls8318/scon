@@ -21,4 +21,7 @@ public interface ConsultantHopeMapper {
 	/* 상담 신청 수정용 */
 	int modifyConsultant(ConsultantDTO con);
 
+	/* 상담 신청 삭제용 */
+	int deleteConsultant(int no);
+
 }

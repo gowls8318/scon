@@ -31,17 +31,19 @@ public class ConsultantHopeController {
 		this.messageSource = messageSource;
 	}
 	
-	@GetMapping("/consultant/consultantList")
+	/* 상담 신청 내역 조회용 */
+	@GetMapping("/consultant/list")
 	public ModelAndView selectAllConsultantList(ModelAndView mv) {
 		
 		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList();
 		
 		mv.addObject("consultantList", consultantList);
-		mv.setViewName("student/consultant/consultantList");
+		mv.setViewName("student/consultant/list");
 		
 		return mv;
 	}
 	
+	/* 상담 신청 등록용 */
 	@GetMapping("/consultant/insertForm")
 	public String insertConsultantPage() {
 		
@@ -57,39 +59,57 @@ public class ConsultantHopeController {
 		/* MessageSource bean을 사용하려면 의존성 주입을 받아야 한다. */
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertConsultantHope", null, locale));
 		
-		return "redirect:/student/consultant/consultantList";
+		return "redirect:/student/consultant/list";
 	}
 	
-	@GetMapping("/consultant/consultantDetail/{conNo}")
-	public ModelAndView selectDetailPage(@PathVariable int conNo, ModelAndView mv) {
+	/* 상담 신청 상세 조회용 */
+//	@GetMapping("/consultant/detail/{conNo}")
+//	public ModelAndView selectDetailPage(@PathVariable int conNo, ModelAndView mv) {
+//		
+//		ConsultantDTO consultantDetail = consultantHopeService.selectConsultantDetail(conNo);
+//		
+//		mv.addObject("consultantDetail", consultantDetail);
+//		mv.setViewName("student/consultant/detail");
+//		
+//		return mv;
+//	}
+	
+	@GetMapping("/consultant/detail")
+	public String selectDetailPage(int no, Model model) {
 		
-		ConsultantDTO consultantDetail = consultantHopeService.selectConsultantDetail(conNo);
+		model.addAttribute("consultantDetail", consultantHopeService.selectConsultantDetail(no));
 		
-		mv.addObject("consultantDetail", consultantDetail);
-		mv.setViewName("student/consultant/consultantDetail");
-		
-		return mv;
+		return "student/consultant/detail";
 	}
 	
-	@GetMapping("/consultant/updateForm/{conNo}")
-	public ModelAndView updateConsultantPage(@PathVariable int conNo, ModelAndView mv) {
+	/* 상담 신청 수정용 */
+	@GetMapping("/consultant/updateForm")
+	public String updateConsultantPage(int no, Model model) {
 		
-		ConsultantDTO consultant = consultantHopeService.selectConsultantDetail(conNo);
+		model.addAttribute("consultant", consultantHopeService.selectConsultantDetail(no));
 		
-		mv.addObject("consultant", consultant);
-		mv.setViewName("student/consultant/updateForm");
-		
-		return mv;
+		return "student/consultant/updateForm";
 	}
 	
-	@PostMapping("/consultant/updateForm/{conNo}")
+	@PostMapping("/consultant/updateForm")
 	public String updateConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) throws Exception {
 		
 		consultantHopeService.modifyConsultant(con);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateConsultantHope", null, locale));
 		
-		return "redirect:/student/consultant/consultantList";
+		return "redirect:/student/consultant/list";
+	}
+	
+	/* 상담 신청 삭제용 */
+	@PostMapping("consultant/delete")
+	public String deleteConsultant(int no, RedirectAttributes rttr, Locale locale) {
+		
+		consultantHopeService.deleteConsultant(no);
+		
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteConsultantHope", null, locale));
+		
+		return "redirect:/student/consultant/list";
 	}
 	
 }

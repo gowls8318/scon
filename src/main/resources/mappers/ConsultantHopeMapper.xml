@@ -78,10 +78,13 @@
 	<!-- 상담 신청 상세 조회용 -->
 	<select id="selectConsultantDetail" resultMap="consultantResultMap">
 		SELECT
-			   CON_HDATE
+			   CON_NO
+			 , CON_WRITE_DATE
+			 , CON_HDATE
 			 , CON_HTIME
 			 , CON_HTITLE
 			 , CON_HCONTENT
+			 , CON_HUPDATE
 		  FROM TB_CONSULTANT
 		 WHERE CON_HDELETE = 'N'
 		   AND CON_NO = #{ conNo }
@@ -96,6 +99,14 @@
 		     , CON_HTITLE = #{ conHTitle }
 		     , CON_HCONTENT = #{ conHContent }
 		     , CON_HUPDATE = SYSDATE
+		 WHERE CON_NO = #{ conNo }
+	</update>
+	
+	<!-- 상담 신청 삭제용 -->
+	<update id="deleteConsultant">
+		UPDATE
+			   TB_CONSULTANT
+		   SET CON_HDELETE = 'Y'
 		 WHERE CON_NO = #{ conNo }
 	</update>
 
