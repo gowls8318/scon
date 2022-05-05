@@ -55,88 +55,61 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">상담 신청 수정</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">상담 신청 조회</h6>
                         </div>
                         <div class="card-body">
-                            <form action="/student/consultant/updateForm" method="post" name="consultantForm">
-                            	<input type="hidden" name="no" value="${ consultant.conNo }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
-                                        <tbody th:object="${ consultant }">
+                                        <tbody th:object="${ consultantDetail }">
+                                            <tr>
+                                                <th class="col-lg-3">
+                                                    <label for="clsName" class="col-form-label">신청일</label>
+                                                </th>
+                                                <td class="col-lg-9">
+                                                    <div th:text="*{ conWriteDate }" class="col-sm-10 col-lg-4">신청일</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <label for="memName" class="col-form-label">수정일</label>
+                                                </th>
+                                                <td>
+                                                    <div th:text="*{ conHUpdate }" class="col-sm-10 col-lg-4">수정일</div>
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <th>
                                                     <label for="conHDate" class="col-form-label">희망일</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10 col-lg-4">
-                                                        <input type="date" class="form-control" id="conHDate" name="conHDate"
-                                                        th:value="*{ conHDate }">
-                                                    </div>
+                                                    <!-- <div th:text="${#temporals.format(consultantDetail.conHDate, 'yyyy-MM-dd')}" class="col-sm-10 col-lg-4">2022-05-05</div> -->
+                                                    <div th:text="*{ conHDate }" class="col-sm-10 col-lg-4">2022-05-05</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>
                                                     <label for="conHTime" class="col-form-label">희망 시간</label>
                                                 </th>
-                                                <td>
-                                                    <div class="col-sm-10 col-lg-4">
-                                                        <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conHTime" name="conHTime"
-                                                            th:value="*{ conHTime }">
-                                                            <optgroup label="희망시간 선택">
-	                                                            <option value="09:00 ~ 09:50">09:00 ~ 09:50</option>
-	                                                            <option value="10:00 ~ 10:50">10:00 ~ 10:50</option>
-	                                                            <option value="11:00 ~ 11:50">11:00 ~ 11:50</option>
-	                                                            <option value="14:00 ~ 14:50">14:00 ~ 14:50</option>
-	                                                            <option value="15:00 ~ 15:50">15:00 ~ 15:50</option>
-	                                                            <option value="16:00 ~ 16:50">16:00 ~ 16:50</option>
-	                                                            <option value="17:00 ~ 17:50">17:00 ~ 17:50</option>
-                                                            </optgroup>
-                                                        </select>
-                                                    </div>
+                                                <td >
+                                                    <div th:text="*{ conHTime }" class="col-sm-10 col-lg-4">17:00 ~ 17:50</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="conHTitle" class="col-form-label">제목 <span
-                                                            id="pointtext">*</span></label>
+                                                    <label for="conHTitle" class="col-form-label">제목</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control" id="conHTitle" name="conHTitle"
-                                                        th:value="*{ conHTitle }" required>
-                                                    </div>
+                                                    <div th:text="*{ conHTitle }" class="col-sm-10 col-lg-10">상담 신청 제목</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="conHContent" class="col-form-label">내용 <span
-                                                            id="pointtext">*</span></label>
-                                                    <p class="textCnt"><span id="counter">0</span>/1000</p>
+                                                    <label for="conHContent" class="col-form-label">내용</label>
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-10">
-                                                        <div class="con-input-group">
-                                                            <textarea class="form-control conHContent" aria-label="With textarea"
-                                                                id="conHContent" name="conHContent"
-                                                                th:text="*{ conHContent }"
-                                                                minlength="10" required></textarea>
-                                                        </div>
+                                                        <div th:text="*{ conHContent }" class="con-input-group conHContentD">상담 신청 내용</div>
                                                     </div>
-                                                    <script>
-                                                        $("textarea").keyup(function () {
-                                                            let inputLength = $(this).val().length;
-                                                            $("#counter").text(inputLength);
-
-                                                            let remain = 1000 - inputLength;
-
-                                                            if (remain >= 0) {
-                                                                $("#counter").css("color", "#8B169E");
-                                                            } else {
-                                                                $("#counter").css("color", "#e03131");
-                                                            }
-                                                        });
-                                                    </script>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -145,11 +118,17 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    	th:onclick="cancelUpdate()">취소하기</button>
+                                    onclick="location.href='/student/consultant/list'">돌아가기</button>
+                                    <!-- <button type="button"
+                                        class="btn btn-primary btn-margin submitbuttonbox"
+                                        th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.conNo})} + '\';'">수정하기</button> -->
                                     <button type="button"
                                         class="btn btn-primary btn-margin submitbuttonbox"
-                                        th:onclick="updateConsultant([[${consultant.conNo}]])">수정하기</button>
+                                        th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.conNo})} + '\';'">수정하기</button>
+                                    <button type="button" class="btn btn-primary submitbuttonbox" th:onclick="deleteConsultant([[${consultantDetail.conNo}]])">삭제하기</button>
                                 </div>
+                            <form method="post" name="consultantForm">
+                            	<input type="hidden" name="no" value="${ consultantDetail.conNo }">
                             </form>
                         </div>
                     </div>
@@ -175,16 +154,10 @@
     </a>
 
     <script>
-    	function updateConsultant(no) {
-    		if(confirm('상담 신청 내용을 수정하시겠습니까?')) {
-    			document.forms.consultantForm.action = "updateForm?no=" + no;
+    	function deleteConsultant(no) {
+    		if(confirm('상담 신청 내역을 삭제하시겠습니까?')) {
+    			document.forms.consultantForm.action = "delete?no=" + no;
     			document.forms.consultantForm.submit();
-    		}
-    	}
-    	
-    	function cancelUpdate() {
-    		if(confirm('변경 사항이 저장되지 않습니다. \n상담 신청 수정을 취소하시겠습니까?')) {
-    			location.href = "/student/consultant/list";
     		}
     	}
     </script>

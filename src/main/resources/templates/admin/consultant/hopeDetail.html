@@ -34,7 +34,7 @@
     <div id="wrapper">
 
         <!-- sidebar include -->
-        <div th:replace="/common/studentSidebar.html"></div>
+        <div th:replace="/common/adminSidebar.html"></div>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -58,37 +58,37 @@
                             <h6 class="m-0 font-weight-bold text-primary">상담 신청 조회</h6>
                         </div>
                         <div class="card-body">
-                            <form action="/student/consultant/updateForm" method="post">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
-                                        <tbody th:object="${ consultantDetail }">
+                                        <tbody th:object="${ consultantHopeDetail }">
                                             <tr>
                                                 <th class="col-lg-3">
-                                                    <label for="clsName" class="col-form-label">강의명</label>
+                                                    <label for="clsName" class="col-form-label">신청일</label>
                                                 </th>
                                                 <td class="col-lg-9">
-                                                    <div class="col-sm-10 col-lg-4">국어</div>
+                                                    <div th:text="*{ conWriteDate }" class="col-sm-10 col-lg-4">신청일</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="memName" class="col-form-label">강사명</label>
+                                                    <label for="memName" class="col-form-label">수정일</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10 col-lg-4">이하린</div>
+                                                    <div th:text="*{ conHUpdate }" class="col-sm-10 col-lg-4">수정일</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="conHDate" class="col-form-label">상담 희망일</label>
+                                                    <label for="conHDate" class="col-form-label">희망일</label>
                                                 </th>
                                                 <td>
+                                                    <!-- <div th:text="${#temporals.format(consultantDetail.conHDate, 'yyyy-MM-dd')}" class="col-sm-10 col-lg-4">2022-05-05</div> -->
                                                     <div th:text="*{ conHDate }" class="col-sm-10 col-lg-4">2022-05-05</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="conHTime" class="col-form-label">상담 희망시간</label>
+                                                    <label for="conHTime" class="col-form-label">희망 시간</label>
                                                 </th>
                                                 <td >
                                                     <div th:text="*{ conHTime }" class="col-sm-10 col-lg-4">17:00 ~ 17:50</div>
@@ -118,14 +118,8 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    onclick="location.href='/student/consultant/consultantList'">돌아가기</button>
-                                    <button type="button"
-                                        class="btn btn-primary btn-margin submitbuttonbox"
-                                        th:onclick="'location.href=\'' + @{/student/consultant/updateForm/{conNo} (conNo=*{conNo})} + '\';'">수정하기</button>
-                                    <button type="button" class="btn btn-primary submitbuttonbox"
-                                    data-toggle="modal" data-target="#deleteConH">삭제하기</button>
+                                    onclick="location.href='/admin/consultant/hopeList'">돌아가기</button>
                                 </div>
-                            </form>
                         </div>
                     </div>
 
@@ -148,28 +142,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- 삭제 모달 -->
-    <div class="modal fade modal-bg-acc" id="deleteConH" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content modal-dml modal-content-yj">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">상담 신청을 삭제하시겠습니까?</div>
-                <form action="" method="post">
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary resetbuttonbox" type="button" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary submitbuttonbox">확인</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- /삭제 모달 -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

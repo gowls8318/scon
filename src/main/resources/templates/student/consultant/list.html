@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -25,6 +25,13 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
+    <script>
+    	const successMessage = '[[${successMessage}]]'
+    	if(successMessage) {
+    		alert(successMessage);
+    	}
+    </script>
 
 </head>
 
@@ -32,7 +39,7 @@
     <div id="wrapper">
 
         <!-- sidebar include -->
-        <div th:replace="/common/adminSidebar.html"></div>
+        <div th:replace="/common/studentSidebar.html"></div>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -57,14 +64,17 @@
                         </div>
                         <br>
                         <form class="form-inline" action="" method="get">
-                            <div class="col-lg-9"></div>
-                            <div class="search-area col-lg-3">
-                                <div class="form-group mx-sm-3">
-                                    <label for="search" class="sr-only"></label>
-                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()'
-                                        placeholder="검색어를 입력하세요">
+                            <div class="lec-flex col-12">
+                                <div class="row ml-2">
+                                    <button type="button" class="btn btn-primary btn-conh"
+                                    onclick="location.href='/student/consultant/insertForm'">상담 등록</button>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
+                                <div class="search-area col-lg-6">
+                                    <div class="form-group mx-sm-3">
+                                        <input type="text" class="form-control" id="accSearch" placeholder="검색어를 입력하세요">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-search">검색</button>
+                                </div>
                             </div>
                         </form>
                         <div class="card-body">
@@ -74,24 +84,20 @@
                                         <tr>
                                             <th>번호</th>
                                             <th>상담 신청일</th>
-                                            <th>원생</th>
                                             <th>상담 제목</th>
-                                            <th>처리 현황</th>
-                                            <th>관리</th>
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="conH : ${ consultantHopeList }">
+                                        <tr th:each="conH : ${ consultantList }">
                                             <td th:text="${ conH.conNo }">번호</td>
                                             <td th:text="${ conH.conWriteDate }">상담 신청일</td>
-                                            <td th:text="${ conH.member.name }">원생</td>
+                                            <!-- <td th:text="${ conH.conHTitle }" class="conHTitle"
+                                            th:onclick="'location.href=\'' + @{/student/consultant/detail/{conNo} (conNo=${conH.conNo})} + '\';'">상담 제목</td> -->
+                                            <!-- <td class="conHTitle">
+                                            	<a th:href="@{/student/consultant/detail(no=${conH.conNo})}">[[${conH.conHTitle}]]</a>
+                                            </td> -->
                                             <td th:text="${ conH.conHTitle }" class="conHTitle"
-                                            th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${conH.conNo})} + '\';'">상담 제목</td>
-                                            <td th:text="${ conH.conHandle }">처리 현황</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-con"
-                                                th:onclick="location.href='/admin/consultant/insertForm'">등록</button>
-                                            </td>
+                                            th:onclick="'location.href=\'' + @{/student/consultant/detail(no=${conH.conNo})} + '\';'">상담 제목</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -141,29 +147,16 @@
     </a>
 
     <!-- 입력 검색 -->
-    <!-- 원하는 td만 검색 -->
     <script>
-        function searchTable() {
-            var input, filter, table, tr, td, i, j, found;
-            input = document.getElementById("accSearch");
-            filter = input.value.toLowerCase();
-            table = document.getElementById("dataTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 1; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length - 1; j++) {
-                    if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
-                        found = true;
-                    }
-                }
-                if (found) {
-                    tr[i].style.display = "";
-                    found = false;
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
+        $(document).ready(function() {
+            $("#accSearch").keyup(function() {
+                var value = $(this).val().toLowerCase();
+                $(".accTbody tr").filter(function() {
+                    // 찾는 문자 없을 시 -1 반환
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
     </script>
 
     <!-- Bootstrap core JavaScript-->

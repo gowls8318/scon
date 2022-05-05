@@ -20,7 +20,7 @@ public class ConsultantDTO {
 	private Date conHUpdate;
 	private String conHDelete;
 	private String conHandle;
-	private Date conDate;
+	private String conDate;
 	private String conType;
 	private String conWay;
 	private int conImp;

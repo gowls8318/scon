@@ -103,4 +103,21 @@ public class ConsultantHopeServiceTests {
 		assertNotNull(result);
 	}
 	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("상담 신청 삭제용 서비스 메소드 테스트")
+	public void testDeleteConsultant() {
+		
+		// given
+		// DB에 있는 글 번호
+		int no = 40;
+		
+		// when
+		int result = consultantHopeService.deleteConsultant(no);
+		
+		// then
+		assertNotNull(result);
+	}
+	
 }

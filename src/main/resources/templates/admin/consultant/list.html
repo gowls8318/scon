@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>상담 신청</title>
+    <title>상담 관리</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,13 +25,6 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        
-    <script>
-    	const successMessage = '[[${successMessage}]]'
-    	if(successMessage) {
-    		alert(successMessage);
-    	}
-    </script>
 
 </head>
 
@@ -39,7 +32,7 @@
     <div id="wrapper">
 
         <!-- sidebar include -->
-        <div th:replace="/common/studentSidebar.html"></div>
+        <div th:replace="/common/adminSidebar.html"></div>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -60,21 +53,17 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">상담 신청 내역</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">상담 일지 내역</h6>
                         </div>
                         <br>
                         <form class="form-inline" action="" method="get">
-                            <div class="lec-flex col-12">
-                                <div class="row ml-2">
-                                    <button type="button" class="btn btn-primary btn-conh"
-                                    onclick="location.href='/student/consultant/insertForm'">상담 등록</button>
+                            <div class="col-lg-9"></div>
+                            <div class="search-area col-lg-3">
+                                <div class="form-group mx-sm-3">
+                                    <label for="search" class="sr-only"></label>
+                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()' placeholder="원생 이름을 입력하세요">
                                 </div>
-                                <div class="search-area col-lg-6">
-                                    <div class="form-group mx-sm-3">
-                                        <input type="text" class="form-control" id="accSearch" placeholder="검색어를 입력하세요">
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-search">검색</button>
-                                </div>
+                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
                             </div>
                         </form>
                         <div class="card-body">
@@ -83,18 +72,22 @@
                                     <thead>
                                         <tr>
                                             <th>번호</th>
-                                            <th>상담 신청일</th>
-                                            <th>담당 강사</th>
+                                            <th>상담일</th>
+                                            <th>원생</th>
+                                            <th>중요도</th>
                                             <th>상담 제목</th>
+                                            <th>상담 일지 내용</th>
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="conH : ${ consultantList }">
-                                            <td th:text="${ conH.conNo }">번호</td>
-                                            <td th:text="${ conH.conWriteDate }">상담 신청일</td>
-                                            <td>담당 강사</td>
-                                            <td th:text="${ conH.conHTitle }" class="conHTitle"
-                                            th:onclick="'location.href=\'' + @{/student/consultant/consultantDetail/{conNo} (conNo=${conH.conNo})} + '\';'">상담 제목</td>
+                                        <tr th:each="con : ${ consultantList }">
+                                            <td th:text="${ con.conNo }">번호</td>
+                                            <td th:text="${ con.conDate }">상담일</td>
+                                            <td th:text="${ con.member.name }">원생</td>
+                                            <td th:text="${ con.conImp }">중요도</td>
+                                            <td th:text="${ con.conHTitle }" class="conHTitle"
+                                            th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${con.conNo})} + '\';'">상담 제목</td>
+                                            <td th:text="${ con.conContent }" class="conTitle">상담 일지 내용</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -144,16 +137,26 @@
     </a>
 
     <!-- 입력 검색 -->
+    <!-- 원하는 td만 검색 -->
     <script>
-        $(document).ready(function() {
-            $("#accSearch").keyup(function() {
-                var value = $(this).val().toLowerCase();
-                $(".accTbody tr").filter(function() {
-                    // 찾는 문자 없을 시 -1 반환
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
+        function searchTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("accSearch");
+            filter = input.value.toLowerCase();
+            table = document.getElementById("dataTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    txtValue = td.innerHTML;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
     </script>
 
     <!-- Bootstrap core JavaScript-->
