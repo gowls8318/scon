@@ -10,5 +10,7 @@ import com.scon.project.admin.notice.model.dto.NoticeDTO;
 public interface NoticeMapper {
 
 	List<NoticeDTO> findAllNoticeList();
+	
+	int registNotice(NoticeDTO menu);
 
 }
