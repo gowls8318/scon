@@ -36,7 +36,7 @@ public class UserImpl extends User {
 	public void setDetails(MemberDTO member) {
 		this.id = member.getId();
 		this.name = member.getName();
-		this.pwd = member.getPwd();
+		this.pwd = member.getPassword();
 		this.tempPwdYN = member.getTempPwdYN();
 		this.phone = member.getPhone();
 		this.email = member.getEmail();

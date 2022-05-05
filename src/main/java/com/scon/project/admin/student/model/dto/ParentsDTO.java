@@ -17,7 +17,7 @@ public class ParentsDTO {
 	private String id;
 	private String parentsType;
 	private String parentsName;
-	private String phone;
+	private String parentsPhone;
 	
 	
 }

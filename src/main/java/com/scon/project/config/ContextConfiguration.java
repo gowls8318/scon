@@ -1,13 +1,14 @@
 package com.scon.project.config;
 
 import org.springframework.context.MessageSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 @ComponentScan("com.scon.project")
 public class ContextConfiguration {
@@ -28,5 +29,10 @@ public class ContextConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 
+	
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
+	}
 
 }

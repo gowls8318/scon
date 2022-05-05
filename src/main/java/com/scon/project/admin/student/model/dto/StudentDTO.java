@@ -1,14 +1,17 @@
 package com.scon.project.admin.student.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class StudentDTO {
 	/*
 	MEMBER_ID	VARCHAR2(30 BYTE)	No		1	회원아이디
@@ -22,10 +25,11 @@ public class StudentDTO {
 	private String id;					//회원 Id
 	private String studentType;			//학생유형
 	private String schoolName;			//학교	
-	private int schoolGrade;			//학년
+	private String schoolGrade;			//학년
 	private String schoolClass;			//학급(반)
 	private String consult;				//상담내용
-	
+
+	@JsonIgnore
 	private MemberDTO member;			//회원 기본정보
 	private ProfileDTO profile; 		//프로필 사진
 	private ParentsDTO parents;			//학부모 정보 

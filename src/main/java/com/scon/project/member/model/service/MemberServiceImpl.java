@@ -2,6 +2,7 @@ package com.scon.project.member.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +64,19 @@ public class MemberServiceImpl implements MemberService{
 		// return new User(member.getId(), member.getPwd(), authorities);
 		
 		/* User 객체에 담기지 않는 추가 정보를 User 객체를 extends한 UserImpl에 담아서 리턴한다. */
-		UserImpl user = new UserImpl(member.getId(), member.getPwd(), authorities);
+		UserImpl user = new UserImpl(member.getId(), member.getPassword(), authorities);
 		user.setDetails(member);
 		
 		return user;
 	}
+
+
+	@Override
+	public int insertMember(MemberDTO member) {
+		
+		return memberMapper.insertMember(member);
+	}
+
 
 
 }

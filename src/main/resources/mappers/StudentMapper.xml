@@ -19,7 +19,7 @@
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="name" column="MEMBER_NAME"/>
-		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="password" column="MEMBER_PWD"/>
 		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
@@ -52,8 +52,8 @@
 		<id property="fileId" column="FILE_ID"/>
 		<result property="fileOrginName" column="FILE_ORGNAME"/>
 		<result property="fileSaveName" column="FILE_SAVENAME"/>
-		<result property="filePathName" column="FILE_PATH"/>
-		<result property="fileTypeName" column="FILE_TYPE"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileType" column="FILE_TYPE"/>
 		<result property="fileThumnailPathName" column="FILE_THUM_PATH"/>
 		<result property="fileThumnailName" column="FILE_THUM.NAME"/>
 	</resultMap>
@@ -62,7 +62,7 @@
 		<id property="id" column="REF_MEMBER_ID3"/>
 		<result property="parentsType" column="PARENTS_TYPE"/>
 		<result property="parentsName" column="PARENTS_NAME"/>
-		<result property="phone" column="PHONE"/>
+		<result property="parentsPhone" column="PHONE"/>
 	</resultMap>
 	
 
@@ -79,12 +79,30 @@
 		)
 		VALUES
 		(
-		, #{ id }
+		  #{ id }
 		, #{ studentType }
 		, #{ schoolName }
 		, #{ schoolGrade }
 		, #{ schoolClass }
 		, #{ consult }
+		)
+	</insert>
+	
+	<insert id="insertParents">
+		INSERT
+		  INTO TB_PARENTS
+		(
+		  MEMBER_ID
+		, PARENTS_TYPE
+		, PARENTS_NAME
+		, PHONE
+		)
+		VALUES
+		(
+		  #{ id }
+		, #{ parentsType }
+		, #{ parentsName }
+		, #{ parentsPhone }
 		)
 	</insert>
 	
@@ -115,7 +133,7 @@
 	</select>
 	
 	
-		<select id="findStudentById" resultMap="studentResultMap">
+	<select id="findStudentById" resultMap="studentResultMap">
 		SELECT
 		       A.MEMBER_ID
 		     , A.MEMBER_NAME  
@@ -163,7 +181,47 @@
 	</select>
 	
 	
+	<insert id="insertFile">
 	
+		INSERT
+		  INTO TB_FILE
+		  (
+		   FILE_ID
+	 	 , FILE_ORGNAME
+		 , FILE_SAVENAME
+		 , FILE_PATH
+		 , FILE_TYPE
+		 , FILE_THUM_PATH
+		 , FILE_THUM_NAME
+		  )
+		 VALUES(
+		 	SEQ_FILE_NO.NEXTVAL
+		 , #{ fileOrginName }
+		 , #{ fileSaveName }
+		 , #{ filePath }
+		 , #{ fileType }
+		 , null
+		 , null
+		 )
+	</insert>
+
+	<insert id="insertProfile">
+	
+	<selectKey keyProperty="fileNo" order="BEFORE" resultType="long">
+		SELECT LAST_NUMBER
+		  FROM USER_SEQUENCES
+		 WHERE SEQUENCE_NAME = 'SEQ_FILE_NO'
+	</selectKey>	
+
+		INSERT 
+		  INTO TB_PROFILE
+		  VALUES 
+		  (
+		    #{ id }
+		  , #{ fileNo }
+		  )
+	
+	</insert>
 	
 
 

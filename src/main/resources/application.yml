@@ -1,9 +1,9 @@
 # server port config
 server:
   port: 8001
-  servlet:
-   session:
-    timeout: 3200
+#  servlet:
+#   session:
+#    timeout: 32000
   
 # oracle driver config
 spring:
@@ -16,4 +16,5 @@ spring:
 # Mybatis config
 mybatis:
   mapper-locations: mappers/**/*.xml
-  
+  configuration:
+    jdbc-type-for-null: 'NULL'

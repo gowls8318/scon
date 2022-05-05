@@ -79,7 +79,7 @@ upbtn.forEach((el, index) => {
 
 /* 유효성 검사 후 Help메세지 출력 */
 	//아이디
-	var msg1 = document.getElementById('userId');
+	var msg1 = document.getElementById('id');
 	var result1 = document.getElementById('idHelp');
 	//비밀번호
 	var msg2 = document.getElementById('password');
@@ -116,8 +116,8 @@ upbtn.forEach((el, index) => {
 function checkAll() {
 	
 	//필수정보 9개
+	let id = form.id.value;
 	let name = form.name.value;
-	let userId = form.userId.value;
 	let password = form.password.value;
 	let email = form.email.value;
 	let phone = form.phone.value;
@@ -131,7 +131,7 @@ function checkAll() {
 	let schoolName = form.schoolName.value;
 	let schoolGrade = form.schoolGrade.value;
 	let schoolClass = form.schoolClass.value;
-	let conslut = form.consult.value;
+	let consult = form.consult.value;
 	
 	//학부모정보 3개
 	let parentsName =  form.parentsName.value;
@@ -141,9 +141,9 @@ function checkAll() {
 	//프로필사진 1개
 	let file = document.querySelector('#profile');
 	
-	const body = JSON.stringify({
+	const member = JSON.stringify({
+      id : id,
       name: name,
-      userId : userId,
       password : password,
       email : email,
       phone : phone,
@@ -151,53 +151,61 @@ function checkAll() {
       birthDay : birthDay,
       enrollDate : enrollDate,
       address : address,
+       });
+       
+     const student = JSON.stringify({ 
+	  id : id,
       studentType :studentType,
       schoolName : schoolName,
       schoolGrade : schoolGrade,
       schoolClass : schoolClass,
-      conslut : conslut,
+      consult : consult,
+      });
+      
+     const parents = JSON.stringify({
+	  id : id,
       parentsName : parentsName,
       parentsType : parentsType,
       parentsPhone : parentsPhone
-      
+ 
       });
 
-	console.log(body);
 	
 	//formData에 append
 	let formData = new FormData()
 	
 	formData.append("file", file.files[0]);
-	formData.append("body", body);
+	formData.append("member", member);
+	formData.append("student", student);
+	formData.append("parents", parents);
 
 	
 	// FormData의 값 확인
 	for (var pair of formData.entries()) {
 		 console.log(pair[0]+ ', ' + pair[1]);
 	}
+	
 
-$.ajax({
-	  type: "POST",
-      url: '/admin/studentRegist',
-      data: JSON.stringify(formData),
-      contentType: false,               
-      processData: false,               
-      enctype : 'multipart/form-data',  
-      success: function(data) {
-        if (result.SUCCESS == true) {
-         alert("성공");
-        } else {
-         alert("실패");
-         }
-      }
-});
+		$.ajax({
+			  type: "POST",
+		      url: '/admin/studentRegist',
+		      data: formData,              
+		      processData: false,   
+		      contentType: false,    
+		      enctype : 'multipart/form-data',  
+		      success: function(data) {
+		      
+		         alert("성공");
+
+		      }
+		});
 
 
 	if (!checkName(name)) {
 		return false;
-	} else if (!checkUserId(userId)) {
+	} else if (!checkid(memberId)) {
 		return false;
-	} else if (!checkPassword(userId, password)) {
+	} else if (!checkPassword(memberId, password)) {
 		return false;
 	} else if (!checkEmail(email)) {
 		return false;
@@ -220,7 +228,7 @@ function checkExistData(value, dataName) {
 	return true;
 }
 
-function checkUserId(id) {
+function checkid(id) {
 	//Id가 입력되었는지 확인하기
 	if (!checkExistData(id, "아이디를"))
 		return false;
@@ -229,8 +237,8 @@ function checkUserId(id) {
 	if (!idRegExp.test(id)) {
 		document.getElementById('idHelp').innerHTML =
 			"아이디는 영문 대소문자와 숫자 4~12자리로 입력해야합니다!";
-		form.userId.value = "";
-		form.userId.focus();
+		form.id.value = "";
+		form.id.focus();
 		return false;
 	}
 	return true; //확인이 완료되었을 때
