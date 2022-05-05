@@ -63,13 +63,19 @@ public class GradeServiceImpl implements GradeService{
 		return false;
 	}
 
+	/* 성적 수정 */
+	@Override
+	public int updateGrade(GradeDTO gradeDTO) throws Exception {
+		return gradeMapper.updateGrade(gradeDTO);
+	}
 
 
-	
-	
-	
-	
-	
-	
+	//성적 삭제
+//	@Override
+//	public int deleteGrade(int gradeId) throws Exception {
+//		return gradeMapper.deleteGrade(gradeId);
+//	}
+
+
 	
 }

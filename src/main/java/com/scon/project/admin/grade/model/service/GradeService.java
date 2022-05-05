@@ -13,6 +13,10 @@ public interface GradeService {
 
 	List<MemberDTO> findAllStudent(int clsId);
 
-	
+	int updateGrade(GradeDTO gradeDTO) throws Exception;
+
+	//int deleteGrade(int gradeId) throws Exception;
+
+
 
 }

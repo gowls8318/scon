@@ -35,12 +35,13 @@
      .pagination{ float: right; }
 
 	 #table-scroll{
-        height: 500px;
+        height: 250px;
         overflow: auto;
     }
     
     #btn-collection{
     	padding-bottom: 10px;
+    	
     }
     
 </style>
@@ -73,7 +74,7 @@
             </div>
                 <hr class="border-bottom-primary">
 
-                <button type="button" class="btn btn-primary" th:onclick="|loation.href='@{/admin/insertGrade}'|">성적 추가 하기</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='/admin/insertGrade'">성적 추가 하기</button>
 
 
                     <br><br>
@@ -102,27 +103,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <form id="check-form">
                                         <tr th:each="grade : ${ gradeList }">
                                             <td>
                                                 <span class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="checked" id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                    </label>
+                                                	<input class="form-check-input btn-check" type="checkbox" name="gradeIdArr" id="flexCheckDefault" th:value="${grade.gradeId}">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                </label>
                                             </td>
-                                            <td th:text="${ grade.memberId}"></td>
-                                            <td th:text="${ grade.clsId }"></td>
-                                            <td th:text="${ grade.grade}"></td>
+                                            <input type="hidden" th:value="${grade.gradeId}" class="gradeId" />
+                                            <td th:text="${ grade.memberName}" class="memberName"></td>
+                                            <td th:text="${ grade.clsName }" class="clsName"></td>
+                                            <td th:text="${ grade.grade }" class="grade"></td>
                                             <td th:text="${ grade.gradeDate}"></td>
                                         </tr>
+                                        </form>
                                     </tbody>
-                                <!--  </div>  -->
+                           <!---->  </div> 
                                 </table>
                             </div>
                          </div>
-                        
-                         
-                            
-                            <!--- 수정 삭제 버튼 --->
+                         <!--- 수정 삭제 버튼 --->
                                 <div class="container" id="btn-collection">
                                     <div class="row">
                                     <div class="col text-center">
@@ -133,7 +134,14 @@
                                         </button>
                                     </div>
                                     </div>
-                                </div>
+                                </div>        
+                        <!-- 푸터 --> 
+                        </div>
+                        
+                         
+                            
+                            
+                              
                                 
                         	<!-- 페이징 -->
                      <!--        <nav aria-label="Page navigation example">
@@ -170,24 +178,24 @@
 
 
             <!-- Modal (삭제 모달)-->
-                <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">성적 삭제</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                                </div>
-                                    <div class="modal-body">
-                                        삭제 하시겠습니까?
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                    <button type="submit" class="btn btn-primary delete-btn">삭제</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+             <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title" id="exampleModalLabel">성적 삭제</h5>
+                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">×</span>
+                             </div>
+                                 <div class="modal-body">
+                                     삭제 하시겠습니까?
+                                 </div>
+                                 <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                 <button type="submit" class="btn btn-primary delete-btn">삭제</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
 
 
 
@@ -204,27 +212,28 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                       	<input type="hidden" name="gradeId" id="gradeId" />
                         <div class="row mb-3">
                             <div class="col-lg-1"></div>
-                            <label for="std" class="col-sm-2 col-form-label col-lg-3">원생</label>
+                            <label for="stdName" class="col-sm-2 col-form-label col-lg-3">원생</label>
                             <div class="col-sm-10 col-lg-7">
-                                <input type="text" class="form-control" id="std" readonly>
+                                <input type="text" class="form-control" id="stdName" readonly>
                             </div>
                             <div class="col-lg-1"></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-1"></div>
-                            <label for="clsId" class="col-sm-2 col-form-label col-lg-3">수강 강의</label>
+                            <label for="clsName" class="col-sm-2 col-form-label col-lg-3">수강 강의</label>
                             <div class="col-sm-10 col-lg-7">
-                                <input type="text" class="form-control" id="clsId" readonly>
+                                <input type="text" class="form-control" id="clsName" readonly>
                             </div>
                             <div class="col-lg-1"></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-1"></div>
-                            <label for="lecPay" class="col-sm-2 col-form-label col-lg-3">점수 입력</label>
+                            <label for="grade" class="col-sm-2 col-form-label col-lg-3">점수 입력</label>
                             <div class="col-sm-10 col-lg-7">
-                                <input type="text" class="form-control" id="lecPay">
+                                <input type="text" class="form-control" id="grade">
                             </div>
                             <div class="col-lg-1"></div>
                         </div>
@@ -246,29 +255,7 @@
     </div>
     <!-- /accModal1 -->
           
-	<script>
-        function beforeCheck(){
-            if($("input:checkbox[name=checked]").is(":checked") && $("input:checkbox[name=checked]:checked").length == 1) {
-            $("#accModal1").modal("show");
-        } else if($("input:checkbox[name=checked]").is(":checked") && $("input:checkbox[name=checked]:checked").length > 1) {
-            alert("학생을 한명만 선택 해주세요.");
-        } else {
-            alert("선택된 학생이 없습니다.");
-        }
-    };
-
-    function closeModal() {
-        $("#accModal1").modal("hide");
-    }
-    
-    function beforeCheck2(){
-        if($("input:checkbox[name=checked]").is(":checked") && $("input:checkbox[name=checked]:checked").length >= 1) {
-        $("#delete-modal").modal("show");
-    }  else {
-        alert("선택된 학생이 없습니다.");
-    }
-};
- </script>
+	
 
 
 	</div>
@@ -292,8 +279,63 @@
     <script src="/js/demo/chart-pie-demo.js"></script>
     <script src="/js/demo/datatables-demo.js"></script>  
 
-    <!-- Sweet Alert -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    
+    <script>
+			// 성적 수정 모달
+			$(".update-btn").on('click', function() {
+				let grade = $("#grade").val()
+	        	let gradeId = $("#gradeId").val()
+	        	
+	        	let data = {
+					'grade' : grade,
+					'gradeId' : gradeId
+				}
+	        	$.ajax({
+					type: 'POST', 						
+					url: '/admin/grade', 							
+					data: data, 						
+				
+					success: function(data) { 					
+						location.reload()
+					},
+					error: function(xhr) { 
+						console.log("수정 실패")
+					}
+				
+				})
+			});
+			
+		//수정 모달 (원생명, 수강 강의 값 자동 넣기/중복 체크 여부 확인)
+        function beforeCheck() {
+            if($(".btn-check").is(":checked") && $(".btn-check:checked").length == 1) {
+            	let curCheck = $(".btn-check:checked");
+            	let index= $(".btn-check").index(curCheck);
+            	let memberName = $(".memberName").eq(index).text();
+            	let clsName = $(".clsName").eq(index).text();
+            	let grade = $(".grade").eq(index).text();
+            	let gradeId = $(".gradeId").eq(index).val();
+            	
+            	$("#stdName").val(memberName);
+            	$("#clsName").val(clsName);
+            	$("#grade").val(grade);
+            	$("#gradeId").val(gradeId);
+            	
+	            $("#accModal1").modal("show");
+	        } else if($(".btn-check").is(":checked") && $(".btn-check:checked").length > 1) {
+	            alert("학생을 한명만 선택 해주세요.");
+	        } else {
+	            alert("선택된 학생이 없습니다.");
+	        }
+	    }
+
+        //모달 닫기 
+	    function closeModal() {
+	        $("#accModal1").modal("hide");
+	    }
+
+
+ </script>
 
 </body>
 
