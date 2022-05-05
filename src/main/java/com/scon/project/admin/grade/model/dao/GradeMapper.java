@@ -16,5 +16,10 @@ public interface GradeMapper {
 
 	List<MemberDTO> findAllStudent(int classId);
 
+	int updateGrade(GradeDTO gradeDTO) throws Exception;
+	
+//	int deleteGrade(int gradeId) throws Exception;
+
+
 	
 }
