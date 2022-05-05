@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.academy.model.dao.AcademyMapper">
+
+	<resultMap id="academyResultMap" type="com.scon.project.admin.academy.model.dto.AcademyDTO">
+		<id property="busCode" column="BUS_CODE"/>
+		<result property="busNum" column="BUS_NUM"/>
+		<result property="busTitle" column="BUS_TITLE"/>
+		<result property="busRep" column="BUS_REP"/>
+		<result property="busPhone" column="BUS_PHONE"/>
+		<result property="busFax" column="BUS_FAX"/>
+		<result property="busAdr" column="BUS_ADR"/>
+		<result property="busHompy" column="BUS_HOMPY"/>
+	</resultMap>
+	
+	<select id="selectAcademyInfo" resultMap="academyResultMap">
+		SELECT
+		       BUS_CODE
+		     , BUS_NUM
+		     , BUS_TITLE
+		     , BUS_REP
+		     , BUS_PHONE
+		     , BUS_FAX
+		     , BUS_ADR
+		     , BUS_HOMPY		     
+		  FROM TB_BUSINESS
+	</select>
+
+</mapper>
