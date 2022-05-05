@@ -103,57 +103,59 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr></tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th>
-                                            작성자 <span id="pointtext">*</span>
-                                        </th>
-                                        <td>
-                                            <input class="form-control" type="text" placeholder="관리자" 
-                                            aria-label="Disabled input example" disabled>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            제목 <span id="pointtext">*</span>
-                                        </th>
-                                        <td>
-                                            <input class="form-control" type="text" placeholder="" 
-                                            aria-label="default input example">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>파일첨부</th>
-                                        <td>
-                                            <form method="post" enctype="multipart/form-data"> 
-                                                <label for="file-input"></label> 
-                                                <input id="file-input" type="file" /> 
-                                            </form>
-
-
-                                            <!-- <form method="post" enctype="multipart/form-data">
-                                                <div class="form-group">
-                                                <label for="exampleFormControlFile1">파일 선택</label>
-                                                <input type="file" class="form-control-file notiFile" id="exampleFormControlFile1">
-                                                </div>
-                                            </form> -->
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>내용 <span id="pointtext">*</span></th>
-                                        <td>
-                                            <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            	<form action="/admin/notiForm" method="post">
+	                                <table class="table">
+	                                    <thead>
+	                                    <tr></tr>
+	                                    </thead>
+	                                    <tbody>
+	                                    <tr>
+	                                        <th>
+	                                            작성자 <span id="pointtext">*</span>
+	                                        </th>
+	                                        <td>
+	                                            <input class="form-control" type="text" placeholder="관리자" 
+	                                            aria-label="Disabled input example" disabled>
+	                                        </td>
+	                                    </tr>
+	                                    <tr>
+	                                        <th>
+	                                            제목 <span id="pointtext">*</span>
+	                                        </th>
+	                                        <td>
+	                                            <input class="form-control" type="text" placeholder="" 
+	                                            aria-label="default input example">
+	                                        </td>
+	                                    </tr>
+	                                    <tr>
+	                                        <th>파일첨부</th>
+	                                        <td>
+	                                            <form method="post" enctype="multipart/form-data"> 
+	                                                <label for="file-input"></label> 
+	                                                <input id="file-input" type="file" /> 
+	                                            </form>
+	
+	
+	                                            <!-- <form method="post" enctype="multipart/form-data">
+	                                                <div class="form-group">
+	                                                <label for="exampleFormControlFile1">파일 선택</label>
+	                                                <input type="file" class="form-control-file notiFile" id="exampleFormControlFile1">
+	                                                </div>
+	                                            </form> -->
+	                                        </td>
+	                                    </tr>
+	                                    <tr>
+	                                        <th>내용 <span id="pointtext">*</span></th>
+	                                        <td>
+	                                            <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3"></textarea>
+	                                        </td>
+	                                    </tr>
+	                                    </tbody>
+	                                </table>
+                            	</form>
                             </div>
                             <div class="row buttonbox">                                
-                                <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#submitModal" type="submit">등록</button>
+                                <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" data-target="#submitModal" type="submit">등록</button>
                             </div>
                         </div>
                     </div>
@@ -180,7 +182,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- 삭제 확인 Modal-->
+<!--     삭제 확인 Modal
     <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -192,13 +194,15 @@
                     </button>
                 </div>
                 <div class="modal-body">등록하시려면 확인버튼을 눌러주세요.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" href="/notiTables.html">확인</button>
-                </div>
+                <form action="" method="post">
+	                <div class="modal-footer">
+	                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+	                    <button class="btn btn-primary" type="submit" data-dismiss="modal">확인</button>
+	                </div>
+                </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

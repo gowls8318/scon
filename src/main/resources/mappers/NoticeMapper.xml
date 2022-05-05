@@ -29,6 +29,24 @@
 	</select>
 	
 	
+	<insert id="registNotice">
+		INSERT
+		  INTO TB_NOTICE
+		(
+		  NOTI_NO
+		, NOTI_TITLE
+		, NOTI_CONTENT
+		, NOTI_DATE
+		)
+		VALUES
+		(
+		  SEQ_NOTI_NO.NEXTVAL
+		, #{ notiTitle }
+		, #{ notiContent }
+		, NOW()
+		)
+	</insert>
+
 
 
 </mapper>

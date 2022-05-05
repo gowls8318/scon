@@ -20,9 +20,22 @@ public class NoticeServiceImpl implements NoticeService {
 		this.noticeMapper = noticeMapper;
 	}
 
+//	목록조회
 	@Override
 	public List<NoticeDTO> findAllNoticeList() {
 		return noticeMapper.findAllNoticeList();
+	}
+	
+// 게시글 등록
+	@Override
+	public boolean registNotice(NoticeDTO notice) throws Exception {
+		int result = noticeMapper.registNotice(notice);
+		
+		if(result <= 0) {
+			throw new Exception("메뉴 등록에 실패하였습니다.");
+		}
+		
+		return result > 0 ? true : false;
 	}
 
 

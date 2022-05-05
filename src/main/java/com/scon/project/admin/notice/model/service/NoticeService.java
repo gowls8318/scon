@@ -8,4 +8,6 @@ public interface NoticeService {
 
 	List<NoticeDTO> findAllNoticeList();
 
+	boolean registNotice(NoticeDTO notice) throws Exception;
+
 }
