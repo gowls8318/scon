@@ -61,6 +61,8 @@ input[type="checkbox"]::before {
 
 
 			<!-- Main Content -->
+			
+		
 			<div id="content">
 				<!-- Begin Page Content -->
 
@@ -97,8 +99,7 @@ input[type="checkbox"]::before {
 
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th style="text-align: center">과목</th>
@@ -110,32 +111,40 @@ input[type="checkbox"]::before {
 										</tr>
 									</thead>
 									
-									
-<!-- 									<form th:action="@{/admin/classList}" method="post">
-										<tr th:each="classList : ${ classList }">
-											<td th:text="&{classList."										
+								
+								<!-- 
+								
+								<tr th:each="classDTO : ${ classList }">
+											<th th:text="${ classDTO.clsSubject}" style="text-align: center">과목</th>
+											<th  th:text="${ classDTO.member.memberId }" style="text-align: center">강사</th>
+											<th th:text="${ classDTO.clsName }" style="text-align: center">강의명</th>
+											<th th:text="|${ classDTO.clsStart}, ${ class.clsEnd}|" style="text-align: center">수업일</th>
+											<th th:text="${ classDTO.clsRoom }" style="text-align: center">강의실</th>
+											<th style="text-align: center">Action</th>
 										</tr>
-									</form> -->
+								
+								 -->
 									
-
-									<tbody style="text-align: center">
-										<tr>
-											<td>다</td>
-											<td>우별림</td>
+			
+									<tbody class="classBody" style="text-align: center">
+									<tr th:each="class : ${ classList }">
+											<td th:text="${ class.clsSubject }"></td>
+											 <td th:text="${ class.member.name }"></td> 
+											
+											
 											<td>
-												<!-- 클릭 시 상세보기 모달창 --> <text type="text" data-toggle="modal"
-													data-target=".bd-example-modal-lg">모달창테스트 클릭하세요.</text>
+											<span th:each="Allclass : ${ classAllList }">
+												<!-- 클릭 시 상세보기 모달창 --> 
+												<text th:text="${ Allclass.clsName }" type="text" data-toggle="modal" data-target=".bd-example-modal-lg"></text>
 
 												<div class="modal fade bd-example-modal-lg" tabindex="-1"role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-													<div class="modal-dialog modal-lg">
-														<div class="modal-content">
+													<div class="modal-dialog modal-lg" >
+														<div class="modal-content" >
 
 															<!-- 과목정보 -->
 															<div class="card shadow mb-4">
-																<div class="card-body">
-																	<h5
-																		style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E; text-align: left">
-																		과목정보</h5>
+																<div class="card-body" >
+																	<h5 style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E; text-align: left">과목정보</h5>
 																	<div class="mx-auto  row">
 																		<div class=" mx-auto row align-items-center">
 
@@ -144,18 +153,17 @@ input[type="checkbox"]::before {
 																					id="basic-addon1" style="width: 8em">과목명</span>
 																			</div>
 																			<div class="col-8" style="margin-top: 1em;">
-																				<input type="text" class="infoformbox form-control"
-																					aria-label="Username" placeholder="스프링프레임워크"
-																					aria-describedby="basic-addon1">
+																				<input th:text="${Allclass.clsSubject}" type="text" class="infoformbox form-control">
 																			</div>
 																			<div class="col-auto" style="margin-top: 1em;">
 																				<span class="coloumnamebox input-group-text"
-																					id="basic-addon1" style="width: 8em">강사명</span>
+																					id="basic-addon1" style="width: 8em" >강사명</span>
 																			</div>
 																			<div class="col-8" style="margin-top: 1em;">
 																				<input type="text" class="infoformbox form-control"
-																					aria-label="Username" placeholder="우별림쌤"
+																					aria-label="Username"  th:text="${ classAllList.member.name }"
 																					aria-describedby="basic-addon1">
+																					
 																			</div>
 																			<div class="col-auto" style="margin-top: 1em;">
 																				<span class="coloumnamebox input-group-text"
@@ -164,10 +172,11 @@ input[type="checkbox"]::before {
 																			</div>
 																			<div class="col-8" style="margin-top: 1em;">
 																				<input type="text" class="infoformbox form-control"
-																					aria-label="Username" placeholder="32"
+																					aria-label="Username" th:text="${Allclass.clsStuNum }"
 																					aria-describedby="basic-addon1">
 																			</div>
-																		</div>
+																	</div>
+																	
 
 
 																		<div class="col-auto" style="margin-top: 1em;">
@@ -177,7 +186,7 @@ input[type="checkbox"]::before {
 																		</div>
 																		<div class="col-8" style="margin-top: 1em;">
 																			<input type="text" class="infoformbox form-control"
-																				aria-label="Username" placeholder="너에게도 봄이다..스프링.."
+																				aria-label="Username" th:text="${Allclass.clsName }"
 																				aria-describedby="basic-addon1">
 																		</div>
 
@@ -187,7 +196,7 @@ input[type="checkbox"]::before {
 																		</div>
 																		<div class="col-8" style="margin-top: 1em;">
 																			<input type="text" class="infoformbox form-control"
-																				aria-label="Username" placeholder="성인"
+																				aria-label="Username" th:text="${Allclass.clsGrade }"
 																				aria-describedby="basic-addon1">
 																		</div>
 
@@ -198,7 +207,7 @@ input[type="checkbox"]::before {
 																		</div>
 																		<div class="col-8" style="margin-top: 1em;">
 																			<input type="text" class="infoformbox form-control"
-																				aria-label="Username" placeholder="35582394"
+																				aria-label="Username" th:text="${Allclass.clsPay }"
 																				aria-describedby="basic-addon1">
 																		</div>
 
@@ -215,13 +224,13 @@ input[type="checkbox"]::before {
 																				</div>
 																				<div class="col-4" style="margin-top: 1em;">
 																					<input type="text" class="infoformbox form-control"
-																						aria-label="Username" placeholder="2021-01-08"
+																						aria-label="Username" th:text="${Allclass.clsStart }"
 																						aria-describedby="basic-addon1">
 																				</div>
 																				~
 																				<div class="col-4" style="margin-top: 1em;">
 																					<input type="text" class="infoformbox form-control"
-																						aria-label="Username" placeholder="2022-05-26"
+																						aria-label="Username" th:text="${Allclass.clsEnd }"
 																						aria-describedby="basic-addon1">
 																				</div>
 																				<div class="col-auto" style="margin-top: 1em;">
@@ -230,7 +239,7 @@ input[type="checkbox"]::before {
 																				</div>
 																				<div class="col-8" style="margin-top: 1em;">
 																					<input type="text" class="infoformbox form-control"
-																						aria-label="Username" placeholder="L강의실"
+																						aria-label="Username" th:text="${Allclass.clsRoom }"
 																						aria-describedby="basic-addon1">
 																				</div>
 
@@ -242,12 +251,12 @@ input[type="checkbox"]::before {
 																					</span>
 																				</div>
 																				<div class="col-10"
-																					style="margin-top: 1em; text-align: left">
+																					style="margin-top: 1em; text-align: left" th:each="day : ${ dayList }">
 																					<!-- 인풋박스 -->
 																					<div class="col-12" style="margin-top: 1em;">
 																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1" checked>
+																							<input class="form-check-input" type="checkbox" id="days1"
+																							th:text="${Allclass.dayList[0] }" value="1">
 																							<label class="form-check-label"
 																								for="inlineCheckbox1">월</label>
 																						</div>
@@ -334,21 +343,22 @@ input[type="checkbox"]::before {
 																<!-- 전체 section end -->
 																<!-- 비고란 -->
 																<br>
-																<div clas="form-inline ">
+																<div class="form-inline ">
 																	<div class="input-group input-group-lg">
 																		<span class="input-group-text"
 																			style="margin: 2em; height: 3em;">비고</span>
 																		<textarea class="form-control"
-																			aria-label="With textarea"
-																			placeholder="눈감고 스프링 100줄 코드 작성 가능할 정도로 집중수업!"
-																			style="font-size: medium;"></textarea>
+														
+																			th:text="${Allclass.clsNote }"
+																			style="font-size: medium;">
+																		</textarea>
 																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
 												</div>
-											
+											</span>
 											</td>
 											<!-- 과목정보 -->
 
@@ -356,8 +366,8 @@ input[type="checkbox"]::before {
 
 
 
-											<td>2021-03-01~2022-05-26</td>
-											<td>L강의실</td>
+											<td th:text="|${ class.clsStart} ~ ${ class.clsEnd}|"></td>
+											<td th:text="${ class.clsRoom }"></td>
 											<td>
 												<!-- 강의실 입장 --> 
 												<text onclick="location.href='/admin/classList'">
@@ -370,8 +380,10 @@ input[type="checkbox"]::before {
 												<i class="bi bi-trash"></i>&nbsp;</text>
 											</td>
 										</tr>
+									
 									</tbody>
 								</table>
+								
 								
 								<!-- 페이징 -->
 								<nav aria-label="Page navigation example"
@@ -392,9 +404,11 @@ input[type="checkbox"]::before {
 						</div>
 					</div>
 				</div>
+			
 				<!-- /.container-fluid -->
 
 			</div>
+			</form>
 			<!-- End of Main Content -->
 			<!-- footer include -->
 			<div th:replace="/common/footer.html"></div>

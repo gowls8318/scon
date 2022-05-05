@@ -16,7 +16,6 @@
 		<result property="clsStatus" column="CLS_STATUS"/>
 		
 		
-		<!--  태미님 mapper 작성 후 추후 수정  -->
 		 <association property="member" resultMap="memberResultMap"/>
 		 <!-- 수업요일 -->
 		 <collection property="dayList" resultMap="dayResultMap"/>
@@ -25,20 +24,19 @@
 	</resultMap>
 	
 	
-	<!-- TB_TEACHER 리절트맵 추후 작성 (태미님) -->
-	<resultMap id="memberResultMap" type="com.scon.project.admin.Class.dto.MemberDTO">
-		<id property="memberId" column="MEMBER_ID"/>
-		<result property="memberName" column="MEMBER_NAME"/>
-		<result property="memberPwd" column="MEMBER_PWD"/>
-		<result property="tempPwdYn" column="TEMP_PWD_YN"/>
+	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
-		<result property="birthday" column="BIRTHDAY"/>
-		<result property="address" column="ADDRESS"/>
-		<result property="gender" column="GENDER"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="address" column="GENDER"/>
+		<result property="gender" column="ADDRESS"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="delDate" column="DEL_DATE"/>
-		<result property="memberSt" column="MEMBER_ST"/>
+		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="status" column="MEMBER_ST"/>
 	</resultMap>
 	
 	
@@ -78,8 +76,8 @@
 		 )
 		 VALUES
 		 (
-		   CLS_ID.NEXTVAL
-		 , #{ member.memberId }
+		    CLS_ID.NEXTVAL
+		 , #{ member.id }
 		 , #{ clsName }
 		 , #{ clsSubject }
 		 , #{ clsStuNum }
@@ -133,13 +131,13 @@
 		SELECT
 			   A.CLS_ID
 		     , A.CLS_SUBJECT
-		     , B.MEMBER_ID 
+		     , D.MEMBER_NAME 
 		     , A.CLS_NAME
 		     , A.CLS_START
 		 	 , A.CLS_END
 		 	 , A.CLS_ROOM
-		  FROM TB_CLASS A
-		  JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+		 FROM TB_CLASS A
+		  JOIN TB_MEMBER D ON (A.MEMBER_ID = D.MEMBER_ID)
 		 WHERE A.CLS_STATUS = 'N'
 		 ORDER BY A.CLS_ID DESC
 	</select>

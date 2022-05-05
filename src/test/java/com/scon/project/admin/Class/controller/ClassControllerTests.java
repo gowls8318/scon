@@ -15,7 +15,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.config.SconApplication;
+import com.scon.project.member.controller.MemberController;
+import com.scon.project.member.model.dto.MemberDTO;
 
 @SpringBootTest
 @ContextConfiguration(classes = { SconApplication.class })
@@ -44,9 +47,9 @@ public class ClassControllerTests {
 		//given
 		
 		//when&then
-		mockMvc.perform(MockMvcRequestBuilders.post("/admin/classList"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/classList"))
 		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.forwardedUrl("admin/classList"))
+		.andExpect(MockMvcResultMatchers.forwardedUrl("admin/class/selectClass"))
 		.andDo(MockMvcResultHandlers.print());
 		
 	}
@@ -60,7 +63,7 @@ public class ClassControllerTests {
 		//when&then
 		mockMvc.perform(MockMvcRequestBuilders.post("/admin/classList"))
 		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.forwardedUrl("admin/classList"))
+		.andExpect(MockMvcResultMatchers.forwardedUrl("admin/class/selectClass"))
 		.andDo(MockMvcResultHandlers.print());
 		
 	}
@@ -69,10 +72,12 @@ public class ClassControllerTests {
 	// 강의등록테스트
 	@Test
 	public void 신규_강의_등록_컨트롤러_테스트() throws Exception {
+		
+		
 
 		// given
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("member.memberId", "director");
+		params.add("member.id", "director");
 		params.add("clsName", "강의 등록 테스트");
 		params.add("clsSubject", "스프링");
 		params.add("clsStuNum", "30명");

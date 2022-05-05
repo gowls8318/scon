@@ -1,6 +1,7 @@
 package com.scon.project.admin.Class.dto;
 
 import java.util.List;
+import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.Data;
 
