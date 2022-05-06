@@ -46,7 +46,7 @@ public class GradeMapperTests {
 		assertNotNull(gradeList);
 	}
 	
-	/* 성적 입력 학생 조회 */
+	/* 성적 입력 학생 조회 (complete) */
 	@Test
 	public void  성적_입력_학생_조회_매퍼_테스트() {
 		
@@ -54,7 +54,7 @@ public class GradeMapperTests {
 		int classId = 1;
 		
 		//when
-		List<MemberDTO> memberList = gradeMapper.findAllStudent(classId);
+		List<GradeDTO> memberList = gradeMapper.findAllStudent(classId);
 				
 		//then
 		assertNotNull(memberList);
@@ -62,12 +62,12 @@ public class GradeMapperTests {
 
 	/* 성적 입력(insert) 테스트*/
 	@Test
-	@Disabled
 	public void 성적_입력_매퍼_테스트() {
 		
 		//given
 		GradeDTO grade = new GradeDTO();
-		//gradeId, clsId는 시퀀스
+		//gradeId, clsId는 시퀀스 (clsId는 임의로 줬음)
+		grade.setClsId(1);
 		grade.setMemberId("user02");
 		
 		String date = "2022-05-04";

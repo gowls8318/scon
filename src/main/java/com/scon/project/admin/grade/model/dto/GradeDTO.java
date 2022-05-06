@@ -25,10 +25,8 @@ public class GradeDTO {
 	private int clsId;
 	private java.sql.Date gradeDate;
 	private int grade;
-	
 	// 회원이름
 	private String memberName;
-	
 	// 수업이름
 	private String clsName;
 	

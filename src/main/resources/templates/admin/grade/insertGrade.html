@@ -27,10 +27,11 @@
 
 
 <style>
-    #place-center{
+    
+/*   #place-center{
         padding-left: 5%;
-    }
-
+    } */
+    
     #small-btn{
         width: 65px;
         height: 20px;
@@ -48,8 +49,13 @@
         width: 10rem;
         float: right; 
     }
-
-    .pagination{justify-content: center; }
+   
+    
+    #table-scroll{
+        height: 250px;
+        overflow: auto;
+    }
+   
 
 </style>
 
@@ -87,7 +93,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <!--------------------- 폼 태그 시작 부분 (view 매핑) -------------->
-                                <form action="주소쓰기" method="post">
+                                <form id="insertGradeForm" method="post">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
@@ -101,93 +107,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr th:each="member : ${ memberList }">
                                                 <td>
                                                     <span class="form-check">
                                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                                         <label class="form-check-label" for="flexCheckDefault">
                                                         </label>
                                                 </td>
-                                                <td>김유나</td>
-                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly></td>
+                                                <td th:text="${ member.memberName }"></td>
+                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly>
+                                                <input type="hidden" id="memberId" th:value="${member.memberId}" class="memberId" /></td>
                                                 <td>
                                                     <div class="col-lg-6"> <!-- <div class="mb-3"> -->
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1 stu-grade" placeholder="점수를 입력해주세요.">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                </td>
-                                                <td>한재성</td>
-                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly></td>
-                                                <td>
-                                                    <div class="col-lg-6">
-                                                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="점수를 입력해주세요.">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                </td>
-                                                <td>이진아</td>
-                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly></td>
-                                                <td>
-                                                    <div class="col-lg-6">
-                                                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="점수를 입력해주세요.">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                </td>
-                                                <td>박하윤</td>
-                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly></td>
-                                                <td>
-                                                    <div class="col-lg-6">
-                                                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="점수를 입력해주세요.">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                </td>
-                                                <td>이진수</td>
-                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly></td>
-                                                <td>
-                                                    <div class="col-lg-6">
-                                                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="점수를 입력해주세요.">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                </td>
-                                                <td>김유미</td>
-                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly></td>
-                                                <td>
-                                                    <div class="col-lg-6">
-                                                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="점수를 입력해주세요.">
+                                                        <input type="text" class="form-control" id="stu-grade" placeholder="점수를 입력해주세요.">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -198,14 +130,14 @@
                          <div class="container">
                         <div class="row">
                       <div class="col text-center">
-                        <button type="submit" class="btn btn-primary">확인</button>
+                        <button type="button" class="btn btn-primary" id="apply-btn">확인</button>
                       </div>
                     </div>
                   </div>
                 </form> <!-- 폼태그 -->
-                    </div>
+           </div>
                 <!----------- 페이징  ---------->
-                  <nav aria-label="Page navigation example">
+          <!-- <nav aria-label="Page navigation example">
                     <ul class="pagination">
                       <li class="page-item">
                         <a class="page-link" href="#" aria-label="Previous">
@@ -221,21 +153,102 @@
                         </a>
                       </li>
                     </ul>
-                  </nav>
+                  </nav> 
+                  
+                </div>-->     
 
-                </div>
-         
              </div>
             <!-- /.container-fluid -->
-                
-            <!-- End of Main Content -->
-                
 
- 
-
+           
+                
+            <!-- End of Main Content -->	
+		 </div> 
 	</div>
-</div>
 
+
+	<script>	
+	
+	
+	 // 성적 등록 모달
+		$("#apply-btn").on('click', function() {
+			
+			let gradeArray = [];
+			
+			let grade = $("#stu-grade").val();
+        	let memberId = $("#memberId").val();
+        	let gradeDate = $("#selected-date").val();
+        	/* 여기는 나중에 바꿔야 됨 (세션에서 가져오는걸로)*/
+   	    	let clsId = 1;
+        	
+        	gradeArray.push(grade);
+        	gradeArray.push(memberId);
+        	gradeArray.push(gradeDate);
+        	gradeArray.push(clsId);
+        	
+        	
+        	let data = {
+				'gradeArray' : gradeArray
+			}
+        	
+        	$.ajax({
+				type: 'POST', 						
+				url: '/admin/insertGrade', 							
+				data: data, 						
+			
+				success: function(data) { 					
+					alert("등록이 완료 되었습니다.")
+					location.reload()
+				},
+				error: function(xhr) { 
+					console.log("등록 실패")
+					alert("등록 실패!")
+				}
+			
+			})
+		});
+		
+		
+		// 성적 입력 모달
+	/*	 $("#apply-btn").on('click', function() {
+            if(!$('#stu-grade').val().length >= 1) {
+             alert("점수가 입력되지 않았습니다.");
+	        }
+		 }) */
+		 
+		 var gradeArr = new array();	
+		 $("#apply-btn").on('click',function(){
+			 $("form").each(function(){
+				 gradeArr = $(this).find(':input');
+				 console.log(gradeArr);
+			 })
+		 })
+
+		         
+
+	        $("#stu-grade").click(function(){
+	            var isRight = true;
+	            $("#frm").find("input[type=text]").each(function(index, item){
+	                // 아무값없이 띄어쓰기만 있을 때도 빈 값으로 체크되도록 trim() 함수 호출
+	                let unWritten = $(this).val().trim() == '';
+	                if (unWritten == 0) {
+	                    alert("점수를 입력해주세요.");
+	                    isRight = false;
+	                    return false;
+	                }
+	            });
+
+	            if (!isRight) {
+	                return;
+	            }
+
+	          /*  $(this).prop("disabled", true);
+	            $(this).prop("disabled", false); */
+	        }); 
+
+		
+		
+	</script>
 
 
     <!-- Bootstrap core JavaScript-->

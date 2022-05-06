@@ -44,7 +44,7 @@
 		<result property="status" column="MEMBER_ST"/>		
 </resultMap>
 
-		<!--  성적 조회 (gradeList) -->
+		<!--  성적 조회 (gradeList) Complete -->
 		<select id="findAllGrade" resultMap="gradeResultMap">
 			SELECT *
 			FROM TB_GRADE G JOIN TB_MEMBER M ON (G.MEMBER_ID = M.MEMBER_ID)
@@ -52,17 +52,25 @@
 			WHERE G.CLS_ID = #{ cldId }
 		</select>
 		
-		<!--  성적 입력 학생 조회(insertGrade) -->
-		<select id="findAllStudent" resultMap="memberResultMap">
+		<!--  성적 수정 Complete -->
+		<update id="updateGrade">
+			UPDATE TB_GRADE
+			   SET grade = #{grade}
+			 WHERE grade_id = #{gradeId}  
+		</update>
+		
+		<!--  성적 입력 학생 조회(insertGrade) Complete -->
+		<select id="findAllStudent" resultMap="gradeResultMap">
 			SELECT
-				M.MEMBER_ID
+				G.MEMBER_ID
 			  , M.MEMBER_NAME
 			  , C.CLS_NAME
-			 FROM TB_MEMBER M
-		  LEFT JOIN TB_CLASS C ON (M.MEMBER_ID = C.MEMBER_ID)
+			 FROM TB_GRADE G
+             JOIN TB_MEMBER M ON(G.MEMBER_ID = M.MEMBER_ID)
+             JOIN TB_CLASS C ON (M.MEMBER_ID = C.MEMBER_ID)
 		  WHERE C.CLS_ID = #{ clsId }
-		</select>
-
+		</select>	 
+		
 		<!--  성적 입력 (insertGrade) -->
 		<insert id="insertGradeList" parameterType="com.scon.project.admin.grade.model.dto.GradeDTO">
 			INSERT
@@ -78,26 +86,17 @@
 				(
 				 SEQ_GRADE.NEXTVAL
 			   , #{ memberId } <!-- jdbcType=VARCHAR -->
-			   , CLS_ID.NEXTVAL
+			   , #{ clsId }
 			   , #{ gradeDate }
 			   , #{ grade }
 				)				
 		</insert>
-		
-		
-		<!--  성적 수정 -->
-		<update id="updateGrade">
-			UPDATE TB_GRADE
-			   SET grade = #{grade}
-			 WHERE grade_id = #{gradeId}  
-		</update>
+	
 		
 		<!-- 성적 삭제 -->
 		<delete id="deleteGrade">
 			DELETE FROM TB_GRADE WHERE grade_id = #{gradeId}
 		</delete>
-		
-		
 		
 
 
