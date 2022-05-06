@@ -21,6 +21,7 @@
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- 채팅 cs -->
 <link href="/css/chat.css" rel="stylesheet">
@@ -61,26 +62,19 @@ input[type="checkbox"]::before {
 
 
 			<!-- Main Content -->
-			
-		
+
+
 			<div id="content">
 				<!-- Begin Page Content -->
-
 				<div class="container-fluid">
-
 					<!-- Page Heading -->
 
-
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-2 text-gray-800">강의조회</h1>
 					</div>
 					<hr class="border-bottom-primary">
 
-
-
 					<!-- DataTales Example -->
-
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h6 class="m-0 font-weight-bold text-primary">강의조회목록</h6>
@@ -99,7 +93,8 @@ input[type="checkbox"]::before {
 
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
 									<thead>
 										<tr>
 											<th style="text-align: center">과목</th>
@@ -110,281 +105,39 @@ input[type="checkbox"]::before {
 											<th style="text-align: center">Action</th>
 										</tr>
 									</thead>
-									
-								
-								<!-- 
-								
-								<tr th:each="classDTO : ${ classList }">
-											<th th:text="${ classDTO.clsSubject}" style="text-align: center">과목</th>
-											<th  th:text="${ classDTO.member.memberId }" style="text-align: center">강사</th>
-											<th th:text="${ classDTO.clsName }" style="text-align: center">강의명</th>
-											<th th:text="|${ classDTO.clsStart}, ${ class.clsEnd}|" style="text-align: center">수업일</th>
-											<th th:text="${ classDTO.clsRoom }" style="text-align: center">강의실</th>
-											<th style="text-align: center">Action</th>
-										</tr>
-								
-								 -->
-									
-			
+
+
 									<tbody class="classBody" style="text-align: center">
-									<tr th:each="class : ${ classList }">
+										<tr th:each="class : ${ classList }">
+				   	    					 <input type="hidden" th:value="${class.clsId}" class="clsId"/>  
 											<td th:text="${ class.clsSubject }"></td>
-											 <td th:text="${ class.member.name }"></td> 
+											<td th:text="${ class.member.name }"></td>
 											
-											
-											<td>
-											<span th:each="Allclass : ${ classAllList }">
-												<!-- 클릭 시 상세보기 모달창 --> 
-												<text th:text="${ Allclass.clsName }" type="text" data-toggle="modal" data-target=".bd-example-modal-lg"></text>
-
-												<div class="modal fade bd-example-modal-lg" tabindex="-1"role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-													<div class="modal-dialog modal-lg" >
-														<div class="modal-content" >
-
-															<!-- 과목정보 -->
-															<div class="card shadow mb-4">
-																<div class="card-body" >
-																	<h5 style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E; text-align: left">과목정보</h5>
-																	<div class="mx-auto  row">
-																		<div class=" mx-auto row align-items-center">
-
-																			<div class="col-auto" style="margin-top: 1em;">
-																				<span class="coloumnamebox input-group-text"
-																					id="basic-addon1" style="width: 8em">과목명</span>
-																			</div>
-																			<div class="col-8" style="margin-top: 1em;">
-																				<input th:text="${Allclass.clsSubject}" type="text" class="infoformbox form-control">
-																			</div>
-																			<div class="col-auto" style="margin-top: 1em;">
-																				<span class="coloumnamebox input-group-text"
-																					id="basic-addon1" style="width: 8em" >강사명</span>
-																			</div>
-																			<div class="col-8" style="margin-top: 1em;">
-																				<input type="text" class="infoformbox form-control"
-																					aria-label="Username"  th:text="${ classAllList.member.name }"
-																					aria-describedby="basic-addon1">
-																					
-																			</div>
-																			<div class="col-auto" style="margin-top: 1em;">
-																				<span class="coloumnamebox input-group-text"
-																					id="basic-addon1" style="width: 8em">실수강생 <span
-																					id="pointtext">*</span></span>
-																			</div>
-																			<div class="col-8" style="margin-top: 1em;">
-																				<input type="text" class="infoformbox form-control"
-																					aria-label="Username" th:text="${Allclass.clsStuNum }"
-																					aria-describedby="basic-addon1">
-																			</div>
-																	</div>
-																	
-
-
-																		<div class="col-auto" style="margin-top: 1em;">
-																			<span class="coloumnamebox input-group-text"
-																				id="basic-addon1" style="width: 8em">강의명 <span
-																				id="pointtext">*</span></span>
-																		</div>
-																		<div class="col-8" style="margin-top: 1em;">
-																			<input type="text" class="infoformbox form-control"
-																				aria-label="Username" th:text="${Allclass.clsName }"
-																				aria-describedby="basic-addon1">
-																		</div>
-
-																		<div class="col-auto" style="margin-top: 1em;">
-																			<span class="coloumnamebox input-group-text"
-																				id="basic-addon1" style="width: 8em">대상학년 </span>
-																		</div>
-																		<div class="col-8" style="margin-top: 1em;">
-																			<input type="text" class="infoformbox form-control"
-																				aria-label="Username" th:text="${Allclass.clsGrade }"
-																				aria-describedby="basic-addon1">
-																		</div>
-
-																		<div class="col-auto" style="margin-top: 1em;">
-																			<span class="coloumnamebox input-group-text"
-																				id="basic-addon1" style="width: 8em">수업료 <span
-																				id="pointtext">*</span></span>
-																		</div>
-																		<div class="col-8" style="margin-top: 1em;">
-																			<input type="text" class="infoformbox form-control"
-																				aria-label="Username" th:text="${Allclass.clsPay }"
-																				aria-describedby="basic-addon1">
-																		</div>
-
-
-
-																		<div class="mx-auto row">
-																			<h5
-																				style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E;">
-																				수업정보</h5>
-																			<div class=" mx-auto row align-items-center">
-																				<div class="col-auto" style="margin-top: 1em">
-																					<span class="coloumnamebox input-group-text"
-																						id="basic-addon1" style="width: 8em">수업일</span>
-																				</div>
-																				<div class="col-4" style="margin-top: 1em;">
-																					<input type="text" class="infoformbox form-control"
-																						aria-label="Username" th:text="${Allclass.clsStart }"
-																						aria-describedby="basic-addon1">
-																				</div>
-																				~
-																				<div class="col-4" style="margin-top: 1em;">
-																					<input type="text" class="infoformbox form-control"
-																						aria-label="Username" th:text="${Allclass.clsEnd }"
-																						aria-describedby="basic-addon1">
-																				</div>
-																				<div class="col-auto" style="margin-top: 1em;">
-																					<span class="coloumnamebox input-group-text"
-																						id="basic-addon1" style="width: 8em">강의실</span>
-																				</div>
-																				<div class="col-8" style="margin-top: 1em;">
-																					<input type="text" class="infoformbox form-control"
-																						aria-label="Username" th:text="${Allclass.clsRoom }"
-																						aria-describedby="basic-addon1">
-																				</div>
-
-
-																				<div class="col-2" style="margin-top: 1em;">
-																					<span class="coloumnamebox input-group-text"
-																						id="basic-addon1" style="width: 8em"> 수업요일
-																						<span id="pointtext">*</span>
-																					</span>
-																				</div>
-																				<div class="col-10"
-																					style="margin-top: 1em; text-align: left" th:each="day : ${ dayList }">
-																					<!-- 인풋박스 -->
-																					<div class="col-12" style="margin-top: 1em;">
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox" id="days1"
-																							th:text="${Allclass.dayList[0] }" value="1">
-																							<label class="form-check-label"
-																								for="inlineCheckbox1">월</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox2" value="option2" checked>
-																							<label class="form-check-label"
-																								for="inlineCheckbox2">화</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1" checked>
-																							<label class="form-check-label"
-																								for="inlineCheckbox1">수</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1" checked>
-																							<label class="form-check-label"
-																								for="inlineCheckbox1">목</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1" checked>
-																							<label class="form-check-label"
-																								for="inlineCheckbox1">금</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1" checked>
-																							<label class="form-check-label"
-																								for="inlineCheckbox1">토</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1" checked>
-																							<label class="form-check-label"
-																								for="inlineCheckbox1">일</label>
-																						</div>
-																					</div>
-																				</div>
-
-																				<div class="col-2" style="margin-top: 1em;">
-																					<span class="coloumnamebox input-group-text"
-																						id="basic-addon1" style="width: 8em"> 교시 <span
-																						id="pointtext">*</span></span>
-																				</div>
-																				<div class="col-auto" style="margin-top: 1em;">
-																					<!-- 인풋박스 -->
-																					<div class="col-12" style="margin-top: 1em;">
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1"> <label
-																								class="form-check-label" for="inlineCheckbox1">1교시</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox2" value="option2" checked>
-																							<label class="form-check-label"
-																								for="inlineCheckbox2">2교시</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1"> <label
-																								class="form-check-label" for="inlineCheckbox1">3교시</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1"> <label
-																								class="form-check-label" for="inlineCheckbox1">4교시</label>
-																						</div>
-																						<div class="form-check form-check-inline">
-																							<input class="form-check-input" type="checkbox"
-																								id="inlineCheckbox1" value="option1"> <label
-																								class="form-check-label" for="inlineCheckbox1">5교시</label>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<!-- 전체 section end -->
-																<!-- 비고란 -->
-																<br>
-																<div class="form-inline ">
-																	<div class="input-group input-group-lg">
-																		<span class="input-group-text"
-																			style="margin: 2em; height: 3em;">비고</span>
-																		<textarea class="form-control"
-														
-																			th:text="${Allclass.clsNote }"
-																			style="font-size: medium;">
-																		</textarea>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</span>
+											<td th:onclick="|detailclass(${class.clsId})|">
+											<text class="classdetail" type="text" data-toggle="modal" data-target="#classdetail" >
+											<class th:text="${ class.clsName }"> </class>
+											</text>
 											</td>
-											<!-- 과목정보 -->
-
-
-
-
-
-											<td th:text="|${ class.clsStart} ~ ${ class.clsEnd}|"></td>
+											
+											<td th:text="|${ class.clsStart} ~ ${ class.clsEnd }|"></td>
 											<td th:text="${ class.clsRoom }"></td>
+											
 											<td>
 												<!-- 강의실 입장 --> 
-												<text onclick="location.href='/admin/classList'">
-												<i class="bi bi-arrow-right-square-fill"></i>&nbsp;</text> 
+												<text onclick="location.href='/admin/classList'"> 
+													<i class="bi bi-arrow-right-square-fill"></i>&nbsp;</text> 
 												<!-- 강의 수정-->
-												<text onclick="location.href='/admin/classUpdate'">
+												<text onclick="location.href='/admin/classUpdate'"> 
 												<i class="bi bi-pencil-square"></i>&nbsp;</text> 
-												<!-- 강의 삭제 --> 
-												<text class="" data-toggle="modal" data-target="#classdelModal">
+													<!-- 강의 삭제 --> 
+													<text class="" data-toggle="modal" data-target="#classdelModal">
 												<i class="bi bi-trash"></i>&nbsp;</text>
 											</td>
 										</tr>
-									
 									</tbody>
 								</table>
-								
-								
+
+
 								<!-- 페이징 -->
 								<nav aria-label="Page navigation example"
 									style="margin-left: 45%;">
@@ -404,9 +157,7 @@ input[type="checkbox"]::before {
 						</div>
 					</div>
 				</div>
-			
 				<!-- /.container-fluid -->
-
 			</div>
 			</form>
 			<!-- End of Main Content -->
@@ -448,50 +199,255 @@ input[type="checkbox"]::before {
 	</div>
 
 
+<!-- 강의상세보기 modal -->
+	<div class="modal fade bd-example-modal-lg show" id="classdetail"
+		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="card shadow mb-4">
+					<div class="card-body">
+						<h5
+							style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E; text-align: left">과목정보</h5>
+						<div class="mx-auto  row">
+					<!-- <input type="hidden" name="clsId" id="clsId"/> -->
+							<div class=" mx-auto row align-items-center">
+
+
+								<div class="col-auto" style="margin-top: 1em;">
+									<span class="coloumnamebox input-group-text" id="clsSubject"
+										style="width: 8em">과목명</span>
+								</div>
+								<div class="col-8" style="margin-top: 1em;">
+									<input type="text"
+										class="infoformbox form-control">
+								</div>
+
+								<div class="col-auto" style="margin-top: 1em;">
+									<span class="coloumnamebox input-group-text" id="memberId"
+										style="width: 8em">강사명</span>
+								</div>
+								<div class="col-8" style="margin-top: 1em;">
+									<input type="text" class="infoformbox form-control"
+										aria-label="Username" 
+										aria-describedby="basic-addon1">
+								</div>
+								<div class="col-auto" style="margin-top: 1em;">
+									<span class="coloumnamebox input-group-text" id="basic-addon1"
+										style="width: 8em">실수강생 <span id="pointtext">*</span></span>
+								</div>
+								<div class="col-8" style="margin-top: 1em;">
+									<input type="text" class="infoformbox form-control"
+										aria-label="Username" 
+										aria-describedby="basic-addon1">
+								</div>
+
+						<div class="col-auto" style="margin-top: 1em;">
+							<span class="coloumnamebox input-group-text" id="clsName"
+								style="width: 8em">강의명 <span id="pointtext">*</span></span>
+						</div>
+						<div class="col-8" style="margin-top: 1em;">
+							<input type="text" class="infoformbox form-control"
+								aria-label="Username" 
+								aria-describedby="basic-addon1">
+						</div>
+
+						<div class="col-auto" style="margin-top: 1em;">
+							<span class="coloumnamebox input-group-text" id="basic-addon1"
+								style="width: 8em">대상학년 </span>
+						</div>
+						<div class="col-8" style="margin-top: 1em;">
+							<input type="text" class="infoformbox form-control"
+								aria-label="Username" 
+								aria-describedby="basic-addon1">
+						</div>
+
+						<div class="col-auto" style="margin-top: 1em;">
+							<span class="coloumnamebox input-group-text" id="basic-addon1"
+								style="width: 8em">수업료 <span id="pointtext">*</span></span>
+						</div>
+						<div class="col-8" style="margin-top: 1em;">
+							<input type="text" class="infoformbox form-control"
+								aria-label="Username" 
+								aria-describedby="basic-addon1">
+						</div>
+						
+						<div class="col-auto" style="margin-top: 1em;">
+							<span class="coloumnamebox input-group-text" id="basic-addon1"
+								style="width: 8em">강의실 <span id="pointtext">*</span></span>
+						</div>
+						<div class="col-8" style="margin-top: 1em;">
+							<input type="text" class="infoformbox form-control"
+								aria-label="Username" 
+								aria-describedby="basic-addon1">
+						</div>
+
+						<div class="col-2" style="margin-top: 1em;">
+							<span class="coloumnamebox input-group-text" id="basic-addon1"
+								style="width: 8em"> 수업요일 <span id="pointtext">*</span></span>
+						</div>
+
+
+						<div class="col-10" style="margin-top: 1em; text-align: left"
+							th:each="day : ${ dayList }">
+							<div class="col-12" style="margin-top: 1em;">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox" id="days1"
+										th:text="${Allclass.dayList[0] }" value="1"> <label
+										class="form-check-label" for="inlineCheckbox1">월</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox2" value="option2" checked> <label
+										class="form-check-label" for="inlineCheckbox2">화</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1" checked> <label
+										class="form-check-label" for="inlineCheckbox1">수</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1" checked> <label
+										class="form-check-label" for="inlineCheckbox1">목</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1" checked> <label
+										class="form-check-label" for="inlineCheckbox1">금</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1" checked> <label
+										class="form-check-label" for="inlineCheckbox1">토</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1" checked> <label
+										class="form-check-label" for="inlineCheckbox1">일</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-2" style="margin-top: 1em;">
+							<span class="coloumnamebox input-group-text" id="basic-addon1"
+								style="width: 8em"> 교시 <span id="pointtext">*</span></span>
+						</div>
+						<div class="col-auto" style="margin-top: 1em;">
+							<div class="col-12" style="margin-top: 1em;">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1"> <label
+										class="form-check-label" for="inlineCheckbox1">1교시</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox2" value="option2" checked> <label
+										class="form-check-label" for="inlineCheckbox2">2교시</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1"> <label
+										class="form-check-label" for="inlineCheckbox1">3교시</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1"> <label
+										class="form-check-label" for="inlineCheckbox1">4교시</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox"
+										id="inlineCheckbox1" value="option1"> <label
+										class="form-check-label" for="inlineCheckbox1">5교시</label>
+								</div>
+							</div>
+						</div>
+
+						<br>
+						<div class="form-inline ">
+							<div class="input-group input-group-lg">
+								<span class="input-group-text" style="margin: 2em; height: 3em;">비고</span>
+								<textarea class="form-control" 
+									style="font-size: medium;"> </textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+<script>
+
+	 function detailclass(clsId) {
+		
+		/* 
+		let clsName = ${".clsName"}.text();
+		let clsSubject = ${".clsSubject"}.text();
+		let clsStuNum = ${".clsStuNum"}.text();
+		let clsGrade = ${".clsGrade"}.text();
+		let clsPay = ${".clsPay"}.text();
+		let clsRoom = ${".clsRoom"}.text();
+		let clsStart = ${".clsStart"}.text();
+		let clsEnd = ${".clsEnd"}.text();  
+		*/	
+		
+		$.ajax({
+			type: 'GET',
+			url: '/admin/classDetail',
+			data: {clsId : clsId},
+				
+			
+			success: function(data) {
+				console.log(data);
+				
+				
+			
+				
+			},
+			errer: function(xhr) {
+				console.log("강의상세조회 실패")
+			}
+		});
+		
+	
+	 }
+	
+	
+</script>
+	
+	
+	
+	<script>
+	//모달 닫기 
+	function closeModal() {
+		$("#accModal1").modal("hide");
+	}
+	</script>
+
+<!-- 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>
 	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-	<!-- Core plugin JavaScript-->
+	Core plugin JavaScript
 	<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+-->
 
 	<!-- Custom scripts for all pages-->
 	<script src="/js/sb-admin-2.min.js"></script>
 
 	<!--모달-->
-	<script>
+<!-- 	<script>
 		$('#myModal').modal(options)
-	</script>
+	</script> -->
 
 
-	<!-- 검색기능 -->
-	<!--     
- <script>
-    function getSearchList(){
-	$.ajax({
-		type: 'GET',
-		url : "/getSearch",
-		data : $("form[name=form-inline]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
-		}
-	})
-}
-    </script>
--->
 
 </body>
 </html>
