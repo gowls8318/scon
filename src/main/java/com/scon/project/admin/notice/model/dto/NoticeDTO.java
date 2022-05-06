@@ -2,6 +2,8 @@ package com.scon.project.admin.notice.model.dto;
 
 import java.sql.Date;
 
+import com.scon.project.member.model.dto.MemberDTO;
+
 import lombok.Data;
 
 @Data	

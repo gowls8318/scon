@@ -51,19 +51,28 @@ public class NoticeController {
 		return "admin/notice/notiForm";
 	}
 
-//	공지 글 작성
+//	공지 글 등록
 	@PostMapping("notiForm")
-	public String registNotice(@ModelAttribute NoticeDTO notice, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String registNotice(@ModelAttribute NoticeDTO notice, RedirectAttributes rttr) throws Exception {
 
 		noticeService.registNotice(notice);
-		
-		rttr.addFlashAttribute("successMessage", messageSource.getMessage("registNotice", null, locale));
 		
 		return "redirect:/admin/notice/notiTables";
 	}
 	
-	
-	
+//	게시글 상세 조회
+//	@GetMapping("noticeDetail")
+//	public ModelAndView sellectNoticeDetail(ModelAndView mv) {
+//
+//		NoticeDTO noticeDetail = noticeDetail.sellectNoticeDetail();
+//
+//		mv.addObject("noticeDetail", noticeDetail);
+//		mv.setViewName("admin/notice/noticeDetail");
+//
+//		return mv;
+//
+//    }
+
 	
 	
 	

@@ -75,17 +75,14 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-    <div th:replace="/common/adminSidebar.html"></div> 
+<!--     <div th:replace="/common/adminSidebar.html"></div>  -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
-                <div th:replace="/common/adminTopbar.html"></div>
-                <!-- 채팅 -->
-                <!-- <div th:replace="/admin/chat/chatList.html"></div>  -->
-
+<!--                 <div th:replace="/common/adminTopbar.html"></div> -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -103,7 +100,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                            	<form action="/admin/notiForm" method="post">
+                            	<form action="/admin/notiForm" method="post" id="notiSubmitForm"enctype="multipart/form-data">
 	                                <table class="table">
 	                                    <thead>
 	                                    <tr></tr>
@@ -114,8 +111,8 @@
 	                                            작성자 <span id="pointtext">*</span>
 	                                        </th>
 	                                        <td>
-	                                            <input class="form-control" type="text" placeholder="관리자" 
-	                                            aria-label="Disabled input example" disabled>
+	                                            <input class="form-control" type="text" placeholder="관리자"
+	                                            aria-label="Disabled input example" disabled>	                                            
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
@@ -124,30 +121,20 @@
 	                                        </th>
 	                                        <td>
 	                                            <input class="form-control" type="text" placeholder="" 
-	                                            aria-label="default input example">
+	                                            aria-label="default input example" name="notiTitle">
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
 	                                        <th>파일첨부</th>
-	                                        <td>
-	                                            <form method="post" enctype="multipart/form-data"> 
-	                                                <label for="file-input"></label> 
-	                                                <input id="file-input" type="file" /> 
-	                                            </form>
-	
-	
-	                                            <!-- <form method="post" enctype="multipart/form-data">
-	                                                <div class="form-group">
-	                                                <label for="exampleFormControlFile1">파일 선택</label>
-	                                                <input type="file" class="form-control-file notiFile" id="exampleFormControlFile1">
-	                                                </div>
-	                                            </form> -->
+	                                        <td> 	                                            
+	                                            <label for="file-input"></label> 
+	                                            <input id="file-input" type="file" name="notiFile"/> 
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
 	                                        <th>내용 <span id="pointtext">*</span></th>
 	                                        <td>
-	                                            <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3"></textarea>
+	                                            <textarea class="form-control notiContents" name="notiContent" rows="3"></textarea>
 	                                        </td>
 	                                    </tr>
 	                                    </tbody>
@@ -155,7 +142,7 @@
                             	</form>
                             </div>
                             <div class="row buttonbox">                                
-                                <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" data-target="#submitModal" type="submit">등록</button>
+                                <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#submitModal">등록</button>
                             </div>
                         </div>
                     </div>
@@ -169,7 +156,7 @@
             </div>
             <!-- End of Main Content -->
 
-            <div th:replace="/common/footer.html"></div>
+<!--             <div th:replace="/common/footer.html"></div> -->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -182,8 +169,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-<!--     삭제 확인 Modal
-    <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!--  확인 Modal -->
+    <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
     aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -194,15 +181,25 @@
                     </button>
                 </div>
                 <div class="modal-body">등록하시려면 확인버튼을 눌러주세요.</div>
-                <form action="" method="post">
 	                <div class="modal-footer">
 	                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-	                    <button class="btn btn-primary" type="submit" data-dismiss="modal">확인</button>
+	                    <button class="btn btn-primary" id="submitBtn"type="submit" data-dismiss="modal" th:href="@{/admin/notiTables}">확인</button>
 	                </div>
-                </form>
             </div>
         </div>
-    </div> -->
+    </div> 
+    
+    <script>
+    window.onload = function() {
+        document.getElementById('submitBtn').onclick = function() {
+            document.getElementById('notiSubmitForm').submit();
+            return false;
+        };
+    };
+	</script>
+    
+    
+    
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -215,17 +212,12 @@
     <script src="/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
     <script src="/js/demo/datatables-demo.js"></script>
 
-    <!--모달-->
-    <script>$('#myModal').modal(options)</script>
 
 </body>
 
