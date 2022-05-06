@@ -1,9 +1,9 @@
-package com.scon.project.admin.academy.model.dto;
+package com.scon.project.admin.business.model.dto;
 
 import lombok.Data;
 
 @Data
-public class AcademyDTO {
+public class BusinessDTO {
 	
 	private int busCode;
 	private int busNum;

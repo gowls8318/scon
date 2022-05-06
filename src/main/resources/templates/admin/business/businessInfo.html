@@ -95,14 +95,14 @@
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">교육원명 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3">
-                                <input type="text" class="infoformbox form-control" id="busTitle" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busTitle" th:value="${ BusinessDTO.busTitle }" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                             <div class="col-2"></div>
                             <div class="col-auto">
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">교육원 코드 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3">
-                                <input type="text" class="infoformbox form-control" id="busCode" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busCode" th:value="${ BusinessDTO.busTitle }" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="acaformrow mx-auto row g-3 align-items-center">
@@ -110,14 +110,14 @@
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">대표자 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3 inputinfo">
-                                <input type="text" class="infoformbox form-control" id="busRep" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busRep" placeholder="필수 기입" th:value="${BusinessDTO.busRep}" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                             <div class="col-2"></div>
                             <div class="col-auto">
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">사업자등록번호 </span>
                             </div>
                             <div class="col-3 inputinfo">
-                                <input type="text" class="infoformbox form-control" id="busNum" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busNum" aria-label="Username" th:value="${BusinessDTO.busNum}" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="acaformrow mx-auto row g-3 align-items-center">
@@ -125,14 +125,14 @@
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">전화번호 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3 inputinfo">
-                                <input type="text" class="infoformbox form-control" id="busPhone" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busPhone" placeholder="필수 기입" th:value="${BusinessDTO.busPhone}" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                             <div class="col-2"></div>
                             <div class="col-auto">
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">팩스번호 </span>
                             </div>
                             <div class="col-3 inputinfo">
-                                <input type="text" class="infoformbox form-control" aria-label="Username" id="busFax" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" aria-label="Username" id="busFax" th:value="${BusinessDTO.busFax}" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="acaformrow mx-auto row g-3 align-items-center">
@@ -149,7 +149,7 @@
                                 <div class="col-6">
                                 </div>
                                 <div class="col-6 inputinfo">
-                                    <input type="text" class="infoformbox form-control" id="busAdr" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="infoformbox form-control" id="busAdr" placeholder="필수 기입" th:value="${BusinessDTO.busAdr}" aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                                 <div class="col-6 inputinfo">
                                     <input type="text" class="infoformbox form-control" id="sample6_extraAddress" placeholder="(상세주소)" aria-label="Username" aria-describedby="basic-addon1">
@@ -161,7 +161,7 @@
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">학원 홈페이지 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-10 inputinfo">
-                                <input type="text" class="infoformbox form-control" id="busHompy" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busHompy" th:value="${BusinessDTO.busHompy}" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <br><br><br>
@@ -251,17 +251,6 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-    <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
-    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
-    <script src="/js/demo/datatables-demo.js"></script>
-
-    
 
 </body>
 
