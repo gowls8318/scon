@@ -127,7 +127,7 @@
 	
 	<!-- 강의리스트조회 -->
 	<!--  JOIN TB_MEMBER : 태미님 테이블 연결할 때 사용 -->
-	<select id="selectClass" resultMap="classResultMap">
+	<select id="selectClassList" resultMap="classResultMap">
 		SELECT
 			   A.CLS_ID
 		     , A.CLS_SUBJECT
@@ -145,7 +145,7 @@
 	<!-- rownum : 기본적으로 작성시간으로 입력 -->
 	
 	
-	<!-- 강의상세조회 -->
+	<!-- 강의상세조회 : 모달창 -->
 	<select id="selectAllClass" resultMap="classResultMap">
 	SELECT
 		    A.CLS_ID

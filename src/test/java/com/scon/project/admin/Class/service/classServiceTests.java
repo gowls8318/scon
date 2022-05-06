@@ -38,29 +38,27 @@ public class classServiceTests {
 
 	
 	//when
-	List<ClassDTO> classList = classService.selectClass();
+	List<ClassDTO> classList = classService.selectClassList();
 	
 	//then
 	assertNotNull(classList);
 	
 	}
 	
-	
-	// 강의상세조회성공테스트
-	@Test
-	public void 강의상세보기_조회용_서비스_성공_테스트() {
-	
-	//given
-
-	
-	//when
-	List<ClassDTO> classList = classService.selectAllClass();
-	
-	//then
-	assertNotNull(classList);
-	
-	}
-	
+	/*
+	 * // 강의상세조회성공테스트
+	 * 
+	 * @Test public void 강의상세보기_조회용_서비스_성공_테스트() {
+	 * 
+	 * //given
+	 * 
+	 * 
+	 * //when List<ClassDTO> classList = classService.selectAllClass();
+	 * 
+	 * //then assertNotNull(classList);
+	 * 
+	 * }
+	 */
 
 	// 등록성공테스트
 	@Test

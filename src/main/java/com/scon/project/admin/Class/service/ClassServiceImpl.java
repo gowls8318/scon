@@ -10,6 +10,7 @@ import com.scon.project.admin.Class.dao.ClassMapper;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
 import com.scon.project.admin.Class.dto.TimeDTO;
+import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,16 +54,21 @@ public class ClassServiceImpl implements ClassService {
 
 	//강의리스트조회
 	@Override
-	public List<ClassDTO> selectClass() {
-		return classMapper.selectClass();
+	public List<ClassDTO> selectClassList() {
+		return classMapper.selectClassList();
+	}
+
+	@Override
+	public List<MemberDTO> findAllmemberList(int clsId) {
+		return classMapper.findAllmemberList(clsId);
 	}
 	
 	//강의상세조회
-	@Override
-	public List<ClassDTO> selectAllClass() {
-		
-		return classMapper.selectAllClass();
-	}
+//	@Override
+//	public List<ClassDTO> selectAllClass() {
+//		
+//		return classMapper.selectAllClass();
+//	}
 
 
 }

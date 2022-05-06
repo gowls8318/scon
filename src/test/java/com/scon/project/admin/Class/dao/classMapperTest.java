@@ -38,25 +38,24 @@ public class classMapperTest {
 		//given
 		
 		//when
-		List<ClassDTO> classList = classMapper.selectClass();
+		List<ClassDTO> classList = classMapper.selectClassList();
 		
 		//then
 		assertNotNull(classList);
 	}
 	
 	
-	@Test
-	public void 강의_상세보기_조회용_매퍼_테스트() {
-		
-		//given
-		
-		//when
-		List<ClassDTO> classList = classMapper.selectAllClass();
-				
-		//then
-		assertNotNull(classList);
-		
-	}
+	/*
+	 * @Test public void 강의_상세보기_조회용_매퍼_테스트() {
+	 * 
+	 * //given
+	 * 
+	 * //when List<ClassDTO> classList = classMapper.selectAllClass();
+	 * 
+	 * //then assertNotNull(classList);
+	 * 
+	 * }
+	 */
 	
 	@Test
 	@DisplayName("강의가 잘 등록되는지 매퍼 인터페이스 메소드 확인")
