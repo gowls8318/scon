@@ -14,21 +14,19 @@
 		<result property="notiDelete" column="NOTI_DELETE"/>
 	</resultMap>
 	
-
+<!-- 공지사항 목록 -->
 	<select id="findAllNoticeList" resultMap="noticeResultMap">
 		SELECT
 		       NOTI_NO
 		     , NOTI_TITLE
-		     , MEMBER_ID
 		     , NOTI_DATE
-		     , NOTI_VIEW
 		     , NOTI_DELETE
 		  FROM TB_NOTICE
 		 WHERE NOTI_DELETE = 'N'
-		 ORDER BY NOTI_NO
+		 ORDER BY NOTI_NO DESC
 	</select>
 	
-	
+<!-- 공지등록 폼 -->
 	<insert id="registNotice">
 		INSERT
 		  INTO TB_NOTICE
@@ -37,15 +35,29 @@
 		, NOTI_TITLE
 		, NOTI_CONTENT
 		, NOTI_DATE
+		, NOTI_DELETE
 		)
 		VALUES
 		(
 		  SEQ_NOTI_NO.NEXTVAL
 		, #{ notiTitle }
 		, #{ notiContent }
-		, NOW()
+		, SYSDATE
+		, 'N'
 		)
 	</insert>
+<!-- 	
+	
+		
+	private int notiNo;
+	private String memberId;
+	private int clsId;
+	private String notiTitle;
+	private String notiContent;
+	private Date notiDate;
+	private Date notiUpdate;
+	private int notiView;
+	private String notiDelete; -->
 
 
 
