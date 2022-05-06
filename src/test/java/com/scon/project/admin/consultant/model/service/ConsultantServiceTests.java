@@ -81,15 +81,69 @@ public class ConsultantServiceTests {
 		
 		// given
 		ConsultantDTO con = new ConsultantDTO();
-		con.setConNo(36);
+		con.setNo(54);
 		con.setConDate("2022-05-05");
 		con.setConType("학업 문제");
 		con.setConWay("개인 면담");
-		con.setConImp(5);
+		con.setConImp("★★★★★");
 		con.setConContent("개인 면담 진행");
 		
 		// when
 		int result = consultantService.insertConsultant(con);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("상담 일지 상세 조회용 서비스 메소드 테스트")
+	public void testConsultantDetail() {
+		
+		// given
+		int no = 52;
+				
+		// when
+		ConsultantDTO consultantDetail = consultantService.selectConsultantDetail(no);
+		
+		// then
+		assertNotNull(consultantDetail);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("상담 일지 수정용 서비스 메소드 테스트")
+	public void testUpdateConsultant() {
+		
+		// given
+		// DB에 있는 글 번호
+		ConsultantDTO con = new ConsultantDTO();
+		con.setNo(52);
+		con.setConType("가정 문제");							// 교우 문제
+		con.setConWay("개인 면담");							// 방문 상담
+		con.setConImp("★★★★★");							// ★★★★☆
+		con.setConContent("상담 일지 내용 가정 문제 입니다.");		// 상담 일지 내용 수정입니다.
+		
+		// when
+		int result = consultantService.modifyConsultant(con);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("상담 일지 삭제용 서비스 메소드 테스트")
+	public void testDeleteConsultant() {
+		
+		// given
+		int no = 52;
+		
+		// when
+		int result = consultantService.deleteConsultant(no);
 		
 		// then
 		assertEquals(1, result);

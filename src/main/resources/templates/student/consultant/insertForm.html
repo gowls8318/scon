@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -142,7 +142,7 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    	th:onclick="cancelRegist()">취소하기</button>
+                                    	onclick="cancelRegist()">취소하기</button>
                                     <button type="submit" class="btn btn-primary submitbuttonbox">등록하기</button>
                                 </div>
                             </form>
@@ -171,7 +171,7 @@
     
     <script>
     	function cancelRegist() {
-    		if(confirm('작성 중인 내용은 저장되지 않습니다. \n상담 신청 등록을 취소하시겠습니까?')) {
+    		if(confirm('작성 중인 내용은 저장되지 않습니다. \n상담 등록을 취소하시겠습니까?')) {
     			location.href = "/student/consultant/list";
     		}
     	}

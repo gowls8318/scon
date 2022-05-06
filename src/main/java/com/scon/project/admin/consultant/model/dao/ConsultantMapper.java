@@ -21,4 +21,13 @@ public interface ConsultantMapper {
 	/* 상담 일지 등록용 */
 	int insertConsultant(ConsultantDTO con);
 
+	/* 상담 일지 상세 조회용 */
+	ConsultantDTO selectConsultantDetail(int no);
+
+	/* 상담 일지 수정용 */
+	int modifyConsultant(ConsultantDTO con);
+
+	/* 상담 일지 삭제용 */
+	int deleteConsultant(int no);
+
 }

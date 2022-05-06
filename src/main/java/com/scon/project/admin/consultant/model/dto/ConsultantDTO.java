@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ConsultantDTO {
 
-	private int conNo;
+	private int no;
 	private String memberId;
 	private MemberDTO member;
 	private Date conWriteDate;
@@ -23,7 +23,7 @@ public class ConsultantDTO {
 	private String conDate;
 	private String conType;
 	private String conWay;
-	private int conImp;
+	private String conImp;
 	private String conContent;
 	private Date conUpdate;
 	private String conDelete;

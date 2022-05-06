@@ -50,9 +50,9 @@ public class ConsultantHopeControllerTests {
 	public void testSelectConsultant() throws Exception {
 		
 		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/consultant/consultantList"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/student/consultant/list"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.forwardedUrl("student/consultant/consultantList"))
+				.andExpect(MockMvcResultMatchers.forwardedUrl("student/consultant/list"))
 				.andDo(MockMvcResultHandlers.print());		
 	}
 	
@@ -84,10 +84,10 @@ public class ConsultantHopeControllerTests {
 //	public void testSelectConsultantDetail() throws Exception {
 //		
 //		// given
-//		int conNo = 22;
+//		int no = 22;
 //		
 //		// when & then
-//		mockMvc.perform(MockMvcRequestBuilders.get("/student/consultant/detail/" + conNo))
+//		mockMvc.perform(MockMvcRequestBuilders.get("/student/consultant/detail/" + no))
 //				.andExpect(MockMvcResultMatchers.status().isOk())
 //				.andExpect(MockMvcResultMatchers.forwardedUrl("student/consultant/detail"))
 //				.andDo(MockMvcResultHandlers.print());

@@ -13,7 +13,7 @@ public interface ConsultantHopeService {
 	boolean insertConsultant(ConsultantDTO con) throws Exception;
 
 	/* 상담 신청 상세 조회용 */
-	ConsultantDTO selectConsultantDetail(int conNo);
+	ConsultantDTO selectConsultantDetail(int no);
 
 	/* 상담 신청 수정용 */
 	int modifyConsultant(ConsultantDTO con);

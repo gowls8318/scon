@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -118,17 +118,17 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    onclick="location.href='/student/consultant/list'">돌아가기</button>
+                                    	th:onclick="location.href='/student/consultant/list'">돌아가기</button>
                                     <!-- <button type="button"
                                         class="btn btn-primary btn-margin submitbuttonbox"
                                         th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.conNo})} + '\';'">수정하기</button> -->
                                     <button type="button"
                                         class="btn btn-primary btn-margin submitbuttonbox"
-                                        th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.conNo})} + '\';'">수정하기</button>
-                                    <button type="button" class="btn btn-primary submitbuttonbox" th:onclick="deleteConsultant([[${consultantDetail.conNo}]])">삭제하기</button>
+                                        th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.no})} + '\';'">수정하기</button>
+                                    <button type="button" class="btn btn-primary submitbuttonbox" th:onclick="deleteConsultant([[${consultantDetail.no}]])">삭제하기</button>
                                 </div>
                             <form method="post" name="consultantForm">
-                            	<input type="hidden" name="no" value="${ consultantDetail.conNo }">
+                            	<input type="hidden" name="no" value="${ consultantDetail.no }">
                             </form>
                         </div>
                     </div>

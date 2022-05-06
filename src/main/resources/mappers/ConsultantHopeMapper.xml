@@ -3,7 +3,7 @@
 <mapper namespace="com.scon.project.student.consultant.model.dao.ConsultantHopeMapper">
 
 	<resultMap id="consultantResultMap" type="com.scon.project.admin.consultant.model.dto.ConsultantDTO">
-		<id property="conNo" column="CON_NO"></id>
+		<id property="no" column="CON_NO"></id>
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="conWriteDate" column="CON_WRITE_DATE"/>
 		<result property="conHDate" column="CON_HDATE"/>
@@ -87,7 +87,7 @@
 			 , CON_HUPDATE
 		  FROM TB_CONSULTANT
 		 WHERE CON_HDELETE = 'N'
-		   AND CON_NO = #{ conNo }
+		   AND CON_NO = #{ no }
 	</select>
 	
 	<!-- 상담 신청 수정용 -->
@@ -99,7 +99,7 @@
 		     , CON_HTITLE = #{ conHTitle }
 		     , CON_HCONTENT = #{ conHContent }
 		     , CON_HUPDATE = SYSDATE
-		 WHERE CON_NO = #{ conNo }
+		 WHERE CON_NO = #{ no }
 	</update>
 	
 	<!-- 상담 신청 삭제용 -->
@@ -107,7 +107,7 @@
 		UPDATE
 			   TB_CONSULTANT
 		   SET CON_HDELETE = 'Y'
-		 WHERE CON_NO = #{ conNo }
+		 WHERE CON_NO = #{ no }
 	</update>
 
 </mapper>

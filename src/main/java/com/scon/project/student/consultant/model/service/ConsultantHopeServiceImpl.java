@@ -42,9 +42,9 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 
 	/* 상담 신청 상세 조회용 */
 	@Override
-	public ConsultantDTO selectConsultantDetail(int conNo) {
+	public ConsultantDTO selectConsultantDetail(int no) {
 		
-		return consultantHopeMapper.selectConsultantDetail(conNo);
+		return consultantHopeMapper.selectConsultantDetail(no);
 	}
 
 	/* 상담 신청 수정용 */

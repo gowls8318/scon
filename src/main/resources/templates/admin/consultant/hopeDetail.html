@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -61,6 +61,14 @@
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody th:object="${ consultantHopeDetail }">
+                                        	<tr>
+                                                <th class="col-lg-3">
+                                                    <label for="clsName" class="col-form-label">원생</label>
+                                                </th>
+                                                <td class="col-lg-9">
+                                                    <div th:text="*{ member.name }" class="col-sm-10 col-lg-4">원생</div>
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <th class="col-lg-3">
                                                     <label for="clsName" class="col-form-label">신청일</label>
@@ -118,7 +126,7 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    onclick="location.href='/admin/consultant/hopeList'">돌아가기</button>
+                                    	th:onclick="location.href='/admin/consultant/hopeList'">돌아가기</button>
                                 </div>
                         </div>
                     </div>
