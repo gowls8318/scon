@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -63,10 +64,10 @@ public class ConsultantHopeController {
 	}
 	
 	/* 상담 신청 상세 조회용 */
-//	@GetMapping("/consultant/detail/{conNo}")
-//	public ModelAndView selectDetailPage(@PathVariable int conNo, ModelAndView mv) {
+//	@GetMapping("/consultant/detail/{no}")
+//	public ModelAndView selectDetailPage(@PathVariable int no, ModelAndView mv) {
 //		
-//		ConsultantDTO consultantDetail = consultantHopeService.selectConsultantDetail(conNo);
+//		ConsultantDTO consultantDetail = consultantHopeService.selectConsultantDetail(no);
 //		
 //		mv.addObject("consultantDetail", consultantDetail);
 //		mv.setViewName("student/consultant/detail");
@@ -75,7 +76,7 @@ public class ConsultantHopeController {
 //	}
 	
 	@GetMapping("/consultant/detail")
-	public String selectDetailPage(int no, Model model) {
+	public String selectDetailPage(@RequestParam int no, Model model) {
 		
 		model.addAttribute("consultantDetail", consultantHopeService.selectConsultantDetail(no));
 		
@@ -84,7 +85,7 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 수정용 */
 	@GetMapping("/consultant/updateForm")
-	public String updateConsultantPage(int no, Model model) {
+	public String updateConsultantPage(@RequestParam int no, Model model) {
 		
 		model.addAttribute("consultant", consultantHopeService.selectConsultantDetail(no));
 		
@@ -103,7 +104,7 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 삭제용 */
 	@PostMapping("consultant/delete")
-	public String deleteConsultant(int no, RedirectAttributes rttr, Locale locale) {
+	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) {
 		
 		consultantHopeService.deleteConsultant(no);
 		

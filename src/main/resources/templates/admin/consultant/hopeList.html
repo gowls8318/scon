@@ -26,6 +26,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+	<script>
+    	const successMessage = '[[${successMessage}]]'
+    	if(successMessage) {
+    		alert(successMessage);
+    	}
+    </script>
+    
 </head>
 
 <body id="page-top">
@@ -82,15 +89,17 @@
                                     </thead>
                                     <tbody class="accTbody">
                                         <tr th:each="conH : ${ consultantHopeList }">
-                                            <td th:text="${ conH.conNo }">번호</td>
+                                            <td th:text="${ conH.no }">번호</td>
                                             <td th:text="${ conH.conWriteDate }">상담 신청일</td>
                                             <td th:text="${ conH.member.name }">원생</td>
                                             <td th:text="${ conH.conHTitle }" class="conHTitle"
-                                            th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${conH.conNo})} + '\';'">상담 제목</td>
-                                            <td th:text="${ conH.conHandle }">처리 현황</td>
+                                            th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${conH.no})} + '\';'">상담 제목</td>
+                                            <td th:text="${ conH.conHandle }" id="handle">처리 현황</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-con"
-                                                th:onclick="location.href='/admin/consultant/insertForm'">등록</button>
+                                                <button type="button" class="btn btn-primary btn-con" id="btn-con"
+                                                	th:onclick="'location.href=\'' + @{/admin/consultant/insertForm(no=${conH.no})} + '\';'">등록</button>
+                                                <!-- th:onclick="'location.href=\'' + @{/admin/consultant/insertForm(no=${conH.no})} + '\';'" -->
+                                                <!-- th:onclick="movePage([[${conH.no}]])" -->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -164,6 +173,25 @@
                 }
             }
         }
+    </script>
+    
+    <script>
+    	/* var handle = document.getElementById("handle").innerHTML;
+    	function movePage(no) {
+    		if(handle == "완료") {
+    			alert("이미 처리가 완료된 상담입니다.");
+    		} else if(handle == "미완료") {
+    			location.href = "insertForm?no=" + no;
+    		}
+    	} */
+    	
+    	/* var con = document.getElementById("btn-con")
+    	con.onclick = function() {
+    		if (document.getElementById("handle").indexOf("완료") != -1) {
+    			alert("이미 처리가 완료된 상담입니다.");
+    		};
+    	} */
+    	
     </script>
 
     <!-- Bootstrap core JavaScript-->

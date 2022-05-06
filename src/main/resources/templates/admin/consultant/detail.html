@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>con006</title>
+    <title>상담 관리</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -58,16 +58,15 @@
                             <h6 class="m-0 font-weight-bold text-primary">상담 일지 조회</h6>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj dataTable-yj">
-                                        <tbody>
+                                        <tbody th:object="${ consultantDetail }">
                                             <tr>
                                                 <th class="col-lg-3">
                                                     <label for="std" class="col-form-label">원생</label>
                                                 </th>
                                                 <td class="col-lg-9">
-                                                    <div class="col-sm-10">김도윤</div>
+                                                    <div th:text="*{ member.name }" class="col-sm-10">원생</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -75,7 +74,15 @@
                                                     <label for="conDate" class="col-form-label">상담일</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10">2022-04-30</div>
+                                                    <div th:text="*{ conDate }" class="col-sm-10">상담일</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <label for="conUpdate" class="col-form-label">수정일</label>
+                                                </th>
+                                                <td>
+                                                    <div th:text="*{ conUpdate }" class="col-sm-10">수정일</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -83,7 +90,7 @@
                                                     <label for="conType" class="col-form-label">상담 유형</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10">학업 문제</div>
+                                                    <div th:text="*{ conType }" class="col-sm-10">상담 유형</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -91,7 +98,7 @@
                                                     <label for="conWay" class="col-form-label">상담 방법</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10">개인 면담</div>
+                                                    <div th:text="*{ conWay }" class="col-sm-10">상담 방법</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -99,7 +106,7 @@
                                                     <label for="conImp" class="col-form-label">중요도</label>
                                                 </th>
                                                 <td>
-                                                    <div class="col-sm-10">★★★★★</div>
+                                                    <div th:text="*{ conImp }" class="col-sm-10">중요도</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -108,9 +115,7 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-10">
-                                                        <div class="con-input-group conHContentD">
-                                                            상담 내용
-                                                        </div>
+                                                        <div th:text="*{ conHContent }" class="con-input-group conHContentD">상담 내용</div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -120,9 +125,7 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10">
-                                                        <div class="con-input-group conContentD">
-                                                            상담 일지 내용
-                                                        </div>
+                                                        <div th:text="*{ conContent }" class="con-input-group conContentD">상담 일지 내용</div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -131,12 +134,16 @@
                                 </div>
 
                                 <div class="buttonbox">
-                                    <button type="button" class="btn btn-light resetbuttonbox">돌아가기</button>
+                                    <button type="button" class="btn btn-light resetbuttonbox"
+                                    	th:onclick="location.href='/admin/consultant/list'">돌아가기</button>
                                     <button type="button"
-                                        class="btn btn-primary btn-margin submitbuttonbox">수정하기</button>
+                                        class="btn btn-primary btn-margin submitbuttonbox"
+                                        th:onclick="'location.href=\'' + @{/admin/consultant/updateForm(no=${consultantDetail.no})} + '\';'">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
-                                    data-toggle="modal" data-target="#deleteCon">삭제하기</button>
+                                    	th:onclick="deleteConsultant([[${consultantDetail.no}]])">삭제하기</button>
                                 </div>
+                            <form method="post" name="consultantForm">
+                        		<input type="hidden" name="no" value="${ consultantDetail.no }">
                             </form>
                         </div>
                     </div>
@@ -161,27 +168,14 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- 삭제 모달 -->
-    <div class="modal fade modal-bg-acc" id="deleteCon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content modal-dml modal-content-yj">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">상담 일지를 삭제하시겠습니까?</div>
-                <form action="" method="post">
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary resetbuttonbox" type="button" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary submitbuttonbox">확인</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- /삭제 모달 -->
+    <script>
+    	function deleteConsultant(no) {
+    		if(confirm('상담 일지 내역을 삭제하시겠습니까?')) {
+    			document.forms.consultantForm.action = "delete?no=" + no;
+    			document.forms.consultantForm.submit();
+    		}
+    	}
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

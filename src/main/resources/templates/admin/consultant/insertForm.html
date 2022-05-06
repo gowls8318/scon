@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -58,7 +58,8 @@
                             <h6 class="m-0 font-weight-bold text-primary">상담 일지 등록</h6>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="/admin/consultant/insertForm" method="post" name="consultantForm">
+                            	<input type="hidden" name="no" value="${ consultant.no }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody>
@@ -67,9 +68,7 @@
                                                     <label for="std" class="col-form-label">원생</label>
                                                 </th>
                                                 <td class="col-lg-9">
-                                                    <div class="col-sm-10 col-lg-4">
-                                                        <input type="text" class="form-control" id="std" readonly>
-                                                    </div>
+                                                    <div th:text="${ consultant.member.name }" class="col-sm-10 col-lg-4"></div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -110,7 +109,7 @@
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
                                                             aria-label=".form-select-lg example" id="conWay" name="conWay">
-                                                            <optgroup label="상담 방법">
+                                                            <optgroup label="상담 방법 선택">
 	                                                            <option value="개인 면담">개인 면담</option>
 	                                                            <option value="전화 면담">전화 면담</option>
 	                                                            <option value="방문 상담">방문 상담</option>
@@ -128,12 +127,13 @@
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
                                                             aria-label=".form-select-lg example" id="conImp" name="conImp">
-                                                            <option selected>중요도</option>
-                                                            <option value="5">★★★★★</option>
-                                                            <option value="4">★★★★☆</option>
-                                                            <option value="3">★★★☆☆</option>
-                                                            <option value="2">★★☆☆☆</option>
-                                                            <option value="1">★☆☆☆☆</option>
+                                                            <optgroup label="중요도 선택">
+	                                                            <option value="★★★★★">★★★★★</option>
+	                                                            <option value="★★★★☆">★★★★☆</option>
+	                                                            <option value="★★★☆☆">★★★☆☆</option>
+	                                                            <option value="★★☆☆☆">★★☆☆☆</option>
+	                                                            <option value="★☆☆☆☆">★☆☆☆☆</option>
+	                                                        </optgroup>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -174,8 +174,10 @@
                                 </div>
 
                                 <div class="buttonbox">
-                                    <button type="button" class="btn btn-light resetbuttonbox">취소하기</button>
-                                    <button type="submit" class="btn btn-primary submitbuttonbox">등록하기</button>
+                                    <button type="button" class="btn btn-light resetbuttonbox"
+                                    	onclick="cancelRegist()">취소하기</button>
+                                    <button type="submit" class="btn btn-primary submitbuttonbox"
+                                    	th:onclick="registConsultant([[${consultant.no}]])">등록하기</button>
                                 </div>
                             </form>
                         </div>
@@ -200,6 +202,21 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
+    <script>
+    	function registConsultant(no) {
+    		if(confirm('상담 일지를 등록하시겠습니까?')) {
+    			document.forms.consultantForm.action = "insertForm?no=" + no;
+    			document.forms.consultantForm.submit();
+    		}
+    	}
+    	
+    	function cancelRegist() {
+    		if(confirm('작성 중인 내용은 저장되지 않습니다. \n상담 일지 등록을 취소하시겠습니까?')) {
+    			location.href = "/admin/consultant/hopeList";
+    		}
+    	}
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

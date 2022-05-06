@@ -48,4 +48,25 @@ public class ConsultantServiceImpl implements ConsultantService {
 		return consultantMapper.insertConsultant(con);
 	}
 
+	/* 상담 일지 상세 조회용 */
+	@Override
+	public ConsultantDTO selectConsultantDetail(int no) {
+		
+		return consultantMapper.selectConsultantDetail(no);
+	}
+
+	/* 상담 일지 수정용 */
+	@Override
+	public int modifyConsultant(ConsultantDTO con) {
+		
+		return consultantMapper.modifyConsultant(con);
+	}
+
+	/* 상담 일지 삭제용 */
+	@Override
+	public int deleteConsultant(int no) {
+		
+		return consultantMapper.deleteConsultant(no);
+	}
+
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -59,7 +59,7 @@
                         </div>
                         <div class="card-body">
                             <form action="/student/consultant/updateForm" method="post" name="consultantForm">
-                            	<input type="hidden" name="no" value="${ consultant.conNo }">
+                            	<input type="hidden" name="no" value="${ consultant.no }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody th:object="${ consultant }">
@@ -145,10 +145,10 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    	th:onclick="cancelUpdate()">취소하기</button>
+                                    	onclick="cancelUpdate()">취소하기</button>
                                     <button type="button"
                                         class="btn btn-primary btn-margin submitbuttonbox"
-                                        th:onclick="updateConsultant([[${consultant.conNo}]])">수정하기</button>
+                                        th:onclick="updateConsultant([[${consultant.no}]])">수정하기</button>
                                 </div>
                             </form>
                         </div>
@@ -176,14 +176,14 @@
 
     <script>
     	function updateConsultant(no) {
-    		if(confirm('상담 신청 내용을 수정하시겠습니까?')) {
+    		if(confirm('상담 내용을 수정하시겠습니까?')) {
     			document.forms.consultantForm.action = "updateForm?no=" + no;
     			document.forms.consultantForm.submit();
     		}
     	}
     	
     	function cancelUpdate() {
-    		if(confirm('변경 사항이 저장되지 않습니다. \n상담 신청 수정을 취소하시겠습니까?')) {
+    		if(confirm('변경 사항이 저장되지 않습니다. \n상담 내용 수정을 취소하시겠습니까?')) {
     			location.href = "/student/consultant/list";
     		}
     	}

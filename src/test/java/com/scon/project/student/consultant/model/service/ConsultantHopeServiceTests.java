@@ -71,11 +71,11 @@ public class ConsultantHopeServiceTests {
 	public void testSelectConsultantDetail() {
 		
 		// given
-		int conNo = 22;
+		int no = 22;
 		
 		// when
 		ConsultantDTO consultantDetail = new ConsultantDTO();
-		consultantDetail = consultantHopeService.selectConsultantDetail(conNo);
+		consultantDetail = consultantHopeService.selectConsultantDetail(no);
 		
 		// then
 		assertNotNull(consultantDetail);
@@ -90,7 +90,7 @@ public class ConsultantHopeServiceTests {
 		// given
 		// DB에 있는 글 번호
 		ConsultantDTO con = new ConsultantDTO();
-		con.setConNo(22);
+		con.setNo(22);
 		con.setConHDate("2022-05-09");						// 22/05/05
 		con.setConHTime("10:00 ~ 10:50");					// 15:00 ~ 15:50
 		con.setConHTitle("상담 신청 테스트 제목 수정");			// 상담 신청 테스트

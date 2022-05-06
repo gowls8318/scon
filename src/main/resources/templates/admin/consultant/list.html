@@ -24,8 +24,15 @@
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  
 
+	<script>
+    	const successMessage = '[[${successMessage}]]'
+    	if(successMessage) {
+    		alert(successMessage);
+    	}
+    </script>
+    
 </head>
 
 <body id="page-top">
@@ -75,19 +82,20 @@
                                             <th>상담일</th>
                                             <th>원생</th>
                                             <th>중요도</th>
-                                            <th>상담 제목</th>
+                                            <!-- <th>상담 제목</th> -->
                                             <th>상담 일지 내용</th>
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
                                         <tr th:each="con : ${ consultantList }">
-                                            <td th:text="${ con.conNo }">번호</td>
+                                            <td th:text="${ con.no }">번호</td>
                                             <td th:text="${ con.conDate }">상담일</td>
                                             <td th:text="${ con.member.name }">원생</td>
                                             <td th:text="${ con.conImp }">중요도</td>
-                                            <td th:text="${ con.conHTitle }" class="conHTitle"
-                                            th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${con.conNo})} + '\';'">상담 제목</td>
-                                            <td th:text="${ con.conContent }" class="conTitle">상담 일지 내용</td>
+                                            <!-- <td th:text="${ con.conHTitle }" class="conHTitle"
+                                            	th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${con.no})} + '\';'">상담 제목</td> -->
+                                            <td th:text="${ con.conContent }" class="conTitle"
+                                            	th:onclick="'location.href=\'' + @{/admin/consultant/detail(no=${con.no})} + '\';'">상담 일지 내용</td>
                                         </tr>
                                     </tbody>
                                 </table>
