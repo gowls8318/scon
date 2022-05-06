@@ -29,6 +29,7 @@ public class GradeControllerTests {
 	
 	/* 의존성 주입 테스트 */
 	@Test
+	@Disabled
 	public void testInit() {
 		
 		assertNotNull(gradeController);
@@ -43,6 +44,7 @@ public class GradeControllerTests {
 	
 	/* 성적 조회 테스트 (complete) */
 	@Test   
+	@Disabled
 	public void 전체_성적_조회용_컨트롤러_테스트() throws Exception {
 		//given
 		
@@ -53,25 +55,23 @@ public class GradeControllerTests {
 			   .andDo(MockMvcResultHandlers.print());
 	}
 	
-	/* 성적 입력 전 학생 조회 테스트 */
+	/* 성적 입력 전 학생 조회 테스트 (complete) */
 	@Test
-	@Disabled
 	public void 성적_입력_학생_조회_컨트롤러_테스트() throws Exception {
 		
 		//given
 		
 		//when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin/gradeList?clsId=1"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/insertGrade"))
 		       .andExpect(MockMvcResultMatchers.status().isOk())
-		       .andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=UTF-8"))
+		       .andExpect(MockMvcResultMatchers.forwardedUrl("admin/grade/insertGrade"))
 		       .andDo(MockMvcResultHandlers.print());
-	
 	}
 	
+
 	
 	/* 성적 입력 테스트 */
 	@Test
-	@Disabled
 	public void 성적_입력_컨트롤러_테스트() throws Exception {
 		
 		//given

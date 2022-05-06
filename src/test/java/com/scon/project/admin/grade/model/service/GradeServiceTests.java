@@ -49,7 +49,7 @@ public class GradeServiceTests {
 		assertNotNull(gradeList);
 	}
 	
-	/*성적 입력 전 학생 조회 테스트 */
+	/*성적 입력 전 학생 조회 테스트 (complete) */
 	@Test
 	public void 성적_입력_학생_조회_테스트() {
 		
@@ -59,7 +59,7 @@ public class GradeServiceTests {
 		int classId = 1;
 		
 		//when
-		List<MemberDTO> memberList = gradeService.findAllStudent(classId);
+		List<GradeDTO> memberList = gradeService.findAllStudent(classId);
 				
 		//then
 		assertNotNull(memberList);
@@ -68,7 +68,6 @@ public class GradeServiceTests {
 	
 	/* 성적 입력 테스트 */
 	@Test
-	@Disabled
 	public void 성적_입력_서비스_성공_테스트() throws Exception {
 		//given
 		GradeDTO grade = new GradeDTO();

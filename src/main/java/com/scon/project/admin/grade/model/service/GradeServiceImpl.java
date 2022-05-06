@@ -21,23 +21,36 @@ public class GradeServiceImpl implements GradeService{
 		this.gradeMapper = gradeMapper;
 	}
 	
+	/* 성적 조회 (complete) */
 	@Override
 	public List<GradeDTO> findAllGrade(int clsId) {
 		return gradeMapper.findAllGrade(clsId);
 	}
+	
+	/* 성적 수정 (complete) */
+	@Override
+	public int updateGrade(GradeDTO gradeDTO) throws Exception {
+		return gradeMapper.updateGrade(gradeDTO);
+	}
 
+	/* 성적 입력 학생 조회 (complete) */
+	@Override
+	public List<GradeDTO> findAllStudent(int classId) {
+		return gradeMapper.findAllStudent(classId);
+	}
 
-//	@Override
-//	public boolean insertGradeList(GradeDTO grade) throws Exception {
-//		
-//		int result = gradeMapper.insertGradeList(grade);
-//		
-//		if(result <= 0) {
-//			throw new Exception("성적 등록에 실패하셨습니다.");
-//		} 
-//		
-//		return result > 0 ? true : false;
-//	}
+	/* 성적 입력 */
+	@Override
+	public boolean insertGradeList(GradeDTO grade) throws Exception {
+		
+		int result = gradeMapper.insertGradeList(grade);
+		
+		if(result <= 0) {
+			throw new Exception("성적 등록에 실패하셨습니다.");
+		} 
+		
+		return result > 0 ? true : false;
+	}
 
 //	@Override
 //	public boolean insertGradeList() {
@@ -51,24 +64,11 @@ public class GradeServiceImpl implements GradeService{
 //		return result > 0 ? true : false;
 //	}
 
-	/* 성적 입력 학생 조회 */
-	@Override
-	public List<MemberDTO> findAllStudent(int classId) {
-		return gradeMapper.findAllStudent(classId);
-	}
 	
-	@Override
-	public boolean insertGradeList(GradeDTO grade) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/* 성적 수정 */
-	@Override
-	public int updateGrade(GradeDTO gradeDTO) throws Exception {
-		return gradeMapper.updateGrade(gradeDTO);
-	}
-
+//	@Override
+//	public boolean insertGradeList(GradeDTO grade) throws Exception {
+//		return null;
+//	}
 
 	//성적 삭제
 //	@Override

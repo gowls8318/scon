@@ -10,14 +10,17 @@ import com.scon.project.member.model.dto.MemberDTO;
 @Mapper
 public interface GradeMapper {
 
+	//학생 성적 조회(complete)
 	List<GradeDTO> findAllGrade(int classId);
+	
+	//성적 수정(complete)
+	int updateGrade(GradeDTO gradeDTO) throws Exception;
 
+	//성적 입력 전 학생 조회 (complete)
+	List<GradeDTO> findAllStudent(int classId);
+	
 	int insertGradeList(GradeDTO grade);
 
-	List<MemberDTO> findAllStudent(int classId);
-
-	int updateGrade(GradeDTO gradeDTO) throws Exception;
-	
 //	int deleteGrade(int gradeId) throws Exception;
 
 

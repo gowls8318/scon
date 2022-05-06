@@ -1,17 +1,14 @@
 package com.scon.project.admin.grade.controller;
 
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,7 +28,7 @@ public class GradeController {
 		this.gradeService = gradeSerivce;
 	}
 
-	/* 성적 조회*/
+	/* 성적 조회 complete */
 	@GetMapping("/gradeList")
 	public ModelAndView findGradeList(@RequestParam int clsId, ModelAndView mv) {
 
@@ -43,27 +40,36 @@ public class GradeController {
 		return mv;
 	}
 	
-	/* 성적 수정 */
+	/* 성적 수정 complete */
 	@PostMapping("/grade")
-	public String updateGrade(GradeDTO gradeDTO) throws Exception {
+	public String updateGrade(GradeDTO gradeDTO, HttpServletRequest request) throws Exception {
 		
 		int result = gradeService.updateGrade(gradeDTO);
-		return "redirect:/grade/gradeList";
-	} 
-	
-	/* 성적 등록용 조회 페이지*/
-	@GetMapping("/insertGrade")
-	public String insertGradeList() {
-		return "admin/grade/insertGrade";
+		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
+		return "redirect:"+ referer;
 	}
-
 	
-	/* 성적 등록 페이지 (학생 조회) */
-//	@GetMapping(value="insertGrade", produces="application/json; charset=UTF-8")
-//	@ResponseBody
-//	public List<MemberDTO> findAllStudent(@RequestParam int clsId){
-//		return gradeService.findAllStudent(clsId);
-//	}
+	/* 성적 등록 페이지 (학생 조회) complete */
+	@GetMapping("/insertGrade")
+	public ModelAndView findAllStudent(@RequestParam int clsId, ModelAndView mv){
+		
+		List<GradeDTO> memberList = gradeService.findAllStudent(clsId);
+		
+		mv.addObject("memberList", memberList);
+		mv.setViewName("admin/grade/insertGrade");
+		
+		return mv;
+	}
+	
+	/* 성적 등록 */
+	@PostMapping("/insertGrade")
+	public String insertGrade(GradeDTO gradeDTO, HttpServletRequest request) throws Exception {
+		
+		boolean result = gradeService.insertGradeList(gradeDTO);
+		String referer = request.getHeader("Referer");
+		return "redirect:"+ referer;
+		
+	}
 	
 	/* 성적 등록 이후 포워딩 */
 //	@PostMapping("/insertGrade")

@@ -9,9 +9,11 @@ public interface GradeService {
 
 	List<GradeDTO> findAllGrade(int clsId);
 
+	//성적 입력
 	boolean insertGradeList(GradeDTO grade) throws Exception;
 
-	List<MemberDTO> findAllStudent(int clsId);
+	//성적 입력 전 학생 조회 (complete)
+	List<GradeDTO> findAllStudent(int clsId);
 
 	int updateGrade(GradeDTO gradeDTO) throws Exception;
 
