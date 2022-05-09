@@ -25,5 +25,31 @@
 		     , BUS_HOMPY		     
 		  FROM TB_BUSINESS
 	</select>
+	
+	<insert id="insertBusinessInfo" parameterType="com.scon.project.admin.business.model.dto.BusinessDTO">
+		INSERT
+			INTO TB_BUSINESS
+			(
+				BUS_CODE
+			  , BUS_NUM
+			  , BUS_TITLE
+		      , BUS_REP
+		      , BUS_PHONE
+	  	      , BUS_FAX
+		      , BUS_ADR
+		      , BUS_HOMPY
+			)
+			VALUES			
+				(
+				 #{ busCode }
+			   , #{ busNum }
+			   , #{ busTitle }
+			   , #{	busRep }
+			   , #{ busPhone }
+			   , #{ busFax }
+			   , #{	busAdr }
+			   , #{ busHompy }
+				)			
+	</insert>
 
 </mapper>

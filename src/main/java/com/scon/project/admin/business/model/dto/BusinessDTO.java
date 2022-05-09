@@ -9,8 +9,8 @@ public class BusinessDTO {
 	private int busNum;
 	private String busTitle;
 	private String busRep;
-	private int busPhone;
-	private int busFax;
+	private String busPhone;
+	private String busFax;
 	private String busAdr;
 	private String busHompy;
 	
