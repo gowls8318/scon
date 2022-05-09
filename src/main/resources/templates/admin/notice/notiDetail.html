@@ -120,12 +120,24 @@
                                     </thead>
                                     <tbody>
                                     <tr>
+                                        <th>글번호</th>
+                                        <td th:text="${notice.notiNo}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>조회수</th>
+                                        <td th:text="${notice.notiView}"></td>
+                                    </tr>
+                                    <tr>
                                         <th>작성자</th>
                                         <td>관리자</td>
                                     </tr>
                                     <tr>
+                                        <th>작성일</th>
+                                        <td th:text="${#temporals.format(notice.notiDate, 'yyyy-MM-dd')}"></td>
+                                    </tr>
+                                    <tr>
                                         <th>제목</th>
-                                        <td>공지사항 제목입니다.</td>
+                                        <td th:text="${ notice.notiTitle }"></td>
                                     </tr>
                                     <tr>
                                         <th>파일첨부</th>
@@ -133,7 +145,7 @@
                                     </tr>
                                     <tr>
                                         <th>내용</th>
-                                        <td id="notiContents">공지사항 내용입니다.</td>
+                                        <td id="notiContents" th:text="${ notice.notiContent }">공지사항 내용입니다.</td>
                                     </tr>
                                     </tbody>
                                 </table>

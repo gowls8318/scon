@@ -13,6 +13,7 @@ public interface NoticeService {
 	int registNotice(NoticeDTO noti);
 	
 //	게시글 상세 조회
-	NoticeDTO sellectNoticeDetail();
+	NoticeDTO sellectNoticeDetail(int idx) throws Exception;
 
+	
 }

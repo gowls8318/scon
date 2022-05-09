@@ -46,6 +46,29 @@
 		, 'N'
 		)
 	</insert>
+	
+	
+	<!-- 공지 상세 조회 -->
+	<select id="sellectNoticeDetail" resultMap="noticeResultMap">
+	SELECT
+		   NOTI_NO
+		 , NOTI_TITLE
+		 , NOTI_CONTENT
+		 , NOTI_VIEW
+		 , NOTI_DATE
+	  FROM TB_NOTICE
+	 WHERE NOTI_DELETE = 'N'
+	   AND NOTI_NO = #{ idx }	
+	</select>
+
+	<!-- 게시글 조회수 증가 -->
+	<update id="updateHitCount" parameterType="int">		
+			UPDATE
+				   TB_NOTICE
+			   SET NOTI_VIEW = NOTI_VIEW + 1
+			 WHERE NOTI_NO = #{ idx }  		
+	</update>
+	
 <!-- 	
 	
 		
