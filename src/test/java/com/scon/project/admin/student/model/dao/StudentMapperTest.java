@@ -71,7 +71,7 @@ public class StudentMapperTest {
 
 	 //when 
 	 MemberDTO member = new MemberDTO(); 
-	 member = studentMapper.findMemberById(username);
+	// member = studentMapper.findMemberById(username);
 	 
 	 StudentDTO student = studentMapper.findStudentById(username);
 	 

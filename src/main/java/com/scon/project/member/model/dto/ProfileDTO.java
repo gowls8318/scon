@@ -1,4 +1,4 @@
-package com.scon.project.admin.student.model.dto;
+package com.scon.project.member.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

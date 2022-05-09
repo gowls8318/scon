@@ -104,28 +104,26 @@
                                     <table class="table table-bordered small text-xs" id="">
 
                                         <tr>
-                                            <th class="notiCheck checkNO">
+                                           <th class="notiCheck">
                                                 <div class="form-check">
-                                                    <label class="form-check-label" for=""></label>
-                                                    <input class="form-check-input checkNO" type="checkbox" id="" value="">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault"></label>
                                                 </div>
                                             </th>
                                             <th>이름</th>
                                             <th>핸드폰 번호</th>
                                             <th>등록일</th>
                                         </tr>
-
-
-                                        <tr>
-                                            <th class="notiCheck">
+                                       <tr th:each="member : ${ memberList }">
+                                            <td class="notiCheck">
                                                 <div class="form-check">
-                                                    <input class="form-check-input checkNO" type="checkbox" id="" value="">
+                                                    <input class="form-check-input" type="checkbox" 
+                                                    th:value="${ member.id }" name="selectStd" >
                                                 </div>
-                                            </th>
-                                            <td>강수지</td>
-                                            <td>010-1234-5678</td>
-                                            <td>2022-04-28</td>
-
+                                            </td>
+                                            <td th:text="${ member.name }"></td>
+                                            <td th:text="${ member.phone }"></td>
+                                            <td th:text="${ member.enrollDate }"></td>
                                         </tr>
 
                                     </table>
@@ -176,15 +174,9 @@
 											</label>
 											<div class="col-sm-2"></div>
 											<div class="col-sm-7 col-lg-7 row">
-												<div class="col-sm-9 col-lg-8 row">
-													<input type="text" class="form-control infoformbox"
-														id="userId" name="userId"> <small id="idHelp"
-														class="text-danger"></small>
-												</div>
-												<div class="col-sm-2">
-													<input type="button"
-														class="btn btn-secondary btn-sm stu-btn" value=" 중복 확인 " />
-												</div>
+												<input type="text" class="form-control infoformbox"
+													id="id" name="id" readonly> <small id="idHelp"
+													class="text-danger"></small>
 											</div>
 
 
@@ -221,10 +213,10 @@
 											<div class="col-sm-7 col-lg-7 row">
 
 												<label class="radio-inline col-6"> <input
-													type="radio" class="radio" name="gender" id="F" value="F"
+													type="radio" class="radio pt-2" name="gender" id="F" value="F"
 													checked> 여자
 												</label> <label class="radio-inline col-6"> <input
-													type="radio" class="radio" name="gender" id="M" value="M">
+													type="radio" class="radio pt-2" name="gender" id="M" value="M">
 													남자
 												</label>
 

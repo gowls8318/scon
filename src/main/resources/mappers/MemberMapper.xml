@@ -16,8 +16,7 @@
 		<result property="deleteDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		
-		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
-		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>		
 	</resultMap>
 
 	<resultMap id="memberRoleResultMap" type="com.scon.project.member.model.dto.MemberRoleDTO">
@@ -31,6 +30,16 @@
 		<id property="code" column="REF_AUTHORITY_CODE2"/>
 		<result property="name" column="AUTHORITY_NAME"/>
 		<result property="desc" column="AUTHORITY_DESC"/>
+	</resultMap>
+	
+	<resultMap id="fileResultMap" type="com.scon.project.member.model.dto.ProfileDTO">
+		<id property="fileId" column="FILE_ID"/>
+		<result property="fileOrginName" column="FILE_ORGNAME"/>
+		<result property="fileSaveName" column="FILE_SAVENAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileType" column="FILE_TYPE"/>
+		<result property="fileThumnailPathName" column="FILE_THUM_PATH"/>
+		<result property="fileThumnailName" column="FILE_THUM.NAME"/>
 	</resultMap>
 
 	<insert id="insertMember">
@@ -92,6 +101,68 @@
 		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
 		 WHERE A.MEMBER_ID = #{ username }
 	</select>
+	
+		
+	<insert id="insertFile">
+		INSERT
+		  INTO TB_FILE
+		  (
+		   FILE_ID
+	 	 , FILE_ORGNAME
+		 , FILE_SAVENAME
+		 , FILE_PATH
+		 , FILE_TYPE
+		 , FILE_THUM_PATH
+		 , FILE_THUM_NAME
+		  )
+		 VALUES(
+		 	SEQ_FILE_NO.NEXTVAL
+		 , #{ fileOrginName }
+		 , #{ fileSaveName }
+		 , #{ filePath }
+		 , #{ fileType }
+		 , null
+		 , null
+		 )
+		 
+	</insert>
+
+	<insert id="insertProfile">
+		INSERT 
+		  INTO TB_PROFILE
+		  VALUES 
+		  (
+		    #{ id }
+		  , (SELECT LAST_NUMBER
+		       FROM USER_SEQUENCES
+		      WHERE SEQUENCE_NAME = 'SEQ_FILE_NO')
+		  )
+	</insert>
+	
+	<insert id="insertMemberRole">
+		INSERT 
+		  INTO TB_MEMBER_ROLE
+		  VALUES 
+		  (
+		    #{ role }
+		  , #{ id }
+		  )
+	</insert>
+	
+	<select id="checkId" resultType="int">
+		SELECT
+		       COUNT(*)
+		  FROM TB_MEMBER A
+		 WHERE A.MEMBER_ID = #{ id }
+	</select>
+	
+	<select id="findAllStudentList" resultMap="memberResultMap">
+		SELECT *
+		  FROM TB_MEMBER A
+		  JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE AUTHORITY_CODE = 1
+	</select>
+	
 
 
 </mapper>

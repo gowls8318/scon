@@ -2,6 +2,7 @@ package com.scon.project.admin.student.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scon.project.member.model.dto.MemberDTO;
+import com.scon.project.member.model.dto.ProfileDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

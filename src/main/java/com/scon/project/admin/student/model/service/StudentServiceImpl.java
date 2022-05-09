@@ -1,12 +1,13 @@
 package com.scon.project.admin.student.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.scon.project.admin.student.model.dao.StudentMapper;
 import com.scon.project.admin.student.model.dto.ParentsDTO;
-import com.scon.project.admin.student.model.dto.ProfileDTO;
 import com.scon.project.admin.student.model.dto.StudentDTO;
+import com.scon.project.member.model.dto.MemberDTO;
 
 @Service("studentService")
 public class StudentServiceImpl implements StudentService{
@@ -18,12 +19,6 @@ public class StudentServiceImpl implements StudentService{
 		this.studentMapper = studentMapper;
 	}
 	
-
-	@Override
-	public int insertFile(ProfileDTO profile) {
-		return studentMapper.insertFile(profile);
-	}
-
 	@Override
 	public int insertStudent(StudentDTO student) {
 		return studentMapper.insertStudent(student);
@@ -35,10 +30,11 @@ public class StudentServiceImpl implements StudentService{
 		return studentMapper.insertParents(parents);
 	}
 
-
 	@Override
-	public int insertProfile(String id) {
-		return studentMapper.insertProfile(id);
+	public StudentDTO findStudentById(String id) {
+		
+		return studentMapper.findStudentById(id);
 	}
+
 
 }

@@ -48,7 +48,7 @@
 	</resultMap>
 	
 
-	<resultMap id="fileResultMap" type="com.scon.project.member.model.dto.AuthorityDTO">
+	<resultMap id="profileResultMap" type="com.scon.project.member.model.dto.ProfileDTO">
 		<id property="fileId" column="FILE_ID"/>
 		<result property="fileOrginName" column="FILE_ORGNAME"/>
 		<result property="fileSaveName" column="FILE_SAVENAME"/>
@@ -105,33 +105,7 @@
 		, #{ parentsPhone }
 		)
 	</insert>
-	
-	
-	<select id="findMemberById" resultMap="memberResultMap">
-		SELECT
-		       A.MEMBER_ID
-		     , A.MEMBER_NAME  
-		     , A.MEMBER_PWD
-		     , A.TEMP_PWD_YN
-		     , A.PHONE
-		     , A.EMAIL
-		     , A.BIRTHDAY
-		     , A.ADDRESS
-		     , A.GENDER
-		     , A.ENROLL_DATE
-		     , A.DEL_DATE
-		     , A.MEMBER_ST
-		     , B.MEMBER_ID REF_MEMBER_ID
-		     , B.AUTHORITY_CODE REF_AUTHORITY_CODE
-		     , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
-		     , C.AUTHORITY_NAME
-		     , C.AUTHORITY_DESC
-		  FROM TB_MEMBER A
-		  LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
-		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)  
-		 WHERE A.MEMBER_ID = #{ username }
-	</select>
-	
+
 	
 	<select id="findStudentById" resultMap="studentResultMap">
 		SELECT
@@ -177,51 +151,8 @@
 		  LEFT JOIN TB_PARENTS D ON (A.MEMBER_ID = D.MEMBER_ID) 
 		  LEFT JOIN TB_PROFILE P ON (A.MEMBER_ID = P.MEMBER_ID) 
 		  LEFT JOIN TB_FILE F ON (P.FILE_ID = F.FILE_ID) 
-		 WHERE A.MEMBER_ID = #{ username }
+		 WHERE A.MEMBER_ID = #{ id }
 	</select>
-	
-	
-	<insert id="insertFile">
-	
-		INSERT
-		  INTO TB_FILE
-		  (
-		   FILE_ID
-	 	 , FILE_ORGNAME
-		 , FILE_SAVENAME
-		 , FILE_PATH
-		 , FILE_TYPE
-		 , FILE_THUM_PATH
-		 , FILE_THUM_NAME
-		  )
-		 VALUES(
-		 	SEQ_FILE_NO.NEXTVAL
-		 , #{ fileOrginName }
-		 , #{ fileSaveName }
-		 , #{ filePath }
-		 , #{ fileType }
-		 , null
-		 , null
-		 )
-	</insert>
-
-	<insert id="insertProfile">
-	
-	<selectKey keyProperty="fileNo" order="BEFORE" resultType="long">
-		SELECT LAST_NUMBER
-		  FROM USER_SEQUENCES
-		 WHERE SEQUENCE_NAME = 'SEQ_FILE_NO'
-	</selectKey>	
-
-		INSERT 
-		  INTO TB_PROFILE
-		  VALUES 
-		  (
-		    #{ id }
-		  , #{ fileNo }
-		  )
-	
-	</insert>
 	
 
 
