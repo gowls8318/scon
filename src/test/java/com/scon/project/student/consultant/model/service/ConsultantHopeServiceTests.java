@@ -35,7 +35,7 @@ public class ConsultantHopeServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 신청 내역 조회용 서비스 메소드 테스트")
-	public void testSelectConsultant() {
+	public void testSelectConsultant() throws Exception {
 		
 		// when
 		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList();
@@ -52,7 +52,7 @@ public class ConsultantHopeServiceTests {
 		
 		// given
 		ConsultantDTO con = new ConsultantDTO();
-		con.setConHDate("2022-05-03");
+		con.setConHDate("2022-05-08");
 		con.setConHTime("17:00 ~ 17:50");
 		con.setConHTitle("상담 신청 제목");
 		con.setConHContent("상담 신청 내용");
@@ -68,7 +68,7 @@ public class ConsultantHopeServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 신청 상세 조회용 서비스 메소드 테스트")
-	public void testSelectConsultantDetail() {
+	public void testSelectConsultantDetail() throws Exception {
 		
 		// given
 		int no = 22;
@@ -107,7 +107,7 @@ public class ConsultantHopeServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 신청 삭제용 서비스 메소드 테스트")
-	public void testDeleteConsultant() {
+	public void testDeleteConsultant() throws Exception {
 		
 		// given
 		// DB에 있는 글 번호

@@ -1,269 +1,104 @@
-                                                <!--  작성 영역 -->
-                                                <div class="lec-flex">
-                                                    <div class="row mb-2 ml-1">
-                                                        <div class="col-lg-11"></div>
-                                                        <button type="button"
-                                                            class="btn btn-primary btn-lec">수강
-                                                            등록</button>
-                                                    </div>
-                                                    <div class="search-area col-lg-5 pr-0">
-                                                        <div class="form-group mx-sm-3">
-                                                            <input type="text" class="form-control" id="accSearch"
-                                                                onkeyup='searchTable()' placeholder="검색어를 입력하세요">
-                                                        </div>
-                                                        <button type="button"
-                                                            class="btn btn-primary btn-search">검색</button>
-                                                    </div>
-                                                </div>
-                                                <div class="table-responsive table-responsive-lec2">
-                                                    <table class="table table-bordered-yj dataTable-yj" id="accDataTable"
-                                                        width="100%" cellspacing="0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>번호</th>
-                                                                <th>수강 상태</th>
-                                                                <th>강의명</th>
-                                                                <th>담당 강사</th>
-                                                                <th>수강료</th>
-                                                                <th>수강 기간</th>
-                                                                <th>관리</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>10</td>
-                                                                <td>수강중</td>
-                                                                <td>영어</td>
-                                                                <td>김아윤</td>
-                                                                <td>200,000</td>
-                                                                <td>2022-04-01 ~ 2022-04-30</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>9</td>
-                                                                <td>수강중</td>
-                                                                <td>영어</td>
-                                                                <td>최수아</td>
-                                                                <td>200,000</td>
-                                                                <td>2022-04-01 ~ 2022-04-30</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>8</td>
-                                                                <td>수강중</td>
-                                                                <td>수학</td>
-                                                                <td>서하윤</td>
-                                                                <td>200,000</td>
-                                                                <td>2022-03-01 ~ 2022-03-31</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>7</td>
-                                                                <td>수강 완료</td>
-                                                                <td>수학</td>
-                                                                <td>이하린</td>
-                                                                <td>200,000</td>
-                                                                <td>2022-03-01 ~ 2022-03-31</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>6</td>
-                                                                <td>수강 완료</td>
-                                                                <td>국어</td>
-                                                                <td>최수아</td>
-                                                                <td>250,000</td>
-                                                                <td>2022-02-01 ~ 2022-02-28</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>5</td>
-                                                                <td>수강 완료</td>
-                                                                <td>영어</td>
-                                                                <td>이서아</td>
-                                                                <td>250,000</td>
-                                                                <td>2022-02-01 ~ 2022-02-28</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>4</td>
-                                                                <td>수강 완료</td>
-                                                                <td>수학</td>
-                                                                <td>김아윤</td>
-                                                                <td>200,000</td>
-                                                                <td>2022-02-01 ~ 2022-02-28</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>수강 완료</td>
-                                                                <td>영어</td>
-                                                                <td>이아린</td>
-                                                                <td>200,000</td>
-                                                                <td>2022-02-01 ~ 2022-02-28</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>수강 완료</td>
-                                                                <td>국어</td>
-                                                                <td>서하윤</td>
-                                                                <td>250,000</td>
-                                                                <td>2022-02-01 ~ 2022-02-28</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>수강 완료</td>
-                                                                <td>국어</td>
-                                                                <td>이서아</td>
-                                                                <td>250,000</td>
-                                                                <td>2022-02-01 ~ 2022-02-28</td>
-                                                                <td>
-                                                                    <div class="btn-acc">
-                                                                        <button type="button"
-                                                                            class="btn btn-primary btn-acc1">수정</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-light btn-acc2"
-                                                                            data-toggle="modal"
-                                                                            data-target="#deleteLec">삭제</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-                                                <!-- 삭제 모달 -->
-                                                <div class="modal fade modal-bg-acc" id="deleteLec" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content modal-dml modal-content-yj">
-                                                            <div class="modal-header">
-                                                                <button class="close" type="button" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">수강 정보를 삭제하시겠습니까?</div>
-                                                            <form action="" method="post">
-                                                                <div class="modal-footer">
-                                                                    <button class="btn btn-secondary resetbuttonbox"
-                                                                        type="button" data-dismiss="modal">취소</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary submitbuttonbox">확인</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /삭제 모달 -->
-                                                
-                                                <!-- 입력 검색 -->
-                                                <!-- 원하는 td만 검색 -->
-                                                <script>
-                                                    function searchTable() {
-                                                        var input, filter, table, tr, td, i, j, found;
-                                                        input = document.getElementById("accSearch");
-                                                        filter = input.value.toLowerCase();
-                                                        table = document.getElementById("accDataTable");
-                                                        tr = table.getElementsByTagName("tr");
-                                                        for (i = 1; i < tr.length; i++) {
-                                                            td = tr[i].getElementsByTagName("td");
-                                                            for (j = 0; j < td.length - 1; j++) {
-                                                                if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
-                                                                    found = true;
-                                                                }
-                                                            }
-                                                            if (found) {
-                                                                tr[i].style.display = "";
-                                                                found = false;
-                                                            } else {
-                                                                tr[i].style.display = "none";
-                                                            }
-                                                        }
-                                                    }
-                                                </script>
+<head>
 
-                                                <!-- /작성 영역 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>수강 내역</title>
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="startbootstrap-sb-admin-2-gh-pages/css/student.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+	<!-- 작성 영역 -->
+	<div class="lec-flex">
+		<div class="row mb-2 ml-1">
+			<div class="col-lg-11"></div>
+			<button type="button" class="btn btn-primary btn-lec">수강 등록</button>
+		</div>
+		<div class="search-area col-lg-5 pr-0">
+			<div class="form-group mx-sm-3">
+				<input type="text" class="form-control" id="accSearch"
+					onkeyup='searchTable()' placeholder="검색어를 입력하세요">
+			</div>
+			<button type="button" class="btn btn-primary btn-search">검색</button>
+		</div>
+	</div>
+	<div class="table-responsive table-responsive-lec2">
+		<table class="table table-bordered-yj dataTable-yj" id="accDataTable"
+			width="100%" cellspacing="0">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>수강 상태</th>
+					<th>강의명</th>
+					<th>담당 강사</th>
+					<th>수강료</th>
+					<th>수강 기간</th>
+					<th>관리</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="lec : ${ lectureList }">
+					<td th:text="${ lec.no }">번호</td>
+					<td th:text="${ lec.lecStatus }">수강 상태</td>
+					<td th:text="${ lec.cls.clsName }">강의명</td>
+					<td th:text="${ lec.member.name }">담당 강사</td>
+					<td th:text="${ lec.lecPay }">수강료</td>
+					<td>
+						<div class="clsDate2">
+							<div th:text="${ lec.cls.clsStart }">수강 시작일</div>
+							<span>&nbsp;~&nbsp;</span>
+							<div th:text="${ lec.cls.clsEnd }">수강 종료일</div>
+						</div>
+					</td>
+					<td>
+						<div class="btn-acc">
+							<button type="button" class="btn btn-primary btn-acc1">수정</button>
+							<button type="button" class="btn btn-light btn-acc2">삭제</button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script>
+		/* 입력 검색 - 원하는 td만 검색 */
+		function searchTable() {
+			var input, filter, table, tr, td, i, j, found;
+			input = document.getElementById("accSearch");
+			filter = input.value.toLowerCase();
+			table = document.getElementById("accDataTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 1; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td");
+				for (j = 0; j < td.length - 1; j++) {
+					if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
+						found = true;
+					}
+				}
+				if (found) {
+					tr[i].style.display = "";
+					found = false;
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	</script>
+	<!-- /작성 영역 -->
+
+</body>
+
+</html>

@@ -13,6 +13,8 @@ import com.scon.project.student.consultant.model.dao.ConsultantHopeMapper;
 @Transactional
 public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 
+	/* 예외 처리 해주기 */
+	
 	private final ConsultantHopeMapper consultantHopeMapper;
 	
 	@Autowired
@@ -20,11 +22,17 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 		this.consultantHopeMapper = consultantHopeMapper;
 	}
 	
-	/* 상담 신청 내역 조회용 */
+	/* 상담 신청 내역 조회용 */	
 	@Override
-	public List<ConsultantDTO> selectAllConsultantList() {
+	public List<ConsultantDTO> selectAllConsultantList() throws Exception {
 		
-		return consultantHopeMapper.selectAllConsultantList();
+		List<ConsultantDTO> consultantList = consultantHopeMapper.selectAllConsultantList();
+		
+		if(consultantList == null) {
+			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
+		}
+		
+		return consultantList;
 	}
 
 	/* 상담 신청 등록용 */
@@ -42,23 +50,41 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 
 	/* 상담 신청 상세 조회용 */
 	@Override
-	public ConsultantDTO selectConsultantDetail(int no) {
+	public ConsultantDTO selectConsultantDetail(int no) throws Exception {
 		
-		return consultantHopeMapper.selectConsultantDetail(no);
+		ConsultantDTO consultant = consultantHopeMapper.selectConsultantDetail(no);
+		
+		if(consultant == null) {
+			throw new Exception("상담 신청 상세 조회에 실패하였습니다.");
+		}
+		
+		return consultant;
 	}
 
 	/* 상담 신청 수정용 */
 	@Override
-	public int modifyConsultant(ConsultantDTO con) {
+	public int modifyConsultant(ConsultantDTO con) throws Exception {
 		
-		return consultantHopeMapper.modifyConsultant(con);
+		int result = consultantHopeMapper.modifyConsultant(con);
+		
+		if(result <= 0) {
+			throw new Exception("상담 내용 수정 실패하였습니다.");
+		}
+		
+		return result;
 	}
 
 	/* 상담 신청 삭제용 */
 	@Override
-	public int deleteConsultant(int no) {
+	public int deleteConsultant(int no) throws Exception {
 		
-		return consultantHopeMapper.deleteConsultant(no);
+		int result = consultantHopeMapper.deleteConsultant(no);
+		
+		if(result <= 0) {
+			throw new Exception("상담 삭제에 실패하였습니다.");
+		}
+		
+		return result;
 	}
 
 }
