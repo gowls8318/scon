@@ -1,5 +1,6 @@
 package com.scon.project.admin.Class.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -128,6 +130,20 @@ public class classServiceTests {
 		//when & then
 		assertThrows(Exception.class, () -> classService.registClass(classDTO)); 
 		
+	}
+	
+	//삭제테스트 
+	@Test
+	public void 강의_삭제용_서비스_성공_테스트() {
+		
+		// given
+		int clsId = 464;
+		
+		// when
+		int result = classService.deleteClass(clsId);
+		
+		// then
+		assertEquals(1, result);
 	}
 
 }

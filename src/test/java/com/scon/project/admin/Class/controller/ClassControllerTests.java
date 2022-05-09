@@ -3,6 +3,8 @@ package com.scon.project.admin.Class.controller;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,19 +56,20 @@ public class ClassControllerTests {
 		
 	}
 	
-	//강의상세조회테스트
-	@Test
-	public void 강의상세보기_조회용_서비스_컨트롤러_테스트() throws Exception {
-		
-		//given
-		
-		//when&then
-		mockMvc.perform(MockMvcRequestBuilders.post("/admin/classList"))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.forwardedUrl("admin/class/selectClass"))
-		.andDo(MockMvcResultHandlers.print());
-		
-	}
+	/*
+	 * //강의상세조회테스트
+	 * 
+	 * @Test public void 강의상세보기_조회용_서비스_컨트롤러_테스트() throws Exception {
+	 * 
+	 * //given
+	 * 
+	 * //when&then mockMvc.perform(MockMvcRequestBuilders.post("/admin/classList"))
+	 * .andExpect(MockMvcResultMatchers.status().isOk())
+	 * .andExpect(MockMvcResultMatchers.forwardedUrl("admin/class/selectClass"))
+	 * .andDo(MockMvcResultHandlers.print());
+	 * 
+	 * }
+	 */
 
 	
 	// 강의등록테스트
@@ -96,10 +99,28 @@ public class ClassControllerTests {
 		// when and then
 		mockMvc.perform(MockMvcRequestBuilders.post("/admin/classRegist").params(params))
 				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-				// .andExpect(MockMvcResultMatchers.flash().attributeCount(1)) //메세지확인(1)
+			    .andExpect(MockMvcResultMatchers.flash().attributeCount(1)) //메세지확인(1)
 				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/classList")) // 메소드 수행 확인
 				.andDo(MockMvcResultHandlers.print());
 
 	}
+	
+	
+	// 강의삭제
+	@Test
+	public void 강의_삭제_컨트롤러_테스트() throws Exception {
+
+		// given
+		int clsId = 465;
+
+		// when and then
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/classDelete/?clsId=" + clsId))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.andExpect(MockMvcResultMatchers.flash().attributeCount(1)) //메세지확인(1)
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/classList")) // 메소드 수행 확인
+				.andDo(MockMvcResultHandlers.print());
+		}
+	
+	
 
 }

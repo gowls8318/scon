@@ -128,7 +128,7 @@
 	<!-- 강의리스트조회 -->
 	<!--  JOIN TB_MEMBER : 태미님 테이블 연결할 때 사용 -->
 	<select id="selectClassList" resultMap="classResultMap">
-		SELECT
+		  SELECT
 			   A.CLS_ID
 		     , A.CLS_SUBJECT
 		     , D.MEMBER_NAME 
@@ -142,11 +142,9 @@
 		 ORDER BY A.CLS_ID DESC
 	</select>
 	
-	<!-- rownum : 기본적으로 작성시간으로 입력 -->
-	
 	
 	<!-- 강의상세조회 : 모달창 -->
-	<select id="selectAllClass" resultMap="classResultMap">
+	<select id="classDetail" resultMap="classResultMap">
 	SELECT
 		    A.CLS_ID
 		  , B.MEMBER_ID
@@ -167,7 +165,63 @@
 	   JOIN TB_CLANDDA C ON (C.CLS_ID = A.CLS_ID)
 	   JOIN TB_CLANDTI D ON (D.CLS_ID = A.CLS_ID)
 	  WHERE A.CLS_STATUS = 'N'
+	    AND A.CLS_ID = #{clsId}
 	  ORDER BY A.CLS_ID DESC
+	</select> 
+	
+	<!-- 요일조회 -->
+	<select id="selectDayList" resultMap="classResultMap">
+		SELECT
+		      CLS_DAY_ID
+		  FROM TB_CLANDDA
+		 WHERE CLS_ID = #{ clsId }
 	</select>
+	
+	<!-- rownum : 기본적으로 작성시간으로 입력 -->
+	
 
+	<!-- 강의삭제 -->
+	<update id="deleteClass">
+		UPDATE
+			   TB_CLASS
+		   SET CLS_STATUS = 'Y'
+		 WHERE CLS_ID = #{ clsId }
+	</update>
+	
+	
+	<!-- 강의수정 -->
+	<update id="updateClass">
+		UPDATE
+			  TB_CLASS
+		  SET B.MEMBER_NAME = #{ member.name }
+		  , CLS_NAME = #{ clsName }
+		  , CLS_SUBJECT = #{ clsSubject }
+		  , CLS_STUNUM = #{ clsStuNum }
+		  , CLS_GRADE = #{ clsGrade }
+		  , CLS_PAY = #{ clsPay }
+		  , CLS_ROOM = #{ clsRoom }
+		  , CLS_START = #{ clsStart }
+		  , CLS_END = #{ clsEnd }
+		  , CLS_NOTE = #{ clsNote }
+		 JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE CLS_ID = #{ clsId }
+	</update>
+	
+	
+	<!-- 요일수정 -->
+	<update id="updateDay">
+	UPDATE
+		 TB_CLANDDA
+	  SET CLS_DAY_ID = #{ clsDayId }
+	WHERE CLS_ID = #{ clsId }
+	</update>
+	
+	
+	<!-- 교시수정 -->
+	<update id="updateTime">
+ 	UPDATE
+ 		 TB_CLANDTI
+ 	  SET CLS_TIME_ID = #{ clsTimeId }
+	WHERE CLS_ID = #{ clsId }
+	</update>
 </mapper>
