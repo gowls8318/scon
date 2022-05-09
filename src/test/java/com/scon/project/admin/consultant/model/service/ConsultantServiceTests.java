@@ -35,7 +35,7 @@ public class ConsultantServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 신청 내역 조회용 서비스 메소드 테스트")
-	public void testSelectConsultantHope() {
+	public void testSelectConsultantHope() throws Exception {
 		
 		// when
 		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList();
@@ -48,7 +48,7 @@ public class ConsultantServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 신청 상세 조회용 서비스 메소드 테스트")
-	public void testSelectConsultantHopeDetail() {
+	public void testSelectConsultantHopeDetail() throws Exception {
 		
 		// given
 		int no = 22;
@@ -64,7 +64,7 @@ public class ConsultantServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 일지 내역 조회용 서비스 메소드 테스트")
-	public void testSelectConsultantList() {
+	public void testSelectConsultantList() throws Exception {
 		
 		// when
 		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList();
@@ -77,7 +77,7 @@ public class ConsultantServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 일지 등록용 서비스 메소드 테스트")
-	public void testInsertConsultant() {
+	public void testInsertConsultant() throws Exception {
 		
 		// given
 		ConsultantDTO con = new ConsultantDTO();
@@ -99,7 +99,7 @@ public class ConsultantServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 일지 상세 조회용 서비스 메소드 테스트")
-	public void testConsultantDetail() {
+	public void testConsultantDetail() throws Exception {
 		
 		// given
 		int no = 52;
@@ -115,7 +115,7 @@ public class ConsultantServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 일지 수정용 서비스 메소드 테스트")
-	public void testUpdateConsultant() {
+	public void testUpdateConsultant() throws Exception {
 		
 		// given
 		// DB에 있는 글 번호
@@ -137,7 +137,7 @@ public class ConsultantServiceTests {
 	@Test
 	@Disabled
 	@DisplayName("상담 일지 삭제용 서비스 메소드 테스트")
-	public void testDeleteConsultant() {
+	public void testDeleteConsultant() throws Exception {
 		
 		// given
 		int no = 52;

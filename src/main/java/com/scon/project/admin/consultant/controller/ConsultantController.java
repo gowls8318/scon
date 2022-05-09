@@ -33,7 +33,7 @@ public class ConsultantController {
 	
 	/* 상담 신청 내역 조회용 */
 	@GetMapping("/consultant/hopeList")
-	public ModelAndView selectAllConsultantHopeList(ModelAndView mv) {
+	public ModelAndView selectAllConsultantHopeList(ModelAndView mv) throws Exception {
 		
 		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList();
 		
@@ -45,7 +45,7 @@ public class ConsultantController {
 	
 	/* 상담 신청 상세 조회용 */
 	@GetMapping("/consultant/hopeDetail")
-	public String selectHopeDetailPage(@RequestParam int no, Model model) {
+	public String selectHopeDetailPage(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("consultantHopeDetail", consultantService.selectConsultantHopeDetail(no));
 		
@@ -54,7 +54,7 @@ public class ConsultantController {
 	
 	/* 상담 일지 내역 조회용 */
 	@GetMapping("/consultant/list")
-	public ModelAndView selectAllConsultantList(ModelAndView mv) {
+	public ModelAndView selectAllConsultantList(ModelAndView mv) throws Exception {
 		
 		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList();
 		
@@ -66,7 +66,7 @@ public class ConsultantController {
 	
 	/* 상담 일지 등록용 */
 	@GetMapping("/consultant/insertForm")
-	public String insertConsultantPage(@RequestParam int no, Model model) {
+	public String insertConsultantPage(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("consultant", consultantService.selectConsultantHopeDetail(no));
 		
@@ -74,7 +74,7 @@ public class ConsultantController {
 	}
 	
 	@PostMapping("/consultant/insertForm")
-	public String insertConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) {
+	public String insertConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) throws Exception {
 		
 		consultantService.insertConsultant(con);
 		
@@ -85,7 +85,7 @@ public class ConsultantController {
 	
 	/* 상담 일지 상세 조회용 */
 	@GetMapping("/consultant/detail")
-	public String selectDetailPage(@RequestParam int no, Model model) {
+	public String selectDetailPage(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("consultantDetail", consultantService.selectConsultantDetail(no));
 		
@@ -94,7 +94,7 @@ public class ConsultantController {
 	
 	/* 상담 일지 수정용 */
 	@GetMapping("/consultant/updateForm")
-	public String modifyConsultant(@RequestParam int no, Model model) {
+	public String modifyConsultant(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("consultant", consultantService.selectConsultantDetail(no));
 		
@@ -102,7 +102,7 @@ public class ConsultantController {
 	}
 	
 	@PostMapping("/consultant/updateForm")
-	public String modifyConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) {
+	public String modifyConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) throws Exception {
 		
 		consultantService.modifyConsultant(con);
 		
@@ -113,7 +113,7 @@ public class ConsultantController {
 	
 	/* 상담 일지 삭제용 */
 	@PostMapping("/consultant/delete")
-	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) {
+	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) throws Exception {
 		
 		consultantService.deleteConsultant(no);
 		

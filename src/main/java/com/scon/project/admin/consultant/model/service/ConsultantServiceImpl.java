@@ -22,51 +22,93 @@ public class ConsultantServiceImpl implements ConsultantService {
 	
 	/* 상담 신청 내역 조회용 */
 	@Override
-	public List<ConsultantDTO> selectAllConsultantHopeList() {
+	public List<ConsultantDTO> selectAllConsultantHopeList() throws Exception {
 		
-		return consultantMapper.selectAllConsultantHopeList();
+		List<ConsultantDTO> consultantHopeList = consultantMapper.selectAllConsultantHopeList();
+		
+		if(consultantHopeList == null) {
+			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
+		}
+		
+		return consultantHopeList;
 	}
 
 	/* 상담 신청 상세 조회용 */
 	@Override
-	public ConsultantDTO selectConsultantHopeDetail(int no) {
+	public ConsultantDTO selectConsultantHopeDetail(int no) throws Exception {
 		
-		return consultantMapper.selectConsultantHopeDetail(no);
+		ConsultantDTO consultantHopeDetail = consultantMapper.selectConsultantHopeDetail(no);
+		
+		if(consultantHopeDetail == null) {
+			throw new Exception("상담 신청 상세 조회에 실패하였습니다.");
+		}
+		
+		return consultantHopeDetail;
 	}
 	
 	/* 상담 일지 내역 조회용 */
 	@Override
-	public List<ConsultantDTO> selectAllConsultantList() {
+	public List<ConsultantDTO> selectAllConsultantList() throws Exception {
 		
-		return consultantMapper.selectAllConsultantList();
+		List<ConsultantDTO> consultantList = consultantMapper.selectAllConsultantList();
+		
+		if(consultantList == null) {
+			throw new Exception("상담 일지 내역 조회에 실패하였습니다.");
+		}
+		
+		return consultantList;
 	}
 
 	/* 상담 일지 등록용 */
 	@Override
-	public int insertConsultant(ConsultantDTO con) {
+	public int insertConsultant(ConsultantDTO con) throws Exception {
 		
-		return consultantMapper.insertConsultant(con);
+		int result = consultantMapper.insertConsultant(con);
+		
+		if(result <= 0) {
+			throw new Exception("상담 일지 등록에 실패하였습니다.");
+		}
+		
+		return result;
 	}
 
 	/* 상담 일지 상세 조회용 */
 	@Override
-	public ConsultantDTO selectConsultantDetail(int no) {
+	public ConsultantDTO selectConsultantDetail(int no) throws Exception {
 		
-		return consultantMapper.selectConsultantDetail(no);
+		ConsultantDTO consultantDetail = consultantMapper.selectConsultantDetail(no);
+		
+		if(consultantDetail == null) {
+			throw new Exception("상담 일지 상세 조회에 실패하였습니다.");
+		}
+		
+		return consultantDetail;
 	}
 
 	/* 상담 일지 수정용 */
 	@Override
-	public int modifyConsultant(ConsultantDTO con) {
+	public int modifyConsultant(ConsultantDTO con) throws Exception {
 		
-		return consultantMapper.modifyConsultant(con);
+		int result = consultantMapper.modifyConsultant(con);
+		
+		if(result <= 0) {
+			throw new Exception("상담 일지 수정에 실패하였습니다.");
+		}
+		
+		return result;
 	}
 
 	/* 상담 일지 삭제용 */
 	@Override
-	public int deleteConsultant(int no) {
+	public int deleteConsultant(int no) throws Exception {
 		
-		return consultantMapper.deleteConsultant(no);
+		int result = consultantMapper.deleteConsultant(no);
+		
+		if(result <= 0) {
+			throw new Exception("상담 일지 삭제에 실패하였습니다.");
+		}
+		
+		return result;
 	}
 
 }

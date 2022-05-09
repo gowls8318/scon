@@ -94,7 +94,7 @@
                                             <td th:text="${ con.conImp }">중요도</td>
                                             <!-- <td th:text="${ con.conHTitle }" class="conHTitle"
                                             	th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${con.no})} + '\';'">상담 제목</td> -->
-                                            <td th:text="${ con.conContent }" class="conTitle"
+                                            <td th:text="${ con.conContent }" class="conTitle" id="conTitle"
                                             	th:onclick="'location.href=\'' + @{/admin/consultant/detail(no=${con.no})} + '\';'">상담 일지 내용</td>
                                         </tr>
                                     </tbody>
@@ -144,9 +144,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- 입력 검색 -->
-    <!-- 원하는 td만 검색 -->
-    <script>
+    <script type="text/javascript">
+    	/* 입력 검색 - 원하는 td만 검색 */
         function searchTable() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("accSearch");
@@ -165,6 +164,9 @@
                 }
             }
         }
+        
+        var title = document.getElementById("conTitle").innerHTML;
+    	console.log(title.substring(0, 19));
     </script>
 
     <!-- Bootstrap core JavaScript-->

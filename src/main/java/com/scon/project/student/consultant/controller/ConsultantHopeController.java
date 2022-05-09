@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +33,7 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 내역 조회용 */
 	@GetMapping("/consultant/list")
-	public ModelAndView selectAllConsultantList(ModelAndView mv) {
+	public ModelAndView selectAllConsultantList(ModelAndView mv) throws Exception {
 		
 		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList();
 		
@@ -76,7 +75,7 @@ public class ConsultantHopeController {
 //	}
 	
 	@GetMapping("/consultant/detail")
-	public String selectDetailPage(@RequestParam int no, Model model) {
+	public String selectDetailPage(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("consultantDetail", consultantHopeService.selectConsultantDetail(no));
 		
@@ -85,7 +84,7 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 수정용 */
 	@GetMapping("/consultant/updateForm")
-	public String updateConsultantPage(@RequestParam int no, Model model) {
+	public String updateConsultantPage(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("consultant", consultantHopeService.selectConsultantDetail(no));
 		
@@ -104,7 +103,7 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 삭제용 */
 	@PostMapping("consultant/delete")
-	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) {
+	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) throws Exception {
 		
 		consultantHopeService.deleteConsultant(no);
 		
