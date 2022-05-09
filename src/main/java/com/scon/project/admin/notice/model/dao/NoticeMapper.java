@@ -16,6 +16,8 @@ public interface NoticeMapper {
 	int registNotice(NoticeDTO noti);
 	
 //	게시글 상세 조회
-	NoticeDTO sellectNoticeDetail();
+	NoticeDTO sellectNoticeDetail(int no) throws Exception;
+
+	void updateHitCount(int idx) throws Exception;
 
 }
