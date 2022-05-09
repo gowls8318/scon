@@ -17,10 +17,16 @@ public class BusinessServiceImpl implements BusinessService {
 	public BusinessServiceImpl(BusinessMapper businessMapper) {
 		this.businessMapper = businessMapper;
 	}
-
+	//조회
 	@Override
 	public BusinessDTO selectBusinessInfo() {
 		
 		return businessMapper.selectBusinessInfo();
+	}
+	//등록
+	@Override
+	public int insertBusinessInfo(BusinessDTO bus) {
+		
+		return businessMapper.insertBusinessInfo(bus);
 	}
 }

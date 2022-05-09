@@ -167,7 +167,8 @@
                         </div>
                         <br><br><br>
                         <div class="row buttonbox">
-                            <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" onclick=" location.href='/business/businessInfoInsert'">수정</button>
+                            <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset">취소</button>
+                            <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="submit">저장</button>
                         </div>
                     </form>
                     </div>
@@ -240,6 +241,13 @@
 	    }
 	</script>
 
+	<script type="text/javascript">
+    $(document).ready(function() {
+        var result = '<c:out value="${result}"/>';
+        if(!(result==''))
+            alert("게시물이 등록되었습니다!");
+    });
+	</script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

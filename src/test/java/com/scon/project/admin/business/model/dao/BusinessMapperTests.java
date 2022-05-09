@@ -1,5 +1,6 @@
 package com.scon.project.admin.business.model.dao;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Disabled;
@@ -10,16 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.scon.project.admin.business.model.dto.BusinessDTO;
-import com.scon.project.admin.consultant.model.dao.ConsultantMapper;
-import com.scon.project.admin.consultant.model.dao.ConsultantMapperTests;
-import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
 import com.scon.project.config.SconApplication;
 
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
-@Slf4j
 public class BusinessMapperTests {
 	
 	@Autowired
@@ -36,6 +32,7 @@ public class BusinessMapperTests {
 
 // success
 	@Test
+	@Disabled
 	@DisplayName("교육원 정보 조회용 매퍼 테스트")
 	public void testSelectBusinessInfo() {
 		
@@ -47,5 +44,29 @@ public class BusinessMapperTests {
 		assertNotNull(selectBusinessInfo);
 	}
 	
+	// success
+		@Test
+		@DisplayName("교육원 정보 등록용 매퍼 테스트")
+		public void testInsertConsultant() {
+			
+			// given
+			BusinessDTO bus = new BusinessDTO();
+			bus.setBusCode(12345);
+			bus.setBusNum(1231212345);
+			bus.setBusTitle("SCON");
+			bus.setBusRep("김원장");
+			bus.setBusPhone("01012345678");
+			bus.setBusFax("0212345678");
+			bus.setBusAdr("서울시 강남구 역삼동");
+			bus.setBusHompy("https://www.scon.ac.kr");
+			
+			
+			// when
+			int result = businessMapper.insertBusinessInfo(bus);
+			
+			// then
+			assertEquals(1, result);
+		}
+		
 
 }
