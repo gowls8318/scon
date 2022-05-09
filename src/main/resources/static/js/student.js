@@ -39,43 +39,7 @@ function readFile() {
 
 	//5분뒤에 메모리 해제 
 	setTimeout(function() { window.URL.revokeObjectURL(href) }, 1000 * 60 * 5)
-
 }
-
-
-/* 서브 메뉴 이동 함수 */
-const btn = document.querySelectorAll('#menu-btns .btn');
-
-btn.forEach((el, index) => {
-	el.onclick = () => {
-
-		let subMenuList = document.querySelectorAll(".menu");
-
-		subMenuList.forEach((el, index) => {
-			subMenuList[index].classList.add('d-none');
-		});
-
-		subMenuList[index].classList.remove('d-none');
-
-	}
-});
-
-/* 수정하기 메뉴 이동 함수 */
-const upbtn = document.querySelectorAll('.btn-acc1');
-
-upbtn.forEach((el, index) => {
-	el.onclick = () => {
-
-		let subMenuList = document.querySelectorAll(".menu");
-
-		subMenuList.forEach((el, index) => {
-			subMenuList[index].classList.add('d-none');
-		});
-
-		subMenuList[2].classList.remove('d-none');
-
-	}
-});
 
 /* 유효성 검사 후 Help메세지 출력 */
 	//아이디
@@ -112,8 +76,54 @@ upbtn.forEach((el, index) => {
 	};
 
 
+//아이디 중복검사
+let idck = 0;
+
+$('#checkId').click(function() {
+
+	let id = form.id.value;
+
+	if (!checkExistData(id, "아이디를"))
+		return false;
+
+	$.ajax({
+		type: "POST",
+		url: '/member/checkId',
+		dataType: "json",
+		data: { "id": id },
+		success: function(data) {
+			if (data > 0) {
+				alert("중복된 아이디 입니다.")
+				$("#id").addClass("is-invalid");
+				idck = 0;
+			} else {
+				alert("사용 가능한 아이디 입니다.")
+				$("#id").removeClass("is-invalid");
+				$("#id").addClass("is-valid");
+				idck = 1;
+			}
+		}, error: function() {
+			alert("error");
+		}
+	});
+
+});
+
+// 아이디 변경시 다시 중복검사 진행
+$("#id").change(function(){
+	$("#id").removeClass("is-valid");
+	$("#id").removeClass("is-invalid");
+	idck = 0;
+});
+
+
 /** 유효성 검사 */
 function checkAll() {
+	
+	if(idck == 0){
+		alert("아이디 중복 확인을 진행해주세요.")
+		return false;
+	}
 	
 	//필수정보 9개
 	let id = form.id.value;
@@ -167,10 +177,9 @@ function checkAll() {
       parentsName : parentsName,
       parentsType : parentsType,
       parentsPhone : parentsPhone
- 
       });
 
-	
+
 	//formData에 append
 	let formData = new FormData()
 	
@@ -186,37 +195,36 @@ function checkAll() {
 	}
 	
 
-		$.ajax({
-			  type: "POST",
-		      url: '/admin/studentRegist',
-		      data: formData,              
-		      processData: false,   
-		      contentType: false,    
-		      enctype : 'multipart/form-data',  
-		      success: function(data) {
-		      
-		         alert("성공");
-
-		      }
-		});
-
-
+	//유효성 검사
 	if (!checkName(name)) {
 		return false;
-	} else if (!checkid(memberId)) {
+	} else if (!checkid(id)) {
 		return false;
-	} else if (!checkPassword(memberId, password)) {
+	} else if (!checkPassword(id, password)) {
 		return false;
 	} else if (!checkEmail(email)) {
 		return false;
 	} else if (!checkPhone(phone)) {
 		return false;
 	}
-
-	alert("테스트");
-	//return true;
-
-
+	
+	//회원가입
+			$.ajax({
+			  type: "POST",
+		      url: '/admin/studentRegist',
+		      data: formData,           
+		      processData: false,   
+		      contentType: false,    
+		      enctype : 'multipart/form-data',  
+		      success: function(data) {
+		      
+		     	 alert("원생 등록에 성공하였습니다.");
+				 location.href="/admin/studentList";
+		      },
+		      error: function() {
+				 alert("원생 등록에 실패하였습니다.")
+		 }
+	});
 }
 
 // 공백 확인
@@ -321,5 +329,22 @@ function checkPhone(phone) {
 	return true; //확인이 완료되었을 때
 }
 
+$('input[name=selectStd]').on('click',function() {
+	let id = '';
+	
+	if($(this).prop('checked')){
+		id = $(this).val();
 
-
+		$.ajax({
+			type: "POST",
+			url: '/admin/findStudentById',
+			data: { "id" : id },
+			success: function(res) {
+				alert(res.student.name);
+			}, error: function() {
+				alert("실패");
+			}
+		
+	});
+  }
+});

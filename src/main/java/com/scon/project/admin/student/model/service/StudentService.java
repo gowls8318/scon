@@ -1,8 +1,9 @@
 package com.scon.project.admin.student.model.service;
 
 import com.scon.project.admin.student.model.dto.ParentsDTO;
-import com.scon.project.admin.student.model.dto.ProfileDTO;
+
 import com.scon.project.admin.student.model.dto.StudentDTO;
+import com.scon.project.member.model.dto.MemberDTO;
 
 
 public interface StudentService {
@@ -11,9 +12,8 @@ public interface StudentService {
 	
 	int insertParents(ParentsDTO parents);
 
-	int insertFile(ProfileDTO profile);
+	StudentDTO findStudentById(String id);
 
-	int insertProfile(String id);
 
 	
 

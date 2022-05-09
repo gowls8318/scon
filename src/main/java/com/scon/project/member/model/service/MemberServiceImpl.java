@@ -1,10 +1,9 @@
 package com.scon.project.member.model.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,11 +11,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.scon.project.member.model.dao.MemberMapper;
 import com.scon.project.member.model.dto.AuthorityDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 import com.scon.project.member.model.dto.MemberRoleDTO;
+import com.scon.project.member.model.dto.ProfileDTO;
 import com.scon.project.member.model.dto.UserImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -70,12 +73,47 @@ public class MemberServiceImpl implements MemberService{
 		return user;
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
+	@Override
+	public int insertMember(MemberDTO member, ProfileDTO profile, int role){
+		
+		/* 멤버 등록 */
+		int memberResult = memberMapper.insertMember(member);
+		/* 멤버 권한 등록 */
+		int roleResult = memberMapper.insertMemberRole(member.getId(), role);
+		
+		/* 프로필 사진 있을 시 프로필 사진 등록 */
+		if(profile.getFileSaveName() != null) {
+			int fileResult = memberMapper.insertFile(profile);
+			int profileResult =memberMapper.insertProfile(member.getId());
+		}
+		
+		int result = 0;
+		
+		if(memberResult > 0 && roleResult > 0 ) {
+			result = 1;
+		}
+
+		return result;
+		
+	}
+
+
 
 	@Override
-	public int insertMember(MemberDTO member) {
-		
-		return memberMapper.insertMember(member);
+	public int checkId(MemberDTO member) {
+		return memberMapper.checkId(member);
 	}
+
+
+	@Override
+	public List<MemberDTO> findAllStudentList() {
+		
+		return memberMapper.findAllStudentList();
+	}
+
+
+
 
 
 
