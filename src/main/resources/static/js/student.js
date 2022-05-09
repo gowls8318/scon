@@ -339,12 +339,66 @@ $('input[name=selectStd]').on('click',function() {
 			type: "POST",
 			url: '/admin/findStudentById',
 			data: { "id" : id },
-			success: function(res) {
-				alert(res.student.name);
+			success: function(data) {
+				var student = data;
 			}, error: function() {
 				alert("실패");
 			}
 		
 	});
   }
+});
+
+
+
+/* 서브 메뉴 이동 함수 */
+ 	const btn = document.querySelectorAll('#menu-btns .btn');
+
+ 	btn.forEach((el, index) => {
+ 	  el.onclick = () => {
+
+ 		let subMenuList = document.querySelectorAll(".menu");
+
+ 		subMenuList.forEach((el, index) => {
+ 			subMenuList[index].classList.add('d-none');
+ 		});
+
+ 		subMenuList[index].classList.remove('d-none');
+
+ 	  }
+});
+
+
+/* 등록하기 메뉴 이동 함수 */
+const lecbtn = document.querySelectorAll('.btn-lec');
+
+lecbtn.forEach((el, index) => {
+	el.onclick = () => {
+
+		let subMenuList = document.querySelectorAll(".menu");
+
+		subMenuList.forEach((el, index) => {
+			subMenuList[index].classList.add('d-none');
+		});
+
+		subMenuList[2].classList.remove('d-none');
+
+	}
+});
+
+/* 수정하기 메뉴 이동 함수 */
+const upbtn = document.querySelectorAll('.btn-acc1');
+
+upbtn.forEach((el, index) => {
+	el.onclick = () => {
+
+		let subMenuList = document.querySelectorAll(".menu");
+
+		subMenuList.forEach((el, index) => {
+			subMenuList[index].classList.add('d-none');
+		});
+
+		subMenuList[3].classList.remove('d-none');
+
+	}
 });
