@@ -26,6 +26,7 @@ public class ClassServiceImpl implements ClassService {
 		this.classMapper = classMapper;
 	}
 
+	// 강의등록
 	@Override
 	public boolean registClass(ClassDTO classDTO) throws Exception {
 
@@ -38,7 +39,7 @@ public class ClassServiceImpl implements ClassService {
 			if (day.getClsDayId() != 0)
 				result2 += classMapper.insertClsAndDay(day);
 		}
-		
+
 		int result3 = 0;
 		for (TimeDTO time : classDTO.getTime()) {
 			if (time.getClsTimeId() != 0)
@@ -52,23 +53,37 @@ public class ClassServiceImpl implements ClassService {
 		return result > 0 ? true : false;
 	}
 
-	//강의리스트조회
+	// 강의리스트조회
 	@Override
 	public List<ClassDTO> selectClassList() {
 		return classMapper.selectClassList();
 	}
 
+	//강의상세조회
+	@Override
+	public ClassDTO classDetail(int clsId) {
+
+		return classMapper.classDetail(clsId);
+	}
+
+	//요일리스트조회
+	@Override
+	public List<DayDTO> selectDayList() {
+		return classMapper.selectDayList();
+	}
+	
+	// 멤버가져오기
 	@Override
 	public List<MemberDTO> findAllmemberList(int clsId) {
 		return classMapper.findAllmemberList(clsId);
 	}
-	
-	//강의상세조회
-//	@Override
-//	public List<ClassDTO> selectAllClass() {
-//		
-//		return classMapper.selectAllClass();
-//	}
+
+	// 강의삭제
+	@Override
+	public int deleteClass(int clsId) {
+
+		return classMapper.deleteClass(clsId);
+	}
 
 
 }

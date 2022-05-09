@@ -15,17 +15,29 @@ public interface ClassMapper {
 	//강의리스트조회
 	List<ClassDTO> selectClassList();
 	
+	//멤버조회(강사)
 	List<MemberDTO> findAllmemberList(int clsId);
 
 	//강의상세보기조회
-	//	List<ClassDTO> selectAllClass(int clsId);
+	ClassDTO classDetail(int clsId);
+	
+	//요일리스트조회
+	List<DayDTO> selectDayList();
 	
 	//강의등록
 	int registClass(ClassDTO classDTO);
 
+	//날짜등록
 	int insertClsAndDay(DayDTO dayDTO);
 	
+	//교시등록
 	int insertClsAndTime(TimeDTO timeDTO);
+
+	//강의삭제
+	int deleteClass(int clsId);
+
+	//강의수정
+	int updateClass(ClassDTO classDTO);
 
 
 
