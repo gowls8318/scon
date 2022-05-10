@@ -1,4 +1,4 @@
-package com.scon.project.admin.student.controller;
+package com.scon.project.admin.lecture.controller;
 
 import java.util.List;
 import java.util.Locale;
@@ -17,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
-import com.scon.project.admin.student.model.dto.LectureDTO;
-import com.scon.project.admin.student.model.service.LectureService;
+import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.service.LectureService;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,20 +46,51 @@ public class LectureController {
 	}
 	
 	/* 전체 강의 조회용 */
-	@GetMapping(value="student/subMenu3", produces="application/json; charset=UTF-8")
+	@GetMapping(value="student/lectureRegist", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public List<ClassDTO> findAllClassList(Model model) throws Exception {
+	public List<ClassDTO> findAllClassList() throws Exception {
 		
 		return lectureService.findAllClassList();
 	}
 	
+	/* 강의 정보 조회용 */
+//	@GetMapping("/student/lectureRegist")
+//	public ModelAndView findClassDetail(ModelAndView mv) throws Exception {
+//		
+//		List<ClassDTO> classList = lectureService.findClassDetail();
+//		
+//		mv.addObject("classDetail", classList);
+//		mv.setViewName("admin/student/lectureRegist");
+//		
+//		return mv;
+//	}
+	
 	/* 수강 등록용 */
-	@PostMapping("/student/subMenu3")
+	@PostMapping("/student/lectureRegist")
+	@ResponseBody
 	public String insertLecture(@ModelAttribute LectureDTO lec, RedirectAttributes rttr, Locale locale) throws Exception {
 		
 		lectureService.insertLecture(lec);
 		
-		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertLecture", null, locale));
+		return messageSource.getMessage("insertLecture", null, locale);
+	}
+	
+	/* 수강 수정용 */
+	@GetMapping("/student/lectureModify")
+	@ResponseBody
+	public String updateLecturePage(@RequestParam int no, Model model) throws Exception {
+		
+		model.addAttribute("lecture", lectureService.selectLectureDetail(no));
+		
+		return "admin/student/lectureModify";
+	}
+	
+	@PostMapping("/student/lectureModify")
+	public String modifyLecture(@ModelAttribute LectureDTO lec, RedirectAttributes rttr, Locale locale) throws Exception {
+		
+		lectureService.modifyLecture(lec);
+		
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateLecture", null, locale));
 		
 		return "redirect:/admin/student/studentList";
 	}

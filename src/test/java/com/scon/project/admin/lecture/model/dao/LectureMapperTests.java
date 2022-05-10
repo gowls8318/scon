@@ -1,4 +1,4 @@
-package com.scon.project.admin.student.model.dao;
+package com.scon.project.admin.lecture.model.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -13,15 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
-import com.scon.project.admin.student.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.config.SconApplication;
-import com.scon.project.student.consultant.model.dao.ConsultantHopeMapperTests;
-
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
-@Slf4j
 public class LectureMapperTests {
 
 	@Autowired
@@ -65,6 +61,19 @@ public class LectureMapperTests {
 	// success
 	@Test
 	@Disabled
+	@DisplayName("강의 정보 조회용 매퍼 테스트")
+	public void testFindClassDetail() {
+		
+		// when
+		List<ClassDTO> classList = lectureMapper.findClassDetail();
+		
+		// then
+		assertNotNull(classList);
+	}
+	
+	// success
+	@Test
+	@Disabled
 	@DisplayName("수강 등록용 매퍼 테스트")
 	public void testInsertLecture() {
 		
@@ -75,6 +84,43 @@ public class LectureMapperTests {
 		
 		// when
 		int result = lectureMapper.insertLecture(lec);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 상세 조회용 매퍼 테스트")
+	public void testSelectLectureDetail() {
+		
+		// given
+		int no = 12;
+		
+		// when
+		LectureDTO lectureDetail = lectureMapper.selectLectureDetail(no);
+		
+		// then
+		assertNotNull(lectureDetail);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 수정용 매퍼 테스트")
+	public void testUpdateLecture() {
+		
+		// given
+		LectureDTO lec = new LectureDTO();
+		lec.setNo(12);
+		lec.setClsId(22);					// 1
+		lec.setLecPay(5000);				// 400000
+		lec.setLecStatus("수강중");			// 수강중
+		lec.setLecDiscount("오픈 이벤트");		// 친구 추천 이벤트
+		
+		// when
+		int result = lectureMapper.modifyLecture(lec);
 		
 		// then
 		assertEquals(1, result);

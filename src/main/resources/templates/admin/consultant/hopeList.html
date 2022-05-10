@@ -93,15 +93,12 @@
                                             <td th:text="${ conH.conWriteDate }">상담 신청일</td>
                                             <td th:text="${ conH.member.name }">원생</td>
                                             <td th:text="${ conH.conHTitle }" class="conHTitle"
-                                            th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${conH.no})} + '\';'">상담 제목</td>
+                                            	th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${conH.no})} + '\';'">상담 제목</td>
                                             <td th:text="${ conH.conHandle }" class="handle">처리 현황</td>
                                             <td>
                                                <button type="button" class="btn btn-primary btn-con"
                                                 	th:onclick="movePage(this, [[${conH.no}]])">등록</button>
                                                 <!-- th:onclick="'location.href=\'' + @{/admin/consultant/insertForm(no=${conH.no})} + '\';'" -->
-                                                <!-- th:onclick="movePage([[${conH.no}]])" -->
-                                                 <!-- <button type="button" class="btn btn-primary btn-con" id="btn-con"
-                                                	th:onclick="movePage([[${conH.no}]])">등록</button> -->
                                             </td>
                                         </tr>
                                     </tbody>
