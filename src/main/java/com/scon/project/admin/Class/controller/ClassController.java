@@ -37,7 +37,7 @@ public class ClassController {
 		this.messageSource = messageSource;
 	}
 
-	// 강의 등록용 화면 이동
+	//강의 등록용 화면 이동
 	@GetMapping("/classRegist")
 	public String getDashBoard2() {
 
@@ -46,20 +46,18 @@ public class ClassController {
 
 	/*----------------------------------------------------*/
 
-	// 강의리스트조회
+	//강의리스트조회
 	@GetMapping("/classList")
 	public ModelAndView selectClass(ModelAndView mv) {
 
 		List<ClassDTO> classList = classService.selectClassList();
-		List<DayDTO> dayList = classService.selectDayList();
 
 		mv.addObject("classList", classList);
-		mv.addObject("dayList", dayList);
 		mv.setViewName("admin/class/selectClass");
 		return mv;
 	}
 
-	// 강의상세조회
+	//강의상세조회
 	@GetMapping("/classDetail")
 	@ResponseBody // clssDTO 반환, JSON 컴벌트
 	public ClassDTO selectClassDetail(@RequestParam int clsId) {
@@ -69,6 +67,7 @@ public class ClassController {
 		return classDetail;
 	}
 
+	//강의등록
 	@PostMapping("classRegist")
 	public String registClass(@ModelAttribute ClassDTO classDTO, RedirectAttributes rttr, Locale locale)
 			throws Exception {
@@ -90,6 +89,8 @@ public class ClassController {
 	public List<MemberDTO> findMemberList(int clsId) {
 		return classService.findAllmemberList(clsId);
 	}
+	
+	
 
 	// 강의삭제
 	@GetMapping("/classList/delete")
@@ -103,29 +104,33 @@ public class ClassController {
 	}
 	
 	
+	
+	//강의수정
+	@GetMapping("/classUpdate")
+	public String classUpdate(@RequestParam int clsId, Model model) {
+		
+		model.addAttribute("classUpdate", classService.classDetail(clsId));
+		
+		return "admin/class/updateClass";
+		
+	}
+	
+	//강의수정
+	@PostMapping("/classUpdate")
+	public String classUpdate (@ModelAttribute ClassDTO classDTO, RedirectAttributes rttr, Locale locale) throws Exception {
+		
+		classService.classUpdate(classDTO);
 
-	// 강의수정
-	/*
-	 * @GetMapping("/classUpdate") public String updateClass(@RequestParam int
-	 * clsId, Model model) {
-	 * 
-	 * model.addAttribute("classList", classService.selectClassList(clsId));
-	 * 
-	 * return "admin/class/updateClass"; }
-	 */
+		log.info("수정 요청 강의 : {}", classDTO);
+		
+		
+		rttr.addFlashAttribute("successMessage", messageSource.getMessage("classUpdate", null, locale));
+		
+		
+		return "redirect:/admin/classList";
+		
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 } // class

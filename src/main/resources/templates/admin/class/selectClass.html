@@ -128,7 +128,7 @@ input[type="checkbox"]::before {
 												<text onclick="location.href='/admin/classList'"> 
 												<i class="bi bi-arrow-right-square-fill"></i>&nbsp;</text> 
 												<!-- 강의 수정-->
-												<text onclick="location.href='/admin/classUpdate'"> 
+												<text th:onclick="'location.href=\'' + @{/admin/classUpdate(clsId=${class.clsId})} + '\';'"> 
 												<i class="bi bi-pencil-square"></i>&nbsp;</text> 
 												<!-- 강의 삭제 --> 
 												<text class="" data-toggle="modal" data-target="#classdelModal"
@@ -275,8 +275,7 @@ input[type="checkbox"]::before {
 
 
 								<div class="mx-auto row">
-									<h5
-										style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E;">수업정보</h5>
+									<h5 style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E;">수업정보</h5>
 									<div class=" mx-auto row align-items-center">
 										<div class="col-auto" style="margin-top: 1em">
 											<span class="coloumnamebox input-group-text" style="width: 8em">수업일</span>
@@ -323,27 +322,27 @@ input[type="checkbox"]::before {
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													value="option1"> <label class="form-check-label"
-													for="inlineCheckbox1">수</label>
+													id="dayList" value="option1"> 
+												<label class="form-check-label" for="inlineCheckbox1">수</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													value="option1"> <label class="form-check-label"
+													id="dayList" value="option1"> <label class="form-check-label"
 													for="inlineCheckbox1">목</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													value="option1"> <label class="form-check-label "
+													id="dayList" value="option1"> <label class="form-check-label "
 													for="inlineCheckbox1">금</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													value="option1"> <label class="form-check-label"
+													id="dayList" value="option1"> <label class="form-check-label"
 													for="inlineCheckbox1">토</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													value="option1"> <label class="form-check-label"
+													id="dayList" value="option1"> <label class="form-check-label"
 													for="inlineCheckbox1">일</label>
 											</div>
 										</div>

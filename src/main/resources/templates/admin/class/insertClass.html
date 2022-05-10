@@ -308,7 +308,8 @@ input[type="checkbox"]::before {
 						<div class="row buttonbox">
 							<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" 
 							data-toggle="modal" data-target="#classupdateModal">등록</button>
-							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset">취소</button>
+							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset"
+							onclick="location.href='/admin/classList'">취소</button>
 						</div>
 					</div>
 				</div>
@@ -346,8 +347,8 @@ input[type="checkbox"]::before {
 				</div>
 				<div class="modal-body">강의를 등록하시겠습니까?</div>
 				<div class="modal-footer">
-					<a class="btn btn-secondary"
-						onclick="location.href='/admin/classRegist'">취소</a>
+					<button class="btn btn-secondary" type="button"
+						onclick="location.href='/admin/classList'">취소</button>
 					<button class="btn btn-primary" type="button" data-dismiss="modal"
 						onclick="location.href='/admin/classList'">등록</button>
 

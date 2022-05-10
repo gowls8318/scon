@@ -190,23 +190,23 @@
 	
 	
 	<!-- 강의수정 -->
-	<update id="updateClass">
+	<update id="classDetailUpdate">
 		UPDATE
-			  TB_CLASS
-		  SET B.MEMBER_NAME = #{ member.name }
-		  , CLS_NAME = #{ clsName }
-		  , CLS_SUBJECT = #{ clsSubject }
-		  , CLS_STUNUM = #{ clsStuNum }
-		  , CLS_GRADE = #{ clsGrade }
-		  , CLS_PAY = #{ clsPay }
-		  , CLS_ROOM = #{ clsRoom }
-		  , CLS_START = #{ clsStart }
-		  , CLS_END = #{ clsEnd }
-		  , CLS_NOTE = #{ clsNote }
-		 JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
-		 WHERE CLS_ID = #{ clsId }
-	</update>
-	
+			  TB_CLASS A
+		  SET   A.MEMBER_ID = (SELECT B.MEMBER_ID FROM TB_MEMBER B WHERE B.MEMBER_ID = #{member.id} )
+			  , A.CLS_NAME = #{ clsName }
+			  , A.CLS_SUBJECT = #{ clsSubject }
+			  , A.CLS_STUNUM = #{ clsStuNum }
+			  , A.CLS_GRADE = #{ clsGrade }
+			  , A.CLS_PAY = #{ clsPay }
+			  , A.CLS_ROOM = #{ clsRoom }
+			  , A.CLS_START = #{ clsStart }
+			  , A.CLS_END = #{ clsEnd }
+			  , A.CLS_NOTE = #{ clsNote }
+		 WHERE 	A.CLS_ID = #{ clsId }
+		   AND  A.CLS_STATUS = 'N'
+ 	</update>
+ 	
 	
 	<!-- 요일수정 -->
 	<update id="updateDay">
@@ -224,4 +224,9 @@
  	  SET CLS_TIME_ID = #{ clsTimeId }
 	WHERE CLS_ID = #{ clsId }
 	</update>
+	
+	
+	
+	
+	
 </mapper>

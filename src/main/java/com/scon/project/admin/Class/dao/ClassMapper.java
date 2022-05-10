@@ -36,8 +36,19 @@ public interface ClassMapper {
 	//강의삭제
 	int deleteClass(int clsId);
 
-	//강의수정
-	int updateClass(ClassDTO classDTO);
+	//강의상세보기수정
+	int classDetailUpdate(ClassDTO clsId);
+
+	//요일수정
+	int updateDay(DayDTO dayList);
+
+	//교시수정
+	int updateTime(TimeDTO time);
+
+
+
+
+
 
 
 

@@ -3,6 +3,7 @@ package com.scon.project.admin.Class.service;
 import java.util.List;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
+import com.scon.project.admin.Class.dto.TimeDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 
 public interface ClassService {
@@ -26,6 +27,13 @@ public interface ClassService {
 	int deleteClass(int clsId);
 
 	//강의수정
+	int classUpdate(ClassDTO classDTO) throws Exception;
+	
+	//요일수정
+	int updateDay(DayDTO dayList);
+	
+	//교시수정
+	int updateTime(TimeDTO time);
 
 	
 

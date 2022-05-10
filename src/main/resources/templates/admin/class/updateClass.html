@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8">
@@ -52,8 +51,6 @@ input[type="checkbox"]::before {
 </style>
 
 
-
-
 </head>
 
 
@@ -67,56 +64,59 @@ input[type="checkbox"]::before {
 
 
 			<!-- Main Content -->
-			<div id="content">
-				<!-- Begin Page Content -->
-
-				<div class="container-fluid">
-
-					<!-- Page Heading -->
-
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-2 text-gray-800">강의수정</h1>
-						<text type="reset" id="resetbtn"
-							onclick="location.href='/admin/classUpdate'"> <i
-							class="bi bi-arrow-repeat"></i></text>
-					</div>
-					<hr class="border-bottom-primary">
-
-
-					<!-- 과목정보 -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">과목정보</h6>
+				<div id="content">
+					<!-- Begin Page Content -->
+					<div class="container-fluid">
+						<!-- Page Heading -->
+						<div
+							class="d-sm-flex align-items-center justify-content-between mb-4">
+							<h1 class="h3 mb-2 text-gray-800">강의수정</h1>
+							<text type="reset" id="resetbtn" onclick="location.href='/admin/classRegist'">
+							<i class="bi bi-arrow-repeat"></i></text>
 						</div>
 
-						<div class="card-body">
-							<form>
+						<hr class="border-bottom-primary">
+
+						<!-- 과목정보 -->
+						<div class="card shadow mb-4">
+					<form th:action="@{/admin/classUpdate}" method="post">
+						<input type="hidden" class="clsId" th:value="${classUpdate.clsId}">
+							<tbody th:object ="${ classUpdate }">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">과목정보</h6>
+							</div>
+
+							<div class="card-body">
+
 								<div class="col-lg-12 table-center table-sy">
 									<table class="table">
 										<tbody>
 											<tr>
-												<th class="col-lg-1"><label><span for="std"
-														class="col-form-label">과목명 <span id="pointtext">*</span></span></label>
-												</th>
+												<th class="col-lg-1"><label> <span for="std"
+														class="col-form-label">과목명 <span id="pointtext">*</span>
+													</span>
+												</label></th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
-														<input type="text" class="form-control" id="std">
+														<input type="text" class="form-control" id="std"
+															name="clsSubject" th:value="*{ clsSubject }">
 													</div>
 												</td>
 												<th class="col-lg-1"><label for="std"
-													class="col-form-label">강사 <span id="pointtext">*</span></label>
+													class="col-form-label">강사선택 <span id="pointtext">*</span></label>
 												</th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
 														<select class="form-control form-select-lg"
-															aria-label=".form-select-lg example" id="conImp">
-															<option selected>강사 선택</option>
+															aria-label=".form-select-lg example" name="FindAllmember" id="FindAllmember">
+
 															<option value="1">우별림</option>
 															<option value="2">우별림</option>
 															<option value="3">우별림</option>
 															<option value="4">우별림</option>
 															<option value="5">우별림</option>
+
+
 														</select>
 													</div>
 												</td>
@@ -124,7 +124,7 @@ input[type="checkbox"]::before {
 													class="col-form-label"> 실강생 수 </label></th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
-														<input type="text" class="form-control" id="std">
+														<input type="text" class="form-control" name="clsStuNum"  th:value="*{ clsStuNum }">
 													</div>
 												</td>
 											</tr>
@@ -134,14 +134,14 @@ input[type="checkbox"]::before {
 												</th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
-														<input type="text" class="form-control" id="std">
+														<input type="text" class="form-control" name="clsName" th:value="*{ clsName }">
 													</div>
 												</td>
 												<th class="col-lg-1"><label for="std"
 													class="col-form-label">대상 학년</label></th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
-														<input type="text" class="form-control" id="std">
+														<input type="text" class="form-control" name="clsGrade" th:value="*{ clsGrade }">
 													</div>
 												</td>
 												<th class="col-lg-1"><label for="std"
@@ -149,7 +149,7 @@ input[type="checkbox"]::before {
 												</th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
-														<input type="text" class="form-control" id="std">
+														<input type="text" class="form-control" name="clsPay" th:value="*{ clsPay }">
 													</div>
 												</td>
 											</tr>
@@ -157,22 +157,23 @@ input[type="checkbox"]::before {
 									</table>
 								</div>
 
-							</form>
-						</div>
-					</div>
-					<!-- 과목정보 -->
 
-					<!-- 수업정보 -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">수업정보</h6>
+							</div>
+							</tbody>
 						</div>
+						<!-- 과목정보 -->
 
-						<div class="card-body">
-							<form>
+						<!-- 수업정보 -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">수업정보</h6>
+							</div>
+
+							<div class="card-body">
+
 								<div class="col-lg-12 table-center table-sy">
 									<table class="table">
-										<tbody>
+										<tbody th:object ="${ classUpdate }">
 											<tr>
 												<th class="col-lg-1 classdatetime"><label for="std"
 													class="col-form-label">수업일 <span id="pointtext">*</span></label>
@@ -180,11 +181,13 @@ input[type="checkbox"]::before {
 												<td class="col-lg-5 classdatetime2">
 													<div class="datetime">
 														<div class="col-lg-4">
-															<input type="date" class="form-control" id="std">
+															<input type="date" class="form-control"  th:value="*{ clsStart }" name="clsStart" 
+																required >
 														</div>
 														<span class="mt-2">~</span>
 														<div class="col-lg-4">
-															<input type="date" class="form-control" id="std">
+															<input type="date" class="form-control" th:value="*{ clsEnd }" name="clsEnd"
+																required>
 														</div>
 													</div>
 												</td>
@@ -196,7 +199,7 @@ input[type="checkbox"]::before {
 												</th>
 												<td class="col-lg-5">
 													<div class="col-sm-10 col-lg-10">
-														<input type="text" class="form-control" id="std">
+														<input type="text" class="form-control" name="clsRoom" th:value="*{ clsRoom }">
 													</div>
 												</td>
 											</tr>
@@ -207,46 +210,48 @@ input[type="checkbox"]::before {
 
 								<div class="col-lg-12 table-center table-sy">
 									<table class="table">
-										<tbody>
+										<tbody th:object ="${ classUpdate }">
+										<input type="hidden" class="clsId" th:value="${classUpdate.clsId}">
 											<tr>
 												<th class="col-lg-1"><label for="std"
 													class="col-form-label">수업요일 <span id="pointtext">*</span></label>
 												</th>
+
 												<td class="col-lg-5">
-													<!-- 인풋박스 -->
 													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox1" value="option1"> <label
-															class="form-check-label" for="inlineCheckbox1">월</label>
+														<input class="form-check-input daycheck" type="checkbox" 
+														id="dayList" name="|dayList{$index}|.clsDayId"   value="1">
+														<label class="form-check-label" for="days1">월</label>
 													</div>
 													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox2" value="option2"> <label
-															class="form-check-label" for="inlineCheckbox2">화</label>
+														<input class="form-check-input daycheck" type="checkbox" id="days2"
+															name="|dayList{$index}|.clsDayId" value="2"> <label
+															class="form-check-label" for="days2">화</label>
 													</div>
 													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox1" value="option1"> <label
-															class="form-check-label" for="inlineCheckbox1">수</label>
+														<input class="form-check-input daycheck" type="checkbox" id="days3"
+															name="|dayList{$index}|.clsDayId" value="3"> <label
+															class="form-check-label" for="days3">수</label>
 													</div>
 													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox2" value="option2"> <label
-															class="form-check-label" for="inlineCheckbox2">목</label>
-														<div class="form-check form-check-inline"></div>
-														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox1" value="option1"> <label
-															class="form-check-label" for="inlineCheckbox1">금</label>
+														<input class="form-check-input daycheck" type="checkbox" id="days4"
+															name="|dayList{$index}|.clsDayId" value="4"> <label
+															class="form-check-label" for="days4">목</label>
 													</div>
 													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox1" value="option1"> <label
-															class="form-check-label" for="inlineCheckbox1">토</label>
+														<input class="form-check-input daycheck" type="checkbox" id="days5"
+															name="|dayList{$index}|.clsDayId" value="5"> <label
+															class="form-check-label" for="days5">금</label>
 													</div>
 													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox2" value="option2"> <label
-															class="form-check-label" for="inlineCheckbox2">일</label>
+														<input class="form-check-input daycheck" type="checkbox" id="days6"
+															name="|dayList{$index}|.clsDayId" value="6"> <label
+															class="form-check-label" for="days6">토</label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input daycheck" type="checkbox" id="days7"
+															name="|dayList{$index}|.clsDayId" value="7"> <label
+															class="form-check-label" for="days7">일</label>
 													</div>
 												</td>
 
@@ -258,107 +263,190 @@ input[type="checkbox"]::before {
 													<!-- 인풋박스 -->
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox1" value="option1"> <label
-															class="form-check-label" for="inlineCheckbox1">1교시</label>
+															id="inlineCheckbox1 timecheck" name="time[0].clsTimeId" value="1">
+														<label class="form-check-label" for="inlineCheckbox1">1교시</label>
 													</div>
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox2" value="option2"> <label
-															class="form-check-label" for="inlineCheckbox2">2교시</label>
+															id="inlineCheckbox2 timecheck" name="time[1].clsTimeId" value="2">
+														<label class="form-check-label" for="inlineCheckbox2">2교시</label>
 													</div>
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox1" value="option1"> <label
-															class="form-check-label" for="inlineCheckbox1">3교시</label>
+															id="inlineCheckbox1 timecheck" name="time[2].clsTimeId" value="3">
+														<label class="form-check-label" for="inlineCheckbox1">3교시</label>
 													</div>
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox2" value="option2"> <label
-															class="form-check-label" for="inlineCheckbox2">4교시</label>
-														<div class="form-check form-check-inline"></div>
+															id="inlineCheckbox1 timecheck" name="time[3].clsTimeId" value="4">
+														<label class="form-check-label" for="inlineCheckbox1">4교시</label>
+													</div>
+													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="checkbox"
-															id="inlineCheckbox1" value="option1"> <label
-															class="form-check-label" for="inlineCheckbox1">5교시</label>
+															id="inlineCheckbox1 timecheck" name="time[4].clsTimeId" value="5">
+														<label class="form-check-label" for="inlineCheckbox1">5교시</label>
 													</div>
 												</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
-							</form>
-						</div>
-					</div>
-					<!-- 수업정보 -->
 
-					<!-- 비고란 -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="input-group input-group-lg">
-								<span class="input-group-text">비고</span>
-								<textarea class="form-control text-md"
-									aria-label="With textarea"></textarea>
 							</div>
 						</div>
-					</div>
-					<!-- 비고란 -->
+						<!-- 수업정보 -->
 
-					<div class="row buttonbox">
-						<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm"
-							data-toggle="modal" data-target="#classupdateModal">등록</button>
-						<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm"
-							type="reset">취소</button>
-					</div>
+						<!-- 비고란 -->
+						<div class="card shadow mb-4">
+							<div class="card-body">
+								<div class="input-group input-group-lg">
+									<span class="input-group-text">비고</span>
+									<textarea class="form-control" aria-label="With textarea" name="clsNote" th:text="${ classUpdate.clsNote }"></textarea>
+								</div>
 
+	
+							</div>
+								
+						</div>
+						<!-- 비고란 -->
 
-				</div>
-				<!-- End of Main Content -->
-				<!-- footer include -->
-				<div th:replace="/common/Footer.html"></div>
-
-			</div>
-			<!-- End of Main Content -->
-
-		</div>
-		<!-- End of Content Wrapper -->
-
-		<!-- Scroll to Top Button-->
-		<a class="scroll-to-top rounded" href="#page-top"> <i
-			class="fas fa-angle-up"></i>
-		</a>
-
-		<!-- 강의 수정 Modal-->
-		<div class="modal fade" id="classupdateModal" tabindex="-1"
-			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">강의수정</h5>
-						<button class="close" type="button" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">강의를 수정하시겠습니까?</div>
-					<div class="modal-footer">
-						<a class="btn btn-secondary"
-							onclick="location.href='/common/class/updateClass'">취소</a>
-						<button class="btn btn-primary" type="button" data-dismiss="modal"
-							onclick="location.href='/common/class/selectClass'">수정</button>
+						<div class="row buttonbox">
+							<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" 
+							data-toggle="modal" data-target="#classupdateModal"
+							th:onclick="|updateClass(${classUpdate.clsId})|">수정</button>
+							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset"
+							onclick="location.href='/admin/classList'">취소</button>
+						</div>
 					</div>
 				</div>
+			</form>
+		</div>
+	
+	</div>
+	<!-- End of Main Content -->
+	<!-- footer include -->
+	<div th:replace="/common/footer.html"></div>
+
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- 강의 수정 Modal-->
+	<div class="modal fade" id="classupdateModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<form method="post" name="UpdateClassForm"
+			th:action="@{/admin/classUpdate}">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">강의수정</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">강의를 수정하시겠습니까?</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						onclick="location.href='/admin/classList'">취소</button>
+					<button class="btn btn-primary submitbuttonbox" type="submit" >수정</button>
+				</div>
+				<input type="hidden" name="clsId" id="updatecls" />
 			</div>
 		</div>
+		</form>
+	</div>
 
 
 
-		<!-- Bootstrap core JavaScript-->
-		<script src="/vendor/jquery/jquery.min.js"></script>
-		<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script>
+		function updateDayAndTime(clsId) {
 
-		<!-- Core plugin JavaScript-->
-		<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+			$.ajax({
+				type : 'POST',
+				url : '/admin/classUpdate',
+				data : { clsId : clsId },
 
-		<!-- Custom scripts for all pages-->
-		<script src="/js/sb-admin-2.min.js"></script>
+				success : function(data){
+					console.log(data);
+					
+					 $("#clsName").text(data.clsName);
+					 $("#clsSubject").text(data.clsSubject);
+					 $("#clsStuNum").text(data.clsStuNum);
+					 $("#clsGrade").text(data.clsGrade);
+					 $("#clsPay").text(data.clsPay);
+					 $("#clsRoom").text(data.clsRoom);
+					 $("#clsStart").text(data.clsStart);
+					 $("#clsEnd").text(data.clsEnd);
+					 $("#clsNote").text(data.clsNote); 
+					 
+					 //요일체크박스
+					 const daycheck = document.querySelectorAll(".daycheck");
+					 console.log(daycheck);
+					 for(const index in data.dayList) {
+						 const clsDayId = data.dayList[index].clsDayId; 
+						 console.log(clsDayId);
+						 switch(clsDayId){
+						 case 1 : daycheck[0].checked = true; break;
+						 case 2 : daycheck[1].checked = true; break;
+						 case 3 : daycheck[2].checked = true; break;
+						 case 4 : daycheck[3].checked = true; break;
+						 case 5 : daycheck[4].checked = true; break;
+						 case 6 : daycheck[5].checked = true; break;
+						 case 7 : daycheck[6].checked = true; break;
+						 }
+					 }
+					 
+					 //교시체크박스
+					 const timecheck = document.querySelectorAll(".timecheck");
+					 console.log(timecheck);
+					 for(const index in data.time) {
+						 const clsTimeId = data.time[index].clsTimeId; 
+						 console.log(clsTimeId);
+						 switch(clsTimeId){
+						 case 1 : timecheck[0].checked = true; break;
+						 case 2 : timecheck[1].checked = true; break;
+						 case 3 : timecheck[2].checked = true; break;
+						 case 4 : timecheck[3].checked = true; break;
+						 case 5 : timecheck[4].checked = true; break;
+						 case 6 : timecheck[5].checked = true; break;
+						 case 7 : timecheck[6].checked = true; break;
+						 }
+					 }
+					 
+					
+				},
+				error : function(xhr) {
+					console.log("강의상세조회 실패")
+				}
+			});
+
+		}
+		
+		//강의수정
+		function updateClass(clsId) {
+			document.getElementById("updatecls").value = clsId;
+		}
+		
+		
+/* 		let dayList = [[${ classList.dayList }]];
+		alert(dayList);
+		 */
+		</script>
+
+
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="/js/sb-admin-2.min.js"></script>
+
 </body>
 </html>
