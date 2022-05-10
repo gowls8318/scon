@@ -39,42 +39,37 @@ public class GradeServiceImpl implements GradeService{
 		return gradeMapper.findAllStudent(classId);
 	}
 
-	/* 성적 입력 */
+	/* 성적 입력 (complete) */
 	@Override
-	public boolean insertGradeList(GradeDTO grade) throws Exception {
+	public boolean insertGradeList(List<GradeDTO> gradeList) throws Exception {
 		
-		int result = gradeMapper.insertGradeList(grade);
+		int result = 0;
 		
-		if(result <= 0) {
+		for(GradeDTO grade : gradeList ){
+			result += gradeMapper.insertGradeList(grade);
+		}
+		
+		if(result != gradeList.size()) {
 			throw new Exception("성적 등록에 실패하셨습니다.");
-		} 
+		}
 		
 		return result > 0 ? true : false;
-	}
+		
+	} 
 
-//	@Override
-//	public boolean insertGradeList() {
-//		
-//		int result = gradeMapper.insertGradeList(clsId, memberId);
-//		
-//		if(result <= 0) {
-//			throw new Exception("학생 등록에 실패하셨습니다.");
-//		}
-//		
-//		return result > 0 ? true : false;
-//	}
-
-	
-//	@Override
-//	public boolean insertGradeList(GradeDTO grade) throws Exception {
-//		return null;
-//	}
 
 	//성적 삭제
 //	@Override
-//	public int deleteGrade(int gradeId) throws Exception {
+//	public int deleteGrade(int[] gradeId) throws Exception {
 //		return gradeMapper.deleteGrade(gradeId);
 //	}
+
+	//성적 삭제 (테스트 중 이 메소드 쓰기!!!!!)
+	@Override
+	public int deleteGrade(List<String> deleteList) {
+		return gradeMapper.deleteGrade(deleteList);
+	}
+
 
 
 	

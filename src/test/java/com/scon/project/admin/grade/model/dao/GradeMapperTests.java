@@ -70,11 +70,9 @@ public class GradeMapperTests {
 		grade.setClsId(1);
 		grade.setMemberId("user02");
 		
-		String date = "2022-05-04";
-		java.sql.Date date2 = java.sql.Date.valueOf(date);
-		grade.setGradeDate(date2);
+		String date = "22.05.08";
+		grade.setGradeDate(date);
 		grade.setGrade(100);
-		
 
 		//when
 		int result = gradeMapper.insertGradeList(grade);

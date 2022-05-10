@@ -91,35 +91,37 @@
                             <h6 class="m-0 font-weight-bold text-primary g-title">성적 추가</h6> <input type="date" class="form-control" id="mini-date">
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
                                 <!--------------------- 폼 태그 시작 부분 (view 매핑) -------------->
-                                <form id="insertGradeForm" method="post">
+                               <form id="insertGradeForm" method="post" action="/admin/insertGrade"> 
+                            <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th class="notiCheck"><span class="form-check">
                                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
-                                                    </label></th>
+                                                    </label></span></th>
                                                 <th class="notiWriter">이름</th>
                                                 <th class="notiDate">시험 일자</th>
                                                 <th class="notiGrade">점수</th>                        
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr th:each="member : ${ memberList }">
+                                        <tbody>  
+                                            <tr th:each="member,index : ${ memberList }">
                                                 <td>
                                                     <span class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <input class="form-check-input" type="checkbox"  id="flexCheckDefault">
                                                         <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
+                                                        </label></span>
                                                 </td>
                                                 <td th:text="${ member.memberName }"></td>
-                                                <td><input type="date" class="form-control selected-date" id="selected-date" readonly>
-                                                <input type="hidden" id="memberId" th:value="${member.memberId}" class="memberId" /></td>
+                                                <td><input type="date" class="form-control selected-date" id="selected-date" th:name="|gradeList[${index.index}].gradeDate|" readonly>
+                                                <input type="hidden" id="memberId" th:value="${member.memberId}" th:name="|gradeList[${index.index}].memberId|" class="memberId" />
+                                                <input type="hidden" id="clsId" th:value="${member.clsId}" th:name="|gradeList[${index.index}].clsId|" class="clsId" />
+                                                </td>
                                                 <td>
                                                     <div class="col-lg-6"> <!-- <div class="mb-3"> -->
-                                                        <input type="text" class="form-control" id="stu-grade" placeholder="점수를 입력해주세요.">
+                                                        <input type="text" class="form-control" id="stu-grade" th:name="|gradeList[${index.index}].grade|" placeholder="점수를 입력해주세요.">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -130,7 +132,7 @@
                          <div class="container">
                         <div class="row">
                       <div class="col text-center">
-                        <button type="button" class="btn btn-primary" id="apply-btn">확인</button>
+                        <button type="submit" class="btn btn-primary" id="apply-btn" >확인</button>
                       </div>
                     </div>
                   </div>
@@ -168,84 +170,73 @@
 
 
 	<script>	
-	
-	
-	 // 성적 등록 모달
-		$("#apply-btn").on('click', function() {
+		
+	//성적 입력 여부 확인
+	function beforeCheck(){
+		let isRight = true;
+		$("#insertGradeForm").find("input[name=grade]").each(function(index, item){
 			
-			let gradeArray = [];
-			
-			let grade = $("#stu-grade").val();
-        	let memberId = $("#memberId").val();
-        	let gradeDate = $("#selected-date").val();
-        	/* 여기는 나중에 바꿔야 됨 (세션에서 가져오는걸로)*/
-   	    	let clsId = 1;
-        	
-        	gradeArray.push(grade);
-        	gradeArray.push(memberId);
-        	gradeArray.push(gradeDate);
-        	gradeArray.push(clsId);
-        	
-        	
-        	let data = {
-				'gradeArray' : gradeArray
+			if($(this).val().trim() == '') {
+				alert("성적을 입력해주세요.");
+				isRight = false;
+				return false;
 			}
-        	
-        	$.ajax({
-				type: 'POST', 						
-				url: '/admin/insertGrade', 							
-				data: data, 						
-			
-				success: function(data) { 					
-					alert("등록이 완료 되었습니다.")
-					location.reload()
-				},
-				error: function(xhr) { 
-					console.log("등록 실패")
-					alert("등록 실패!")
-				}
-			
-			})
 		});
 		
+		if (isRight){
+			let formData = new FormData(document.getElementById("insertGradeForm"));
+			
+			$.ajax ({
+				type: 'POST',
+				url : '/admin/insertGrade',
+				data : JSON.stringify(formData),
+				
+				success : function(data) {
+					console.log("등록 완료");
+					alert("등록이 완료 되었습니다.");
+					location.reload();
+				},
+				
+				error : function(e){
+					console.log("ERROR :" + e);
+					alert("등록 실패");
+					location.reload();
+				}
+				
+			})
+		}
 		
-		// 성적 입력 모달
-	/*	 $("#apply-btn").on('click', function() {
-            if(!$('#stu-grade').val().length >= 1) {
-             alert("점수가 입력되지 않았습니다.");
-	        }
-		 }) */
-		 
-		 var gradeArr = new array();	
-		 $("#apply-btn").on('click',function(){
-			 $("form").each(function(){
-				 gradeArr = $(this).find(':input');
-				 console.log(gradeArr);
-			 })
-		 })
-
-		         
-
-	        $("#stu-grade").click(function(){
-	            var isRight = true;
-	            $("#frm").find("input[type=text]").each(function(index, item){
-	                // 아무값없이 띄어쓰기만 있을 때도 빈 값으로 체크되도록 trim() 함수 호출
-	                let unWritten = $(this).val().trim() == '';
-	                if (unWritten == 0) {
-	                    alert("점수를 입력해주세요.");
-	                    isRight = false;
-	                    return false;
-	                }
-	            });
-
-	            if (!isRight) {
-	                return;
-	            }
-
-	          /*  $(this).prop("disabled", true);
-	            $(this).prop("disabled", false); */
-	        }); 
-
+		
+	}
+	
+	
+	
+		
+/*	$("#apply-btn").on('click', function(){
+		let form = $("#insertGradeForm").serialize();
+		
+		let data = new FormData(form);
+		
+		$.ajax ({
+			type: 'POST',
+			enctype : 'multipart/form-data',
+			url : 'admin/insertGrade',
+			data : { "data" : form },
+			
+			success : function(data) {
+				console.log("등록 완료");
+				alert("등록이 완료 되었습니다.");
+				location.reload();
+			},
+			
+			error : function(e){
+				console.log("ERROR :" + e);
+				alert("등록 실패");
+				location.reload();
+			}
+			
+		})
+	}); */
 		
 		
 	</script>

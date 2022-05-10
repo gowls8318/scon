@@ -18,10 +18,17 @@ public interface GradeMapper {
 
 	//성적 입력 전 학생 조회 (complete)
 	List<GradeDTO> findAllStudent(int classId);
-	
+
+	//성적 입력 (complete)
 	int insertGradeList(GradeDTO grade);
 
-//	int deleteGrade(int gradeId) throws Exception;
+
+//	int deleteGrade(int[] gradeId) throws Exception;
+
+	//성적 삭제 (테스트 중! 이 메소드 쓰기!!!!)
+	int deleteGrade(List<String> deleteList);
+
+
 
 
 	
