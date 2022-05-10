@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
 
@@ -22,6 +22,7 @@
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    
 
     <style>
     /* 파일첨부 */
@@ -42,6 +43,25 @@
     /* 정렬 */
     .table th{
         vertical-align: middle;
+    }
+
+    /* 수정, 삭제 버튼 */
+    #delete-btn {
+        background-color: red;
+        border: none;
+    }
+
+    /* 댓글 작성 창*/
+    textarea {
+        resize: none;
+    }
+
+    #apply-btn {
+        background-color: purple;
+        color: white;
+        border-radius: 3px;
+        border: none;
+       
     }
     </style>
 
@@ -82,31 +102,31 @@
                                     <tr></tr>
                                     </thead>
                                     <tbody>
-                              <!--      <tr>
+                                    <tr>
                                         <th>
-                                            작성자 <span id="pointtext">*</span>
+                                            작성자 <span id="pointtext"></span>
                                         </th>
                                         <td>
                                             <input class="form-control" type="text" placeholder="관리자" 
                                             aria-label="Disabled input example" disabled>
                                         </td>
-                                    </tr>  -->
+                                    </tr>
                                     <tr>
                                         <th>
-                                            제목 <span id="pointtext">*</span>
+                                            제목 <span id="pointtext"></span>
                                         </th>
                                         <td>
                                             <input class="form-control" type="text" placeholder="" 
-                                            aria-label="default input example">
+                                            aria-label="default input example" readonly>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>파일첨부</th>
                                         <td>
-                                            <form method="post" enctype="multipart/form-data"> 
+                                           <form method="post" enctype="multipart/form-data"> 
                                                 <label for="file-input"></label> 
                                                 <input id="file-input" type="file" /> 
-                                            </form>
+                                            </form> 
 
 
                                             <!-- <form method="post" enctype="multipart/form-data">
@@ -118,17 +138,57 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>내용 <span id="pointtext">*</span></th>
+                                        <th>내용 <span id="pointtext"></span></th>
                                         <td>
                                             <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>댓글 <span id="replytext"></span>
+                                        <td>
+                        <!-- Comments section-->
+                        <section class="mb-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <!-- Comment form-->
+                                <form class="mb-4"><textarea class="form-control col-md-12" rows="1" placeholder="댓글을 작성해주세요"></textarea><button id="apply-btn">등록</button></form>
+                                <!-- Comment with nested comments-->
+                                <div class="d-flex mb-4">
+                                    <!-- Parent comment-->
+                                    <div class="flex-shrink-0"></div>
+                                    <div class="ms-5">
+                                        <div class="fw-bold"><span style="color:black; font-weight: bold;">김민아</span>
+                                             <a href="#">수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
+                                        엄청 잘했다
+                                        <!-- Child comment 1-->
+                                        <div class="d-flex mt-4">
+                                            <div class="flex-shrink-0"></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold"><span style="color:black; font-weight: bold;">한지우</span>
+                                                    <a href="#">수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
+                                                100점 맞을듯
+                                            </div>
+                                        </div>
+                                        <!-- Child comment 2-->
+                                        <div class="d-flex mt-4">
+                                            <div class="flex-shrink-0"></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold"><span style="color:black; font-weight: bold;">유지수</span><a href="#">
+                                                    수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
+                                               퍼가요~
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <!-- 글쓴이만 보이는 버튼 -->
                             <div class="row buttonbox">
-                                <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset">취소</button>
-                                <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="submit">등록</button>
+                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit">수정</button>
+                                <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="submit">삭제</button>
                             </div>
                         </div>
                     </div>
@@ -155,7 +215,7 @@
     <!--  Ajax -->
 	<script>
 	
-  /*  $("#send-btn").click(function(){
+    $("#send-btn").click(function(){
             
             const taskTitle = document.getElementById("task-title").value;
             const taskContent = document.getElementById("task-content").value;
@@ -167,7 +227,7 @@
                     taskTitle : taskTitle,
                     taskContent : taskContent
                     /* 파일 넣기 */
-           /*       },
+                  },
                   success : function(data){
                       console.log(data);
                       console.table(data);
@@ -176,91 +236,7 @@
                       console.log(xhr);
                   }
         });
-    }); */
-    
-  	//이미지 파일 여부 판단
- /* 	function checkImageType(fileName){
-    	var pattern = /jpg|gif|png|jpeg/i;
-    	return fileName.match(pattern);
-    }
-    
-    //업로드 파일 여부
-    function getFileInfo(fullName){
-    	var fileName, imgsrc, getLink, fileLink;
-    	
-    	//이미지 파일일 경우
-    	if(checkImageType(fullName)){
-    		// 이미지 파일 경로(썸네일)
-    		imgsrc = "/spring02/upload/displayFile?fileName="+fullName;
-    		console.log(imgsrc);
-    		
-    		// 업로드 파일명
-    		fileLink = fullName.substr(14);
-    		console.log(fileLink);
-    		
-    		// 날짜별 디렉토리 추출
-    		var front = fullName.substr(0,12);
-    		console.log(front);
-    		
-    		// s_를 제거한 업로드 이미지 파일명
-    		var end = fullName.substr(14);
-    		console.log(end);
-    		
-    		// 원본 이미지 파일 디렉토리
-    		getLink = "/spring02/upload/displayFile?fileName="+front+end;
-    		console.log(getLink);
-    		// 이미지 파일이 아닐 경우
-    	} else {
-    		// UUID를 제외한 원본파일명
-    		fileLink = fullName.substr(12);
-    		console.log(fileLink);
-    		// 일반 파일 디렉토리
-    		getLink = "/spring02/upload/displayFile?fileName="+fullName;
-    		console.log(getLink);
-    	}
-    	// 목록에 출력할 원본 파일명
-    	fileName = fileLink.substr(fileLink.indexOf("_")+1);
-    	console.log(fileName);
-    	//{ 변수: 값 } json 객체 리턴
-    	return {fileName:fileName, imgsrc:imgsrc, getLink:getLink, fullName:fullName};
-    }
-    
-    
-    $(document).ready(function(){
-    	// 파일 업로드 영역에서 기본효과를 제한
-    	$(".fileDrop").on("drangenter dragover", function(e){
-    		e.preventDefault(); //기본 효과 제한
-    	});
-    	
-    	// 드래그해서 드롭한 파일들 ajax 요청
-    	$(".fileDrop").on("drop", function(e){
-    		e.preventDefault(); //기본 효과 제한
-    		var files = e.originalEvent.dataTransfer.files; //드래그한 파일들
-    		var file = files[0]; //첫번째 첨푸바일
-    		var formData = new FormData(); //폼 데이터 객체
-    		formData.append("file", file); //첨부 파일 추가
-    		$.ajax({
-    			url : "${path}/upload/uploadAjax",
-    			type : "post",
-    			data : formData,
-    			dataType : "text",
-    			processData : false, // processType : false - header가 아닌 body로 전달
-    			contentType : false,
-    			
-    			success : function(data){
-    				console.log(data);
-    				// 첨부 파일 정보
-    				var fileInfo = getFileInfo(data);
-    				// 하이퍼 링크
-    				var html = "<a href='"+fileInfo.getLink+"'>"+fileInfo.fileName+"</a><br>";
-    				// hidden 태그 추가
-    				html += "<input type='hidden' class='file' value='"+fileInfo.fullName+"'>";
-    				// div에 추가
-    				$("#uploadedList").append(html);
-    			}
-    		});
-    	}); */
- 
+    });
       </script>
 
     <!-- Bootstrap core JavaScript-->
@@ -280,8 +256,7 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins --><script src="vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
