@@ -24,8 +24,8 @@
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
 		<result property="birthDay" column="BIRTHDAY"/>
-		<result property="address" column="GENDER"/>
-		<result property="gender" column="ADDRESS"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="gender" column="GENDER"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="deleteDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
@@ -62,7 +62,7 @@
 		<id property="id" column="REF_MEMBER_ID3"/>
 		<result property="parentsType" column="PARENTS_TYPE"/>
 		<result property="parentsName" column="PARENTS_NAME"/>
-		<result property="parentsPhone" column="PHONE"/>
+		<result property="parentsPhone" column="PARENTS_PHONE"/>
 	</resultMap>
 	
 
@@ -126,8 +126,8 @@
 		     , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
 		     , C.AUTHORITY_NAME
 		     , C.AUTHORITY_DESC
-		     , S.MEMBER_ID
-			 , S.STUDENT_TYPE REF_MEMBER_ID2
+		     , S.MEMBER_ID REF_MEMBER_ID2
+			 , S.STUDENT_TYPE
 			 , S.SCHOOL_NAME
 			 , S.SCHOOL_GRADE
 			 , S.SCHOOL_CLASS
@@ -135,8 +135,7 @@
 			 , D.MEMBER_ID REF_MEMBER_ID3
 			 , D.PARENTS_TYPE
 			 , D.PARENTS_NAME
-			 , D.PHONE
-			 , P.MEMBER_ID REF_MEMBER_ID4
+			 , D.PHONE PARENTS_PHONE
 			 , F.FILE_ID
 			 , F.FILE_ORGNAME
 			 , F.FILE_SAVENAME

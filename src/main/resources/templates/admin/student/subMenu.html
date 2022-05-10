@@ -7,13 +7,13 @@
         </label>
         <div class="col-lg-2"></div>
         <div class="col-lg-5 row">
-            <select class="form-control form-select-lg mb-3 infoformbox">
+            <select class="form-control form-select-lg mb-3 infoformbox" name="studentType" id="studentType">
                 <option selected>학생 유형</option>
-                <option value="1">초등학생</option>
-                <option value="2">중학생</option>
-                <option value="3">고등학생</option>
-                <option value="4">대학생</option>
-                <option value="5">성인</option>
+                <option value="초등학생">초등학생</option>
+                <option value="중학생">중학생</option>
+                <option value="고등학생">고등학생</option>
+                <option value="대학생">대학생</option>
+                <option value="성인">성인</option>
             </select>
         </div>
         <!-- 학교 -->
@@ -22,7 +22,7 @@
         </label>
         <div class="col-lg-2"></div>
         <div class="col-lg-7 row">
-            <input type="text" class="form-control infoformbox" id="name">
+            <input type="text" class="form-control infoformbox" name="schoolName">
         </div>
         <!-- 학년 -->
         <label for="" class="col-lg-3">
@@ -30,7 +30,7 @@
         </label>
         <div class="col-lg-2"></div>
         <div class="col-lg-7 row">
-            <input type="text" class="form-control infoformbox" id="name">
+            <input type="text" class="form-control infoformbox" id="schoolGrade" name="schoolGrade">
         </div>
         <!-- 학급(반) -->
         <label for="" class="col-lg-3">
@@ -38,7 +38,7 @@
         </label>
         <div class="col-lg-2"></div>
         <div class="col-lg-7 row">
-            <input type="text" class="form-control infoformbox" id="name">
+            <input type="text" class="form-control infoformbox" id="schoolClass" name="schoolClass">
         </div>
     </div>
     <!-- 오른쪽 -->
@@ -54,7 +54,7 @@
         </label>
         <div class="col-lg-2"></div>
         <div class="col-lg-7 row">
-            <input type="text" class="form-control infoformbox" id="name">
+            <input type="text" class="form-control infoformbox" name="parentsName">
         </div>
         <!-- 가족관계-->
         <label for="" class="col-lg-3">
@@ -62,7 +62,7 @@
         </label>
         <div class="col-lg-2"></div>
         <div class="col-lg-7 row">
-            <input type="text" class="form-control infoformbox" id="name">
+            <input type="text" class="form-control infoformbox" name="parentsType">
         </div>
         <!-- 비상 연락처 -->
         <label for="" class="col-lg-3">
@@ -71,7 +71,7 @@
         </label>
         <div class="col-lg-2"></div>
         <div class="col-lg-7 row">
-            <input type="text" class="form-control infoformbox" id="name">
+            <input type="text" class="form-control infoformbox" name="parentsPhone">
         </div>
     </div>
 
@@ -80,12 +80,13 @@
         <span class="coloumnamebox input-group-text colbox">상담 내용(비고)</span>
     </label>
     <div class="col-lg-8 text-a">
-        <textarea class="form-control text-area" rows="2" id=""></textarea>
+        <textarea class="form-control text-area" style="margin-left:140px;" rows="2" name="consult"></textarea>
     </div>
+    <input type="hidden" name="hidden" value="/admin/updateStudent">
 
 </fieldset>
 <!-- 수정/ 삭제 버튼 -->
 <div class="registbtn pt-3">
-	<button type="button" class="btn btn-primary btn-lec1">수정하기</button>
+	<button type="button" class="btn btn-primary btn-lec1" onclick="checkAll();">수정하기</button>
     <button type="button" class="btn btn-light btn-lec2 mr-2">삭제하기</button>
 </div>

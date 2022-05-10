@@ -120,9 +120,16 @@ $("#id").change(function(){
 /** 유효성 검사 */
 function checkAll() {
 	
-	if(idck == 0){
-		alert("아이디 중복 확인을 진행해주세요.")
-		return false;
+	let path = form.hidden.value;
+	
+	alert(path);
+	if(path == '/admin/studentRegist'){
+		
+		if(idck == 0){
+			alert("아이디 중복 확인을 진행해주세요.")
+			return false;
+		}
+	
 	}
 	
 	//필수정보 9개
@@ -211,7 +218,7 @@ function checkAll() {
 	//회원가입
 			$.ajax({
 			  type: "POST",
-		      url: '/admin/studentRegist',
+		      url: path,
 		      data: formData,           
 		      processData: false,   
 		      contentType: false,    
@@ -340,7 +347,8 @@ $('input[name=selectStd]').on('click',function() {
 			url: '/admin/findStudentById',
 			data: { "id" : id },
 			success: function(data) {
-				var student = data;
+		
+				studentDetail(data);
 			}, error: function() {
 				alert("실패");
 			}
@@ -349,7 +357,58 @@ $('input[name=selectStd]').on('click',function() {
   }
 });
 
+// 학생 정보 출력
+function studentDetail(student){
+	
+	form.reset();
+	
+	form.id.value = student.member.id;
+	form.name.value = student.member.name;
+	form.password.value = student.member.password;
+	form.email.value = student.member.email;
+	form.phone.value = student.member.phone;
+	
+	if(student.member.gender == 'F'){	
+		$(":radio[name='gender'][value='F']").attr('checked', true);
+	}else if(student.member.gender == 'M') {
+		$(":radio[name='gender'][value='M']").attr('checked', true);
+	}
 
+	form.birthDay.value = student.member.birthDay;
+	
+	form.enrollDate.value = student.member.enrollDate;
+	
+	let addr = student.member.address.split('$');
+	form.zipCode.value = addr[0];
+	form.address.value = addr[1]
+	form.extraAddress.value = addr[2];
+
+	if(student.studentType != null){
+		$("#studentType").val(student.studentType).prop("selected", true);
+	} else{
+		$("#studentType option:eq(0)").prop("selected", true);
+	}
+
+	form.schoolName.value = student.schoolName;
+	form.schoolGrade.value = student.schoolGrade;
+	form.schoolClass.value = student.schoolClass;
+	
+	form.parentsName.value = student.parents.parentsName;
+	form.parentsType.value = student.parents.parentsType;
+	form.parentsPhone.value = student.parents.parentsPhone;
+	form.consult.value = student.consult;
+
+	if(student.profile != null) {
+		$("#img").removeAttr('src');
+		let src = '\\img\\profile\\' + student.profile.fileSaveName;
+		$("#img").attr('src', src);	
+	} else {
+		$("#img").removeAttr('src');
+		let profile= '\\img\\profile.jpg';
+		$("#img").attr('src', profile);	
+	}
+	
+}
 
 /* 서브 메뉴 이동 함수 */
  	const btn = document.querySelectorAll('#menu-btns .btn');
@@ -367,6 +426,8 @@ $('input[name=selectStd]').on('click',function() {
 
  	  }
 });
+
+
 
 
 /* 등록하기 메뉴 이동 함수 */
@@ -398,7 +459,9 @@ upbtn.forEach((el, index) => {
 			subMenuList[index].classList.add('d-none');
 		});
 
-		subMenuList[3].classList.remove('d-none');
+	subMenuList[3].classList.remove('d-none');
 
 	}
 });
+
+
