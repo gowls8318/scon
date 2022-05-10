@@ -7,8 +7,9 @@ public interface BusinessService {
 	//교육원 정보 조회용
 	BusinessDTO selectBusinessInfo();
 
-	//교육원 정보 입력용
-	int insertBusinessInfo(BusinessDTO bus);
+	//교육원 정보 수정용
+	BusinessDTO updateBusinessInfo();
+
 
 
 }

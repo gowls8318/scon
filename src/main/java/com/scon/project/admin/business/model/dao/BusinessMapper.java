@@ -9,9 +9,9 @@ public interface BusinessMapper {
 	
 	//교육원 정보 조회
 	BusinessDTO selectBusinessInfo();
-
-	//교육원 정보 입력
-	int insertBusinessInfo(BusinessDTO BusinessDTO);
 	
+	//교육원 정보 수정
+	BusinessDTO updateBusinessInfo();
+
 
 }
