@@ -67,45 +67,44 @@ public class GradeServiceTests {
 	
 	
 	/* 성적 입력 테스트 */
-	@Test
-	public void 성적_입력_서비스_성공_테스트() throws Exception {
-		//given
-		GradeDTO grade = new GradeDTO();
-		//gradeId, clsId는 시퀀스
-		grade.setMemberId("user02");
-				
-		String date = "2022-05-04";
-		java.sql.Date date2 = java.sql.Date.valueOf(date);
-		grade.setGradeDate(date2);
-		grade.setGrade(100);
-
-		//when
-		//결과값을 true/false로 받기
-		boolean result = gradeService.insertGradeList(grade);
-
-		//then
-		assertTrue(result);
-	}
-	
-	@Test
-	@Disabled
-	public void 성적_입력_서비스_실패_테스트() {
-		
-		//given
-		GradeDTO grade = new GradeDTO();
-		//gradeId, clsId는 시퀀스
+//	@Test
+//	public void 성적_입력_서비스_성공_테스트() throws Exception {
+//		//given
+//		GradeDTO grade = new GradeDTO();
+//		//gradeId, clsId는 시퀀스 (clsId는 임의로 줬음)
+//		grade.setClsId(1);
 //		grade.setMemberId("user02");
-						
-		String date = "2022-05-04";
-		java.sql.Date date2 = java.sql.Date.valueOf(date);
-		grade.setGradeDate(date2);
-		grade.setGrade(100);
-		
-		//when & then
-		assertThrows(Exception.class, () -> gradeService.insertGradeList(grade));
-		
-	}
+//		
+//		String date = "22.05.08";
+//		grade.setGradeDate(date);
+//		grade.setGrade(100);
+//
+//		//when
+//		//결과값을 true/false로 받기
+//		boolean result = gradeService.insertGradeList();
+//
+//		//then
+//		assertTrue(result);
+//	}
 	
+//	@Test
+//	@Disabled
+//	public void 성적_입력_서비스_실패_테스트() {
+//		//given
+//		GradeDTO grade = new GradeDTO();
+//		//gradeId, clsId는 시퀀스 (clsId는 임의로 줬음)
+//		grade.setClsId(1);
+//		grade.setMemberId("user02");
+//		
+//		String date = "22.05.08";
+//		grade.setGradeDate(date);
+//		grade.setGrade(100);
+//		
+//		//when & then
+//		assertThrows(Exception.class, () -> gradeService.insertGradeList(grade));
+//		
+//	}
+//	
 	
 	
 }

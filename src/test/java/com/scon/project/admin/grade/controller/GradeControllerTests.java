@@ -79,14 +79,14 @@ public class GradeControllerTests {
 		params.add("gradeId", "1");
 		params.add("memberId", "user02");
 		params.add("clsId", "1");
-		params.add("gradeDate","2022-05-04");
+		params.add("gradeDate","22.05.09");
 		params.add("grade", "90");
 	
 		//when & then
-		mockMvc.perform(MockMvcRequestBuilders.post("/admin/gradeList").params(params))
+		mockMvc.perform(MockMvcRequestBuilders.post("/admin/insertGrade").params(params))
 		       .andExpect(MockMvcResultMatchers.status().is3xxRedirection()) //redirect 확인
 		       .andExpect(MockMvcResultMatchers.flash().attributeCount(1))  //RedirectAttributes에 담은 1개의 메세지 확인
-		       .andExpect(MockMvcResultMatchers.redirectedUrl("/admin/gradeList"))
+		       .andExpect(MockMvcResultMatchers.redirectedUrl("/admin/grade/insertGrade"))
 		       .andDo(MockMvcResultHandlers.print());
 
 	}

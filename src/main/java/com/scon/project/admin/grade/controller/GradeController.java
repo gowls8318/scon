@@ -1,5 +1,7 @@
 package com.scon.project.admin.grade.controller;
 
+
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,15 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scon.project.admin.grade.model.dto.GradeDTO;
+import com.scon.project.admin.grade.model.dto.GradeDTOList;
 import com.scon.project.admin.grade.model.service.GradeService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 //@SessionAttributes("clsId")
@@ -61,34 +67,49 @@ public class GradeController {
 		return mv;
 	}
 	
-	/* 성적 등록 */
-	@PostMapping("/insertGrade")
-	public String insertGrade(GradeDTO gradeDTO, HttpServletRequest request) throws Exception {
-		
-		boolean result = gradeService.insertGradeList(gradeDTO);
+	/* 성적 입력 (complete) */
+	@PostMapping("/insertGrade") //@RequestParam int clsId
+	public String insertGrade(GradeDTOList gradeList, HttpServletRequest request) throws Exception {
+		log.info(gradeList.getGradeList().toString());
+		boolean result = gradeService.insertGradeList(gradeList.getGradeList());
 		String referer = request.getHeader("Referer");
 		return "redirect:"+ referer;
-		
 	}
+
 	
-	/* 성적 등록 이후 포워딩 */
-//	@PostMapping("/insertGrade")
-//	public String insertGrade(@ModelAttribute GradeDTO grade, RedirectAttributes rttr) throws Exception {
+	/* 성적 삭제 */
+//	@PostMapping("/gradeList")
+//	public String deleteGrade(@RequestParam(value="gradeId[]") int[] gradeId, HttpServletRequest request) throws Exception {
 //		
-//		gradeService.insertGradeList(grade);
+//		int result = gradeService.deleteGrade(gradeId);
 //		
-//		rttr.addFlashAttribute("successMessage", "성적 등록이 완료 되었습니다.");
+//		for(int i=0; i<gradeId.length; i++) {
+//			
+//		}
 //		
-//		return "redirect:/admin/grade/gradeList";
+//		String referer = request.getHeader("Referer");
+//		return "redirect:" + referer;
+//	}
+
+	//성적 삭제 테스트 중~~~~~
+//	@PostMapping("/gradeList")
+//	public String deleteGrade(@RequestParam(value="gradeId[]") List<String> deleteList, HttpServletRequest request) {
+//		
+//		int result = gradeService.deleteGrade(deleteList);
+//		String referer = request.getHeader("Referer");
+//		return "redirect:" + referer;
+//		
 //	}
 	
-	
 
-	/* 성차별 성적 조회 */
+
+	/* 석차별 성적 조회 */
 	@GetMapping("/gradeRank")
 	public String gradeRankTest() {
 		return "admin/grade/gradeRank";
 	}
+	
+	
 	
 	
 }

@@ -72,30 +72,51 @@
 		</select>	 
 		
 		<!--  성적 입력 (insertGrade) -->
-		<insert id="insertGradeList" parameterType="com.scon.project.admin.grade.model.dto.GradeDTO">
+	<!--   <insert id="insertGradeList" parameterType="com.scon.project.admin.grade.model.dto.GradeDTO">
 			INSERT
 				INTO TB_GRADE
 				(
 				 GRADE_ID 
 			   , MEMBER_ID 
 			   , CLS_ID 
-			   , GRADE_DATE 
 			   , GRADE 
+			   , GRADE_DATE
 				)
 			VALUES			
 				(
 				 SEQ_GRADE.NEXTVAL
-			   , #{ memberId } <!-- jdbcType=VARCHAR -->
-			   , #{ clsId }
-			   , #{ gradeDate }
+			   , #{ memberId }
+		  	   , #{ clsId }
 			   , #{ grade }
+			   , #{ gradeDate }
 				)				
+		</insert> -->
+		
+		<!--  성적 입력 (테스트 중 이 쿼리문 쓰기!!!!!!) -->
+		<insert id="insertGradeList">
+			INSERT
+				INTO TB_GRADE
+				(
+			     GRADE_ID
+			   , MEMBER_ID
+			   , CLS_ID
+			   , GRADE
+			   , GRADE_DATE
+				)
+				VALUES
+				(
+					SEQ_GRADE.NEXTVAL
+				  , #{ memberId }
+				  , #{ clsId }
+				  , #{ grade }
+				  , #{ gradeDate }
+				)
 		</insert>
 	
 		
 		<!-- 성적 삭제 -->
 		<delete id="deleteGrade">
-			DELETE FROM TB_GRADE WHERE grade_id = #{gradeId}
+			DELETE FROM TB_GRADE WHERE GRADE_ID = #{gradeId}
 		</delete>
 		
 

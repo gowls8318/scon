@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -107,7 +108,7 @@
                                         <tr th:each="grade : ${ gradeList }">
                                             <td>
                                                 <span class="form-check">
-                                                	<input class="form-check-input btn-check" type="checkbox" name="gradeIdArr" id="flexCheckDefault" th:value="${grade.gradeId}">
+                                                	<input class="form-check-input btn-check" type="checkbox" name="gradeId" id="flexCheckDefault" th:value="${grade.gradeId}">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                 </label>
                                             </td>
@@ -137,14 +138,14 @@
                                 </div>        
                         <!-- 푸터 --> 
                         </div>
-                        
-                         
+             
+
                             
                             
                               
                                 
                         	<!-- 페이징 -->
-                     <!--        <nav aria-label="Page navigation example">
+                     <!--     <nav aria-label="Page navigation example">
                                 <ul class="pagination">
                                     <li class="page-item">
                                         <a class="page-link" href="#" aria-label="Previous">
@@ -191,7 +192,7 @@
                                  </div>
                                  <div class="modal-footer">
                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                 <button type="submit" class="btn btn-primary delete-btn">삭제</button>
+                                 <button type="button" class="btn btn-primary delete-btn" onclick="deleteGrade();">삭제</button>
                              </div>
                          </div>
                      </div>
@@ -274,15 +275,15 @@
     <!-- Page level plugins --><script src="vendor/chart.js/Chart.min.js"></script>
  <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <!-- Page level custom scripts -->
+    <!-- Page level custom scripts 
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
-    <script src="/js/demo/datatables-demo.js"></script>  
+    <script src="/js/demo/datatables-demo.js"></script>  -->
 
 
-    
+
     <script>
-			// 성적 수정 모달
+			// 성적 수정 모달 (O)
 			$(".update-btn").on('click', function() {
 				let grade = $("#grade").val()
 	        	let gradeId = $("#gradeId").val()
@@ -306,7 +307,7 @@
 				})
 			}); 
 			
-		//수정 모달 (원생명, 수강 강의 값 자동 넣기/중복 체크 여부 확인)
+		//수정 모달 (원생명, 수강 강의 값 자동 넣기/중복 체크 여부 확인) (O)
         function beforeCheck() {
             if($(".btn-check").is(":checked") && $(".btn-check:checked").length == 1) {
             	let curCheck = $(".btn-check:checked");
@@ -328,11 +329,91 @@
 	            alert("선택된 학생이 없습니다.");
 	        }
 	    }
+		
+        //삭제 모달 (체크 여부 확인) (O)
+        function beforeCheck2(){
+	        if($(".btn-check").is(":checked") && $(".btn-check:checked").length >= 1) {     	
+	        	$("#delete-modal").modal("show");
+		    }  else {
+		        alert("선택된 학생이 없습니다.");
+		        console.log("선택된 학생 없음");
+		    }
+	    }
 
-        //모달 닫기 
+        //모달 닫기  (O)
 	    function closeModal() {
 	        $("#accModal1").modal("hide");
 	    }
+        
+        // -------------------------------------------- //
+        
+      function deleteGrade(){
+        	let checked = $(".btn-check:checked").length;
+        	gradeIdArr = new Array();
+        	
+        /*	for(let i=0; i<checked.length; i++){
+        		let gradeId = $(".btn-check:checked").val();
+        		gradeIdArr.push(gradeId);
+        	}  */
+        	
+        	$(".btn-check:checked").each(function (){
+        		let gradeId = $(".btn-check:checked").val(); 	
+        		gradeIdArr.push(gradeId);
+        	})
+        	
+        	let data = {
+        			'gradeId' : gradeIdArr
+        	}
+        	
+        	$.ajax({
+        		
+        		url : '/admin/gradeList',
+        		type : 'POST',
+        		data : data,
+        		
+        		success: function(data){
+        			console.log("성적 삭제 완료");
+        			alert("성적 삭제 완료")
+        			location.reload();
+        		},
+        		error : function(xhr, textStatus, errorThrown, data){
+        			console.log("성적 삭제 실패.");
+        			console.log(xhr);
+        			console.log(data);
+        			alert("성적 삭제 실패");
+        			location.reload();
+        			
+        		}
+        	});
+      
+        }
+     /*   	
+        	let data = {
+        			'gradeId' : gradeIdArr
+        	}
+        	
+        	$.ajax({
+        		
+        		url : '/admin/gradeList',
+        		type : 'POST',
+        		data : data,
+        		
+        		success: function(data){
+        			console.log("성적 삭제 완료");
+        			alert("성적 삭제 완료")
+        			location.reload();
+        		},
+        		error : function(xhr, textStatus, errorThrown, data){
+        			console.log("성적 삭제 실패.");
+        			console.log(xhr);
+        			console.log(data);
+        			alert("성적 삭제 실패");
+        			location.reload();
+        			
+        		}
+        	}); */
+      
+
 
 
  </script>
