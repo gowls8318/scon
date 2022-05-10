@@ -2,7 +2,7 @@ package com.scon.project.member.model.dto;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,13 +32,15 @@ public class MemberDTO {
 	
 	private String id;								//회원아이디
 	private String name;							//회원명
-	private String password;								//비밀번호
+	private String password;						//비밀번호
 	private String tempPwdYN;
 	private String phone;							//연락처
 	private String email;							//이메일
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
 	private java.sql.Date birthDay;					//생년월일
 	private String address;							//주소
 	private String gender;							//성별
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
 	private java.sql.Date enrollDate;				//등록일
 	private java.sql.Date deleteDate;				//삭제일
 	private String status;							//회원상태

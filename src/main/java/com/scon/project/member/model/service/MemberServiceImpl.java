@@ -75,18 +75,12 @@ public class MemberServiceImpl implements MemberService{
 
 	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
 	@Override
-	public int insertMember(MemberDTO member, ProfileDTO profile, int role){
+	public int insertMember(MemberDTO member, int role){
 		
 		/* 멤버 등록 */
 		int memberResult = memberMapper.insertMember(member);
 		/* 멤버 권한 등록 */
 		int roleResult = memberMapper.insertMemberRole(member.getId(), role);
-		
-		/* 프로필 사진 있을 시 프로필 사진 등록 */
-		if(profile.getFileSaveName() != null) {
-			int fileResult = memberMapper.insertFile(profile);
-			int profileResult =memberMapper.insertProfile(member.getId());
-		}
 		
 		int result = 0;
 		
@@ -110,6 +104,30 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberDTO> findAllStudentList() {
 		
 		return memberMapper.findAllStudentList();
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
+	@Override
+	public int insertProfile(ProfileDTO profile, MemberDTO member) {
+		
+		int result = 0;
+		/* 프로필 사진 있을 시 프로필 사진 등록 */
+		if(profile.getFileSaveName() != null) {
+			int fileResult = memberMapper.insertFile(profile);
+			int profileResult =memberMapper.insertProfile(member.getId());
+			
+			if(fileResult > 0 && profileResult > 0) {
+				result = 1;
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public int updateMember(MemberDTO member) {
+
+		return 0;
 	}
 
 

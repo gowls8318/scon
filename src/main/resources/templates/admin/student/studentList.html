@@ -101,7 +101,7 @@
                                 </div>
                                 <p class="p-left pt-3">전체 학생수 : 52명</p>
                                 <div class="table-responsive tb-h">
-                                    <table class="table table-bordered small text-xs" id="">
+                                    <table class="table table-bordered table-hover small text-xs" id="">
 
                                         <tr>
                                            <th class="notiCheck">
@@ -118,7 +118,7 @@
                                             <td class="notiCheck">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" 
-                                                    th:value="${ member.id }" name="selectStd" >
+                                                    th:value="${ member.id }" name="selectStd">
                                                 </div>
                                             </td>
                                             <td th:text="${ member.name }"></td>
@@ -152,8 +152,8 @@
                                     <fieldset class="row col-lg-12">
                                         <div class="col-lg-2">
                                             <!-- 프로필 사진 등록 -->
-                                            <img class="profile text-sm" src="/img/profile.jpg" alt="프로필 사진"><br><br>
-                                            <input class="text-xs" type="file" value="" />
+                                            <img class="profile text-sm" src="/img/profile.jpg" id="img" alt="프로필 사진"><br>
+											<br> <input type="file" name="profile" id="profile" class="text-xs" accept=".gif, .jpg, .png"  onchange="readFile(event);"/>
                                         </div>
                                         <div class="form-group col-lg-5 row">
 
@@ -247,7 +247,7 @@
 											</label>
 											<div class="col-sm-2"></div>
 											<div class="col-sm-7 col-lg-7">
-												<input type="date" class="infoformbox form-control">
+												<input type="date" class="infoformbox form-control" id="enrollDate" name="enrollDate">
 											</div>
 
                                         </div>
@@ -260,14 +260,14 @@
                                             <div class="col-lg-2 addr"></div>
                                             <div class="col-lg-9 row">
                                                 <div class="col-lg-4 row">
-                                                    <input type="text" class="form-control infoformbox" id="zipcode">
+                                                    <input type="text" class="form-control infoformbox" id="zipCode" name="zipCode" >
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <input type="button" class="btn btn-secondary btn-sm stu-btn"
                                                         value="우편번호 찾기" />
                                                 </div>
-                                                <input type="text" class="form-control infoformbox" id="exaddress">
-                                                <input type="text" class="form-control infoformbox" id="">
+                                                <input type="text" class="form-control infoformbox" id="address">
+                                                <input type="text" class="form-control infoformbox" id="extraAddress">
                                             </div>
 
                                         </div>
@@ -309,6 +309,12 @@
                                             </div>
                                             <!-- 수강 강의 수정 -->
                                           <div class="menu d-none">
+                                            	<div th:replace="/admin/student/subMenu3"></div>
+                                            </div>
+                                            <div class="menu d-none">
+                                            	<div th:replace="/admin/student/subMenu3"></div>
+                                            </div>
+                                            <div class="menu d-none">
                                             	<div th:replace="/admin/student/subMenu3"></div>
                                             </div>
 
