@@ -30,7 +30,8 @@ public class BusinessMapperTests {
 		assertNotNull(businessMapper);
 	}
 
-// success
+	// success
+	
 	@Test
 	@Disabled
 	@DisplayName("교육원 정보 조회용 매퍼 테스트")
@@ -43,30 +44,33 @@ public class BusinessMapperTests {
 		// then
 		assertNotNull(selectBusinessInfo);
 	}
-	
 	// success
-		@Test
-		@DisplayName("교육원 정보 등록용 매퍼 테스트")
-		public void testInsertConsultant() {
-			
-			// given
-			BusinessDTO bus = new BusinessDTO();
-			bus.setBusCode(12345);
-			bus.setBusNum(1231212345);
-			bus.setBusTitle("SCON");
-			bus.setBusRep("김원장");
-			bus.setBusPhone("01012345678");
-			bus.setBusFax("0212345678");
-			bus.setBusAdr("서울시 강남구 역삼동");
-			bus.setBusHompy("https://www.scon.ac.kr");
-			
-			
-			// when
-			int result = businessMapper.insertBusinessInfo(bus);
-			
-			// then
-			assertEquals(1, result);
-		}
+	
+	@Test
+	@DisplayName("교육원 정보 수정용 매퍼 테스트")
+	public void testUpdateBusinessInfo() {
 		
+		BusinessDTO bus = new BusinessDTO();
+		bus.setBusCode(12340);
+		bus.setBusNum(1231212340);
+		bus.setBusTitle("SCONN");
+		bus.setBusRep("이원장");
+		bus.setBusPhone("01012345670");
+		bus.setBusFax("0212345670");
+		bus.setBusAdr("서울시 강남구 역삼각형");
+		bus.setBusHompy("http://");
+		
+		// when
+		BusinessDTO result = businessMapper.updateBusinessInfo();
+		
+		// then
+		assertNotNull(result);
+	}
+	// success
+	
+	
+	
+	
+
 
 }
