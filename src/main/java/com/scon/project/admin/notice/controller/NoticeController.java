@@ -60,20 +60,41 @@ public class NoticeController {
 		
 		return "redirect:/admin/notice/notiTables";
 	}
-	
+
 //	게시글 상세 조회
-	@GetMapping("noticeDetail")
-	public ModelAndView openNoticeDetail(@RequestParam int idx) throws Exception {
+	@GetMapping("noticeDetail") 
+	public ModelAndView openNoticeDetail(@RequestParam int idx, ModelAndView mv) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("/admin/notiDetail");
-				
+					
 		NoticeDTO notice = noticeService.sellectNoticeDetail(idx);
 		
 		mv.addObject("notice", notice);
+		mv.setViewName("admin/notice/notiDetail");
 
 		return mv;
 
     }
+	
+	
+	
+	
+	
+	
+	
+	
+////	게시글 상세 조회
+//	@GetMapping("noticeDetail")
+//	public ModelAndView openNoticeDetail(@RequestParam int idx) throws Exception {
+//		
+//		ModelAndView mv = new ModelAndView("/admin/notiDetail");
+//				
+//		NoticeDTO notice = noticeService.sellectNoticeDetail(idx);
+//		
+//		mv.addObject("notice", notice);
+//
+//		return mv;
+//
+//    }
 
 	
 	
