@@ -1,4 +1,4 @@
-package com.scon.project.admin.student.model.dto;
+package com.scon.project.admin.lecture.model.dto;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.member.model.dto.MemberDTO;

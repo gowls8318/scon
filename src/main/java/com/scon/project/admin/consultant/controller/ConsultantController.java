@@ -94,7 +94,7 @@ public class ConsultantController {
 	
 	/* 상담 일지 수정용 */
 	@GetMapping("/consultant/updateForm")
-	public String modifyConsultant(@RequestParam int no, Model model) throws Exception {
+	public String modifyConsultantPage(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("consultant", consultantService.selectConsultantDetail(no));
 		

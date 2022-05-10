@@ -110,12 +110,14 @@
 }
 /* 검색 버튼, 상담 등록 버튼 */
 .btn-search,
-.btn-conh {
+.btn-conh,
+.btn-lec {
   border: none!important;
   background-color: #8B169E !important;
 }
 .btn-search:focus,
-.btn-conh:focus {
+.btn-conh:focus,
+.btn-lec:focus {
   box-shadow: none !important;
 }
 
@@ -212,7 +214,8 @@
 
 /* 상담 placeholder 색 연하게 */
 .conHContent::placeholder,
-.conContent::placeholder{
+.conContent::placeholder,
+.lecDiscount::placeholder{
   color: #c8c8c8!important;
 }
 
@@ -266,4 +269,8 @@
 /* 수강 기간 정렬 */
 .clsDate{
   display: flex;
+}
+.clsDate2{
+  display: flex;
+  justify-content: center !important;
 }

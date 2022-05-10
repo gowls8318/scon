@@ -63,7 +63,7 @@
                                         <tbody th:object="${ consultantHopeDetail }">
                                         	<tr>
                                                 <th class="col-lg-3">
-                                                    <label for="clsName" class="col-form-label">원생</label>
+                                                    <label for="std" class="col-form-label">원생</label>
                                                 </th>
                                                 <td class="col-lg-9">
                                                     <div th:text="*{ member.name }" class="col-sm-10 col-lg-4">원생</div>
@@ -71,7 +71,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-lg-3">
-                                                    <label for="clsName" class="col-form-label">신청일</label>
+                                                    <label for="conWriteDate" class="col-form-label">신청일</label>
                                                 </th>
                                                 <td class="col-lg-9">
                                                     <div th:text="*{ conWriteDate }" class="col-sm-10 col-lg-4">신청일</div>
@@ -79,7 +79,7 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="memName" class="col-form-label">수정일</label>
+                                                    <label for="conHUpdate" class="col-form-label">수정일</label>
                                                 </th>
                                                 <td>
                                                     <div th:text="*{ conHUpdate }" class="col-sm-10 col-lg-4">수정일</div>
@@ -90,8 +90,7 @@
                                                     <label for="conHDate" class="col-form-label">희망일</label>
                                                 </th>
                                                 <td>
-                                                    <!-- <div th:text="${#temporals.format(consultantDetail.conHDate, 'yyyy-MM-dd')}" class="col-sm-10 col-lg-4">2022-05-05</div> -->
-                                                    <div th:text="*{ conHDate }" class="col-sm-10 col-lg-4">2022-05-05</div>
+                                                    <div th:text="*{ conHDate }" class="col-sm-10 col-lg-4">희망일</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -99,7 +98,7 @@
                                                     <label for="conHTime" class="col-form-label">희망 시간</label>
                                                 </th>
                                                 <td >
-                                                    <div th:text="*{ conHTime }" class="col-sm-10 col-lg-4">17:00 ~ 17:50</div>
+                                                    <div th:text="*{ conHTime }" class="col-sm-10 col-lg-4">희망 시간</div>
                                                 </td>
                                             </tr>
                                             <tr>

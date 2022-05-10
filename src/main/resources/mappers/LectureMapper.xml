@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.scon.project.admin.student.model.dao.LectureMapper">
+<mapper namespace="com.scon.project.admin.lecture.model.dao.LectureMapper">
 
-	<resultMap id="lectureResultMap" type="com.scon.project.admin.student.model.dto.LectureDTO">
+	<resultMap id="lectureResultMap" type="com.scon.project.admin.lecture.model.dto.LectureDTO">
 		<id property="no" column="LEC_NO"/>
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="clsId" column="CLS_ID"/>
@@ -61,8 +61,21 @@
 		 ORDER BY A.LEC_NO DESC
 	</select>
 	
-	<!-- 전체 강의 조회용 -->
+	<!-- 수강 등록 - 전체 강의 조회용 -->
 	<select id="findAllClassList" resultMap="classResultMap">
+		SELECT
+			   CLS_ID
+			 , CLS_NAME
+			 , CLS_SUBJECT
+			 , CLS_PAY
+			 , CLS_START
+			 , CLS_END
+		  FROM TB_CLASS
+		 WHERE CLS_STATUS = 'Y'
+	</select>
+	
+	<!-- 수강 등록 - 강의 정보 조회용 -->
+	<select id="findClassDetail" resultMap="classResultMap">
 		SELECT
 			   CLS_ID
 			 , CLS_NAME
@@ -98,5 +111,29 @@
 		, #{ lecDiscount }
 		)
 	</insert>
+	
+	<!-- 수강 상세 조회용 -->
+	<select id="selectLectureDetail" resultMap="lectureResultMap">
+		SELECT
+			   LEC_NO
+			 , CLS_ID
+			 , LEC_PAY
+			 , LEC_STATUS
+			 , LEC_DELETE
+			 , LEC_DISCOUNT
+		  FROM TB_LECTURE
+		 WHERE LEC_NO = #{ no }
+	</select>
+	
+	<!-- 수강 수정용 -->
+	<update id="modifyLecture">
+		UPDATE
+			   TB_LECTURE
+		   SET CLS_ID = #{ clsId }
+		     , LEC_PAY = #{ lecPay }
+		     , LEC_STATUS = #{ lecStatus }
+		     , LEC_DISCOUNT = #{ lecDiscount }
+		 WHERE LEC_NO = #{ no }
+	</update>
 
 </mapper>
