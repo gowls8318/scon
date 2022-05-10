@@ -154,8 +154,9 @@
                                             </th>
                                             <!-- 내용 -->
                                             <td th:text="${ notice.notiNo }"></td>
-                                            <td><a href="@{/admin/notiDetail}" class="notiTitleDetail" 
-                                            	th:attrappend="href=${ notice.notiNo }" th:text="${ notice.notiTitle }"></a></td>
+                                            <td>
+                                            <a th:href="@{/admin/notiDetail(idx=${notice.notiNo})}">[[${notice.notiTitle}]]</a>
+                                            </td>
                                             <td th:text="${ notice.memberId }"></td>
                                             <td th:text="${ notice.notiDate }"></td>
                                             <td th:text="${ notice.notiView }"></td>

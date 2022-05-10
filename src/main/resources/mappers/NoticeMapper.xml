@@ -24,7 +24,18 @@
 		  FROM TB_NOTICE
 		 WHERE NOTI_DELETE = 'N'
 		 ORDER BY NOTI_NO DESC
+		 LIMIT #{ startPage }, #{ recordsPerPage }
 	</select>
+	
+<!-- 페이징 -->
+	<select id="noticeTotalCount" parameterType="Criteria" resultType="int">
+		SELECT
+			   COUNT(*)
+		  FROM TB_NOTICE
+		 WHERE NOTI_DELETE = 'N'
+	</select>	
+	
+	
 	
 <!-- 공지등록 폼 -->
 	<insert id="registNotice">

@@ -9,8 +9,9 @@ import com.scon.project.admin.notice.model.dto.NoticeDTO;
 @Mapper
 public interface NoticeMapper {
 	
-//	공지사항 목록 조회
+////	공지사항 목록 조회
 	List<NoticeDTO> findAllNoticeList();
+	
 
 //	공지사항 게시글 등록
 	int registNotice(NoticeDTO noti);
@@ -19,5 +20,12 @@ public interface NoticeMapper {
 	NoticeDTO sellectNoticeDetail(int no) throws Exception;
 
 	void updateHitCount(int idx) throws Exception;
-
 }
+	
+
+	
+//	페이징
+//	public List<NoticeDTO> findAllNoticeList(Criteria criteria);
+//	
+//	public int NoticeTotalCount(Criteria criteria);
+//}
