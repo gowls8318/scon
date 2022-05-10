@@ -85,5 +85,27 @@ public class ClassServiceImpl implements ClassService {
 		return classMapper.deleteClass(clsId);
 	}
 
+	@Override
+	public int classUpdate(ClassDTO classDTO) throws Exception {
+		
+		int result = classMapper.classDetailUpdate(classDTO);
+		
+		if (result <= 0) {
+			throw new Exception("강의 수정 실패");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateDay(DayDTO dayList) {
+		return classMapper.updateDay(dayList);
+	}
+
+	@Override
+	public int updateTime(TimeDTO time) {
+		return classMapper.updateTime(time);
+	}
+
 
 }

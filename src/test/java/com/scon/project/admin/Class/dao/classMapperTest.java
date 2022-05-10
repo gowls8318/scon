@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,10 @@ public class classMapperTest {
 	 * }
 	 */
 	
+	//강의등록 ;성공
 	@Test
 	@DisplayName("강의가 잘 등록되는지 매퍼 인터페이스 메소드 확인")
+	@Disabled
 	public void registClass() {
 		
 		//given
@@ -93,8 +96,10 @@ public class classMapperTest {
 	}
 	
 	
+	//강의삭제 ;성공
 	@Test
 	@DisplayName("강의가 잘 삭제되는지 매퍼 인터페이스 메소드 확인")
+	@Disabled
 	public void deleteClass() {
 		
 		// given
@@ -109,23 +114,25 @@ public class classMapperTest {
 			}
 	
 	
+	//강의수정 ;성공
 	@Test
 	@DisplayName("강의가 잘 수정되는지 매퍼 인터페이스 메소드 확인")
+	@Disabled
 	public void updateClass() {
 		
 		// given
 		ClassDTO classDTO = new ClassDTO();
 		MemberDTO member = new MemberDTO();
-		List<DayDTO> day = new ArrayList<DayDTO>();
+		List<DayDTO> dayList = new ArrayList<DayDTO>();
 		List<TimeDTO> time = new ArrayList<TimeDTO>();
 		member.setId("director");
 		classDTO.setMember(member); // classDTO에 memberDTO(member)가 담겨야 함
-		classDTO.setClsId(563);
-		day.add(new DayDTO(1, null));
-		day.add(new DayDTO(3, null));
+		classDTO.setClsId(1081);
+		dayList.add(new DayDTO(1, null));
+		dayList.add(new DayDTO(3, null));
 		time.add(new TimeDTO(1, null));
 		time.add(new TimeDTO(2, null));// 3교시
-		classDTO.setDayList(day); // classDTO에 DayDTO 담기
+		classDTO.setDayList(dayList); // classDTO에 DayDTO 담기
 		classDTO.setTime(time); // classDTO에 TimeDTO 담기
 		classDTO.setClsName("강의명 테스트");
 		classDTO.setClsSubject("자바");
@@ -133,20 +140,18 @@ public class classMapperTest {
 		classDTO.setClsGrade("성인");
 		classDTO.setClsPay(300000);
 		classDTO.setClsRoom("L강의실");
+		classDTO.setClsStart("2021-05-02");
+		classDTO.setClsEnd("2022-05-30");
 		classDTO.setClsNote("비고란 테스트");
 		classDTO.setClsStatus("Y"); 
 				
 		// when
-		int result = classMapper.updateClass(classDTO);
-				
+		int result = classMapper.classDetailUpdate(classDTO);
+
 		// then
 		assertEquals(1, result);
 		
-			}
-	
-	
-	
-	
+	}
 		
 	}
 	

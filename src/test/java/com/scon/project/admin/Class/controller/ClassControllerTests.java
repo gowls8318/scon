@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,10 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.config.SconApplication;
-import com.scon.project.member.controller.MemberController;
-import com.scon.project.member.model.dto.MemberDTO;
 
 @SpringBootTest
 @ContextConfiguration(classes = { SconApplication.class })
@@ -42,8 +38,9 @@ public class ClassControllerTests {
 		mockMvc = MockMvcBuilders.standaloneSetup(classController).build();
 	}
 	
-	//강의리스트조회테스트
-	@Test
+	//강의리스트조회테스트 ;성공
+	@Test 
+	@Disabled
 	public void 강의_리스트_조회_컨트롤러_테스트() throws Exception {
 		
 		//given
@@ -72,11 +69,10 @@ public class ClassControllerTests {
 	 */
 
 	
-	// 강의등록테스트
+	// 강의등록테스트  ;성공
 	@Test
+	@Disabled
 	public void 신규_강의_등록_컨트롤러_테스트() throws Exception {
-		
-		
 
 		// given
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -106,8 +102,9 @@ public class ClassControllerTests {
 	}
 	
 	
-	// 강의삭제
+	// 강의삭제 ;성공
 	@Test
+	@Disabled
 	public void 강의_삭제_컨트롤러_테스트() throws Exception {
 
 		// given
@@ -122,5 +119,40 @@ public class ClassControllerTests {
 		}
 	
 	
-
+	//강의수정 ;성공
+	@Test
+	@Disabled
+	public void 강의_수정_컨트롤러_테스트() throws Exception {
+		
+		//given
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("member.id", "director");
+		params.add("clsId", "1081");
+		params.add("clsName", "강의 수정 테스트");
+		params.add("clsSubject", "프론트엔드천재되기");
+		params.add("clsStuNum", "30");
+		params.add("clsGrade", "김코딩학생대상");
+		params.add("clsPay", "30000");
+		params.add("clsRoom", "L강의실");
+		params.add("clsStart", "2020-05-01");
+		params.add("clsEnd", "2020-05-30");
+		params.add("clsNote", "강의 수정 비고란 테스트");
+		params.add("clsStatus", "Y");
+		params.add("dayList[0].clsDayId", "2");
+		params.add("dayList[1].clsDayId", "3");
+		params.add("time[0].clsTimeId", "3");
+		params.add("time[1].clsTimeId", "4");
+		
+		
+		//when and then
+		mockMvc.perform(MockMvcRequestBuilders.post("/admin/classUpdate").params(params))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/classList"))
+				.andDo(MockMvcResultHandlers.print());
 }
+	
+	
+	
+	
+	}//ClassControllerTests

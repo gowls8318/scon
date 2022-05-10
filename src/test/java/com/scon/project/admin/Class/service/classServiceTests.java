@@ -62,8 +62,9 @@ public class classServiceTests {
 	 * }
 	 */
 
-	// 등록성공테스트
+	// 등록성공테스트 ;성공
 	@Test
+	@Disabled
 	public void 강의_등록용_서비스_성공_테스트() throws Exception {
 
 		// given
@@ -132,8 +133,9 @@ public class classServiceTests {
 		
 	}
 	
-	//삭제테스트 
+	//삭제테스트 ;성공
 	@Test
+	@Disabled
 	public void 강의_삭제용_서비스_성공_테스트() {
 		
 		// given
@@ -145,5 +147,45 @@ public class classServiceTests {
 		// then
 		assertEquals(1, result);
 	}
+	
+	
+	//수정테스트 ;성공
+	@Test
+	@Disabled
+	public void 강의_수정용_서비스_성공_테스트() throws Exception {
+
+		// given
+		ClassDTO classDTO = new ClassDTO();
+		MemberDTO member = new MemberDTO();
+		List<DayDTO> day = new ArrayList<DayDTO>();
+		List<TimeDTO> time = new ArrayList<TimeDTO>();
+		member.setId("director");
+		classDTO.setMember(member); // classDTO에 memberDTO(member)가 담겨야 함
+		classDTO.setClsId(1081);
+		day.add(new DayDTO(1, null));
+		day.add(new DayDTO(3, null));
+		time.add(new TimeDTO(1, null));
+		time.add(new TimeDTO(2, null));// 3교시
+		classDTO.setDayList(day); // classDTO에 DayDTO 담기
+		classDTO.setTime(time); // classDTO에 TimeDTO 담기
+		classDTO.setClsName("강의명 테스트");
+		classDTO.setClsSubject("자바");
+		classDTO.setClsStuNum("20");
+		classDTO.setClsGrade("소영이만");
+		classDTO.setClsPay(300000);
+		classDTO.setClsRoom("강의실 수정 테스트");
+		classDTO.setClsStart("2021-05-10");
+		classDTO.setClsEnd("2022-05-30");
+		classDTO.setClsNote("비고란 수정 테스트");
+		classDTO.setClsStatus("Y");
+
+		// when
+		int result = classService.classUpdate(classDTO);
+
+		// then
+		assertEquals(1, result);
+
+	}
+
 
 }
