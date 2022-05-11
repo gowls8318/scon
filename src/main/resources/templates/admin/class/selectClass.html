@@ -483,6 +483,18 @@ input[type="checkbox"]::before {
 	
 
 
+
+	<script>
+	 $(document).ready(function(){
+         $("#search-input").keyup(function(){
+             var k = $(this).val();
+             $("tr").hide();
+             var temp = $("tr:contains('" + k + "')");
+             $(temp).show();
+         });
+     });
+	</script>
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>
 	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
