@@ -31,6 +31,7 @@ function execDaumPostcode() {
 }
 
 
+
 /* 프로필 사진 미리보기 */
 function readFile() {
 	let file = event.target.files[0];
@@ -93,11 +94,35 @@ $('#checkId').click(function() {
 		data: { "id": id },
 		success: function(data) {
 			if (data > 0) {
-				alert("중복된 아이디 입니다.")
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: ' 중복된 아이디입니다! '
+			})
 				$("#id").addClass("is-invalid");
 				idck = 0;
 			} else {
-				alert("사용 가능한 아이디 입니다.")
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'success',
+			  title: ' 사용가능한 아이디입니다. '
+			})
 				$("#id").removeClass("is-invalid");
 				$("#id").addClass("is-valid");
 				idck = 1;
@@ -120,18 +145,78 @@ $("#id").change(function(){
 /** 유효성 검사 */
 function checkAll() {
 	
-	let path = form.hidden.value;
+	let path = form.path.value;
+	let alertName = "";
 	
-	alert(path);
-	if(path == '/admin/studentRegist'){
-		
-		if(idck == 0){
-			alert("아이디 중복 확인을 진행해주세요.")
+	// 원생 등록 시 아이디 중복체크 필수
+	if (path == '/admin/studentRegist' || path == '/admin/teacherRegist') {
+		alertName= "등록";
+		if (idck == 0) {
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: ' 아이디 중복 검사를 해주세요 !'
+			})
 			return false;
 		}
-	
+	// 원생 수정시 원생을 선택한 상태여야 함.
+	} else if(path == '/admin/updateStudent') {
+		alertName = "수정";
+		if (form.id.value == '') {
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: '원생을 선택해주세요!'
+			})
+			return false;
+		}
+	 } else{
+		alertName = "수정";
+		
+		if (form.id.value == '') {
+			
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: '강사를 선택해주세요!'
+			})
+			return false;
+		}
 	}
-	
+		
 	//필수정보 9개
 	let id = form.id.value;
 	let name = form.name.value;
@@ -142,19 +227,9 @@ function checkAll() {
 	let birthDay = form.birthDay.value;
 	let enrollDate = form.enrollDate.value;
 	let address = form.zipCode.value + '$' + form.address.value + '$' + form.extraAddress.value;
-	
-	//학생 추가정보 5개
-	let studentType = form.studentType.value;
-	let schoolName = form.schoolName.value;
-	let schoolGrade = form.schoolGrade.value;
-	let schoolClass = form.schoolClass.value;
-	let consult = form.consult.value;
-	
-	//학부모정보 3개
-	let parentsName =  form.parentsName.value;
-	let parentsType = form.parentsType.value;
-	let parentsPhone = form.parentsPhone.value;
-	
+	let delDate = form.delDate.value;
+	let status = form.status.value;
+
 	//프로필사진 1개
 	let file = document.querySelector('#profile');
 	
@@ -168,46 +243,74 @@ function checkAll() {
       birthDay : birthDay,
       enrollDate : enrollDate,
       address : address,
-       });
+      delDate : delDate,
+      status : status
+    });
        
-     const student = JSON.stringify({ 
-	  id : id,
-      studentType :studentType,
-      schoolName : schoolName,
-      schoolGrade : schoolGrade,
-      schoolClass : schoolClass,
-      consult : consult,
-      });
-      
-     const parents = JSON.stringify({
-	  id : id,
-      parentsName : parentsName,
-      parentsType : parentsType,
-      parentsPhone : parentsPhone
-      });
-
 
 	//formData에 append
 	let formData = new FormData()
 	
 	formData.append("file", file.files[0]);
 	formData.append("member", member);
+
+	if (path == '/admin/studentRegist' || path=='/admin/updateStudent') {
+		//학생 추가정보 5개
+		let studentType = form.studentType.value;
+		let schoolName = form.schoolName.value;
+		let schoolGrade = form.schoolGrade.value;
+		let schoolClass = form.schoolClass.value;
+		let consult = form.consult.value;
+
+		//학부모정보 3개
+		let parentsName = form.parentsName.value;
+		let parentsType = form.parentsType.value;
+		let parentsPhone = form.parentsPhone.value;
+
+		const student = JSON.stringify({
+			id: id,
+			studentType: studentType,
+			schoolName: schoolName,
+			schoolGrade: schoolGrade,
+			schoolClass: schoolClass,
+			consult: consult,
+		});
+
+		const parents = JSON.stringify({
+			id: id,
+			parentsName: parentsName,
+			parentsType: parentsType,
+			parentsPhone: parentsPhone
+		});
+		
 	formData.append("student", student);
 	formData.append("parents", parents);
 
-	
+	} else if (path == '/admin/teacherRegist' || path=='/admin/updateTeacher') {
+		//강사 정보 2개
+		let jobCode = form.jobCode.value;
+		let resume = form.resume.value;
+
+		const teacher = JSON.stringify({
+			id: id,
+			jobCode: jobCode,
+			resume: resume
+		})
+		
+	formData.append("teacher", teacher);
+
+	}
+
 	// FormData의 값 확인
 	for (var pair of formData.entries()) {
 		 console.log(pair[0]+ ', ' + pair[1]);
 	}
-	
+
 
 	//유효성 검사
 	if (!checkName(name)) {
 		return false;
 	} else if (!checkid(id)) {
-		return false;
-	} else if (!checkPassword(id, password)) {
 		return false;
 	} else if (!checkEmail(email)) {
 		return false;
@@ -215,29 +318,88 @@ function checkAll() {
 		return false;
 	}
 	
-	//회원가입
-			$.ajax({
-			  type: "POST",
-		      url: path,
-		      data: formData,           
-		      processData: false,   
-		      contentType: false,    
-		      enctype : 'multipart/form-data',  
-		      success: function(data) {
-		      
-		     	 alert("원생 등록에 성공하였습니다.");
-				 location.href="/admin/studentList";
-		      },
-		      error: function() {
-				 alert("원생 등록에 실패하였습니다.")
-		 }
-	});
+	//회원 가입일 경우에만 비밀번호 체크
+	if(path == '/admin/studentRegist'){
+		
+		if (!checkPassword(id, password)) {
+			return false;
+		}
+	}
+	
+	Swal.fire({
+      title: alertName+'하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#6610f2',
+      cancelButtonColor: '#858796',
+      confirmButtonText: alertName,
+      cancelButtonText: '취소'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+		$.ajax({
+		type: "POST",
+		url: path,
+		data: formData,
+		processData: false,
+		contentType: false,
+		enctype: 'multipart/form-data',
+		success: function(data) {
+			
+			Swal.fire({
+				title : alertName + '완료',
+				text: data.message,
+				icon: 'success'
+			});
+			
+			location.href = data.location;
+		},
+		error: function() {
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: '실패! 다시 시도해주세요.'
+			})
+		}
+	}); //<-- ajax
+	
+      }
+    })
+	
 }
 
 // 공백 확인
 function checkExistData(value, dataName) {
 	if (value == "") {
-		alert(dataName + " 입력해주세요!");
+		
+		const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: dataName + " 입력해주세요!"
+			})
+			
 		return false;
 	}
 	return true;
@@ -336,21 +498,26 @@ function checkPhone(phone) {
 	return true; //확인이 완료되었을 때
 }
 
-$('input[name=selectStd]').on('click',function() {
+$('input[name=selectMember]').on('click',function() {
 	let id = '';
+	
+	let findMemberPath = form.findMemberPath.value;
 	
 	if($(this).prop('checked')){
 		id = $(this).val();
 
 		$.ajax({
 			type: "POST",
-			url: '/admin/findStudentById',
+			url: findMemberPath,
 			data: { "id" : id },
 			success: function(data) {
-		
 				studentDetail(data);
 			}, error: function() {
-				alert("실패");
+				Swal.fire({
+					title : '조회 실패',
+					text: '다시 시도해주세요',
+					icon: 'warning'
+			})
 			}
 		
 	});
@@ -358,60 +525,182 @@ $('input[name=selectStd]').on('click',function() {
 });
 
 // 학생 정보 출력
-function studentDetail(student){
+function studentDetail(mem){
 	
 	form.reset();
 	
-	form.id.value = student.member.id;
-	form.name.value = student.member.name;
-	form.password.value = student.member.password;
-	form.email.value = student.member.email;
-	form.phone.value = student.member.phone;
+	let findMemberPath = form.findMemberPath.value;
 	
-	if(student.member.gender == 'F'){	
+	$("#img").removeAttr('src');
+	let profile= '\\img\\profile.jpg';
+	$("#img").attr('src', profile);	
+	
+	form.id.value = mem.member.id;
+	form.name.value = mem.member.name;
+	form.password.value = mem.member.password;
+	form.email.value = mem.member.email;
+	form.phone.value = mem.member.phone;
+	
+	if(mem.member.gender == 'F'){	
+		$(":radio[name='gender'][value='M']").attr('checked', false);
 		$(":radio[name='gender'][value='F']").attr('checked', true);
-	}else if(student.member.gender == 'M') {
+	}else if(mem.member.gender == 'M') {
+		$(":radio[name='gender'][value='F']").attr('checked', false);
 		$(":radio[name='gender'][value='M']").attr('checked', true);
 	}
 
-	form.birthDay.value = student.member.birthDay;
+	form.birthDay.value = mem.member.birthDay;
 	
-	form.enrollDate.value = student.member.enrollDate;
+	form.enrollDate.value = mem.member.enrollDate;
 	
-	let addr = student.member.address.split('$');
+	let addr = mem.member.address.split('$');
 	form.zipCode.value = addr[0];
 	form.address.value = addr[1]
 	form.extraAddress.value = addr[2];
 
-	if(student.studentType != null){
-		$("#studentType").val(student.studentType).prop("selected", true);
-	} else{
-		$("#studentType option:eq(0)").prop("selected", true);
-	}
 
-	form.schoolName.value = student.schoolName;
-	form.schoolGrade.value = student.schoolGrade;
-	form.schoolClass.value = student.schoolClass;
+	if(findMemberPath == '/admin/findStudentById'){
+		
+		if(mem.studentType != null){
+			$("#studentType").val(mem.studentType).prop("selected", true);
+		} else{
+			$("#studentType option:eq(0)").prop("selected", true);
+		}
+		
+		form.schoolName.value = mem.schoolName;
+		form.schoolGrade.value = mem.schoolGrade;
+		form.schoolClass.value = mem.schoolClass;
+		
+		form.parentsName.value = mem.parents.parentsName;
+		form.parentsType.value = mem.parents.parentsType;
+		form.parentsPhone.value = mem.parents.parentsPhone;
+		form.consult.value = mem.consult;
+		
+	} else if (findMemberPath == '/admin/findTeacherById'){
+		
+		$("#jobCode").val(mem.jobCode).prop("selected", true);
+		$("#status").val(mem.member.status).prop("selected", true);
+		form.delDate.value = mem.member.delDate;
+		form.resume.value = mem.resume;
 	
-	form.parentsName.value = student.parents.parentsName;
-	form.parentsType.value = student.parents.parentsType;
-	form.parentsPhone.value = student.parents.parentsPhone;
-	form.consult.value = student.consult;
+	}
+	
 
-	if(student.profile != null) {
+	if(mem.profile != null) {
 		$("#img").removeAttr('src');
-		let src = '\\img\\profile\\' + student.profile.fileSaveName;
+		let src = '\\img\\profile\\' + mem.profile.fileSaveName;
 		$("#img").attr('src', src);	
-	} else {
-		$("#img").removeAttr('src');
-		let profile= '\\img\\profile.jpg';
-		$("#img").attr('src', profile);	
 	}
 	
 }
 
+function deleteMember(){
+	
+	let path = form.path.value;
+	let status = "";
+	
+	if(path == '/admin/updateStudent') {
+		status = "퇴원생";
+		
+		if (form.id.value == '') {
+			
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: ' 원생을 선택하세요! '
+			})
+		    
+			return false;
+		}
+	 } else{
+		status= "퇴직";
+		if (form.id.value == '') {
+			const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 3000,
+			  timerProgressBar: false,
+			  didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+			  icon: 'warning',
+			  title: ' 강사를 선택하세요! '
+			})
+			
+			return false;
+		}
+	}
+	
+    Swal.fire({
+      title: '삭제하시겠습니까?',
+      text: "회원 정보는 남아있습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#6610f2',
+      cancelButtonColor: '#858796',
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+		let id= form.id.value;
+	
+		$.ajax({
+				type: "POST",
+				url: "/member/deleteMember",
+				data: { "id" : id ,
+						"status" : status },
+				success: function(data) {
+					Swal.fire({
+						title : "삭제 완료!",
+						text: data.message,
+						icon: 'success'
+					})
+				}, error: function() {
+					const Toast = Swal.mixin({
+					  toast: true,
+					  position: 'top',
+					  showConfirmButton: false,
+					  timer: 3000,
+					  timerProgressBar: false,
+					  didOpen: (toast) => {
+						toast.addEventListener('mouseenter', Swal.stopTimer)
+						toast.addEventListener('mouseleave', Swal.resumeTimer)
+						}
+					})
+					
+					Toast.fire({
+					  icon: 'warning',
+					  title: ' 실패! 다시 시도해주세요.'
+					})
+				}
+			
+		}); //<-- ajax
+	
+      }
+    })
+		
+}
+
+
 /* 서브 메뉴 이동 함수 */
- 	const btn = document.querySelectorAll('#menu-btns .btn');
+const btn = document.querySelectorAll('#menu-btns .btn');
 
  	btn.forEach((el, index) => {
  	  el.onclick = () => {
@@ -428,8 +717,6 @@ function studentDetail(student){
 });
 
 
-
-
 /* 등록하기 메뉴 이동 함수 */
 const lecbtn = document.querySelectorAll('.btn-lec');
 
@@ -443,7 +730,6 @@ lecbtn.forEach((el, index) => {
 		});
 
 		subMenuList[2].classList.remove('d-none');
-
 	}
 });
 

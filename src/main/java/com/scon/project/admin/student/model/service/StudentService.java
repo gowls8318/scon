@@ -14,6 +14,10 @@ public interface StudentService {
 
 	StudentDTO findStudentById(String id);
 
+	int updateStudent(StudentDTO student);
+
+	int updateParents(ParentsDTO parents);
+
 
 	
 

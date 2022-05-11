@@ -23,7 +23,7 @@ public class UserImpl extends User {
 	private String address;							//주소
 	private String gender;							//성별
 	private java.sql.Date enrollDate;				//등록일
-	private java.sql.Date deleteDate;				//삭제일
+	private java.sql.Date delDate;				//삭제일
 	private String status;							//회원상태
 
 	/* TB_MEMBER_ROLE - 한 멤버는 여러 권한을 가질 수 있다 */
@@ -44,7 +44,7 @@ public class UserImpl extends User {
 		this.address = member.getAddress();
 		this.gender = member.getGender();
 		this.enrollDate = member.getEnrollDate();
-		this.deleteDate = member.getDeleteDate();
+		this.delDate = member.getDelDate();
 		this.status = member.getStatus();
 		this.memberRoleList = member.getMemberRoleList();
 		
