@@ -28,7 +28,7 @@
 	</select>
 	
 <!-- 페이징 -->
-	<select id="noticeTotalCount" parameterType="Criteria" resultType="int">
+	<select id="noticeTotalCount" resultType="int">
 		SELECT
 			   COUNT(*)
 		  FROM TB_NOTICE
