@@ -14,28 +14,48 @@
 		<result property="notiDelete" column="NOTI_DELETE"/>
 	</resultMap>
 	
-<!-- 공지사항 목록 -->
-	<select id="findAllNoticeList" resultMap="noticeResultMap">
+<!-- 공지사항 목록 + 페이징 -->
+	<select id="findAllNoticeList" resultMap="noticeResultMap" 
+	parameterType="com.scon.project.admin.notice.paging.Criteria">
 		SELECT
 		       NOTI_NO
 		     , NOTI_TITLE
 		     , NOTI_DATE
-		     , NOTI_DELETE
-		  FROM TB_NOTICE
-		 WHERE NOTI_DELETE = 'N'
-		 ORDER BY NOTI_NO DESC
-		 LIMIT #{ startPage }, #{ recordsPerPage }
+		     , NOTI_VIEW
+		     , NOTI_DELETE     
+		 FROM (
+		      SELECT
+		             NOTI_NO
+		           , NOTI_TITLE
+		           , NOTI_DATE
+		           , NOTI_VIEW
+		           , NOTI_DELETE
+		           , ROW_NUMBER()
+		        OVER(ORDER BY NOTI_NO DESC) AS RNUM             
+		       FROM TB_NOTICE
+		       WHERE NOTI_DELETE = 'N'
+		       ) MB
+		WHERE RNUM BETWEEN #{ rowStart } AND #{ rowEnd }
+		ORDER BY NOTI_NO DESC
 	</select>
 	
+
+<!-- 페이지네이션 -->
+<!-- 게시물의 총 갯수를 구하는 쿼리 -->
+<!-- 	<select id="allNoticeCount" resultMap="noticeResultMap" >
+=======
 <!-- 페이징 -->
 	<select id="noticeTotalCount" resultType="int">
+
 		SELECT
-			   COUNT(*)
+			   COUNT(NOTI_NO)
 		  FROM TB_NOTICE
-		 WHERE NOTI_DELETE = 'N'
-	</select>	
-	
-	
+		 WHERE NOTI_NO > 0	 
+	</select> -->
+
+
+
+
 	
 <!-- 공지등록 폼 -->
 	<insert id="registNotice">

@@ -167,21 +167,36 @@
                             </div>
 
                             <!-- 페이지네이션 -->
-                            <nav aria-label="">
-                                <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <a class="page-link"><</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+<!--                             <nav aria-label="">
+                                <ul class="pagination"
+                                	th:with="start=${T(Math).floor(noticeList.number/10)*10 + 1},	
+                   							 last=(${start + 9 < noticeList.totalPages ? start + 9 : noticeList.totalPages})"> -->
+                   			<!-- 첫페이지로 이동 -->
+<!--                                     <li class="page-item">
+                                        <a class="page-link" th:href="@{/notiTables(page=1)}" aria-label="First">
+                                        	<span aria-hidden="true">&lt;&lt;</span>
+                                        </a>
+                                    </li> -->
+                                    
+                             <!-- 현재페이지 나열 -->
+<!--                                     <li class="page-item" th:each="page: ${ #numbers.sequence(start, last) }" th:class="${page == noticeList.number + 1} ? 'active'">
+                                    	<a class="page-link" th:text="${ page }" th:href="@{/notiTables(page=${ page })}"></a>
+                                    </li> -->
+                                    
+                             		 <!--       
                                     <li class="page-item active" aria-current="page">
                                         <a class="page-link" href="#">2</a>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">></a>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                                    
+                              <!-- 마지막페이지로 이동 -->
+<!--                                     <li class="page-item">
+                                        <a class="page-link" th:href="@{/notiTables(page=${ noticeList.totalPages })}" aria-label="Last">
+                                        	<span aria-hidden="true">&gt;&gt;</span>
+                                        </a>
                                     </li>
                                 </ul>
-                            </nav>
+                            </nav> -->
 
                             <div class="row buttonbox">
                                 <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal" type="delete">삭제</button>

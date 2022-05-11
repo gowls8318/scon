@@ -5,12 +5,20 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.scon.project.admin.notice.model.dto.NoticeDTO;
+import com.scon.project.admin.notice.paging.Criteria;
 
 @Mapper
 public interface NoticeMapper {
 	
-////	공지사항 목록 조회
-	List<NoticeDTO> findAllNoticeList();
+//////	공지사항 목록 조회
+//	List<NoticeDTO> findAllNoticeList();
+	
+//	목록+페이징
+	List<NoticeDTO> findAllNoticeList(Criteria cri) throws Exception;
+
+//	게시물 총 갯수
+//	int allNoticeCount() throws Exception;
+	
 	
 
 //	공지사항 게시글 등록
@@ -20,6 +28,9 @@ public interface NoticeMapper {
 	NoticeDTO sellectNoticeDetail(int no) throws Exception;
 
 	void updateHitCount(int idx) throws Exception;
+
+
+
 }
 	
 
