@@ -1,5 +1,9 @@
 package com.scon.project.admin.taskBoard.model.dto;
 
+import java.util.List;
+
+import com.scon.project.member.model.dto.ProfileDTO;
+
 import lombok.Data;
 
 @Data
@@ -16,6 +20,6 @@ public class TaskBoardDTO {
 	private int taskView;                    //조회수
 	
 	
-	private int fileId; //파일 아이디 (TaskFile DTO)
+	private List<ProfileDTO> fileId;     //하나의 게시글에 여러개의 파일
 	private String memberName;
 }

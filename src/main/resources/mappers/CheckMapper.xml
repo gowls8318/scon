@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.check.model.dao.CheckMapper">
+
+	<resultMap id="checkResultMap" type="com.scon.project.admin.check.model.dto.CheckDTO">
+		<id property="no" column="CHQ_NO"/>
+		<result property="memberId" column="BUS_NUM"/>
+		<result property="clsId" column="CLS_ID"/>
+		<result property="chkDate" column="CHQ_DATE"/>
+		<result property="chkStart" column="CHQ_START"/>
+		<result property="chkFinish" column="CHQ_FINISH"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
+		<association property="cls" resultMap="classResultMap"/>
+	</resultMap>
+	
+	
+	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="address" column="GENDER"/>
+		<result property="gender" column="ADDRESS"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="status" column="MEMBER_ST"/>
+	</resultMap>
+	
+	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
+		<id property="clsId" column="CLS_ID"/>
+		<result property="clsName" column="CLS_NAME"/>
+		<result property="clsSubject" column="CLS_SUBJECT"/>
+		<result property="clsStuNum" column="CLS_STUNUM"/>
+		<result property="clsGrade" column="CLS_GRADE"/>
+		<result property="clsPay" column="CLS_PAY"/>
+		<result property="clsRoom" column="CLS_ROOM"/>
+		<result property="clsStart" column="CLS_START"/>
+		<result property="clsEnd" column="CLS_END"/>
+		<result property="clsNote" column="CLS_NOTE"/>
+		<result property="clsStatus" column="CLS_STATUS"/>
+	</resultMap>
+	
+	<!-- 강의 목록 불러오기 -->
+	<select id="getClassList" resultType="com.scon.project.admin.Class.dto.ClassDTO">
+	<![CDATA[
+		SELECT *
+		FROM TB_CLASS
+		ORDER BY CLS_ID 
+	]]>
+	</select>
+</mapper>
