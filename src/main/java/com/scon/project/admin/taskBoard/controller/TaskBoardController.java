@@ -1,11 +1,23 @@
 package com.scon.project.admin.taskBoard.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scon.project.admin.taskBoard.model.dto.TaskBoardDTO;
@@ -28,23 +40,23 @@ public class TaskBoardController {
 		return "/admin/taskBoard/insertTask";
 	}
 	
-/*	@GetMapping("/taskBoardList")
-	public String taskBoardList() {
-		return "admin/taskBoard/taskBoardList";
-	} */
-	
-	// 과제 게시판 전체 조회
 //	@GetMapping("/taskBoardList")
-//	public ModelAndView findAllTask(ModelAndView mv) {
-//		
-//		List<TaskBoardDTO> taskList = taskBoardService.findAllTask();
-//		
-//		mv.addObject("taskList", taskList);
-//		mv.setViewName("admin/taskBoard/taskBoardList");
-//		
-//		return mv;
-//	}
-//	
+//	public String taskBoardList() {
+//		return "admin/taskBoard/taskBoardList";
+//	} 
+	
+	// 과제 게시판 전체 조회 (O)
+	@GetMapping("/taskBoardList")
+	public ModelAndView findAllTask(@RequestParam int clsId, ModelAndView mv) {
+		
+		List<TaskBoardDTO> taskList = taskBoardService.findAllTask(clsId);
+		
+		mv.addObject("taskList", taskList);
+		mv.setViewName("admin/taskBoard/taskBoardList");
+		
+		return mv;
+	}
+	
 	
 	@GetMapping("/taskDetail")
 	public String taskDetail() {
@@ -52,15 +64,20 @@ public class TaskBoardController {
 	}
 	
 	
-	/*
-	 * 	@PostMapping("multi-file")
-	public String multiFileUpload(@RequestParam List<MultipartFile> multiFiles, HttpServletRequest request, Model model) {
+/*	@PostMapping("/insertTask")
+	public String multiFileUpload(@RequestParam(value="file") List<MultipartFile> multiFiles, @RequestParam(value="key") TaskBoardDTO task, HttpServletRequest request, ModelAndView mv) {
+	
+		String taskTitle = request.getParameter("taskTitle");
+		String taskContent = request.getParameter("taskContent");
+		
+		
+		
 		
 		String multiFileDescription = request.getParameter("multiFileDescription");
 		System.out.println("multiFiles : " + multiFiles);
 		System.out.println("multiFileDescription : " + multiFileDescription);
 		
-		// 파일을 저장할 경로 설정 
+		// 파일을 저장할 경로 설정  (경로를 프로젝트 내부로)
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		
 		System.out.println("root : " + root);
@@ -88,7 +105,7 @@ public class TaskBoardController {
 			
 			files.add(file);
 		}
-		
+	
 		try {
 		
 			// 파일을 저장한다. 
@@ -96,7 +113,7 @@ public class TaskBoardController {
 				multiFiles.get(i).transferTo(new File(filePath + "\\" + files.get(i).get("savedName")));
 			}
 			
-			model.addAttribute("message", "파일 업로드 성공!");
+			mv.addObject("message", "파일 업로드 성공!");
 			
 		} catch (IllegalStateException | IOException e) {
 			
@@ -105,12 +122,12 @@ public class TaskBoardController {
 				new File(filePath + "\\" + files.get(i).get("savedName")).delete();
 			}
 			
-			model.addAttribute("message", "파일 업로드 실패!");
+			mv.addObject("message", "파일 업로드 실패!");
 		}
 		
-		return "result";
+		return "admin/taskBoard/taskBoardList";
 	} */
-	
+	 
 	
 	
 	

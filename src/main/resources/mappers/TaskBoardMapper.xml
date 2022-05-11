@@ -15,7 +15,7 @@
 	<result property="clsId" column="CLS_ID"/>
 	<result property="memberName" column="MEMBER_NAME"/>
 	
-	<association property="fileId" column="FILE_ID"/>
+	<collection property="fileId" resultMap="taskFileResultMap"/>
 </resultMap>
 
 <resultMap id="fileResultMap" type="com.scon.project.member.model.dto.ProfileDTO">
@@ -56,6 +56,7 @@
 			  , T.TASK_TITLE
 			  , T.TASK_CONTENT
 			  , T.TASK_DATE
+			  , T.TASK_VIEW
 			  , M.MEMBER_NAME
 			FROM TB_TASK T
 			JOIN TB_MEMBER M ON(T.MEMBER_ID = M.MEMBER_ID)
