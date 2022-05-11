@@ -274,3 +274,8 @@
   display: flex;
   justify-content: center !important;
 }
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: #8B169E !important;
+  background-color: #8B169E !important;
+}

@@ -8,8 +8,12 @@
 		<result property="clsId" column="CLS_ID"/>
 		<result property="lecPay" column="LEC_PAY"/>
 		<result property="lecStatus" column="LEC_STATUS"/>
-		<result property="lecDelete" column="LEC_DELETE"/>
 		<result property="lecDiscount" column="LEC_DISCOUNT"/>
+		<result property="lecDelete" column="LEC_DELETE"/>
+		<result property="accStatus" column="ACC_STATUS"/>
+		<result property="accDate" column="ACC_DATE"/>
+		<result property="accOption" column="ACC_OPTION"/>
+		<result property="accPay" column="ACC_PAY"/>
 		
 		<association property="member" resultMap="memberResultMap"/>
 		<association property="cls" resultMap="classResultMap"/>
@@ -42,6 +46,8 @@
 		<result property="clsEnd" column="CLS_END"/>
 		<result property="clsNote" column="CLS_NOTE"/>
 		<result property="clsStatus" column="CLS_STATUS"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
 	<!-- 수강 내역 조회용 -->
@@ -50,23 +56,32 @@
 			   A.LEC_NO
 			 , A.LEC_PAY
 			 , A.LEC_STATUS
-			 , B.CLS_NAME
-			 , B.CLS_START
-			 , B.CLS_END
-			 , C.MEMBER_NAME
+			 , A.LEC_DISCOUNT
+			 , A.LEC_DELETE
+			 , A.ACC_STATUS
+			 , A.ACC_DATE
+			 , A.ACC_OPTION
+			 , A.ACC_PAY
+			 , B.MEMBER_NAME
+			 , C.CLS_ID
+             , C.MEMBER_ID
+			 , C.CLS_NAME
+			 , C.CLS_PAY
+			 , C.CLS_START
+			 , C.CLS_END
 		  FROM TB_LECTURE A
-		  JOIN TB_CLASS B ON(A.CLS_ID = B.CLS_ID)
-		  JOIN TB_MEMBER C ON(B.MEMBER_ID = C.MEMBER_ID)
-		 WHERE LEC_DELETE = 'N'
+		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		  JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
 		 ORDER BY A.LEC_NO DESC
 	</select>
-	
-	<!-- 수강 등록 - 전체 강의 조회용 -->
-	<select id="findAllClassList" resultMap="classResultMap">
+		
+	<!-- 강의 조회용 -->
+	<select id="selectAllClassList" resultMap="classResultMap">
 		SELECT
 			   CLS_ID
 			 , CLS_NAME
 			 , CLS_SUBJECT
+			 , CLS_GRADE
 			 , CLS_PAY
 			 , CLS_START
 			 , CLS_END
@@ -74,17 +89,13 @@
 		 WHERE CLS_STATUS = 'Y'
 	</select>
 	
-	<!-- 수강 등록 - 강의 정보 조회용 -->
-	<select id="findClassDetail" resultMap="classResultMap">
+	<!-- 원생 조회용 -->
+	<select id="selectAllMemberList" resultMap="memberResultMap">
 		SELECT
-			   CLS_ID
-			 , CLS_NAME
-			 , CLS_SUBJECT
-			 , CLS_PAY
-			 , CLS_START
-			 , CLS_END
-		  FROM TB_CLASS
-		 WHERE CLS_STATUS = 'Y'
+			   MEMBER_ID
+			 , MEMBER_NAME
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ST = '대기생'
 	</select>
 	
 	<!-- 수강 등록용 -->
@@ -97,43 +108,26 @@
 		, CLS_ID
 		, LEC_PAY
 		, LEC_STATUS
-		, LEC_DELETE
 		, LEC_DISCOUNT
+		, ACC_STATUS
+		, ACC_DATE
+		, ACC_OPTION
+		, ACC_PAY
 		)
 		VALUES
 		(
 		  SEQ_LEC_NO.NEXTVAL
-		, 'user01'
+		, #{ memberId }
 		, #{ clsId }
 		, #{ lecPay }
 		, DEFAULT
-		, DEFAULT
 		, #{ lecDiscount }
+		, <if test="accDate != null">'수납'</if>
+		, <if test="accDate != null">#{ accDate }</if>
+		, <if test="accDate != null">#{ accOption }</if>
+		, <if test="accDate != null">#{ accPay }</if>
 		)
 	</insert>
-	
-	<!-- 수강 상세 조회용 -->
-	<select id="selectLectureDetail" resultMap="lectureResultMap">
-		SELECT
-			   LEC_NO
-			 , CLS_ID
-			 , LEC_PAY
-			 , LEC_STATUS
-			 , LEC_DELETE
-			 , LEC_DISCOUNT
-		  FROM TB_LECTURE
-		 WHERE LEC_NO = #{ no }
-	</select>
-	
-	<!-- 수강 수정용 -->
-	<update id="modifyLecture">
-		UPDATE
-			   TB_LECTURE
-		   SET CLS_ID = #{ clsId }
-		     , LEC_PAY = #{ lecPay }
-		     , LEC_STATUS = #{ lecStatus }
-		     , LEC_DISCOUNT = #{ lecDiscount }
-		 WHERE LEC_NO = #{ no }
-	</update>
+
 
 </mapper>

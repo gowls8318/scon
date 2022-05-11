@@ -84,13 +84,13 @@
                                                             aria-label=".form-select-lg example" id="conHTime" name="conHTime"
                                                             th:value="*{ conHTime }">
                                                             <optgroup label="희망시간 선택">
-	                                                            <option value="09:00 ~ 09:50">09:00 ~ 09:50</option>
-	                                                            <option value="10:00 ~ 10:50">10:00 ~ 10:50</option>
-	                                                            <option value="11:00 ~ 11:50">11:00 ~ 11:50</option>
-	                                                            <option value="14:00 ~ 14:50">14:00 ~ 14:50</option>
-	                                                            <option value="15:00 ~ 15:50">15:00 ~ 15:50</option>
-	                                                            <option value="16:00 ~ 16:50">16:00 ~ 16:50</option>
-	                                                            <option value="17:00 ~ 17:50">17:00 ~ 17:50</option>
+	                                                            <option th:selected="*{ conHTime }=='09:00 ~ 09:50'">09:00 ~ 09:50</option>
+	                                                            <option th:selected="*{ conHTime }=='10:00 ~ 10:50'">10:00 ~ 10:50</option>
+	                                                            <option th:selected="*{ conHTime }=='11:00 ~ 11:50'">11:00 ~ 11:50</option>
+	                                                            <option th:selected="*{ conHTime }=='14:00 ~ 14:50'">14:00 ~ 14:50</option>
+	                                                            <option th:selected="*{ conHTime }=='15:00 ~ 15:50'">15:00 ~ 15:50</option>
+	                                                            <option th:selected="*{ conHTime }=='16:00 ~ 16:50'">16:00 ~ 16:50</option>
+	                                                            <option th:selected="*{ conHTime }=='17:00 ~ 17:50'">17:00 ~ 17:50</option>
                                                             </optgroup>
                                                         </select>
                                                     </div>

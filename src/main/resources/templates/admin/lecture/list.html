@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>원생 수납 내역 조회</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+	<script>
+    	const successMessage = '[[${successMessage}]]'
+    	if(successMessage) {
+    		alert(successMessage);
+    	}
+    </script>
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- sidebar include -->
+        <div th:replace="/common/adminSidebar.html"></div>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- topbar include -->
+            <div th:replace="/common/adminTopbar.html"></div>
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">원생 수납 내역</h1>
+                    </div>
+                    <hr class="border-bottom-primary">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">원생 수납 내역 조회</h6>
+                        </div>
+                        <br>
+                        <form class="form-inline" action="" method="get">
+                            <!-- <div class="col-lg-9"></div> -->
+                            <div class="col-sm-10 col-lg-8 accDate">
+                                <div class="mt-2 col-lg-1 accDateSearch">기간&nbsp; : </div>
+                                <div class="col-sm-10 col-lg-1 mr-5 pl-0">
+                                    <input type="date" class="form-control" id="clsSrt">
+                                </div>
+                                <div class="mt-2 ml-4 pl-2">~</div>
+                                <div class="col-sm-10 col-lg-1 mr-5">
+                                    <input type="date" class="form-control" id="clsEnd">
+                                </div>
+                                <div class="ml-4 pl-3 mt-1 fa-searchicon">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="search-area col-lg-4">
+                                <div class="form-group mx-sm-3">
+                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()'
+                                        placeholder="검색어를 입력하세요">
+                                </div>
+                                <button type="button" class="btn btn-primary btn-search mr-2"
+                                	th:onclick="location.href='/admin/lecture/insertForm'">수강 등록</button>
+                            </div>
+                        </form>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered-yj dataTable-yj" id="accDataTable"
+                                    width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>원생</th>
+                                            <th>강의명</th>
+                                            <th>수강 기간</th>
+                                            <th>강사명</th>
+                                            <th>수강료</th>
+                                            <th>수납일</th>
+                                            <th>결제 방법</th>
+                                            <th>수납 여부</th>
+                                            <th>환불 처리</th>
+                                            <th>관리</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="accTbody">
+                                        <tr th:each="lec : ${ lectureList }">
+                                            <td th:text="${ lec.no }">번호</td>
+                                            <td th:text="${ lec.member.name }">원생</td>
+                                            <td th:text="${ lec.cls.clsName }">강의명</td>
+                                            <td>
+                                            	<div class="clsDate2">
+													<div th:text="${ lec.cls.clsStart }" id="clsSrt2">수강 시작일</div>
+													<span>&nbsp;~&nbsp;</span>
+													<div th:text="${ lec.cls.clsEnd }" id="clsEnd2">수강 종료일</div>
+												</div>
+                                            </td>
+                                            <td th:text="${ lec.member.id }">강사명</td>
+                                            <td th:text="${ lec.lecPay }">수강료</td>
+                                            <td th:text="${ lec.accDate }">수납일</td>
+                                            <td th:text="${ lec.accOption }">결제 방법</td>
+                                            <td th:text="${ lec.accStatus }">수납 여부</td>
+                                            <td></td>
+                                            <td class="btn-no">
+                                                <div class="btn-acc">
+                                                    <button type="button" class="btn btn-primary btn-acc1">수정</button>
+                                                    <!-- th:onclick="'location.href=\'' + @{/admin/account/insertForm(no=${lec.no})} + '\';'" -->
+                                                    <button type="button" class="btn btn-light btn-acc2"
+                                                        data-toggle="modal" data-target="#refModal">환불</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 페이징 -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination mt-1 mb-0">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- footer include -->
+            <div th:replace="/common/footer.html"></div>
+
+            <!-- refModal-->
+            <div class="modal fade" id="refModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content ref-modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">환불 처리</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" name="accRefForm">
+                            	<input type="hidden" name="no" id="no">
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="std" class="col-sm-2 col-form-label col-lg-3">원생</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="text" class="form-control" id="std" readonly>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="clsId" class="col-sm-2 col-form-label col-lg-3">수강 강의</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="text" class="form-control" id="clsId" readonly>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refDate" class="col-sm-2 col-form-label col-lg-3">환불일</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="date" class="form-control" id="refDate">
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refPay" class="col-sm-2 col-form-label col-lg-3">환불 금액</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="number" class="form-control" id="refPay" required>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refContent" class="col-sm-2 col-form-label col-lg-3">환불 사유</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <div class="input-group refContent">
+                                            <textarea class="form-control" aria-label="With textarea"
+                                                id="refContent"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="modal-footer pb-0">
+                                    <button type="button" class="btn btn-light resetbuttonbox"
+                                        data-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-primary submitbuttonbox" data-toggle="modal"
+                                        data-target="#refModal2">환불처리</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /refModal -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <script>
+    	/* 입력 검색 - 원하는 td만 검색 */
+        function searchTable() {
+            var input, filter, table, tr, td, i, j, found;
+            input = document.getElementById("accSearch");
+            filter = input.value.toLowerCase();
+            table = document.getElementById("accDataTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length - 1; j++) {
+                    if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        found = true;
+                    }
+                }
+                if (found) {
+                    tr[i].style.display = "";
+                    found = false;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    	
+    	
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
+    <script src="/js/emo/datatables-demo.js"></script>
+
+</body>
+
+</html>

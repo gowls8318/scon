@@ -86,14 +86,15 @@
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conType" name="conType">
+                                                            aria-label=".form-select-lg example" id="conType" name="conType"
+                                                            th:value="*{ conType }">
                                                             <optgroup label="상담 유형 선택">
-	                                                            <option value="학업 문제">학업 문제</option>
-	                                                            <option value="진로 문제">진로 문제</option>
-	                                                            <option value="교우 문제">교우 문제</option>
-	                                                            <option value="가정 문제">가정 문제</option>
-	                                                            <option value="교육원 문제">교육원 문제</option>
-	                                                            <option value="기타">기타</option>
+	                                                            <option th:selected="*{ conType }=='학업 문제'">학업 문제</option>
+	                                                            <option th:selected="*{ conType }=='진로 문제'">진로 문제</option>
+	                                                            <option th:selected="*{ conType }=='교우 문제'">교우 문제</option>
+	                                                            <option th:selected="*{ conType }=='가정 문제'">가정 문제</option>
+	                                                            <option th:selected="*{ conType }=='교육원 문제'">교육원 문제</option>
+	                                                            <option th:selected="*{ conType }=='기타'">기타</option>
                                                             </optgroup>
                                                         </select>
                                                     </div>
@@ -106,12 +107,13 @@
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conWay" name="conWay">
+                                                            aria-label=".form-select-lg example" id="conWay" name="conWay"
+                                                            th:value="*{ conWay }">
                                                             <optgroup label="상담 방법 선택">
-	                                                            <option value="개인 면담">개인 면담</option>
-	                                                            <option value="전화 면담">전화 면담</option>
-	                                                            <option value="방문 상담">방문 상담</option>
-	                                                            <option value="기타">기타</option>
+	                                                            <option th:selected="*{ conWay }=='개인 면담'">개인 면담</option>
+	                                                            <option th:selected="*{ conWay }=='전화 면담'">전화 면담</option>
+	                                                            <option th:selected="*{ conWay }=='방문 상담'">방문 상담</option>
+	                                                            <option th:selected="*{ conWay }=='기타'">기타</option>
                                                             </optgroup>
                                                         </select>
                                                     </div>
@@ -124,13 +126,14 @@
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
                                                         <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="conImp" name="conImp">
+                                                            aria-label=".form-select-lg example" id="conImp" name="conImp"
+                                                            th:value="*{ conImp }">
                                                             <optgroup label="중요도 선택">
-	                                                            <option value="★★★★★">★★★★★</option>
-	                                                            <option value="★★★★☆">★★★★☆</option>
-	                                                            <option value="★★★☆☆">★★★☆☆</option>
-	                                                            <option value="★★☆☆☆">★★☆☆☆</option>
-	                                                            <option value="★☆☆☆☆">★☆☆☆☆</option>
+	                                                            <option th:selected="*{ conImp }=='★★★★★'">★★★★★</option>
+	                                                            <option th:selected="*{ conImp }=='★★★★☆'">★★★★☆</option>
+	                                                            <option th:selected="*{ conImp }=='★★★☆☆'">★★★☆☆</option>
+	                                                            <option th:selected="*{ conImp }=='★★☆☆☆'">★★☆☆☆</option>
+	                                                            <option th:selected="*{ conImp }=='★☆☆☆☆'">★☆☆☆☆</option>
 	                                                        </optgroup>
                                                         </select>
                                                     </div>
