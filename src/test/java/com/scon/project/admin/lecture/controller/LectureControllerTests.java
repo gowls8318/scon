@@ -50,68 +50,44 @@ public class LectureControllerTests {
 	public void testSelectLecture() throws Exception {
 		
 		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin/student/studentList"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/lecture/list"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/student/studentList"))
-				.andDo(MockMvcResultHandlers.print());
+				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/lecture/list"))
+				.andDo(MockMvcResultHandlers.print());	
 	}
 	
 	// success
 	@Test
 	@Disabled
-	@DisplayName("전체 강의 조회용 컨트롤러 테스트")
-	public void testFindClass() throws Exception {
+	@DisplayName("강의 조회용 컨트롤러 테스트")
+	public void testSelectClass() throws Exception {
 		
 		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin/student/lectureRegist"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/lecture/insertForm"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=UTF-8"))
-				.andDo(MockMvcResultHandlers.print());
+				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/lecture/insertForm"))
+				.andDo(MockMvcResultHandlers.print());	
 	}
-	
-	@Test
-	@DisplayName("강의 정보 조회용 컨트롤러 테스트")
-	public void testFindClassDetail() throws Exception {
-		
-		// when & then
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin/student/lectureRegist"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/student/lectureRegist"))
-				.andDo(MockMvcResultHandlers.print());
-	}
-	
-//	@Test
-//	@Disabled
-//	@DisplayName("수강 상세 조회용 컨트롤러 테스트")
-//	public void testSelectLectureDetail() throws Exception {
-//		
-//		// given
-//		int no = 12;
-//		
-//		// when & then
-//		mockMvc.perform(MockMvcRequestBuilders.get("/admin/student/lectureModify/?no=" + no))
-//				.andExpect(MockMvcResultMatchers.status().isOk())
-//				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/student/lectureModify"))
-//				.andDo(MockMvcResultHandlers.print());
-//	}
 	
 	// success
-//	@Test
-//	
-//	@DisplayName("수강 등록용 컨트롤러 테스트")
-//	public void testInsertLecture() throws Exception {
-//		
-//		// given
-//		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//		params.add("clsId", "22");
-//		params.add("lecPay", "300000");
-//		
-//		// when & then
-//		mockMvc.perform(MockMvcRequestBuilders.post("/admin/student/subMenu3").params(params))
-//				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-//				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
-//				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/student/subMenu2"))
-//				.andDo(MockMvcResultHandlers.print());
-//	}
+	@Test
+	
+	@DisplayName("수강 등록용 컨트롤러 테스트")
+	public void testInsertLecture() throws Exception {
+		
+		// given
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("clsId", "22");
+		params.add("", "");
+		params.add("", "");
+		params.add("", "");
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.post("/admin/lecture/insertForm").params(params))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/lecture/list"))
+				.andDo(MockMvcResultHandlers.print());
+	}
 	
 }

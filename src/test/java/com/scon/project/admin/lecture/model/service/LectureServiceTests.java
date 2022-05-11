@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.config.SconApplication;
+import com.scon.project.member.model.dto.MemberDTO;
 
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
@@ -43,15 +44,15 @@ public class LectureServiceTests {
 		// then
 		assertNotNull(lectureList);
 	}
-	
+
 	// success
 	@Test
 	@Disabled
-	@DisplayName("전체 강의 조회용 서비스 메소드 테스트")
-	public void testFindClass() throws Exception {
+	@DisplayName("강의 조회용 서비스 메소드 테스트")
+	public void testSelectClass() throws Exception {
 		
 		// when
-		List<ClassDTO> classList = lectureService.findAllClassList();
+		List<ClassDTO> classList = lectureService.selectAllClassList();
 		
 		// then
 		assertNotNull(classList);
@@ -60,14 +61,14 @@ public class LectureServiceTests {
 	// success
 	@Test
 	@Disabled
-	@DisplayName("강의 정보 조회용 서비스 메소드 테스트")
-	public void testFindClassDetail() throws Exception {
+	@DisplayName("원생 조회용 서비스 메소드 테스트")
+	public void testSelectStudent() throws Exception {
 		
 		// when
-		List<ClassDTO> classList = lectureService.findClassDetail();
+		List<MemberDTO> memberList = lectureService.selectAllMemberList();
 		
 		// then
-		assertNotNull(classList);
+		assertNotNull(memberList);
 	}
 	
 	// success
@@ -78,48 +79,13 @@ public class LectureServiceTests {
 		
 		// given
 		LectureDTO lec = new LectureDTO();
-		lec.setClsId(21);
-		lec.setLecPay(250000);
+		lec.setMemberId("user03");
+		lec.setClsId(1);
+		lec.setLecPay(100000);
+		lec.setLecDiscount("친구 추천 이벤트");
 		
 		// when
 		int result = lectureService.insertLecture(lec);
-		
-		// then
-		assertNotNull(result);
-	}
-	
-	// success
-	@Test
-	@Disabled
-	@DisplayName("수강 상세 조회용 서비스 메소드 테스트")
-	public void testSelectLectureDetail() throws Exception {
-		
-		// given
-		int no = 12;
-		
-		// when
-		LectureDTO lectureDetail = lectureService.selectLectureDetail(no);
-		
-		// then
-		assertNotNull(lectureDetail);
-	}
-	
-	// success
-	@Test
-	@Disabled
-	@DisplayName("수강 수정용 서비스 메소드 테스트")
-	public void testUpdateLecture() throws Exception {
-		
-		// given
-		LectureDTO lec = new LectureDTO();
-		lec.setNo(12);
-		lec.setClsId(21);					// 22
-		lec.setLecPay(500000);				// 5000
-		lec.setLecStatus("수강중");			// 수강중
-		lec.setLecDiscount("오픈 이벤트");		// 오픈 이벤트
-		
-		// when
-		int result = lectureService.modifyLecture(lec);
 		
 		// then
 		assertNotNull(result);

@@ -15,7 +15,11 @@ public class LectureDTO {
 	private ClassDTO cls;
 	private int lecPay;
 	private String lecStatus;
-	private String lecDelete;
 	private String lecDiscount;
+	private String lecDelete;
+	private String accStatus;
+	private String accDate;
+	private String accOption;
+	private Integer accPay;
 	
 }

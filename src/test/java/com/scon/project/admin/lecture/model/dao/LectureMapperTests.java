@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.config.SconApplication;
+import com.scon.project.member.model.dto.MemberDTO;
 
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
@@ -48,11 +49,11 @@ public class LectureMapperTests {
 	// success
 	@Test
 	@Disabled
-	@DisplayName("전체 강의 조회용 매퍼 테스트")
-	public void testFindClass() {
+	@DisplayName("강의 조회용 매퍼 테스트")
+	public void testSelectClass() {
 		
 		// when
-		List<ClassDTO> classList = lectureMapper.findAllClassList();
+		List<ClassDTO> classList = lectureMapper.selectAllClassList();
 		
 		// then
 		assertNotNull(classList);
@@ -61,14 +62,14 @@ public class LectureMapperTests {
 	// success
 	@Test
 	@Disabled
-	@DisplayName("강의 정보 조회용 매퍼 테스트")
-	public void testFindClassDetail() {
+	@DisplayName("원생 조회용 매퍼 테스트")
+	public void testSelectStudent() {
 		
 		// when
-		List<ClassDTO> classList = lectureMapper.findClassDetail();
+		List<MemberDTO> memberList = lectureMapper.selectAllMemberList();
 		
 		// then
-		assertNotNull(classList);
+		assertNotNull(memberList);
 	}
 	
 	// success
@@ -79,48 +80,13 @@ public class LectureMapperTests {
 		
 		// given
 		LectureDTO lec = new LectureDTO();
-		lec.setClsId(21);
-		lec.setLecPay(250000);
+		lec.setMemberId("user02");
+		lec.setClsId(1);
+		lec.setLecPay(100000);
+		lec.setLecDiscount("오픈 이벤트");
 		
 		// when
 		int result = lectureMapper.insertLecture(lec);
-		
-		// then
-		assertEquals(1, result);
-	}
-	
-	// success
-	@Test
-	@Disabled
-	@DisplayName("수강 상세 조회용 매퍼 테스트")
-	public void testSelectLectureDetail() {
-		
-		// given
-		int no = 12;
-		
-		// when
-		LectureDTO lectureDetail = lectureMapper.selectLectureDetail(no);
-		
-		// then
-		assertNotNull(lectureDetail);
-	}
-	
-	// success
-	@Test
-	@Disabled
-	@DisplayName("수강 수정용 매퍼 테스트")
-	public void testUpdateLecture() {
-		
-		// given
-		LectureDTO lec = new LectureDTO();
-		lec.setNo(12);
-		lec.setClsId(22);					// 1
-		lec.setLecPay(5000);				// 400000
-		lec.setLecStatus("수강중");			// 수강중
-		lec.setLecDiscount("오픈 이벤트");		// 친구 추천 이벤트
-		
-		// when
-		int result = lectureMapper.modifyLecture(lec);
 		
 		// then
 		assertEquals(1, result);
