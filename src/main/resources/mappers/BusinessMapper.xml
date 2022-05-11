@@ -27,12 +27,40 @@
 		  FROM TB_BUSINESS
 	</select>
 	
+	<!-- 교육원 정보 입력 -->
+	<insert id="insertBusinessInfo">
+		INSERT 
+		INTO TB_BUSINESS
+		(
+		   BUS_CODE
+	     , BUS_NUM
+	     , BUS_TITLE
+	     , BUS_REP
+	     , BUS_PHONE
+	     , BUS_FAX
+	     , BUS_ADR
+	     , BUS_HOMPY
+		)
+		VALUES
+		(
+			#{ busCode }
+		  , #{ busNum }
+		  , #{ busTitle }
+	      , #{ busRep }
+	      , #{ busPhone }
+  	      , #{ busFax }
+	      , #{ busAdr }
+	      , #{ busHompy }
+	     )
+	</insert>
+	
+	
 	<!-- 교육원 정보 수정 -->
 	<update id="updateBusinessInfo">
 		UPDATE TB_BUSINESS
 			SET BUS_CODE = #{ busCode }
-			  , BUS_NUM = # { busNum }
-			  , BUS_TITLE = # { busTitle }
+			  , BUS_NUM = #{ busNum }
+			  , BUS_TITLE = #{ busTitle }
 		      , BUS_REP = #{ busRep }
 		      , BUS_PHONE = #{ busPhone }
 	  	      , BUS_FAX = #{ busFax }
