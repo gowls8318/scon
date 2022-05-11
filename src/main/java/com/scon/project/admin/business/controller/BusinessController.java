@@ -25,7 +25,7 @@ public class BusinessController {
 	}
 	
 	//조회
-	@GetMapping("/business/businessInfo=e")
+	@GetMapping("/business/businessInfo")
 	public ModelAndView businessInfo(ModelAndView mv) {
 		BusinessDTO businessInfo = businessService.selectBusinessInfo();
 		mv.addObject("BusinessDTO", businessInfo);

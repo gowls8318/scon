@@ -40,19 +40,6 @@
 	</select>
 	
 
-<!-- 페이지네이션 -->
-<!-- 게시물의 총 갯수를 구하는 쿼리 -->
-<!-- 	<select id="allNoticeCount" resultMap="noticeResultMap" >
-=======
-<!-- 페이징 -->
-	<select id="noticeTotalCount" resultType="int">
-
-		SELECT
-			   COUNT(NOTI_NO)
-		  FROM TB_NOTICE
-		 WHERE NOTI_NO > 0	 
-	</select> -->
-
 
 
 

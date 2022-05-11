@@ -1,7 +1,5 @@
 package com.scon.project.admin.business.model.service;
 
-import org.springframework.web.servlet.ModelAndView;
-
 import com.scon.project.admin.business.model.dto.BusinessDTO;
 
 public interface BusinessService {
