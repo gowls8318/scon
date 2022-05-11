@@ -13,7 +13,7 @@
 		<result property="address" column="GENDER"/>
 		<result property="gender" column="ADDRESS"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>		
@@ -64,15 +64,15 @@
 		  #{ id }
 		, #{ name }
 		, #{ password }
-		, DEFAULT
+		, 'Y'
 		, #{ phone }
 		, #{ email }
 		, #{ birthDay }
 		, #{ address }
 		, #{ gender }
 		, #{ enrollDate }
-		, NULL
-		, '대기생'
+		, #{ delDate }
+		, #{ status }
 		)
 	</insert>
 	
@@ -124,7 +124,7 @@
 		 , null
 		 , null
 		 )
-		 
+
 	</insert>
 
 	<insert id="insertProfile">
@@ -133,9 +133,7 @@
 		  VALUES 
 		  (
 		    #{ id }
-		  , (SELECT LAST_NUMBER
-		       FROM USER_SEQUENCES
-		      WHERE SEQUENCE_NAME = 'SEQ_FILE_NO')
+		  , SEQ_FILE_NO.CURRVAL
 		  )
 	</insert>
 	
@@ -163,6 +161,45 @@
 		 WHERE AUTHORITY_CODE = 1
 	</select>
 	
+	<select id="findAllTeacherList" resultMap="memberResultMap">
+		SELECT *
+		  FROM TB_MEMBER A
+		  JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE AUTHORITY_CODE = 2
+	</select>
 
+	<update id="updateMember">
+		UPDATE TB_MEMBER
+		   SET MEMBER_NAME = #{ name }
+			 , PHONE = #{ phone }
+			 , EMAIL = #{ email }
+			 , BIRTHDAY = #{ birthDay }
+			 , ADDRESS = #{ address }
+			 , GENDER = #{ gender }
+			 , ENROLL_DATE = #{ enrollDate }
+			 , MEMBER_ST = #{ status }
+			 , DEL_DATE = #{ delDate }
+		WHERE MEMBER_ID = #{ id }	 
+	</update>
+	
+	<update id="updateProfile">
+		UPDATE TB_PROFILE
+		   SET FILE_ID = SEQ_FILE_NO.CURRVAL
+		 WHERE MEMBER_ID= #{ id }     
+	</update>
+	
+	<select id="selectPofileById" resultType="int">
+		SELECT COUNT(*)
+		  FROM TB_PROFILE
+		 WHERE MEMBER_ID = #{ id } 
+	</select>
+	
+	<update id="deleteMember">
+		UPDATE TB_MEMBER
+		   SET MEMBER_ST = #{ status }
+		 	  , DEL_DATE = SYSDATE
+		 WHERE MEMBER_ID = #{ id }	  
+	</update>
+	
 
 </mapper>

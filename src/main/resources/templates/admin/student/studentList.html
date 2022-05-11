@@ -22,8 +22,13 @@
     
     <!-- bootstrap-icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
+    
     <link href="/css/student.css" rel="stylesheet">
+    
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    
 
 </head>
 
@@ -99,14 +104,14 @@
                                         </table>
                                     </div>
                                 </div>
-                                <p class="p-left pt-3">전체 학생수 : 52명</p>
+                                <p class="text-right pt-3 small">전체 학생수 : [[${ memberList.size() }]] 명</p>
                                 <div class="table-responsive tb-h">
-                                    <table class="table table-bordered table-hover small text-xs" id="">
+                                    <table class="table table-bordered table-hover small">
 
                                         <tr>
                                            <th class="notiCheck">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                                 </div>
                                             </th>
@@ -118,7 +123,7 @@
                                             <td class="notiCheck">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" 
-                                                    th:value="${ member.id }" name="selectStd">
+                                                    th:value="${ member.id }" name="selectMember">
                                                 </div>
                                             </td>
                                             <td th:text="${ member.name }"></td>
@@ -213,10 +218,10 @@
 											<div class="col-sm-7 col-lg-7 row">
 
 												<label class="radio-inline col-6"> <input
-													type="radio" class="radio pt-2" name="gender" id="F" value="F"
+													type="radio" class="radio" name="gender" id="F" value="F"
 													checked> 여자
 												</label> <label class="radio-inline col-6"> <input
-													type="radio" class="radio pt-2" name="gender" id="M" value="M">
+													type="radio" class="radio" name="gender" id="M" value="M">
 													남자
 												</label>
 
@@ -263,8 +268,8 @@
                                                     <input type="text" class="form-control infoformbox" id="zipCode" name="zipCode" >
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <input type="button" class="btn btn-secondary btn-sm stu-btn"
-                                                        value="우편번호 찾기" />
+                                                   <input type="button"
+														class="btn btn-secondary btn-sm stu-btn" value="우편번호 찾기" onclick="execDaumPostcode()"/>
                                                 </div>
                                                 <input type="text" class="form-control infoformbox" id="address">
                                                 <input type="text" class="form-control infoformbox" id="extraAddress">
@@ -301,23 +306,17 @@
                                         <div class="card-body submenu-box">
 											<!--  원생 추가정보 -->
                                             <div class="menu">
+                                            	<input type="hidden" name="findMemberPath" value="/admin/findStudentById">
                                             	<div th:replace="/admin/student/subMenu"></div>
                                             </div>
                                             <!-- 수강 강의 목록 조회/등록 -->
                                             <div class="menu d-none">
-                                            	<div th:replace="/admin/student/subMenu2"></div>
+                                            	<div th:replace="/admin/student/lectureList"></div>
                                             </div>
                                             <!-- 수강 강의 수정 -->
                                           <div class="menu d-none">
-                                            	<div th:replace="/admin/student/subMenu3"></div>
+                                            	<div th:replace="/admin/student/LectureModify"></div>
                                             </div>
-                                            <div class="menu d-none">
-                                            	<div th:replace="/admin/student/subMenu3"></div>
-                                            </div>
-                                            <div class="menu d-none">
-                                            	<div th:replace="/admin/student/subMenu3"></div>
-                                            </div>
-
                                            
                                             <br>
 	
@@ -374,6 +373,10 @@
 	
 	<!-- 원생 관리 자바스크립트 -->
 	<script src="/js/student.js"></script>
+	
+	<!-- 다음 주소 api-->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 
 </body>
 

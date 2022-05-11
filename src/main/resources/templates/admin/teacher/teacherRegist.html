@@ -12,21 +12,25 @@
 
 <title>강사 등록</title>
 
-<!-- Custom fonts for this template-->
-<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/css/sb-admin-2.min.css" rel="stylesheet">
-
-<!-- bootstrap-icons -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
-<link href="/css/student.css" rel="stylesheet">
+	<!-- Custom fonts for this template-->
+	<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+		type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+	
+	<!-- Custom styles for this template-->
+	<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+	
+	<!-- bootstrap-icons -->
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	
+	<link href="/css/student.css" rel="stylesheet">
+	
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 
 </head>
@@ -67,8 +71,8 @@
 									<!-- Card Body -->
 									<div class="card-body col-lg-12">
 										<div>
-											<img class="profile" src="/img/profile.jpg" alt="프로필 사진"><br>
-											<br> <input type="file" class="" value="" />
+											<img class="profile1" src="/img/profile.jpg" id="img" alt="프로필 사진"><br>
+											<br> <input type="file" name="profile" id="profile" accept=".gif, .jpg, .png"  onchange="readFile(event);"/>
 											<!-- 프로필 사진 등록 -->
 										</div>
 									</div>
@@ -181,7 +185,7 @@
 													id="phoneHelp" class="text-danger"></small>
 											</div>
 											<label for="" class="col-lg-3"> <span
-												class="coloumnamebox input-group-text colbox">입원일 <span
+												class="coloumnamebox input-group-text colbox">입사일 <span
 													id="pointtext">*</span></span>
 											</label>
 											<div class="col-sm-2"></div>
@@ -239,13 +243,13 @@
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
 														<select
-															class="form-control form-select-lg mb-3 infoformbox col-lg-5" name="">
-															<option selected>일반 강사</option>
-															<option value="1">담당 강사</option>
-															<option value="2">팀장</option>
+															class="form-control form-select-lg mb-3 infoformbox col-lg-5" name="jobCode">
+															<option value="6" selected>일반 강사</option>
+															<option value="5">담당 강사</option>
+															<option value="4">팀장</option>
 															<option value="3">교수부장</option>
-															<option value="4">부원장</option>
-															<option value="5">원장</option>
+															<option value="2">부원장</option>
+															<option value="1">원장</option>
 														</select>
 													</div>
 													<label for="" class="col-lg-3"> <span
@@ -253,19 +257,18 @@
 													</label>
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
-														 <select class="form-control form-select-lg mb-3 infoformbox">
-                                                            <option value="1" selected>근무</option>
-                                                            <option value="2">휴직</option>
-                                                            <option value="3">퇴직</option>
+														 <select class="form-control form-select-lg mb-3 infoformbox" name="status">
+                                                            <option value="근무" selected>근무</option>
+                                                            <option value="휴직">휴직</option>
+                                                            <option value="퇴직">퇴직</option>
                                                         </select>
-
 													</div>
 													<label for="" class="col-lg-3"> <span
 														class="coloumnamebox input-group-text colbox">퇴직일</span>
 													</label>
 													<div class="col-sm-2"></div>
 													<div class="col-sm-7 col-lg-7 row">
-														  <input type="date" class="form-control infoformbox" id="">
+														  <input type="date" class="form-control infoformbox" id="delDate" name="delDate">
 													</div>
 
 												</div>
@@ -280,18 +283,16 @@
 														(비고)</span>
 												</label>
 												
-												<div class="col-sm-8 col-lg-8 row ma-reft">
-													<textarea class="form-control" rows="3" id="" name=""></textarea>
+												<div class="col-sm-8 col-lg-8 row ma-left">
+													<textarea class="form-control" rows="3" id="resume" name="resume"></textarea>
 												</div>
-
+											<input type="hidden" name="path" value="/admin/teacherRegist">
 											</fieldset>
 											<br>
 											<div class="registbtn">
-												<button type="submit"
-													class="btn btn-primary submitbuttonbox">등록 하기</button>
+												<button type="button"
+													class="btn btn-primary submitbuttonbox" onclick="checkAll()">등록 하기</button>
 											</div>
-
-
 										</div>
 
 									</div>
@@ -333,6 +334,9 @@
 
 		<!-- 원생 관리 자바스크립트 -->
 		<script src="/js/student.js"></script>
+		
+		<!-- 다음 주소 api-->
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
 
 </html>

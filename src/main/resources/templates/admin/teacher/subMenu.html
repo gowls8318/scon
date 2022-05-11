@@ -7,13 +7,13 @@
 		<div class="col-sm-2"></div>
 		<div class="col-sm-7 col-lg-7 row">
 			<select class="form-control form-select-lg mb-3 infoformbox col-lg-5"
-				name="">
-				<option selected>일반 강사</option>
-				<option value="1">담당 강사</option>
-				<option value="2">팀장</option>
+				name="jobCode" id="jobCode">
+				<option value="6" selected>일반 강사</option>
+				<option value="5">담당 강사</option>
+				<option value="4">팀장</option>
 				<option value="3">교수부장</option>
-				<option value="4">부원장</option>
-				<option value="5">원장</option>
+				<option value="2">부원장</option>
+				<option value="1">원장</option>
 			</select>
 		</div>
 		<label for="" class="col-lg-3"> <span
@@ -21,10 +21,11 @@
 		</label>
 		<div class="col-sm-2"></div>
 		<div class="col-sm-7 col-lg-7 row">
-			<select class="form-control form-select-lg mb-3 infoformbox">
-				<option value="1" selected>근무</option>
-				<option value="2">휴직</option>
-				<option value="3">퇴직</option>
+			<select class="form-control form-select-lg mb-3 infoformbox"
+			 name="status" id="status">
+				<option value="근무" selected>근무</option>
+				<option value="휴직">휴직</option>
+				<option value="퇴직">퇴직</option>
 			</select>
 
 		</div>
@@ -33,7 +34,7 @@
 		</label>
 		<div class="col-sm-2"></div>
 		<div class="col-sm-7 col-lg-7 row">
-			<input type="date" class="form-control infoformbox" id="">
+			<input type="date" class="form-control infoformbox" id="delDate" name="delDate">
 		</div>
 
 	</div>
@@ -47,15 +48,14 @@
 		class="coloumnamebox input-group-text colbox">이력 사항 (비고)</span>
 	</label>
 
-	<div class="col-sm-8 col-lg-8 row ma-reft">
-		<textarea class="form-control" rows="3" id="" name=""></textarea>
+	<div class="col-sm-8 col-lg-8 row ma-left1">
+		<textarea class="form-control" rows="3" id="resume" name="resume"></textarea>
 	</div>
+	<input type="hidden" name="path" value="/admin/updateTeacher">
 
 </fieldset>
 <!-- 수정/ 삭제 버튼 -->
-<div class="registbtn">
-	<button type="submit" class="btn btn-primary submitbuttonbox btn-sm">수정
-		하기</button>
-	<button type="button" class="btn btn-primary resetbuttonbox btn-sm">삭제
-		하기</button>
+<div class="registbtn pt-3">
+	<button type="button" class="btn btn-primary btn-lec1" onclick="checkAll();">수정하기</button>
+	<button type="button" class="btn btn-light btn-lec2 mr-2" onclick="deleteMember()">삭제하기</button>
 </div>

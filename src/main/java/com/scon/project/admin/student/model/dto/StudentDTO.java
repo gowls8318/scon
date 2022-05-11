@@ -1,18 +1,11 @@
 package com.scon.project.admin.student.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scon.project.member.model.dto.MemberDTO;
 import com.scon.project.member.model.dto.ProfileDTO;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 public class StudentDTO {
 	/*
 	MEMBER_ID	VARCHAR2(30 BYTE)	No		1	회원아이디

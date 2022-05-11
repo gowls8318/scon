@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.scon.project.admin.student.model.dao.StudentMapper">
+<mapper namespace="com.scon.project.admin.teacher.model.dao.TeacherMapper">
 
-	<resultMap id="studentResultMap" type="com.scon.project.admin.student.model.dto.StudentDTO">
+	<resultMap id="TeacherResultMap" type="com.scon.project.admin.teacher.model.dto.TeacherDTO">
 		<id property="id" column="REF_MEMBER_ID2"/>
-		<result property="studentType" column="STUDENT_TYPE"/>
-		<result property="schoolName" column="SCHOOL_NAME"/>
-		<result property="schoolGrade" column="SCHOOL_GRADE"/>
-		<result property="schoolClass" column="SCHOOL_CLASS"/>
-		<result property="consult" column="CONSULT"/>
+		<result property="jobCode" column="JOB_CODE"/>
+		<result property="jobName" column="JOB_NAME"/>
+		<result property="resume" column="RESUME"/>
 		
 		<association property="member" resultMap="memberResultMap"/> <!-- 회원 기본정보  -->
 		<association property="profile" resultMap="profileResultMap"/> <!-- 프로필 사진 -->
-		<association property="parents" resultMap="parentsResultMap"/> <!-- 학부모 정보 -->
 		
 	</resultMap>
 	
@@ -27,7 +24,7 @@
 		<result property="address" column="ADDRESS"/>
 		<result property="gender" column="GENDER"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
@@ -58,56 +55,25 @@
 		<result property="fileThumnailName" column="FILE_THUM.NAME"/>
 	</resultMap>
 	
-	<resultMap id="parentsResultMap" type="com.scon.project.admin.student.model.dto.ParentsDTO">
-		<id property="id" column="REF_MEMBER_ID3"/>
-		<result property="parentsType" column="PARENTS_TYPE"/>
-		<result property="parentsName" column="PARENTS_NAME"/>
-		<result property="parentsPhone" column="PARENTS_PHONE"/>
-	</resultMap>
-	
 
-	<insert id="insertStudent">
+	<insert id="insertTeacher">
 		INSERT
-		  INTO TB_STUDENT
+		  INTO TB_TEACHER
 		(
 		  MEMBER_ID
-		, STUDENT_TYPE
-		, SCHOOL_NAME
-		, SCHOOL_GRADE
-		, SCHOOL_CLASS
-		, CONSULT
+		, JOB_CODE
+		, RESUME
 		)
 		VALUES
 		(
 		  #{ id }
-		, #{ studentType }
-		, #{ schoolName }
-		, #{ schoolGrade }
-		, #{ schoolClass }
-		, #{ consult }
+		, #{ jobCode }
+		, #{ resume }
 		)
 	</insert>
 	
-	<insert id="insertParents">
-		INSERT
-		  INTO TB_PARENTS
-		(
-		  MEMBER_ID
-		, PARENTS_TYPE
-		, PARENTS_NAME
-		, PHONE
-		)
-		VALUES
-		(
-		  #{ id }
-		, #{ parentsType }
-		, #{ parentsName }
-		, #{ parentsPhone }
-		)
-	</insert>
 
-	
-	<select id="findStudentById" resultMap="studentResultMap">
+	<select id="findTeacherById" resultMap="TeacherResultMap">
 		SELECT
 		       A.MEMBER_ID
 		     , A.MEMBER_NAME  
@@ -126,16 +92,10 @@
 		     , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
 		     , C.AUTHORITY_NAME
 		     , C.AUTHORITY_DESC
-		     , S.MEMBER_ID REF_MEMBER_ID2
-			 , S.STUDENT_TYPE
-			 , S.SCHOOL_NAME
-			 , S.SCHOOL_GRADE
-			 , S.SCHOOL_CLASS
-			 , S.CONSULT
-			 , D.MEMBER_ID REF_MEMBER_ID3
-			 , D.PARENTS_TYPE
-			 , D.PARENTS_NAME
-			 , D.PHONE PARENTS_PHONE
+		     , T.MEMBER_ID REF_MEMBER_ID2
+		     , T.JOB_CODE
+		     , T.RESUME
+		     , J.JOB_NAME
 			 , F.FILE_ID
 			 , F.FILE_ORGNAME
 			 , F.FILE_SAVENAME
@@ -146,42 +106,26 @@
 		  FROM TB_MEMBER A
 		  LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
 		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE) 
-		  LEFT JOIN TB_STUDENT S ON (A.MEMBER_ID = S.MEMBER_ID)
-		  LEFT JOIN TB_PARENTS D ON (A.MEMBER_ID = D.MEMBER_ID) 
+		  LEFT JOIN TB_TEACHER T ON (A.MEMBER_ID = T.MEMBER_ID)
+		  LEFT JOIN TB_JOB J ON (T.JOB_CODE = J.JOB_CODE)
 		  LEFT JOIN TB_PROFILE P ON (A.MEMBER_ID = P.MEMBER_ID) 
 		  LEFT JOIN TB_FILE F ON (P.FILE_ID = F.FILE_ID) 
 		 WHERE A.MEMBER_ID = #{ id }
+		   AND B.AUTHORITY_CODE = 2 
 	</select>
 	
-	<update id="updateStudent">
-		UPDATE TB_STUDENT
-		   SET STUDENT_TYPE = #{ studentType }
-			 , SCHOOL_NAME = #{ schoolName }
-			 , SCHOOL_GRADE = #{ schoolGrade }
-			 , SCHOOL_CLASS = #{ schoolClass }
-			 , CONSULT = #{ consult }
-		WHERE MEMBER_ID = #{ id }	
+	<update id="updateTeacher">
+		UPDATE TB_TEACHER
+		   SET JOB_CODE = #{ jobCode }
+			 , RESUME = #{ resume }
+		WHERE MEMBER_ID = #{ id }
 	</update>
 	
-	<update id="updateParents">
-		UPDATE TB_PARENTS
-		   SET PARENTS_NAME = #{ parentsName }
-			 , PARENTS_TYPE = #{ parentsType }
-			 , PHONE = #{ parentsPhone }
-		WHERE MEMBER_ID = #{ id }	
-	</update>
-	
-	<select id="selectStudentById" resultType="int">
+	<select id="selectTeacherById" resultType="int">
 		SELECT COUNT(*)
-		  FROM TB_STUDENT
+		  FROM TB_TEACHER
 		 WHERE MEMBER_ID = #{ id }  
 	</select>
 	
-	<select id="selectParentsById" resultType="int">
-		SELECT COUNT(*)
-		  FROM TB_PARENTS
-		 WHERE MEMBER_ID = #{ id }  
-	</select>
-
 
 </mapper>

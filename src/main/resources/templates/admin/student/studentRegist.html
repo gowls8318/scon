@@ -12,21 +12,25 @@
 
 <title>원생 등록</title>
 
-<!-- Custom fonts for this template-->
-<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+	<!-- Custom fonts for this template-->
+	<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+		type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+	
+	<!-- Custom styles for this template-->
+	<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+	
+	<!-- bootstrap-icons -->
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	
+	<link href="/css/student.css" rel="stylesheet">
 
-<!-- Custom styles for this template-->
-<link href="/css/sb-admin-2.min.css" rel="stylesheet">
-
-<!-- bootstrap-icons -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
-<link href="/css/student.css" rel="stylesheet">
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -309,15 +313,17 @@
 
 												</div>
 
-												<label for="" class="col-lg-1"> <span
-													class="coloumnamebox input-group-text colbox">상담 내용
+												<label for="consult" class="col-lg-1"> <span
+													class="coloumnamebox input-group-text colbox ">상담 내용
 														(비고)</span>
 												</label>
 												
-												<div class="col-sm-8 col-lg-8 row ma-reft">
+												<div class="col-sm-8 col-lg-8 row ma-left">
 													<textarea class="form-control" rows="3" name="consult"></textarea>
 												</div>
-												<input type="hidden" name="hidden" value="/admin/studentRegist">
+												<input type="hidden" name="path" value="/admin/studentRegist">
+												<input type="hidden" name="delDate">
+												<input type="hidden" name="status" value="대기생">
 											</fieldset>
 											<br>
 											<div class="registbtn">

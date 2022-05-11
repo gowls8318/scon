@@ -29,15 +29,13 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService{
 	
 	private MemberMapper memberMapper;
-	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public MemberServiceImpl(MemberMapper memberMapper,PasswordEncoder passwordEncoder) {
+	public MemberServiceImpl(MemberMapper memberMapper) {
 		this.memberMapper = memberMapper;
-		this.passwordEncoder = passwordEncoder;
 	}
 
-	
+	/* 로그인 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
@@ -62,17 +60,16 @@ public class MemberServiceImpl implements MemberService{
 		}
 		
 		log.info("로그인 권한 : {}", authorities);
-		
-		
-		// return new User(member.getId(), member.getPwd(), authorities);
-		
+
 		/* User 객체에 담기지 않는 추가 정보를 User 객체를 extends한 UserImpl에 담아서 리턴한다. */
 		UserImpl user = new UserImpl(member.getId(), member.getPassword(), authorities);
 		user.setDetails(member);
 		
 		return user;
 	}
-
+	
+	
+	/* 원생 회원가입 */
 	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
 	@Override
 	public int insertMember(MemberDTO member, int role){
@@ -92,20 +89,14 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
-
-
+	/* 아이디 중복검사 */
 	@Override
 	public int checkId(MemberDTO member) {
 		return memberMapper.checkId(member);
 	}
 
-
-	@Override
-	public List<MemberDTO> findAllStudentList() {
-		
-		return memberMapper.findAllStudentList();
-	}
-
+	
+	/* 원생 프로필 사진 등록 */
 	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
 	@Override
 	public int insertProfile(ProfileDTO profile, MemberDTO member) {
@@ -122,13 +113,63 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return result;
 	}
+	
+	/* 원생 목록 조회 */
+	@Override
+	public List<MemberDTO> findAllStudentList() {
+		return memberMapper.findAllStudentList();
+	}
 
-
+	/* 강사 목록 조회 */
+	@Override
+	public List<MemberDTO> findAllTeacherList() {
+		return memberMapper.findAllTeacherList();
+	}
+	
+	/* 회원 상세 조회*/
+	@Override
+	public MemberDTO selectMember(String id) {
+		return memberMapper.findMemberById(id);
+	}
+	
+	/* 회원정보 수정 */
 	@Override
 	public int updateMember(MemberDTO member) {
-
-		return 0;
+		return memberMapper.updateMember(member);
 	}
+
+	
+	/* 원생 프로필 사진 수정 */
+	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
+	@Override
+	public int updateProfile(ProfileDTO profile, MemberDTO member) {
+		
+		int result = 0;
+
+		int selectProfileById = memberMapper.selectPofileById(member);
+
+		// 파일 등록
+		int fileResult = memberMapper.insertFile(profile);
+		// 이전에 파일 등록이 되있는지 확인
+
+		if (selectProfileById > 0) {
+			// 프로필 등록이 되있는 경우 수정
+			result = memberMapper.updateProfile(member.getId());
+		} else {
+			// 프로필 등록이 안되어있는 경우 등록
+			result = memberMapper.insertProfile(member.getId());
+		}
+
+		return result;
+	}
+
+	/* 회원 삭제 */
+	@Override
+	public int deleteMember(String id, String status) {
+		return memberMapper.deleteMember(id, status);
+	}
+
+
 
 
 

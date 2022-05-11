@@ -23,6 +23,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
     <link href="/css/student.css" rel="stylesheet">
+    
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -98,10 +102,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <p class="p-left pt-3">전체 강사수 : 52명</p>
+                                <p class="text-right pt-3 small">전체 강사수 : [[${ memberList.size() }]] 명</p>
                                 <div class="table-responsive tb-h">
-                                    <table class="table table-bordered small text-xs" id="">
-
+                                    <table class="table table-bordered table-hover small">
                                         <tr>
                                             <th class="notiCheck checkNO">
                                                 <div class="form-check">
@@ -114,17 +117,16 @@
                                             <th>등록일</th>
                                         </tr>
 
-
-                                        <tr>
-                                            <th class="notiCheck">
+ 										<tr th:each="member : ${ memberList }">
+                                            <td class="notiCheck">
                                                 <div class="form-check">
-                                                    <input class="form-check-input checkNO" type="checkbox" id="" value="">
+                                                    <input class="form-check-input" type="checkbox" 
+                                                    th:value="${ member.id }" name="selectMember">
                                                 </div>
-                                            </th>
-                                            <td>강수지</td>
-                                            <td>010-1234-5678</td>
-                                            <td>2022-04-28</td>
-
+                                            </td>
+                                            <td th:text="${ member.name }"></td>
+                                            <td th:text="${ member.phone }"></td>
+                                            <td th:text="${ member.enrollDate }"></td>
                                         </tr>
 
                                     </table>
@@ -150,11 +152,11 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body row">
-                                    <fieldset class="row col-lg-12">
+                                                       <fieldset class="row col-lg-12">
                                         <div class="col-lg-2">
                                             <!-- 프로필 사진 등록 -->
-                                            <img class="profile text-sm" src="/img/profile.jpg" alt="프로필 사진"><br><br>
-                                            <input class="text-xs" type="file" value="" />
+                                            <img class="profile text-sm" src="/img/profile.jpg" id="img" alt="프로필 사진"><br>
+											<br> <input type="file" name="profile" id="profile" class="text-xs" accept=".gif, .jpg, .png"  onchange="readFile(event);"/>
                                         </div>
                                         <div class="form-group col-lg-5 row">
 
@@ -175,15 +177,9 @@
 											</label>
 											<div class="col-sm-2"></div>
 											<div class="col-sm-7 col-lg-7 row">
-												<div class="col-sm-9 col-lg-8 row">
-													<input type="text" class="form-control infoformbox"
-														id="userId" name="userId"> <small id="idHelp"
-														class="text-danger"></small>
-												</div>
-												<div class="col-sm-2">
-													<input type="button"
-														class="btn btn-secondary btn-sm stu-btn" value=" 중복 확인 " />
-												</div>
+												<input type="text" class="form-control infoformbox"
+													id="id" name="id" readonly> <small id="idHelp"
+													class="text-danger"></small>
 											</div>
 
 
@@ -254,7 +250,7 @@
 											</label>
 											<div class="col-sm-2"></div>
 											<div class="col-sm-7 col-lg-7">
-												<input type="date" class="infoformbox form-control">
+												<input type="date" class="infoformbox form-control" id="enrollDate" name="enrollDate">
 											</div>
 
                                         </div>
@@ -267,19 +263,20 @@
                                             <div class="col-lg-2 addr"></div>
                                             <div class="col-lg-9 row">
                                                 <div class="col-lg-4 row">
-                                                    <input type="text" class="form-control infoformbox" id="zipcode">
+                                                    <input type="text" class="form-control infoformbox" id="zipCode" name="zipCode" >
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <input type="button" class="btn btn-secondary btn-sm stu-btn"
-                                                        value="우편번호 찾기" />
+                                                   <input type="button"
+														class="btn btn-secondary btn-sm stu-btn" value="우편번호 찾기" onclick="execDaumPostcode()"/>
                                                 </div>
-                                                <input type="text" class="form-control infoformbox" id="exaddress">
-                                                <input type="text" class="form-control infoformbox" id="">
+                                                <input type="text" class="form-control infoformbox" id="address">
+                                                <input type="text" class="form-control infoformbox" id="extraAddress">
                                             </div>
 
                                         </div>
 
                                     </fieldset>
+
 
                                 </div>
 
@@ -297,17 +294,15 @@
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">강사 정보</button>
                                             <button type="button"
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">담당 강의</button>
-
-
                                         </div>
 
                                         <!-- 아래 서브 메뉴 -->
                                         <div class="card-body submenu-box">
 
                                             <div class="menu">
+                                            	<input type="hidden" name="findMemberPath" value="/admin/findTeacherById">
                                             	<div th:replace="/admin/teacher/subMenu"></div>
                                             </div>
-                                           
                                            
                                             <br>
 	
@@ -364,6 +359,10 @@
 	
 	<!-- 원생 관리 자바스크립트 -->
 	<script src="/js/student.js"></script>
+	
+	<!-- 다음 주소 api-->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 
 </body>
 

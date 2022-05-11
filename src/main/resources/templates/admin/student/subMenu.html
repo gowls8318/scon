@@ -80,13 +80,15 @@
         <span class="coloumnamebox input-group-text colbox">상담 내용(비고)</span>
     </label>
     <div class="col-lg-8 text-a">
-        <textarea class="form-control text-area" style="margin-left:140px;" rows="2" name="consult"></textarea>
+        <textarea class="form-control text-area ma-left1" rows="2" name="consult"></textarea>
     </div>
-    <input type="hidden" name="hidden" value="/admin/updateStudent">
-
+    <input type="hidden" name="path" value="/admin/updateStudent">
+	<input type="hidden" name="delDate">
+	<input type="hidden" name="status">
+	
 </fieldset>
 <!-- 수정/ 삭제 버튼 -->
 <div class="registbtn pt-3">
 	<button type="button" class="btn btn-primary btn-lec1" onclick="checkAll();">수정하기</button>
-    <button type="button" class="btn btn-light btn-lec2 mr-2">삭제하기</button>
+    <button type="button" class="btn btn-light btn-lec2 mr-2" onclick="deleteMember();">삭제하기</button>
 </div>

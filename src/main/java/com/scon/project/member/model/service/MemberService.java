@@ -17,8 +17,15 @@ public interface MemberService extends UserDetailsService {
 
 	List<MemberDTO> findAllStudentList();
 
+	List<MemberDTO> findAllTeacherList();
+	
+	MemberDTO selectMember(String id);
+	
 	int updateMember(MemberDTO member);
 
+	int updateProfile(ProfileDTO profile, MemberDTO member);
+
+	int deleteMember(String id, String status);
 
 
 }

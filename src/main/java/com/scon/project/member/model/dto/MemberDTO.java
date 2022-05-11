@@ -42,7 +42,8 @@ public class MemberDTO {
 	private String gender;							//성별
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
 	private java.sql.Date enrollDate;				//등록일
-	private java.sql.Date deleteDate;				//삭제일
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
+	private java.sql.Date delDate;					//삭제일
 	private String status;							//회원상태
 
 	/* TB_MEMBER_ROLE - 한 멤버는 여러 권한을 가질 수 있다 */

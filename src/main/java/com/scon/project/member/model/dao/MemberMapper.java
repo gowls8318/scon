@@ -10,10 +10,10 @@ import com.scon.project.member.model.dto.MemberDTO;
 @Mapper
 public interface MemberMapper {
 	
-	//멤버 아이디로 조회
+	// 회원 아이디로 조회
 	MemberDTO findMemberById(String username);
 
-	//멤버 등록
+	// 회원 등록
 	int insertMember(MemberDTO member);
 	
 	// 권한 등록
@@ -29,6 +29,20 @@ public interface MemberMapper {
 
 	// 모든 원생 조회 
 	List<MemberDTO> findAllStudentList();
+
+	// 모든 강사 조회
+	List<MemberDTO> findAllTeacherList();
+	
+	// 회원 필수정보 수정
+	int updateMember(MemberDTO member);
+
+	int updateProfile(String id);
+
+	int selectPofileById(MemberDTO member);
+
+	// 회원 삭제
+	int deleteMember(String id, String status);
+
 
 	
 }

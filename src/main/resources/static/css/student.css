@@ -1,14 +1,13 @@
-/* .radio {
-    margin-top: 20px;
+.radio {
+    margin-top: 10px;
 }
 
-.infoformbox,
-.stu-btn {
-    margin-top: 5px;
-} */
+.ma-left {
+    margin-left: 170px !important;
+}
 
-.ma-reft {
-    margin-left: 150px;
+.ma-left1 {
+    margin-left: 120px !important;
 }
 
 .registbtn {
@@ -46,11 +45,6 @@ table, th, td, tr {
 }
 
 
-.p-left{
-    text-align: right;
-    font-size: x-small;
-}
-
 .sel {
     width: 100px;
 }
@@ -59,10 +53,6 @@ table, th, td, tr {
     font-weight: bold;
 }
 
-.active {
-    font-weight: bold;
-    color: red;
-}
 
 .colbox {
     width: 150px !important;
@@ -84,18 +74,15 @@ option {
 }
 
 
-.checkNO{
-	width: 10px !important;
-}
-
 .tb-h{
-	height: 650px !important;
+	height: 685px !important;
 }
 
 
 .table-responsive {
     display: block;
-    width: 100%;overflow-x: auto;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .text-a{

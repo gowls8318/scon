@@ -14,5 +14,13 @@ public interface StudentMapper {
 		int insertParents(ParentsDTO parents);
 
 		StudentDTO findStudentById(String id);
+
+		int updateStudent(StudentDTO student);
+
+		int updateParents(ParentsDTO parents);
+
+		int selectStudentById(StudentDTO student);
+
+		int selectParentsById(ParentsDTO parents);
 		
 }
