@@ -146,7 +146,7 @@ public class classMapperTest {
 		classDTO.setClsStatus("Y"); 
 				
 		// when
-		int result = classMapper.classDetailUpdate(classDTO);
+		int result = classMapper.classUpdate(classDTO);
 
 		// then
 		assertEquals(1, result);

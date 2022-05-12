@@ -81,8 +81,7 @@ input[type="checkbox"]::before {
 					<!-- 과목정보 -->
 					<div class="card shadow mb-4">
 						<form th:action="@{/admin/classUpdate}" method="post">
-							<input type="hidden" class="clsId"
-								th:value="${classUpdate.clsId}">
+							<input type="hidden" class="clsId" th:value="${classUpdate.clsId}">
 							<tbody th:object="${ classUpdate }">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-primary">과목정보</h6>
@@ -112,14 +111,12 @@ input[type="checkbox"]::before {
 															<select class="form-control form-select-lg"
 																aria-label=".form-select-lg example"
 																name="FindAllmember" id="FindAllmember">
-
-																<option value="1">우별림</option>
+															 <option th:each = "val:${member.name}" th:value="${val?.member.name}" th:utext="${val?.member.name}"></option>
+<!-- 															<option value="1">우별림</option>
 																<option value="2">우별림</option>
 																<option value="3">우별림</option>
 																<option value="4">우별림</option>
-																<option value="5">우별림</option>
-
-
+																<option value="5">우별림</option> -->
 															</select>
 														</div>
 													</td>
@@ -163,10 +160,9 @@ input[type="checkbox"]::before {
 											</tbody>
 										</table>
 									</div>
-
-
 								</div>
 							</tbody>
+							</form>
 					</div>
 					<!-- 과목정보 -->
 
@@ -227,7 +223,7 @@ input[type="checkbox"]::before {
 											</th>
 
 											<td class="col-lg-5">
-										<input type="hidden" class="clsId" th:value="${classUpdate.clsId}">
+											<input type="hidden" class="clsId" th:value="${classUpdate.clsId}">
 												<div class="form-check form-check-inline dayCheck" id="result" name="dayList" th:value="*{dayList}">
 													<!-- <input class="form-check-input daycheck" type="checkbox"
 													th:value="*{dayList[0].clsDayId}" id="dayList" name="dayList" 
@@ -241,9 +237,8 @@ input[type="checkbox"]::before {
 													<input type=checkbox id="result" name="dayList[5].clsDayId" th:value="*{6}" th:onclick='getCheckboxValue()'>토
 													<input type=checkbox id="result" name="dayList[6].clsDayId" th:value="*{7}" th:onclick='getCheckboxValue()'>일
 													<!-- <label class="form-check-label" for="days1">월</label> -->
-													
-													    <!-- <option th:selected="*{ conHTime }=='09:00 ~ 09:50'">09:00 ~ 09:50</option> -->
 												</div>
+												
 												<!-- <div class="form-check form-check-inline">
 													<input class="form-check-input daycheck" type="checkbox"
 													th:value="*{dayList[2].clsDayId}" id="dayList" name="dayList" 
@@ -479,8 +474,8 @@ input[type="checkbox"]::before {
 		    }
 		  }
 
-		  if (checked >= 2){
-		    alert("체크 해제 후 한 가지만 선택해 주세요");
+		  if (checked >= 8){
+		    alert("요일 선택을 초과하였습니다.");
 		    return false;
 		  }
 		});

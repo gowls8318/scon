@@ -88,11 +88,7 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public int classUpdate(ClassDTO classDTO) throws Exception {
 		
-		int result = classMapper.classDetailUpdate(classDTO);
-		
-		if (result <= 0) {
-			throw new Exception("강의 수정 실패");
-		}
+		int result = classMapper.classUpdate(classDTO);
 		
 		return result;
 	}

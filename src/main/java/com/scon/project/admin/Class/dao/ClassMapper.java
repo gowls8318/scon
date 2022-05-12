@@ -37,7 +37,7 @@ public interface ClassMapper {
 	int deleteClass(int clsId);
 
 	//강의상세보기수정
-	int classDetailUpdate(ClassDTO clsId);
+	int classUpdate(ClassDTO clsId);
 
 	//요일수정
 	int updateDay(DayDTO dayList);

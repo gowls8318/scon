@@ -147,7 +147,7 @@
 	<select id="classDetail" resultMap="classResultMap">
 	SELECT
 		    A.CLS_ID
-		  , B.MEMBER_ID
+		  , B.MEMBER_NAME
 		  , A.CLS_NAME
 		  , A.CLS_SUBJECT
 		  , A.CLS_STUNUM
@@ -190,7 +190,7 @@
 	
 	
 	<!-- 강의수정 -->
-	<update id="classDetailUpdate">
+	<update id="classUpdate">
 		UPDATE
 			  TB_CLASS A
 		  SET   A.MEMBER_ID = (SELECT B.MEMBER_ID FROM TB_MEMBER B WHERE B.MEMBER_ID = #{member.id} )
