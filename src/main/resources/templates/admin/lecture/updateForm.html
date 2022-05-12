@@ -58,81 +58,33 @@
                             <h6 class="m-0 font-weight-bold text-primary">수강 등록 & 수납</h6>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="/admin/lecture/updateForm" method="post" name="lectureForm">
+                            	<input type="hidden" name="no" value="${ lecture.no }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
-                                        <tbody>
+                                        <tbody th:object="${ lecture }">
                                             <tr>
-                                                <th class="col-lg-3 p-2"><label for="memberId"
-                                                    class="col-form-label">원생 <span id="pointtext">*</span></label>
+                                                <th class="col-lg-3">
+                                                    <label for="std" class="col-form-label">원생</label>
                                                 </th>
-                                                <td class="col-lg-9 p-2">
-                                                	<div class="col-sm-10 col-lg-4">
-	                                                    <!-- <div class="col-sm-10 col-lg-4">
-	                                                        <input type="text" class="form-control" id="std" name="std">
-	                                                    </div> -->
-	                                                    <select class="form-control form-select-lg"
-	                                                        aria-label=".form-select-lg example" id="memberId" name="memberId">
-	                                                        <optgroup label="원생 선택">
-	                                                        	<option th:each="val : ${ memberList }"
-	                                                        		th:value="${ val?.id }" th:utext="${ val?.name }"></option>
-	                                                        </optgroup>
-	                                                    </select>
-                                                    </div>
+                                                <td class="col-lg-9">
+                                                    <div th:text="*{ member.name }" class="col-sm-10">원생</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-lg-3">
-                                                    <label for="clsId" class="col-form-label">강의명 <span
-                                                            id="pointtext">*</span></label>
+                                                    <label for="clsId" class="col-form-label">강의명</span></label>
                                                 </th>
                                                 <td class="col-lg-9 pl-2">
-                                                    <div class="col-sm-10 col-lg-4">
-                                                        <select class="form-control form-select-lg"
-                                                            aria-label=".form-select-lg example" id="clsId" name="clsId">
-                                                            <optgroup label="강의 선택">
-                                                            	<option th:each="val : ${ classList }"
-                                                            		th:value="${ val?.clsId }" th:utext="${ val?.clsName }"></option>
-                                                            </optgroup>
-                                                        </select>
-                                                    </div>
+                                                    <div th:text="*{ cls.clsName }" class="col-sm-10 col-lg-4"></div>
                                                 </td>
                                             </tr>
-<!--                                             <tr>
-                                                <th>
-                                                    <label for="memName" class="col-form-label">강사명 <span
-                                                            id="pointtext">*</span></label>
-                                                </th>
-                                                <td>
-                                                    <div class="col-sm-10 col-lg-4 pl-2">
-                                                        <input type="text" class="form-control" id="memName" readonly>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-lg-3 p-2"><label for="clsDate"
-                                                    class="col-form-label">수강 기간 <span id="pointtext">*</span></label>
-                                                </th>
-                                                <td class="col-lg-9 p-2">
-                                                    <div class="clsDate">
-                                                        <div class="col-sm-10 col-lg-4">
-                                                            <input type="date" class="form-control" id="clsSrt" readonly>
-                                                        </div>
-                                                        <span class="mt-2">~</span>
-                                                        <div class="col-sm-10 col-lg-4">
-                                                            <input type="date" class="form-control" id="clsEnd" readonly>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr> -->
                                             <tr>
                                                 <th class="col-lg-3 p-2"><label for="lecPay"
-                                                    class="col-form-label">수강료 <span id="pointtext">*</span></label>
+                                                    class="col-form-label">수강료</label>
                                                 </th>
                                                 <td class="col-lg-9 p-2">
-                                                    <div class="col-sm-10 col-lg-4">
-                                                        <input type="number" class="form-control" id="lecPay" name="lecPay" required>
-                                                    </div>
+                                                    <div th:text="*{ lecPay }" class="col-sm-10 col-lg-4"></div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -140,12 +92,25 @@
                                                     class="col-form-label">할인 사유</label>
                                                 </th>
                                                 <td class="col-lg-9 p-2">
-                                                    <div class="col-sm-10 col-lg-10">
-                                                        <input type="text" class="form-control lecDiscount" id="lecDiscount" name="lecDiscount"
-                                                            placeholder="100자 이내로 작성해 주시기 바랍니다.">
-                                                    </div>
+                                                    <div th:text="*{ lecDiscount }" class="col-sm-10 col-lg-10"></div>
                                                 </td>
                                             </tr>
+                                            <tr>
+												<th class="col-lg-3 p-2">
+													<label for="lecStatus" class="col-form-label">수강 상태</label>
+												</th>
+												<td class="col-lg-9 p-2">
+													<div class="col-sm-10 col-lg-4">
+														<select class="form-control form-select-lg"
+															aria-label=".form-select-lg example" id="lecStatus" name="lecStatus">
+															<optgroup label="수강 상태 선택">
+																<option th:selected="*{ lecStatus }=='수강중'">수강중</option>
+																<option th:selected="*{ lecStatus }=='수강 완료'">수강 완료</option>
+															</optgroup>
+														</select>
+													</div>
+												</td>
+											</tr>
                                             <tr><td></td></tr>
                                             <tr>
                                                 <th>
@@ -153,7 +118,7 @@
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4 pl-2">
-                                                        <input type="date" class="form-control" id="accDate" name="accDate">
+                                                        <input th:value="*{ accDate }" type="date" class="form-control" id="accDate" name="accDate">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -165,12 +130,12 @@
                                                     <div class="col-lg-7">
                                                         <div class="custom-control custom-radio custom-control-inline mt-2">
                                                             <input type="radio" id="accCard" name="accOption" value="신용카드"
-                                                                class="custom-control-input">
+                                                                class="custom-control-input" th:checked="${ lecture.accOption == '신용카드' }">
                                                             <label class="custom-control-label" for="accCard">신용카드</label>
                                                         </div>
                                                         <div class="custom-control custom-radio custom-control-inline mt-2">
                                                             <input type="radio" id="accCash" name="accOption" value="현금"
-                                                                class="custom-control-input">
+                                                                class="custom-control-input" th:checked="${ lecture.accOption == '현금' }">
                                                             <label class="custom-control-label" for="accCash">현금</label>
                                                         </div>
                                                     </div>
@@ -182,7 +147,10 @@
                                 <div class="buttonbox">
                                		<button type="button" class="btn btn-light resetbuttonbox"
                                     	onclick = "location.href = '/admin/lecture/list'">취소하기</button>
-                                    <button type="submit" class="btn btn-primary submitbuttonbox">수강등록</button>
+                                    <button type="button" class="btn btn-primary submitbuttonbox"
+                                    	th:onclick="updateLecture([[${lecture.no}]])">수정하기</button>
+                                    <button type="button" class="btn btn-primary submitbuttonbox"
+                                    	th:onclick="deleteLecture([[${lecture.no}]])">삭제하기</button>
                                 </div>
                             </form>
                         </div>
@@ -207,6 +175,22 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
+    <script type="text/javascript">
+    	function updateLecture(no) {
+    		if(confirm('수강 내용을 수정하시겠습니까?')) {
+    			document.forms.lectureForm.action = "updateForm?no=" + no;
+    			document.forms.lectureForm.submit();
+    		}
+    	}
+    	
+    	function deleteLecture(no) {
+    		if(confirm('수강 내역을 삭제하시겠습니까?')) {
+    			document.forms.lectureForm.action = "delete?no=" + no;
+    			document.forms.lectureForm.submit();
+    		}
+    	}
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

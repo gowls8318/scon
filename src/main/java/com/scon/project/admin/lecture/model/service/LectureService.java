@@ -20,4 +20,13 @@ public interface LectureService {
 	/* 수강 등록용 */
 	int insertLecture(LectureDTO lec) throws Exception;
 
+	/* 수강 수정용 - 정보 조회 */
+	LectureDTO selectLectureDetail(int no) throws Exception;
+
+	/* 수강 수정용 */
+	int modifyLecture(LectureDTO lec) throws Exception;
+
+	/* 수강 삭제용 */
+	int deleteLecture(int no) throws Exception;
+
 }

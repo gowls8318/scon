@@ -13,7 +13,6 @@
 		<result property="accStatus" column="ACC_STATUS"/>
 		<result property="accDate" column="ACC_DATE"/>
 		<result property="accOption" column="ACC_OPTION"/>
-		<result property="accPay" column="ACC_PAY"/>
 		
 		<association property="member" resultMap="memberResultMap"/>
 		<association property="cls" resultMap="classResultMap"/>
@@ -56,12 +55,9 @@
 			   A.LEC_NO
 			 , A.LEC_PAY
 			 , A.LEC_STATUS
-			 , A.LEC_DISCOUNT
-			 , A.LEC_DELETE
 			 , A.ACC_STATUS
 			 , A.ACC_DATE
 			 , A.ACC_OPTION
-			 , A.ACC_PAY
 			 , B.MEMBER_NAME
 			 , C.CLS_ID
              , C.MEMBER_ID
@@ -72,6 +68,7 @@
 		  FROM TB_LECTURE A
 		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		  JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
+		 WHERE A.LEC_DELETE = 'N'
 		 ORDER BY A.LEC_NO DESC
 	</select>
 		
@@ -109,10 +106,11 @@
 		, LEC_PAY
 		, LEC_STATUS
 		, LEC_DISCOUNT
+		<if test="accDate != ''">
 		, ACC_STATUS
 		, ACC_DATE
 		, ACC_OPTION
-		, ACC_PAY
+		</if>
 		)
 		VALUES
 		(
@@ -122,12 +120,58 @@
 		, #{ lecPay }
 		, DEFAULT
 		, #{ lecDiscount }
-		, <if test="accDate != null">'수납'</if>
-		, <if test="accDate != null">#{ accDate }</if>
-		, <if test="accDate != null">#{ accOption }</if>
-		, <if test="accDate != null">#{ accPay }</if>
+		<if test="accDate != ''">
+		, '수납'
+		, #{ accDate }
+		, #{ accOption }
+		</if>
 		)
 	</insert>
-
+	
+	<!-- 수강 수정용 - 정보 조회 -->
+	<select id="selectLectureDetail" resultMap="lectureResultMap">
+		SELECT
+			   A.LEC_NO
+			 , A.LEC_PAY
+			 , A.LEC_STATUS
+			 , A.LEC_DISCOUNT
+			 , A.LEC_DELETE
+			 , A.ACC_STATUS
+			 , A.ACC_DATE
+			 , A.ACC_OPTION
+			 , B.MEMBER_NAME
+			 , C.CLS_ID
+             , C.MEMBER_ID
+			 , C.CLS_NAME
+			 , C.CLS_PAY
+			 , C.CLS_START
+			 , C.CLS_END
+		  FROM TB_LECTURE A
+		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		  JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
+		 WHERE LEC_NO = #{ no }
+		   AND LEC_DELETE = 'N'
+	</select>
+	
+	<!-- 수강 수정용 -->
+	<update id="modifyLecture">
+		UPDATE
+			   TB_LECTURE
+		   SET LEC_STATUS = #{ lecStatus }
+		     <if test="accDate != ''">
+		     , ACC_STATUS = '수납'
+		     , ACC_DATE = #{ accDate }
+		     , ACC_OPTION = #{ accOption }
+		     </if>
+		 WHERE LEC_NO = #{ no }
+	</update>
+	
+	<!-- 수강 삭제용 -->
+	<update id="deleteLecture">
+		UPDATE
+			   TB_LECTURE
+		   SET LEC_DELETE = 'Y'
+		 WHERE LEC_NO = #{ no }
+	</update>
 
 </mapper>
