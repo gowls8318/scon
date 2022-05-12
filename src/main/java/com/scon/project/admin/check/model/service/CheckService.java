@@ -1,11 +1,13 @@
 package com.scon.project.admin.check.model.service;
 
+import java.util.List;
 
-public class CheckService {
+import com.scon.project.admin.check.model.dto.CheckDTO;
+
+public interface CheckService {
+
+	//List<CheckDTO> selectAllStudentList() throws Exception;
 	
-
-	public static Object getClassList() {
-		return getClassList();
-	}
+	
 
 }

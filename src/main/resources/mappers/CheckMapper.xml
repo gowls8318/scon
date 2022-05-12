@@ -4,7 +4,7 @@
 
 	<resultMap id="checkResultMap" type="com.scon.project.admin.check.model.dto.CheckDTO">
 		<id property="no" column="CHQ_NO"/>
-		<result property="memberId" column="BUS_NUM"/>
+		<result property="memberId" column="MEMBER_ID"/>
 		<result property="clsId" column="CLS_ID"/>
 		<result property="chkDate" column="CHQ_DATE"/>
 		<result property="chkStart" column="CHQ_START"/>
@@ -42,14 +42,32 @@
 		<result property="clsEnd" column="CLS_END"/>
 		<result property="clsNote" column="CLS_NOTE"/>
 		<result property="clsStatus" column="CLS_STATUS"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
-	<!-- 강의 목록 불러오기 -->
-	<select id="getClassList" resultType="com.scon.project.admin.Class.dto.ClassDTO">
-	<![CDATA[
-		SELECT *
-		FROM TB_CLASS
-		ORDER BY CLS_ID 
-	]]>
+	<select id="selectAllStudentList" resultMap="checkResultMap">
+		SELECT
+			  A.CHQ_NO
+			, B.MEMBER_ID
+			, B.MEMBER_NAME
+			, C.CLS_ID
+			, C.CLS_NAME
+			, A.CHQ_DATE
+			, A.CHQ_START
+			, A.CHQ_FINISH
+		FROM TB_CHECK A
+		JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
+		ORDER BY A.CHQ_NO DESC
 	</select>
+	
+	<!-- 강의 목록 불러오기 -->
+	<!-- <select id="getClassList" resultType="com.scon.project.admin.Class.dto.ClassDTO">
+			SELECT
+		       CLS_ID
+		     , CLS_NAME	     
+		  FROM TB_CLASS
+		WHERE CLS_STATUS = 'Y'
+	</select> -->
 </mapper>

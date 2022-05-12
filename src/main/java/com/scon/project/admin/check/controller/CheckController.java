@@ -1,20 +1,51 @@
 package com.scon.project.admin.check.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.scon.project.admin.check.model.dto.CheckDTO;
 import com.scon.project.admin.check.model.service.CheckService;
 
 @Controller
 @RequestMapping("/admin/check")
 public class CheckController {
 	
-	@GetMapping("/chkRegist")
-	public String chkRegist() {
-		return "admin/check/chkRegist";
-	}
+//	private CheckService checkService;
+//	
+//	@Autowired
+//	public CheckController(CheckService checkService) {
+//		this.checkService = checkService;
+//	}
+//	
+//	/* 반별 출결 조회 */
+//	@GetMapping("/chkViewClass")
+//	public ModelAndView selectAllStudentList(ModelAndView mv) throws Exception {
+//		
+//		List<CheckDTO> checkList = checkService.selectAllStudentList();
+//		
+//		mv.addObject("checkList", checkList);
+//		mv.setViewName("admin/check/chkViewClass");
+//		
+//		return mv;
+//	}
+//
+//	@GetMapping("/chkViewClassNs")
+//	public String chkViewClassNoResult() {
+//		return "admin/check/chkViewClassNs";
+//	}
+//	
+//	@GetMapping("/chkRegist")
+//	public String chkRegist() {
+//		
+//		return "admin/check/chkRegist";
+//	}
+	
+	
 	
 //	@GetMapping("/chkRegist")
 //	public void chkRegist(Model model) {
@@ -26,15 +57,6 @@ public class CheckController {
 		return "admin/check/chkRegistNs";
 	}
 	
-	@GetMapping("/chkViewClass")
-	public String chkViewClass() {
-		return "admin/check/chkViewClass";
-	}
-
-	@GetMapping("/chkViewClassNs")
-	public String chkViewClassNoResult() {
-		return "admin/check/chkViewClassNs";
-	}
 	
 	@GetMapping("/chkViewStudent")
 	public String chkViewStudent() {

@@ -24,11 +24,17 @@ public class BusinessServiceImpl implements BusinessService {
 		return businessMapper.selectBusinessInfo();
 	}
 	
-	//입력
+//	@Override
+//	public BusinessDTO selectBusinessInfo(int busCode) {
+//		BusinessDTO BusinessDTO = businessMapper.selectBusinessInfo(busCode);
+//		return businessMapper.selectBusinessInfo(busCode);
+//	}
+	
+	//수정
 	@Override
-	public BusinessDTO insertBusinessInfo(BusinessDTO business) {
+	public void insertBusinessInfo(BusinessDTO BusinessDTO) {
 		
-		return businessMapper.insertBusinessInfo();
+		businessMapper.insertBusinessInfo(BusinessDTO);
 	}
 	
 }

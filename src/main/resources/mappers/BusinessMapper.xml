@@ -28,7 +28,7 @@
 	</select>
 	
 	<!-- 교육원 정보 입력 -->
-	<insert id="insertBusinessInfo">
+	<insert id="updatetBusinessInfo">
 		INSERT 
 		INTO TB_BUSINESS
 		(
@@ -56,7 +56,7 @@
 	
 	
 	<!-- 교육원 정보 수정 -->
-	<update id="updateBusinessInfo">
+	<update id="insertBusinessInfo">
 		UPDATE TB_BUSINESS
 			SET BUS_CODE = #{ busCode }
 			  , BUS_NUM = #{ busNum }
