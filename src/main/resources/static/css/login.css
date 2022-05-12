@@ -40,3 +40,7 @@ a:hover {
     color: #8B169E;
     font-weight: bold;
 }
+
+.form-control-user{
+	font-size : 16px !important;
+}

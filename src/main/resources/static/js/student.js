@@ -94,41 +94,18 @@ $('#checkId').click(function() {
 		data: { "id": id },
 		success: function(data) {
 			if (data > 0) {
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: ' 중복된 아이디입니다! '
-			})
+			toast('worning', '중복된 아이디입니다.');
 				$("#id").addClass("is-invalid");
 				idck = 0;
 			} else {
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
+				toast('success', '사용 가능한 아이디 입니다.');
 			
-			Toast.fire({
-			  icon: 'success',
-			  title: ' 사용가능한 아이디입니다. '
-			})
 				$("#id").removeClass("is-invalid");
 				$("#id").addClass("is-valid");
 				idck = 1;
 			}
 		}, error: function() {
-			alert("error");
+			toast('error', 'error! 다시 시도해주세요!');
 		}
 	});
 
@@ -152,67 +129,21 @@ function checkAll() {
 	if (path == '/admin/studentRegist' || path == '/admin/teacherRegist') {
 		alertName= "등록";
 		if (idck == 0) {
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: ' 아이디 중복 검사를 해주세요 !'
-			})
+			toast('worning', '아이디 중복 검사를 진행해주세요.');
 			return false;
 		}
 	// 원생 수정시 원생을 선택한 상태여야 함.
 	} else if(path == '/admin/updateStudent') {
 		alertName = "수정";
 		if (form.id.value == '') {
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: '원생을 선택해주세요!'
-			})
+			toast('worning', '원생을 선택해주세요!');
 			return false;
 		}
 	 } else{
 		alertName = "수정";
 		
 		if (form.id.value == '') {
-			
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: '강사를 선택해주세요!'
-			})
+			toast('worning', '강사를 선택해주세요!');
 			return false;
 		}
 	}
@@ -355,22 +286,7 @@ function checkAll() {
 			location.href = data.location;
 		},
 		error: function() {
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: '실패! 다시 시도해주세요.'
-			})
+			toast('error', 'error! 다시 시도해주세요!');
 		}
 	}); //<-- ajax
 	
@@ -382,24 +298,8 @@ function checkAll() {
 // 공백 확인
 function checkExistData(value, dataName) {
 	if (value == "") {
+		toast('worning', dataName + ' 입력해주세요!');
 		
-		const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: dataName + " 입력해주세요!"
-			})
-			
 		return false;
 	}
 	return true;
@@ -513,11 +413,7 @@ $('input[name=selectMember]').on('click',function() {
 			success: function(data) {
 				studentDetail(data);
 			}, error: function() {
-				Swal.fire({
-					title : '조회 실패',
-					text: '다시 시도해주세요',
-					icon: 'warning'
-			})
+				toast('error', 'error! 다시 시도해주세요!');
 			}
 		
 	});
@@ -603,46 +499,14 @@ function deleteMember(){
 		status = "퇴원생";
 		
 		if (form.id.value == '') {
-			
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: ' 원생을 선택하세요! '
-			})
+			toast('worning', '원생을 선택해주세요!');
 		    
 			return false;
 		}
 	 } else{
 		status= "퇴직";
 		if (form.id.value == '') {
-			const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-			
-			Toast.fire({
-			  icon: 'warning',
-			  title: ' 강사를 선택하세요! '
-			})
-			
+			toast('worning', '강사를 선택해주세요!');
 			return false;
 		}
 	}
@@ -664,40 +528,41 @@ function deleteMember(){
 		$.ajax({
 				type: "POST",
 				url: "/member/deleteMember",
-				data: { "id" : id ,
-						"status" : status },
-				success: function(data) {
-					Swal.fire({
-						title : "삭제 완료!",
-						text: data.message,
-						icon: 'success'
-					})
-				}, error: function() {
-					const Toast = Swal.mixin({
-					  toast: true,
-					  position: 'top',
-					  showConfirmButton: false,
-					  timer: 3000,
-					  timerProgressBar: false,
-					  didOpen: (toast) => {
-						toast.addEventListener('mouseenter', Swal.stopTimer)
-						toast.addEventListener('mouseleave', Swal.resumeTimer)
-						}
-					})
-					
-					Toast.fire({
-					  icon: 'warning',
-					  title: ' 실패! 다시 시도해주세요.'
-					})
-				}
-			
-		}); //<-- ajax
-	
+			data: {
+				"id": id,
+				"status": status
+			},
+			success: function(data) {
+				Swal.fire({
+					title: "처리 완료!",
+					text: data.message,
+					icon: 'success'
+				})
+			}, error: function() {
+				toast('error', 'error! 다시 시도해주세요!');
+			}
+		}); //<-- ajax 끝!
       }
     })
 		
 }
 
+
+/* switealert2 toast 알림창 */
+
+function toast(icon, title){
+		const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 2000
+			})
+			
+			Toast.fire({
+			  icon: icon,
+			  title: title
+			})
+	} 
 
 /* 서브 메뉴 이동 함수 */
 const btn = document.querySelectorAll('#menu-btns .btn');

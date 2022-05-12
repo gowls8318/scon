@@ -68,6 +68,12 @@ public class MemberServiceImpl implements MemberService{
 		return user;
 	}
 	
+	@Override
+	public String findIdByName(String name, String email) {
+		return memberMapper.findIdByName(name, email);
+	}
+
+	
 	
 	/* 원생 회원가입 */
 	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.SERIALIZABLE, rollbackFor = {Exception.class})
@@ -168,9 +174,6 @@ public class MemberServiceImpl implements MemberService{
 	public int deleteMember(String id, String status) {
 		return memberMapper.deleteMember(id, status);
 	}
-
-
-
 
 
 

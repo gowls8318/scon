@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +51,31 @@ public class MemberController {
 	@GetMapping("/forgotId")
 	public String forgetId() {
 		return "/member/forgotId";
+	}
+	
+	@ResponseBody
+	@PostMapping("/forgotId")
+	public String findIdByName(@RequestParam("name") String name, @RequestParam("email") String email) {
+		
+		String findId = memberService.findIdByName(name, email);
+		
+		String resultId = "";
+		
+		if(findId !=null) {
+			
+			int id_length = findId.length(); // 아이디의 총 길이
+			
+			resultId = findId.substring(0, 3);
+			
+			String answer = "";
+			for (int j = 3; j < id_length; j++){
+				answer += "*"; 
+			}
+			
+			resultId += answer;
+		}
+		
+		return resultId;
 	}
 
 	@GetMapping("/forgotPwd")
