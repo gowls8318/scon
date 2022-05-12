@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.scon.project.admin.notice.model.dto.NoticeDTO;
 import com.scon.project.admin.notice.model.service.NoticeService;
 import com.scon.project.admin.notice.paging.Criteria;
-import com.scon.project.admin.notice.paging.PageMaker;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,23 +76,27 @@ public class NoticeController {
 
 		noticeService.registNotice(notice);
 		
-		return "redirect:/admin/notice/notiTables";
+		return "redirect:notiTables";
 	}
 
 //	게시글 상세 조회
-	@GetMapping("noticeDetail") 
-	public ModelAndView openNoticeDetail(@RequestParam int idx, ModelAndView mv) throws Exception {
+	@GetMapping("notiDetail") 
+	public String selectNotice(@RequestParam int no, Model model) throws Exception {
 		
-					
-		NoticeDTO notice = noticeService.sellectNoticeDetail(idx);
-		
-		mv.addObject("notice", notice);
-		mv.setViewName("admin/notice/notiDetail");
+		model.addAttribute("noticeDetail", noticeService.selectNoticeDetail(no));
 
-		return mv;
+		return "admin/notice/notiDetail";
 
     }
 	
+//	게시글 수정
+	@PutMapping("notiDetail")
+	public String selectNoticeAction(NoticeDTO noti) throws Exception {
+
+		noticeService.registNotice(noti);
+		
+		return "redirect:notiDetail";
+	}
 	
 	
 	
@@ -100,8 +104,8 @@ public class NoticeController {
 	
 	
 	
-////	게시글 상세 조회
-//	@GetMapping("noticeDetail")
+//	게시글 상세 조회
+//	@GetMapping("notiDetail")
 //	public ModelAndView openNoticeDetail(@RequestParam int idx) throws Exception {
 //		
 //		ModelAndView mv = new ModelAndView("/admin/notiDetail");

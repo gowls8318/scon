@@ -99,6 +99,7 @@
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
+    <!-- 사이드바 -->
 	<div th:replace="/common/adminSidebar.html"></div> 
 
         <!-- Content Wrapper -->
@@ -106,6 +107,7 @@
 
             <!-- Main Content -->
             <div id="content">
+            <!-- 탑바 -->
                 <div th:replace="/common/adminTopbar.html"></div>
 
                 <!-- Begin Page Content -->
@@ -155,9 +157,11 @@
                                             <!-- 내용 -->
                                             <td th:text="${ notice.notiNo }"></td>
                                             <td>
-                                            <a th:href="@{/admin/notiDetail(idx=${notice.notiNo})}">[[${notice.notiTitle}]]</a>
+                                            	<a class="notiTitleDetail" 
+                                            		th:href="@{/admin/notiDetail(no=${notice.notiNo})}">[[${notice.notiTitle}]]</a>
                                             </td>
-                                            <td th:text="${ notice.memberId }"></td>
+                                            <td>관리자</td>                                            
+                                           <!--  <td th:text="${ notice.memberId }"></td> -->
                                             <td th:text="${ notice.notiDate }"></td>
                                             <td th:text="${ notice.notiView }"></td>
                                         </tr>
@@ -261,7 +265,6 @@
 
     <!-- Page level plugins -->
     <script src="/vendor/chart.js/Chart.min.js"></script>
-    <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->

@@ -51,16 +51,21 @@ public class NoticeServiceImpl implements NoticeService {
 
 //	게시글 상세 조회
 	@Override
-	public NoticeDTO sellectNoticeDetail(int idx) throws Exception {
+	public NoticeDTO selectNoticeDetail(int no) throws Exception {
 //		선택한 게시글 조회수 증가
-		noticeMapper.updateHitCount(idx);
-//		선택한 게시글의 내용 조회
-		NoticeDTO notice = noticeMapper.sellectNoticeDetail(idx);
+		noticeMapper.updateHitCount(no);
 		
-		return notice;
+//		선택한 게시글의 내용 조회
+		NoticeDTO noticeDetail = noticeMapper.sellectNoticeDetail(no);
+		
+		return noticeDetail;
 	}
 
 
+//  게시글 수정
+	public void updateNoticeDetail(NoticeDTO noti) {
+		noticeMapper.updateNoticeDetail(noti);
+	}
 
 
 
