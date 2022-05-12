@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -63,30 +63,21 @@
                             <h6 class="m-0 font-weight-bold text-primary">원생 수납 내역 조회</h6>
                         </div>
                         <br>
-                        <form class="form-inline" action="" method="get">
-                            <!-- <div class="col-lg-9"></div> -->
-                            <div class="col-sm-10 col-lg-8 accDate">
-                                <div class="mt-2 col-lg-1 accDateSearch">기간&nbsp; : </div>
-                                <div class="col-sm-10 col-lg-1 mr-5 pl-0">
-                                    <input type="date" class="form-control" id="clsSrt">
-                                </div>
-                                <div class="mt-2 ml-4 pl-2">~</div>
-                                <div class="col-sm-10 col-lg-1 mr-5">
-                                    <input type="date" class="form-control" id="clsEnd">
-                                </div>
-                                <div class="ml-4 pl-3 mt-1 fa-searchicon">
-                                    <button type="submit"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                            <div class="search-area col-lg-4">
-                                <div class="form-group mx-sm-3">
-                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()'
-                                        placeholder="검색어를 입력하세요">
-                                </div>
-                                <button type="button" class="btn btn-primary btn-search mr-2"
+                        <div class="clsDate2">
+                        	<div class="col-lg-3 ml-2">
+                        		<button type="button" class="btn btn-primary btn-search"
                                 	th:onclick="location.href='/admin/lecture/insertForm'">수강 등록</button>
-                            </div>
-                        </form>
+                        	</div>
+	                        <form class="form-inline" action="" method="get">
+	                            <div class="search-area col-lg-12">
+	                                <div class="form-group mx-sm-3">
+	                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()'
+	                                        placeholder="검색어를 입력하세요">
+	                                </div>
+	                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
+	                            </div>
+	                        </form>
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered-yj dataTable-yj" id="accDataTable"
@@ -97,7 +88,7 @@
                                             <th>원생</th>
                                             <th>강의명</th>
                                             <th>수강 기간</th>
-                                            <th>강사명</th>
+                                            <th>수강 상태</th>
                                             <th>수강료</th>
                                             <th>수납일</th>
                                             <th>결제 방법</th>
@@ -107,18 +98,18 @@
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="lec : ${ lectureList }">
-                                            <td th:text="${ lec.no }">번호</td>
-                                            <td th:text="${ lec.member.name }">원생</td>
-                                            <td th:text="${ lec.cls.clsName }">강의명</td>
+                                        <tr th:each="lec : ${ lectureList }" class="lecTr">
+                                            <td th:text="${ lec.no }" class="no">번호</td>
+                                            <td th:text="${ lec.member.name }" class="std">원생</td>
+                                            <td th:text="${ lec.cls.clsName }" class="cls">강의명</td>
                                             <td>
-                                            	<div class="clsDate2">
+                                            	<div class="clsDate3">
 													<div th:text="${ lec.cls.clsStart }" id="clsSrt2">수강 시작일</div>
 													<span>&nbsp;~&nbsp;</span>
 													<div th:text="${ lec.cls.clsEnd }" id="clsEnd2">수강 종료일</div>
 												</div>
                                             </td>
-                                            <td th:text="${ lec.member.id }">강사명</td>
+                                            <td th:text="${ lec.lecStatus }">수강 상태</td>
                                             <td th:text="${ lec.lecPay }">수강료</td>
                                             <td th:text="${ lec.accDate }">수납일</td>
                                             <td th:text="${ lec.accOption }">결제 방법</td>
@@ -126,10 +117,10 @@
                                             <td></td>
                                             <td class="btn-no">
                                                 <div class="btn-acc">
-                                                    <button type="button" class="btn btn-primary btn-acc1">수정</button>
-                                                    <!-- th:onclick="'location.href=\'' + @{/admin/account/insertForm(no=${lec.no})} + '\';'" -->
-                                                    <button type="button" class="btn btn-light btn-acc2"
-                                                        data-toggle="modal" data-target="#refModal">환불</button>
+                                                    <button type="button" class="btn btn-primary btn-acc1"
+                                                    	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no})} + '\';'">수정</button>
+                                                    <button type="button" class="btn btn-light btn-acc2 refBtn"
+                                                    	th:onclick="refund(this, [[${lec.no}]])">환불</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -169,75 +160,67 @@
             <!-- footer include -->
             <div th:replace="/common/footer.html"></div>
 
-            <!-- refModal-->
-            <div class="modal fade" id="refModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content ref-modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">환불 처리</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="post" name="accRefForm">
-                            	<input type="hidden" name="no" id="no">
-                                <div class="row mb-3">
-                                    <div class="col-lg-1"></div>
-                                    <label for="std" class="col-sm-2 col-form-label col-lg-3">원생</label>
-                                    <div class="col-sm-10 col-lg-7">
-                                        <input type="text" class="form-control" id="std" readonly>
-                                    </div>
-                                    <div class="col-lg-1"></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-1"></div>
-                                    <label for="clsId" class="col-sm-2 col-form-label col-lg-3">수강 강의</label>
-                                    <div class="col-sm-10 col-lg-7">
-                                        <input type="text" class="form-control" id="clsId" readonly>
-                                    </div>
-                                    <div class="col-lg-1"></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-1"></div>
-                                    <label for="refDate" class="col-sm-2 col-form-label col-lg-3">환불일</label>
-                                    <div class="col-sm-10 col-lg-7">
-                                        <input type="date" class="form-control" id="refDate">
-                                    </div>
-                                    <div class="col-lg-1"></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-1"></div>
-                                    <label for="refPay" class="col-sm-2 col-form-label col-lg-3">환불 금액</label>
-                                    <div class="col-sm-10 col-lg-7">
-                                        <input type="number" class="form-control" id="refPay" required>
-                                    </div>
-                                    <div class="col-lg-1"></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-1"></div>
-                                    <label for="refContent" class="col-sm-2 col-form-label col-lg-3">환불 사유</label>
-                                    <div class="col-sm-10 col-lg-7">
-                                        <div class="input-group refContent">
-                                            <textarea class="form-control" aria-label="With textarea"
-                                                id="refContent"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1"></div>
-                                </div>
-                                <div class="modal-footer pb-0">
-                                    <button type="button" class="btn btn-light resetbuttonbox"
-                                        data-dismiss="modal">취소</button>
-                                    <button type="button" class="btn btn-primary submitbuttonbox" data-toggle="modal"
-                                        data-target="#refModal2">환불처리</button>
-                                </div>
-                            </form>
-                        </div>
+            <!-- 환불모달-->
+            <div id="refModal" class="modal refModal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="mt-2">환불 처리</h5>
+                        <span class="refClose">&times;</span>
                     </div>
+                    <form action="" method="post" name="refundForm">
+                        <div class="modal-body">
+                            <div class="row mb-3">
+                                <div class="col-lg-1"></div>
+                                <label for="std" class="col-sm-2 col-form-label col-lg-3">원생</label>
+                                <div class="col-sm-10 col-lg-7">
+                                    <input type="text" class="form-control" id="std" readonly>
+                                </div>
+                                <div class="col-lg-1"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-lg-1"></div>
+                                <label for="cls" class="col-sm-2 col-form-label col-lg-3">수강 강의</label>
+                                <div class="col-sm-10 col-lg-7">
+                                    <input type="text" class="form-control" id="cls" readonly>
+                                </div>
+                                <div class="col-lg-1"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-lg-1"></div>
+                                <label for="refDate" class="col-sm-2 col-form-label col-lg-3">환불일</label>
+                                <div class="col-sm-10 col-lg-7">
+                                    <input type="date" class="form-control" id="refDate">
+                                </div>
+                                <div class="col-lg-1"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-lg-1"></div>
+                                <label for="refPay" class="col-sm-2 col-form-label col-lg-3">환불 금액</label>
+                                <div class="col-sm-10 col-lg-7">
+                                    <input type="number" class="form-control" id="refPay" required>
+                                </div>
+                                <div class="col-lg-1"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-lg-1"></div>
+                                <label for="refContent" class="col-sm-2 col-form-label col-lg-3">환불 사유</label>
+                                <div class="col-sm-10 col-lg-7">
+                                    <div class="input-group refContent">
+                                        <textarea class="form-control" aria-label="With textarea"
+                                            id="refContent"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary submitbuttonbox">환불처리</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <!-- /refModal -->
+            <!-- /환불모달 -->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -250,34 +233,83 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <script>
-    	/* 입력 검색 - 원하는 td만 검색 */
-        function searchTable() {
-            var input, filter, table, tr, td, i, j, found;
-            input = document.getElementById("accSearch");
-            filter = input.value.toLowerCase();
-            table = document.getElementById("accDataTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 1; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length - 1; j++) {
-                    if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
-                        found = true;
-                    }
-                }
-                if (found) {
-                    tr[i].style.display = "";
-                    found = false;
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    	
-    	
-    </script>
+	<script>
+		/* 입력 검색 - 원하는 td만 검색 */
+		function searchTable() {
+			var input, filter, table, tr, td, i, j, found;
+			input = document.getElementById("accSearch");
+			filter = input.value.toLowerCase();
+			table = document.getElementById("accDataTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 1; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td");
+				for (j = 0; j < td.length - 1; j++) {
+					if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
+						found = true;
+					}
+				}
+				if (found) {
+					tr[i].style.display = "";
+					found = false;
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
 
-    <!-- Bootstrap core JavaScript-->
+		/* 환불 모달 */
+		var modal = document.getElementById("refModal");
+		var btn = document.getElementsByClassName("refBtn");
+		var span = document.getElementsByClassName("refClose")[0];
+
+		function refund(elem, no) {
+			document.getElementsByClassName('no').value = no;
+			console.log(document.getElementsByClassName('no').value);
+
+			document.getElementsByClassName('std').value = elem.closest('.lecTr').querySelector('.std').innerHTML;
+			console.log(document.getElementsByClassName('std').value);
+
+			document.getElementsByClassName('cls').value = elem.closest('.lecTr').querySelector('.cls').innerHTML;
+			console.log(document.getElementsByClassName('cls').value);
+		}
+		
+		if(refund) {
+			for(i = 0; i < btn.length; i++){
+			    btn[i].onclick = function () {
+			    	
+			        modal.style.display = "block";
+			    }
+			}
+		}
+
+
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+		/* 환불 모달에 값 넣기 */
+		$(".refBtn").click(function () {
+		     var std = $(".std").text();
+		     var cls = $(".cls").text();
+		     console.log(std);
+		     console.log(cls);
+		     
+		    /*  for(var i = 0; i < std.length; i++){
+		    	 console.log(std[i]);
+		     } */
+		     	
+		     $("#std").val(std);
+		     $("#cls").val(cls);
+		 });
+	</script>
+
+	<!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

@@ -20,6 +20,5 @@ public class LectureDTO {
 	private String accStatus;
 	private String accDate;
 	private String accOption;
-	private Integer accPay;
 	
 }

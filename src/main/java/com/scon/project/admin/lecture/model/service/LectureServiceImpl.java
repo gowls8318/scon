@@ -74,4 +74,43 @@ public class LectureServiceImpl implements LectureService {
 		return result;
 	}
 
+	/* 수강 수정용 - 정보 조회 */
+	@Override
+	public LectureDTO selectLectureDetail(int no) throws Exception {
+		
+		LectureDTO lecture = lectureMapper.selectLectureDetail(no);
+		
+		if(lecture == null) {
+			throw new Exception("수강 상세 조회에 실패하였습니다.");
+		}
+		
+		return lecture;
+	}
+
+	/* 수강 수정용 */
+	@Override
+	public int modifyLecture(LectureDTO lec) throws Exception {
+		
+		int result = lectureMapper.modifyLecture(lec);
+		
+		if(result <= 0) {
+			throw new Exception("수강 수정에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+
+	/* 수강 삭제용 */
+	@Override
+	public int deleteLecture(int no) throws Exception {
+		
+		int result = lectureMapper.deleteLecture(no);
+		
+		if(result <= 0) {
+			throw new Exception("수강 삭제에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+
 }

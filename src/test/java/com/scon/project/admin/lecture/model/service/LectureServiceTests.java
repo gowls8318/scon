@@ -1,5 +1,6 @@
 package com.scon.project.admin.lecture.model.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
@@ -86,6 +87,60 @@ public class LectureServiceTests {
 		
 		// when
 		int result = lectureService.insertLecture(lec);
+		
+		// then
+		assertNotNull(result);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 정보 조회용 서비스 메소드 테스트")
+	public void testSelectLectureDetail() throws Exception {
+		
+		// given
+		int no = 46;
+		
+		// when
+		LectureDTO lectureDetail = new LectureDTO();
+		lectureDetail = lectureService.selectLectureDetail(no);
+		
+		// then
+		assertNotNull(lectureDetail);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 수정용 서비스 메소드 테스트")
+	public void testUpdateLecture() throws Exception {
+		
+		// given
+		LectureDTO lec = new LectureDTO();
+		lec.setNo(15);
+		lec.setLecStatus("수강 완료");
+		lec.setAccStatus("수납");
+		lec.setAccDate("2022-05-12");
+		lec.setAccOption("신용카드");
+		
+		// when
+		int result = lectureService.modifyLecture(lec);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 삭제용 서비스 메소드 테스트")
+	public void testDeleteLecture() throws Exception {
+		
+		// given
+		int no = 12;
+		
+		// when
+		int result = lectureService.deleteLecture(no);
 		
 		// then
 		assertNotNull(result);
