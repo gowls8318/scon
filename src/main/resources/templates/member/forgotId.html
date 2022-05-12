@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>forgot password</title>
+    <title>forgot Id</title>
+    
+     
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -19,6 +21,11 @@
      
      <!-- bootstrap-icons -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+     
+     <!-- sweetalert2 -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+     
 
 </head>
 
@@ -55,18 +62,18 @@
                                         <div class="form-group">
                                             <label>이름</label>
                                             <input type="text" class="form-control form-control-user"
-                                                id="name" placeholder="Enter Name">
+                                                id="name" name="name" placeholder="Enter Name">
                                         </div>
                                         <div class="form-group">
                                             <label>이메일</label>
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" placeholder="Enter Email Address">  
+                                                id="email" name="email" placeholder="Enter Email Address">  
                                         </div>
                                       
                                         <br>
-                                        <a href="index.html" class="btn bg-scon btn-user btn-block">
+                                        <button type="button" class="btn bg-scon btn-user btn-block" onclick="findId();">
                                            아이디 찾기 
-                                        </a>
+                                        </button>
                                     </form>
                                     <hr>
                                     <p class="text-center small">
@@ -83,7 +90,62 @@
         </div>
 
     </div>
-
+    
+	<!-- 아이디 찾기 js -->
+	<script>
+	function findId() {
+		
+		let name = document.getElementById('name').value;
+		let email = document.getElementById('email').value;
+		
+		if (name == '' || email =='') {
+			toast('warning', '가입된 정보를 입력하세요!');
+			return false;
+		}
+		
+		
+		$.ajax({
+			type: "POST",
+			url: "/member/forgotId",
+			data: { "name" : name ,
+					"email" : email },
+			success: function(data) {
+				if(data != ""){
+					Swal.fire({
+						title : "아이디 찾기 완료!",
+						text: "가입된 아이디는 " + data + " 입니다.",
+						icon: 'success'
+					}).then( () => {
+						location.href = '/member/login';
+					})
+					
+				} else{
+					toast('worning', '입력하신 정보로 해당하는 아이디를 찾을 수 없습니다!');
+				}
+				
+			}, error: function() {
+				toast('error', 'error! 다시 시도해주세요!');
+			}
+		
+	}); //<-- ajax 끝!
+}
+	
+	function toast(icon, title){
+		const Toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 2000
+			})
+			
+			Toast.fire({
+			  icon: icon,
+			  title: title
+			})
+	}
+	
+	</script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>
 
 </html>
