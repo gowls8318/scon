@@ -28,8 +28,11 @@ public interface NoticeService {
 	int registNotice(NoticeDTO noti);
 	
 //	게시글 상세 조회
-	NoticeDTO sellectNoticeDetail(int idx) throws Exception;
-
+	NoticeDTO selectNoticeDetail(int no) throws Exception;
+	
+//  게시글 수정
+	void updateNoticeDetail(NoticeDTO noti);
+	
 
 	
 }

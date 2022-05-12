@@ -41,10 +41,26 @@
 	
 
 
+<!-- 페이지네이션 -->
+<!-- 게시물의 총 갯수를 구하는 쿼리 -->
+<!-- 	<select id="allNoticeCount" resultMap="noticeResultMap" > -->
+
+<!-- 페이징 -->
+<!-- 	<select id="noticeTotalCount" resultType="int">
+
+		SELECT
+			   COUNT(NOTI_NO)
+		  FROM TB_NOTICE
+		 WHERE NOTI_NO > 0	 
+	</select> -->
+
+
+
+
 
 
 	
-<!-- 공지등록 폼 -->
+	<!-- 공지등록 폼 -->
 	<insert id="registNotice">
 		INSERT
 		  INTO TB_NOTICE
@@ -53,7 +69,8 @@
 		, NOTI_TITLE
 		, NOTI_CONTENT
 		, NOTI_DATE
-		, NOTI_DELETE
+		, NOTI_VIEW
+		, NOTI_DELETE		
 		)
 		VALUES
 		(
@@ -61,6 +78,7 @@
 		, #{ notiTitle }
 		, #{ notiContent }
 		, SYSDATE
+		, '0'
 		, 'N'
 		)
 	</insert>
@@ -76,18 +94,48 @@
 		 , NOTI_DATE
 	  FROM TB_NOTICE
 	 WHERE NOTI_DELETE = 'N'
-	   AND NOTI_NO = #{ idx }	
+	   AND NOTI_NO = #{ no }	
 	</select>
 
 	<!-- 게시글 조회수 증가 -->
-	<update id="updateHitCount" parameterType="int">		
+	<update id="updateHitCount" parameterType="int" >		
 			UPDATE
 				   TB_NOTICE
 			   SET NOTI_VIEW = NOTI_VIEW + 1
-			 WHERE NOTI_NO = #{ idx }  		
+			 WHERE NOTI_NO = #{ no }  		
 	</update>
 	
+	
+ 	<!-- 수정 -->
+<!--	<update id="updateNoticeDetail" parameterType="com.scon.project.admin.notice.notiDetail">
+		UPDATE 
+			   TB_NOTICE
+		   SET NOTI_TITLE = #{ notiTitle }
+			 , NOTI_CONTENT	= #{ notiContent }
+			 , NOTI_DATE = #{ notiUpdate }
+		 WHERE NOTI_DELETE = 'N' 
+	</update> -->
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 <!-- 	
+	NOTI_NO
+NOTI_TITLE
+NOTI_CONTENT
+NOTI_DATE
+NOTI_UPDATE
+NOTI_VIEW
+NOTI_DELETE
+	
 	
 		
 	private int notiNo;

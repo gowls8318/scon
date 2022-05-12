@@ -27,10 +27,19 @@ public interface NoticeMapper {
 //	게시글 상세 조회
 	NoticeDTO sellectNoticeDetail(int no) throws Exception;
 
-	void updateHitCount(int idx) throws Exception;
+	void updateHitCount(int no) throws Exception;
 
+//  게시글 수정
+	void updateNoticeDetail(NoticeDTO noti);
 
-
+	
+	
+	
+	
+	
+	
+	
+	
 }
 	
 

@@ -28,7 +28,7 @@
     /* 정렬 */
     .table th{
         vertical-align: middle;
-        max-width: 3rem;
+        max-width: 1rem;
     }
 
     /* 컬럼높이 */
@@ -42,6 +42,7 @@
         height: 20rem;
         vertical-align : top;
         padding-top: 1.2rem;
+        
     }
 
     /* 모달창 버튼 */
@@ -88,14 +89,14 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-    <!-- <div th:replace="/common/adminSidebar.html"></div>  -->
+    <div th:replace="/common/adminSidebar.html"></div> 
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
-                <!-- <div th:replace="/common/adminTopbar.html"></div> -->
+                <div th:replace="/common/adminTopbar.html"></div>
 
 
                 <!-- Begin Page Content -->
@@ -121,11 +122,11 @@
                                     <tbody>
                                     <tr>
                                         <th>글번호</th>
-                                        <td th:text="${notice.notiNo}"></td>
+                                        <td th:text="${ noticeDetail.notiNo }" class="col-sm-10"></td>
                                     </tr>
                                     <tr>
                                         <th>조회수</th>
-                                        <td th:text="${notice.notiView}"></td>
+                                        <td th:text="${ noticeDetail.notiView }" class="col-sm-10"></td>
                                     </tr>
                                     <tr>
                                         <th>작성자</th>
@@ -133,43 +134,68 @@
                                     </tr>
                                     <tr>
                                         <th>작성일</th>
-                                        <td th:text="${#temporals.format(notice.notiDate, 'yyyy-MM-dd')}"></td>
+                                        <td th:text="${ noticeDetail.notiDate }" class="col-sm-10"></td>
                                     </tr>
                                     <tr>
                                         <th>제목</th>
-                                        <td th:text="${ notice.notiTitle }"></td>
+                                        <td th:text="${ noticeDetail.notiTitle }" class="col-sm-10"></td>
                                     </tr>
                                     <tr>
                                         <th>파일첨부</th>
-                                        <td><a class="notiFile" href="#" download="">첨부된파일.jpg</a></td>
+                                        <td class="col-sm-10"><a class="notiFile" href="#" download="" ></a></td>
                                     </tr>
                                     <tr>
                                         <th>내용</th>
-                                        <td id="notiContents" th:text="${ notice.notiContent }">공지사항 내용입니다.</td>
+                                        <td id="notiContents" th:text="${ noticeDetail.notiContent }" class="col-sm-10"></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="row buttonbox">
-                                <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="modify">수정</button>
+                                <button id="modifyBtn" class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="modify">수정</button>
                                 <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal" type="delete">삭제</button>
+                                
+                                <form id="updateNoti" th:action=@{/}" method="post">
+                                </form>
                             </div>
                         </div>
                     </div>
-
+					
                 </div>
                 <!-- /.con  tainer-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
-            <!-- <div th:replace="/common/footer.html"></div> -->
+            <div th:replace="/common/footer.html"></div>
 
         </div>
         <!-- End of Content Wrapper -->
         
     </div>
     <!-- End of Page Wrapper -->
+
+<script th:inline="javascript">
+	$(document).on('click', '#modifyBtn', function (e) {
+		var str="<input class='form-control' "
+	}
+
+
+
+/* 	$(document).on('ready', function (e) {
+		var form= $("#updateNoti");
+		var notiNo=[[$noti.notiNo]];
+		$(doucument).on('click', '#deleteBtn', funtion (e) {
+			$('#updateNoti'.attr("action"));
+		})
+		
+		
+	}) */
+
+
+</script>
+
+
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -206,17 +232,13 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins --><script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
     <script src="/js/demo/datatables-demo.js"></script>
 
-            <!--모달-->
-    <script>$('#myModal').modal(options)</script>
 
 </body>
 
