@@ -69,9 +69,9 @@ public class LectureControllerTests {
 				.andDo(MockMvcResultHandlers.print());	
 	}
 	
-	// success
-	@Test
 	
+	@Test
+	@Disabled
 	@DisplayName("수강 등록용 컨트롤러 테스트")
 	public void testInsertLecture() throws Exception {
 		
@@ -84,6 +84,62 @@ public class LectureControllerTests {
 		
 		// when & then
 		mockMvc.perform(MockMvcRequestBuilders.post("/admin/lecture/insertForm").params(params))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/lecture/list"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 정보 조회용 컨트롤러 테스트")
+	public void testSelectConsultantDetail() throws Exception {
+		
+		// given
+		int no = 46;
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.get("/admin/lecture/updateForm/?no=" + no))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.forwardedUrl("admin/lecture/updateForm"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 수정용 컨트롤러 테스트")
+	public void testUpdateConsultant() throws Exception {
+		
+		// given
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("lecStatus", "수강 완료");
+		params.add("accStatus", "수납");
+		params.add("accDate", "2022-05-12");
+		params.add("accOption", "현금");
+		
+		int no = 14;
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.post("/admin/lecture/updateForm/?no=" + no).params(params))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/lecture/list"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 삭제용 컨트롤러 테스트")
+	public void testDeleteLecture() throws Exception {
+		
+		// given
+		int no = 11;
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.post("/admin/lecture/delete/?no=" + no))
 				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
 				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/lecture/list"))

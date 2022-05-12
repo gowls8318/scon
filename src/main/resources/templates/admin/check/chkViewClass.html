@@ -94,12 +94,16 @@
                                 <option value="3">자스뽀개기</option>
                             </select>
                         </div>
+                        <div class="col-0 selectstudenttext">학생</div>
+                            <div class="col-2">
+                                <input class="form-control mr-sm-2 stusearchbox" type="text" name="studentname" placeholder="학생 이름을 입력해주세요" aria-label="Search">
+                            </div>
                         <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker" inline="true">
                             <!-- 시작시 기본 날짜 설정은 value를 이용 -->
                             <input type="text" id="datePicker" class="dayselectbox form-control" value="출석 날짜">
                         </div>
                         <button class="stusearchbutton btn-primary btn-sm" type="submit">검색</button>
-                        <div class="col-3"></div>
+                    
                         <div class="col-0">
                             <button class="downloadbuttonbox btn-primary btn-sm" type="submit">오프라인 출석부 다운로드</button>
                         </div>
@@ -121,111 +125,15 @@
                                 </thead>
 
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>김바리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
+                                <tr th:each="chk : ${ checkList }">
+                                    <td th:text="${chk.no}">1</td>
+                                    <td th:text="${ chk.member.name }">김바리</td>
+                                    <td th:text="${ chk.cls.clsName }">자바뿌시기</td>
+                                    <td th:text="${ chk.chkStart}" class="attandancestatusbox">출석</td>
+                                    <td th:text="${ chk.chkFinish}" class="attandancestatusbox">귀가</td>
+                                    <td style="visibility:hidden;" th:text=" ${chk.chkDate} "></td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>김프리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>김스리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>김자리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>김링리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>김바리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>김프리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>김스리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>김자리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>김링리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>김바리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>12</td>
-                                    <td>김프리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>13</td>
-                                    <td>김스리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>14</td>
-                                    <td>김자리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
-                                <tr>
-                                    <td>15</td>
-                                    <td>김링리</td>
-                                    <td>자바뿌시기</td>
-                                    <td><span class="attandancestatusbox">출석</span>09:00</td>
-                                    <td><span class="attandancestatusbox">귀가</span>19:00</td>
-                                </tr>
+                              
                                 </tbody>
                             </table>
                         </div>

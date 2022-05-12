@@ -76,6 +76,12 @@
 		)
 	</insert>
 	
+	<select id="findIdByName" resultType="String">
+		SELECT MEMBER_ID
+		  FROM TB_MEMBER
+		 WHERE MEMBER_NAME = #{ name }
+		   AND EMAIL = #{ email } 
+	</select>
 	
 	<select id="findMemberById" resultMap="memberResultMap">
 		SELECT

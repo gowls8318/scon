@@ -11,7 +11,7 @@ import com.scon.project.member.model.dto.MemberDTO;
 @Mapper
 public interface LectureMapper {
 
-	/* 강의 내역 조회용 */
+	/* 수강 내역 조회용 */
 	List<LectureDTO> selectAllLectureList();
 	
 	/* 강의 조회용 */
@@ -22,5 +22,14 @@ public interface LectureMapper {
 	
 	/* 수강 등록용 */
 	int insertLecture(LectureDTO lec);
+
+	/* 수강 수정용 - 정보 조회 */
+	LectureDTO selectLectureDetail(int no);
+
+	/* 수강 수정용 */
+	int modifyLecture(LectureDTO lec);
+
+	/* 수강 삭제용 */
+	int deleteLecture(int no);
 
 }

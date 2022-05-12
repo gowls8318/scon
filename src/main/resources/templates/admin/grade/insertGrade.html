@@ -93,14 +93,14 @@
                         <div class="card-body">
                                 <!--------------------- 폼 태그 시작 부분 (view 매핑) -------------->
                                <form id="insertGradeForm" method="post" action="/admin/insertGrade"> 
-                            <div class="table-responsive">
+                            <div class="table-responsive" id="table-scroll">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th class="notiCheck"><span class="form-check">
+                     <!--  -                   <th class="notiCheck"><span class="form-check">
                                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
-                                                    </label></span></th>
+                                                    </label></span></th> -->
                                                 <th class="notiWriter">이름</th>
                                                 <th class="notiDate">시험 일자</th>
                                                 <th class="notiGrade">점수</th>                        
@@ -108,12 +108,12 @@
                                         </thead>
                                         <tbody>  
                                             <tr th:each="member,index : ${ memberList }">
-                                                <td>
-                                                    <span class="form-check">
+                                   <!--         <td>
+                                               <span class="form-check">
                                                         <input class="form-check-input" type="checkbox"  id="flexCheckDefault">
                                                         <label class="form-check-label" for="flexCheckDefault">
-                                                        </label></span>
-                                                </td>
+                                                    </label></span> 
+                                                </td> -->
                                                 <td th:text="${ member.memberName }"></td>
                                                 <td><input type="date" class="form-control selected-date" id="selected-date" th:name="|gradeList[${index.index}].gradeDate|" readonly>
                                                 <input type="hidden" id="memberId" th:value="${member.memberId}" th:name="|gradeList[${index.index}].memberId|" class="memberId" />
@@ -132,7 +132,7 @@
                          <div class="container">
                         <div class="row">
                       <div class="col text-center">
-                        <button type="submit" class="btn btn-primary" id="apply-btn" >확인</button>
+                        <button type="button" class="btn btn-primary" id="apply-btn" onclick="beforeCheck()">확인</button>
                       </div>
                     </div>
                   </div>
@@ -161,10 +161,12 @@
 
              </div>
             <!-- /.container-fluid -->
-
+			</div>
            
-                
-            <!-- End of Main Content -->	
+             </div>   
+            <!-- End of Main Content -->
+            <!-- footer include -->
+            <div th:replace="/common/footer"></div>
 		 </div> 
 	</div>
 
@@ -174,7 +176,7 @@
 	//성적 입력 여부 확인
 	function beforeCheck(){
 		let isRight = true;
-		$("#insertGradeForm").find("input[name=grade]").each(function(index, item){
+		$("#insertGradeForm").find("input[id=stu-grade]").each(function(index, item){
 			
 			if($(this).val().trim() == '') {
 				alert("성적을 입력해주세요.");

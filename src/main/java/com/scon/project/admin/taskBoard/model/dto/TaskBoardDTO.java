@@ -20,6 +20,6 @@ public class TaskBoardDTO {
 	private int taskView;                    //조회수
 	
 	
-	private List<ProfileDTO> fileId;     //하나의 게시글에 여러개의 파일
+	private List<FileDTO> fileList;     //하나의 게시글에 여러개의 파일
 	private String memberName;
 }

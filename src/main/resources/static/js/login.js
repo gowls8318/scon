@@ -68,12 +68,8 @@
 			  toast: true,
 			  position: 'top',
 			  showConfirmButton: false,
-			  timer: 3000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
+			  timer: 2000,
+			  timerProgressBar: false
 			})
 			
 			Toast.fire({
@@ -89,12 +85,7 @@
 			  toast: true,
 			  position: 'top',
 			  showConfirmButton: false,
-			  timer: 1000,
-			  timerProgressBar: false,
-			  didOpen: (toast) => {
-				toast.addEventListener('mouseenter', Swal.stopTimer)
-				toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
+			  timer: 2000
 			})
 			
 			Toast.fire({
@@ -108,4 +99,6 @@
 	
 		document.loginForm.submit(); //유효성 검사가 통과되면 서버로 전송.
 	}  
+	
+
 	

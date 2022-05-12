@@ -92,4 +92,58 @@ public class LectureMapperTests {
 		assertEquals(1, result);
 	}
 	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 정보 조회용 매퍼 테스트")
+	public void testSelectLectureDetail() {
+		
+		// given
+		int no = 46;
+		
+		// when
+		LectureDTO lectureDetail = new LectureDTO();
+		lectureDetail = lectureMapper.selectLectureDetail(no);
+		
+		// then
+		assertNotNull(lectureDetail);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 수정용 매퍼 테스트")
+	public void testUpdateLecture() {
+		
+		// given
+		LectureDTO lec = new LectureDTO();
+		lec.setNo(41);
+		lec.setLecStatus("수강 완료");
+		lec.setAccStatus("수납");
+		lec.setAccDate("2022-05-12");
+		lec.setAccOption("신용카드");
+		
+		// when
+		int result = lectureMapper.modifyLecture(lec);
+		
+		// then
+		assertEquals(1, result);
+	}
+	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 삭제용 매퍼 테스트")
+	public void testDeleteLecture() {
+		
+		// given
+		int no = 13;
+		
+		// when
+		int result = lectureMapper.deleteLecture(no);
+		
+		// then
+		assertNotNull(result);
+	}
+	
 }

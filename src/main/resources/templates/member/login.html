@@ -60,7 +60,7 @@
 											<small class="text-danger">[[${errorMessage}]]</small>
 										</div>
                                     </div>
-                                    <form  id="loginForm" name="loginForm" th:action="@{/member/login}" method="post">
+                                    <form class="user" id="loginForm" name="loginForm" th:action="@{/member/login}" method="post">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="id" name="username" placeholder="User Id">
@@ -72,7 +72,7 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small text-center">
                                                 <input type="checkbox" class="custom-control-input" id="checkId">
-                                                <label class="custom-control-label pt-1" for="checkId">Remember
+                                                <label class="custom-control-label" for="checkId">Remember
                                                     Me</label>
                                             </div>
                                         </div>
@@ -99,7 +99,7 @@
     </div>
     
     
-	<!-- 아이디 기억하기 js 코드 -->
+	<!-- 아이디 기억하기 js -->
 	<script src="/js/login.js"></script>
 	
 </body>

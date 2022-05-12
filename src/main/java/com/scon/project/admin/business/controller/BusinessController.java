@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.scon.project.admin.business.model.dto.BusinessDTO;
 import com.scon.project.admin.business.model.service.BusinessService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class BusinessController {
@@ -25,7 +28,15 @@ public class BusinessController {
 	}
 	
 	//조회
-	@GetMapping("/business/businessInfo=e")
+//	@GetMapping("/business/businessInfo")
+//	public String businessInfo(@RequestParam("busCode") int busCode, Model model) {
+//		BusinessDTO businessInfo = businessService.selectBusinessInfo(busCode);
+//		model.addAttribute("businessDTO", businessInfo);
+//		
+//		return "admin/business/businessInfo";
+//	}
+	
+	@GetMapping("/business/businessInfo")
 	public ModelAndView businessInfo(ModelAndView mv) {
 		BusinessDTO businessInfo = businessService.selectBusinessInfo();
 		mv.addObject("BusinessDTO", businessInfo);
@@ -33,27 +44,24 @@ public class BusinessController {
 		return mv;
 	}
 	
-	//등록
+	
+	
+	//수정
 	@GetMapping("/business/insertBusinessInfo")
-	public String insertBusinessInfo(@RequestParam BusinessDTO business, Model model) {
+	public String insertBusinessInfo(@RequestParam BusinessDTO businessDTO, Model model) {
 		
-		BusinessDTO insertBusinessInfo = businessService.insertBusinessInfo(business);
-		
-		model.addAttribute("BusinessDTO", insertBusinessInfo);
-		
+		model.addAttribute("BusinessDTO", businessService.selectBusinessInfo());
 		return "admin/business/insertBuinessInfo";
 	}
 	
-	@PostMapping("/consultant/insertBusinessInfo")
-	public String insertBusinessInfoForm(@RequestParam BusinessDTO business, Model model) {
+	@PostMapping("/business/insertBusinessInfo")
+	public String insertBusinessInfoForm(@RequestParam BusinessDTO BusinessDTO, Model model) {
 		
-		BusinessDTO insertBusinessInfo = businessService.insertBusinessInfo(business);
-		
-		model.addAttribute("BusinessDTO", insertBusinessInfo);
-		
+		businessService.insertBusinessInfo(BusinessDTO);
 		return "admin/business/buinessInfo";
 		
 	}
+	
 //	//입력
 //	@RequestMapping(value="/business/updateBusinessInfo", method = RequestMethod.GET)
 //	public String insertBusinessInfoGet(ModelAndView mv) {

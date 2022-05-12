@@ -87,11 +87,10 @@
                         <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                             <div class="col-0 selectclasstext">강의 선택</div>
                             <div class="col-2">
-                                <select name="classtype" class="browser-default custom-select selectclassbox">
-                                    <option selected value="">------ 강의 선택 ------</option>
-                                    <c:forEach items="${getClassList}" var="class">
-                                    	<option><c:out value="${class.clsName}"/></option>
-                                    </c:forEach>
+                                <select name="clsId" id="clsId" class="browser-default custom-select selectclassbox">
+                                    <optgroup label="------ 강의 선택 ------">
+                                    <option th:each="val : ${ getClassList }" th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="col-0 selectstudenttext">학생</div>
@@ -298,7 +297,24 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
- 
+ 	<script>
+ 	$(function(){
+			$.ajax({
+				url : "/admin/check/chkRegist",
+				success : function(data) {
+					const $classId = $("#clsId");
+					
+					for(let index in data) {
+						$classId.append($("<option>").val(data[index].clsId).text(data[index].clsName));
+					}
+				},
+				error : function(xhr) {
+					console.log(xhr);
+				}
+			});
+		});
+ 	</script>
+		
     <!-- date picker -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
