@@ -46,10 +46,17 @@
 
 		<!--  성적 조회 (gradeList) Complete -->
 		<select id="findAllGrade" resultMap="gradeResultMap">
-			SELECT *
-			FROM TB_GRADE G JOIN TB_MEMBER M ON (G.MEMBER_ID = M.MEMBER_ID)
-			                JOIN TB_CLASS C ON (G.CLS_ID = C.CLS_ID)
-			WHERE G.CLS_ID = #{ cldId }
+			SELECT
+			    C.MEMBER_ID
+			  , C.CLS_NAME
+              , C.CLS_ID
+			  , M.MEMBER_NAME
+              , G.GRADE_ID
+              , G.GRADE
+			  FROM TB_CLASS C
+			  JOIN TB_MEMBER M ON (C.MEMBER_ID = M.MEMBER_ID)
+              JOIN TB_GRADE G ON (M.MEMBER_ID = G.MEMBER_ID)
+			  WHERE C.CLS_ID = #{ clsId }
 		</select>
 		
 		<!--  성적 수정 Complete -->
@@ -61,14 +68,10 @@
 		
 		<!--  성적 입력 학생 조회(insertGrade) Complete -->
 		<select id="findAllStudent" resultMap="gradeResultMap">
-			SELECT
-				G.MEMBER_ID
-			  , M.MEMBER_NAME
-			  , C.CLS_NAME
-			 FROM TB_GRADE G
-             JOIN TB_MEMBER M ON(G.MEMBER_ID = M.MEMBER_ID)
-             JOIN TB_CLASS C ON (M.MEMBER_ID = C.MEMBER_ID)
-		  WHERE C.CLS_ID = #{ clsId }
+			SELECT *
+			FROM TB_GRADE G JOIN TB_MEMBER M ON (G.MEMBER_ID = M.MEMBER_ID)
+			                JOIN TB_CLASS C ON (G.CLS_ID = C.CLS_ID)
+			WHERE G.CLS_ID = #{ cldId }
 		</select>	 
 		
 		<!--  성적 입력 (insertGrade) -->

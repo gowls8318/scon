@@ -85,7 +85,7 @@
 	 </insert>-->
 
 	<!-- 과제 게시판 게시글 입력 -->
-	<insert id="insertTask">
+<!-- <insert id="insertTask">
 		INSERT
 			INTO TB_TASK
 			(
@@ -105,6 +105,30 @@
 			  , #{ taskContent }
 			  , SYSDATE
 			)
-	</insert>
+	</insert> 
+	
+	
+	<insert id="insertFile">
+	INSERT
+		  INTO TB_FILE
+		  (
+		   FILE_ID
+	 	 , FILE_ORGNAME
+		 , FILE_SAVENAME
+		 , FILE_PATH
+		 , FILE_TYPE
+		 , FILE_THUM_PATH
+		 , FILE_THUM_NAME
+		  )
+		 VALUES(
+		 	SEQ_FILE_NO.NEXTVAL
+		 , #{ fileOrginName }
+		 , #{ fileSaveName }
+		 , #{ filePath }
+		 , #{ fileType }
+		 , null
+		 , null
+		 )
+	</insert> -->
 
 </mapper>
