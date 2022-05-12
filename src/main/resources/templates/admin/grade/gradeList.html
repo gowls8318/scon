@@ -81,7 +81,7 @@
                     <br><br>
                     <!--   성적관리 시작 부분 -->
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4" style="overflow: auto;">
+                    <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">성적 관리</h6>
                         </div>
@@ -107,8 +107,9 @@
                                         <form id="check-form">
                                         <tr th:each="grade : ${ gradeList }">
                                             <td>
-                                                <span class="form-check"></span>
+                                                <span class="form-check">
                                                 	<input class="form-check-input btn-check" type="checkbox" name="gradeId" id="flexCheckDefault" th:value="${grade.gradeId}">
+                                                </span>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                 </label>
                                             </td>
@@ -116,7 +117,7 @@
                                             <td th:text="${ grade.memberName}" class="memberName"></td>
                                             <td th:text="${ grade.clsName }" class="clsName"></td>
                                             <td th:text="${ grade.grade }" class="grade"></td>
-                                            <td th:text="${ grade.gradeDate}"></td>
+                                            <td th:text="${ grade.gradeDate }" class="gradeDate"></td>
                                         </tr>
                                         </form>
                                     </tbody>

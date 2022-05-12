@@ -35,11 +35,13 @@ public class GradeController {
 	/* 성적 조회 complete */
 	@GetMapping("/gradeList")
 	public ModelAndView findGradeList(@RequestParam int clsId, ModelAndView mv) {
-
+		
 		List<GradeDTO> gradeList = gradeService.findAllGrade(clsId);
 		
 		mv.addObject("gradeList", gradeList);
 		mv.setViewName("admin/grade/gradeList");
+		
+		log.info(gradeList.toString());
 		
 		return mv;
 	}

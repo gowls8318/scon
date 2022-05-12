@@ -71,6 +71,7 @@
              <hr class="border-bottom-primary">
 
                     <!-- 공지사항 작성 테이블 -->
+                    <form method="post" name="dataForm" id="dataForm" enctype="multipart/form-data" action="/admin/insertTask">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">과제 제출</h6>
@@ -82,7 +83,6 @@
                                     <tr></tr>
                                     </thead>
                                     <tbody>
-	                                    <form method="post" name="dataForm" id="dataForm" enctype="multipart/form-data" action="/admin/insertTask">
 		                                    <tr>
 		                                        <th>
 		                                            제목 <span id="pointtext">*</span>
@@ -109,17 +109,14 @@
 		                                    </tr>
 	                                    </tbody>
                                 	</table>
-                                </form>
                             </div>
                             <div class="row buttonbox">
-                                <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset" onclick="goBack()">취소</button>
-                                <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" id="upload-btn" type="button">등록</button>
+                                <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset" onclick="back()">취소</button>
+                                <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" id="upload-btn" type="submit">등록</button>
                             </div>
                         </div>
                     </div>
-                    <h2 >
-
-                    </h2>
+				 </form>
 
                </div>
                <!-- /.container-fluid -->
@@ -139,7 +136,7 @@
 
     
 	<script>
-		function goBack() {
+		function back() {
 			/* 취소 버튼 눌렀을 때 뒤로 가기 */
 			window.history.back();
 		}
@@ -175,11 +172,11 @@
 			})
 		}) */
 		
-		$(document).ready(function(){
+/*		$(document).ready(function(){
 			$("#upload-btn").on("click",function(){
 				let data = {
 						taskTitle : $("#taskTitle").val(),
-						content : $("#taskContent").val()
+						taskContent : $("#taskContent").val()
 				};
 				
 				let formData = new FormData();
@@ -188,7 +185,7 @@
 				console.log(files);
 				
 				for(let i=0; i<files.length; i++){
-					formData.append("uploadFile", files[i]);
+					formData.append("file", files[i]);
 				}
 				
 				formData.append("key", new Blob([JSON.stringify(data)] , {type : "application/json"}));
@@ -199,13 +196,18 @@
 					processData : false,
 					contentType : false,
 					data : formData,
-				}).done(function(){
-					alert("게시글이 등록 되었습니다.");
-					window.location.href= '/';
-				}).fail(function(error){
-					alert(JSON.stringify(error));
-				});
-			}
+					success : function(data) {
+						console.log(data);
+						console.log("데이터 전송 성공");
+						console.log(files);
+						alert("등록이 완료 되었습니다");
+					},
+					error : function(e){
+						console.log("ERROR : " + e);
+						alert("등록 실패");
+					}
+			} */
+		
 		
 		
 /*		let form = $("#dataForm")[0];
