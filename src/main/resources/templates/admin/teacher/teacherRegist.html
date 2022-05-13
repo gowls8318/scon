@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 
@@ -46,6 +47,7 @@
 			<!-- Main Content -->
 			<div id="content">
 				<div class="container-fluid">
+ 					<th:block sec:authorize="hasRole('DIRECTOR')">
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -300,6 +302,18 @@
 							</div>
 						</form>
 					</div>
+					
+					</th:block>
+					
+					<th:block sec:authorize="hasRole('ADMIN')">
+						<h6 class="m-0 font-weight-bold text-primary"><i class="bi bi-exclamation-octagon">&nbsp;&nbsp;</i>원장 전용 페이지 입니다.</h6>
+						<div
+							class="d-sm-flex align-items-center justify-content-between mb-4">
+							<h1 class="h3 mb-0 text-gray-800">강사 등록</h1>
+						</div>
+						<hr class="border-bottom-primary">
+					</th:block>
+
 					<!-- /.container-fluid -->
 				</div>
 				<!-- End of Main Content -->

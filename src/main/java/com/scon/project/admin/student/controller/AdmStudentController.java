@@ -92,7 +92,6 @@ public class AdmStudentController {
 			
 			// 3. 학부모 정보 등록 (학부모 성함이 있는 경우)
 			if(!parents.getParentsName().isEmpty() ) {
-				
 				int result3 = studentService.insertParents(parents);
 			}
 		}

@@ -28,6 +28,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 					response.sendRedirect("/admin");
 					return;
 				}
+				if(roleNames.contains("ROLE_DIRECTOR")) {
+					response.sendRedirect("/admin");
+					return;
+				}
 				if(roleNames.contains("ROLE_STUDENT")) {
 					response.sendRedirect("/student");
 					return;

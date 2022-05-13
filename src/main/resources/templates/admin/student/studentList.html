@@ -293,9 +293,6 @@
                                         <div class="card-header py-3" id="menu-btns">
                                             <button type="button"
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">원생 정보</button>
-                                            <button type="button"
-                                                class="btn btn-sm sub-btn font-weight-bold font-md">수강 강의</button>
-                                            <button type="button" class="btn btn-sm sub-btn font-weight-bold font-md d-none">강의 등록(hidden)</button>
                                             <button type="button" 
                                                 class="btn btn-sm sub-btn font-weight-bold font-md">성적</button>
                                             <button type="button"
@@ -309,15 +306,6 @@
                                             	<input type="hidden" name="findMemberPath" value="/admin/findStudentById">
                                             	<div th:replace="/admin/student/subMenu"></div>
                                             </div>
-                                            <!-- 수강 강의 목록 조회/등록 -->
-                                            <div class="menu d-none">
-                                            	<div th:replace="/admin/student/lectureList"></div>
-                                            </div>
-                                            <!-- 수강 강의 수정 -->
-                                          <div class="menu d-none">
-                                            	<div th:replace="/admin/student/LectureModify"></div>
-                                            </div>
-                                           
                                             <br>
 	
                                         </div><!-- 서브 메뉴 종료 -->

@@ -39,8 +39,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 				.csrf().disable()
 				.authorizeHttpRequests()
-				//.antMatchers("/").authenticated()
-				//.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/").authenticated()
+				.antMatchers("/admin/**").hasAnyRole("ADMIN","DIRECTOR")
 				/* 그 외의 모든 요청은 허가함 - 인증(로그인) 되지 않은 사용자도 요청 가능 */
 				.anyRequest().permitAll().and()
 				/* 로그인 설정 */

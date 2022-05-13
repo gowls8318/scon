@@ -90,62 +90,9 @@
         </div>
 
     </div>
-    
-	<!-- 아이디 찾기 js -->
-	<script>
-	function findId() {
-		
-		let name = document.getElementById('name').value;
-		let email = document.getElementById('email').value;
-		
-		if (name == '' || email =='') {
-			toast('warning', '가입된 정보를 입력하세요!');
-			return false;
-		}
-		
-		
-		$.ajax({
-			type: "POST",
-			url: "/member/forgotId",
-			data: { "name" : name ,
-					"email" : email },
-			success: function(data) {
-				if(data != ""){
-					Swal.fire({
-						title : "아이디 찾기 완료!",
-						text: "가입된 아이디는 " + data + " 입니다.",
-						icon: 'success'
-					}).then( () => {
-						location.href = '/member/login';
-					})
-					
-				} else{
-					toast('worning', '입력하신 정보로 해당하는 아이디를 찾을 수 없습니다!');
-				}
-				
-			}, error: function() {
-				toast('error', 'error! 다시 시도해주세요!');
-			}
-		
-	}); //<-- ajax 끝!
-}
-	
-	function toast(icon, title){
-		const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 2000
-			})
-			
-			Toast.fire({
-			  icon: icon,
-			  title: title
-			})
-	}
-	
-	</script>
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   
+	<script src="/js/forgotIdAndPwd.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>
 
 </html>

@@ -175,6 +175,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.deleteMember(id, status);
 	}
 
+	@Override
+	public MemberDTO findPwd(MemberDTO member) {
+		return memberMapper.findPwd(member);
+	}
+
 
 
 

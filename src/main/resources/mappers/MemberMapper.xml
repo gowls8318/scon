@@ -10,8 +10,8 @@
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
 		<result property="birthDay" column="BIRTHDAY"/>
-		<result property="address" column="GENDER"/>
-		<result property="gender" column="ADDRESS"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="gender" column="GENDER"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
@@ -41,6 +41,29 @@
 		<result property="fileThumnailPathName" column="FILE_THUM_PATH"/>
 		<result property="fileThumnailName" column="FILE_THUM.NAME"/>
 	</resultMap>
+
+<sql id="memberColumn">
+	A.MEMBER_ID
+	, A.MEMBER_NAME
+	, A.MEMBER_PWD
+	, A.TEMP_PWD_YN
+	, A.PHONE
+	, A.EMAIL
+	, A.BIRTHDAY
+	, A.ADDRESS
+	, A.GENDER
+	, A.ENROLL_DATE
+	, A.DEL_DATE
+	, A.MEMBER_ST
+	, B.MEMBER_ID REF_MEMBER_ID
+	, B.AUTHORITY_CODE REF_AUTHORITY_CODE
+	, C.AUTHORITY_CODE REF_AUTHORITY_CODE2
+	, C.AUTHORITY_NAME
+	, C.AUTHORITY_DESC
+	FROM TB_MEMBER A
+	LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+	LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+</sql>  
 
 	<insert id="insertMember">
 		INSERT
@@ -85,27 +108,16 @@
 	
 	<select id="findMemberById" resultMap="memberResultMap">
 		SELECT
-		       A.MEMBER_ID
-		     , A.MEMBER_NAME  
-		     , A.MEMBER_PWD
-		     , A.TEMP_PWD_YN
-		     , A.PHONE
-		     , A.EMAIL
-		     , A.BIRTHDAY
-		     , A.ADDRESS
-		     , A.GENDER
-		     , A.ENROLL_DATE
-		     , A.DEL_DATE
-		     , A.MEMBER_ST
-		     , B.MEMBER_ID REF_MEMBER_ID
-		     , B.AUTHORITY_CODE REF_AUTHORITY_CODE
-		     , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
-		     , C.AUTHORITY_NAME
-		     , C.AUTHORITY_DESC
-		  FROM TB_MEMBER A
-		  LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
-		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		<include refid="memberColumn"/>
 		 WHERE A.MEMBER_ID = #{ username }
+	</select>
+	
+	<select id="findPwd" resultMap="memberResultMap">
+		SELECT 
+		<include refid="memberColumn"/>
+		WHERE A.MEMBER_ID = #{ id }
+		  AND A.MEMBER_NAME = #{ name }
+		  AND A.EMAIL = #{ email }	
 	</select>
 	
 		

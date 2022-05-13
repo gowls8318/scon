@@ -94,7 +94,7 @@ $('#checkId').click(function() {
 		data: { "id": id },
 		success: function(data) {
 			if (data > 0) {
-			toast('worning', '중복된 아이디입니다.');
+			toast('warning', '중복된 아이디입니다.');
 				$("#id").addClass("is-invalid");
 				idck = 0;
 			} else {
@@ -129,21 +129,21 @@ function checkAll() {
 	if (path == '/admin/studentRegist' || path == '/admin/teacherRegist') {
 		alertName= "등록";
 		if (idck == 0) {
-			toast('worning', '아이디 중복 검사를 진행해주세요.');
+			toast('warning', '아이디 중복 검사를 진행해주세요.');
 			return false;
 		}
 	// 원생 수정시 원생을 선택한 상태여야 함.
 	} else if(path == '/admin/updateStudent') {
 		alertName = "수정";
 		if (form.id.value == '') {
-			toast('worning', '원생을 선택해주세요!');
+			toast('warning', '원생을 선택해주세요!');
 			return false;
 		}
 	 } else{
 		alertName = "수정";
 		
 		if (form.id.value == '') {
-			toast('worning', '강사를 선택해주세요!');
+			toast('warning', '강사를 선택해주세요!');
 			return false;
 		}
 	}
@@ -259,7 +259,7 @@ function checkAll() {
 	
 	Swal.fire({
       title: alertName+'하시겠습니까?',
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#6610f2',
       cancelButtonColor: '#858796',
@@ -298,7 +298,7 @@ function checkAll() {
 // 공백 확인
 function checkExistData(value, dataName) {
 	if (value == "") {
-		toast('worning', dataName + ' 입력해주세요!');
+		toast('warning', dataName + ' 입력해주세요!');
 		
 		return false;
 	}
@@ -478,10 +478,8 @@ function studentDetail(mem){
 		$("#status").val(mem.member.status).prop("selected", true);
 		form.delDate.value = mem.member.delDate;
 		form.resume.value = mem.resume;
-	
 	}
 	
-
 	if(mem.profile != null) {
 		$("#img").removeAttr('src');
 		let src = '\\img\\profile\\' + mem.profile.fileSaveName;
@@ -499,22 +497,21 @@ function deleteMember(){
 		status = "퇴원생";
 		
 		if (form.id.value == '') {
-			toast('worning', '원생을 선택해주세요!');
+			toast('warning', '원생을 선택해주세요!');
 		    
 			return false;
 		}
 	 } else{
 		status= "퇴직";
 		if (form.id.value == '') {
-			toast('worning', '강사를 선택해주세요!');
+			toast('warning', '강사를 선택해주세요!');
 			return false;
 		}
 	}
 	
     Swal.fire({
       title: '삭제하시겠습니까?',
-      text: "회원 정보는 남아있습니다.",
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#6610f2',
       cancelButtonColor: '#858796',

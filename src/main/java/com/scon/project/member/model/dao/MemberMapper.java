@@ -15,6 +15,10 @@ public interface MemberMapper {
 	
 	// 아이디 찾기
 	String findIdByName(String name, String email);
+	
+	// 아이디 찾기
+	MemberDTO findPwd(MemberDTO member);
+
 
 	// 회원 등록
 	int insertMember(MemberDTO member);
@@ -45,6 +49,7 @@ public interface MemberMapper {
 
 	// 회원 삭제
 	int deleteMember(String id, String status);
+	
 
 
 
