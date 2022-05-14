@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scon.project.admin.schedule.model.dao.ScheduleMapper">
+
+	<resultMap id="scheduleResultMap" type="com.scon.project.admin.schedule.model.dto.ScheduleDTO">
+		<id property="scheNo" column="SCHE_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="clsId" column="CLS_ID"/>
+		<result property="startDay" column="START_DAY"/>
+		<result property="endDay" column="END_DAY"/>
+		<result property="content" column="SCHE_CONTENT"/>
+		<result property="color" column="SCHE_COLOR"/>
+		<result property="status" column="SCHE_DELETE"/>
+	</resultMap>
+	
+	<insert id="registSchedule">
+	INSERT
+	INTO TB_SCHE
+	(
+	  SCHE_NO
+	, MEMBER_ID
+	, CLS_ID
+	, START_DAY
+	, END_DAY
+	, SCHE_CONTENT
+	, SCHE_COLOR
+	, SCHE_DELETE
+	)
+	VALUES
+	(
+	SEQ_SCHE_NO.NEXTVAL
+	, #{ memberId }
+	, #{ clsId }
+	, TO_DATE(#{ startDay }, 'YYYY-MM-DD')
+	, TO_DATE(#{ endDay }, 'YYYY-MM-DD')
+	, #{ content }
+	, #{ color }
+	, DEFAULT
+	)
+	</insert>
+	
+	<select id="findSchedule" resultMap="scheduleResultMap">
+		SELECT SCHE_NO
+			 , MEMBER_ID
+			 , CLS_ID
+			 , TO_CHAR(START_DAY, 'YYYY-MM-DD') START_DAY
+			 , TO_CHAR(END_DAY, 'YYYY-MM-DD') END_DAY
+			 , SCHE_CONTENT
+			 , SCHE_COLOR
+			 , SCHE_DELETE
+		  FROM TB_SCHE
+		 WHERE SCHE_DELETE = 'N'   
+	</select>
+	
+	
+	<update id="updateSchedule">
+	 UPDATE TB_SCHE
+	    SET START_DAY = #{ startDay }
+		  , END_DAY = #{ endDay }
+		  , SCHE_CONTENT = #{ content }
+		  , SCHE_COLOR = #{ color }
+	 WHERE SCHE_NO = #{ scheNo }
+	</update>
+	
+	<delete id="deleteSchedule">
+		UPDATE YB_SCHE
+		   SET SCHE_DELETE = 'Y'
+		 WHERE SCHE_NO= #{ scheNo }      
+	</delete>
+	
+
+
+</mapper>

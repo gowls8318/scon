@@ -3,35 +3,6 @@
  * @since 2022.05.04
  */
 
-/* 다음 도로명 주소 Api */
-function execDaumPostcode() {
-	new daum.Postcode(
-		{
-			oncomplete: function(data) {
-				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-				var addr = ''; // 주소 변수
-				var extraAddr = ''; // 상세주소 변수
-				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-					addr = data.roadAddress;
-				} else { // 사용자가 지번 주소를 선택했을 경우(J)
-					addr = data.jibunAddress;
-				}
-				// 우편번호와 주소 정보를 해당 필드에 넣는다.
-				document.getElementById('zipCode').value = data.zonecode;
-				document.getElementById('address').value = addr;
-				// 커서를 상세주소 필드로 이동한다.
-				document.getElementById('extraAddress').focus();
-				document.getElementById('zipCode').readOnly = true;
-				document.getElementById('address').readOnly = true;
-			}
-		}).open();
-}
-
-
-
 /* 프로필 사진 미리보기 */
 function readFile() {
 	let file = event.target.files[0];
@@ -43,38 +14,38 @@ function readFile() {
 }
 
 /* 유효성 검사 후 Help메세지 출력 */
-	//아이디
-	var msg1 = document.getElementById('id');
-	var result1 = document.getElementById('idHelp');
-	//비밀번호
-	var msg2 = document.getElementById('password');
-	var result2 = document.getElementById('passwordHelp');
-	//이메일
-	var msg3 = document.getElementById('email');
-	var result3 = document.getElementById('emailHelp');
-	//이름
-	var msg4 = document.getElementById('name');
-	var result4 = document.getElementById('nameHelp');
-	//전화번호
-	var msg5 = document.getElementById('phone');
-	var result5 = document.getElementById('phoneHelp');
-	
-	
-	msg1.onblur = function() {
-		result1.innerHTML = "";
-	};
-	msg2.onblur = function() {
-		result2.innerHTML = "";
-	};
-	msg3.onblur = function() {
-		result3.innerHTML = "";
-	};
-	msg4.onblur = function() {
-		result4.innerHTML = "";
-	};
-	msg5.onblur = function() {
-		result5.innerHTML = "";
-	};
+//아이디
+var msg1 = document.getElementById('id');
+var result1 = document.getElementById('idHelp');
+//비밀번호
+var msg2 = document.getElementById('password');
+var result2 = document.getElementById('passwordHelp');
+//이메일
+var msg3 = document.getElementById('email');
+var result3 = document.getElementById('emailHelp');
+//이름
+var msg4 = document.getElementById('name');
+var result4 = document.getElementById('nameHelp');
+//전화번호
+var msg5 = document.getElementById('phone');
+var result5 = document.getElementById('phoneHelp');
+
+
+msg1.onblur = function() {
+	result1.innerHTML = "";
+};
+msg2.onblur = function() {
+	result2.innerHTML = "";
+};
+msg3.onblur = function() {
+	result3.innerHTML = "";
+};
+msg4.onblur = function() {
+	result4.innerHTML = "";
+};
+msg5.onblur = function() {
+	result5.innerHTML = "";
+};
 
 
 //아이디 중복검사
@@ -94,12 +65,12 @@ $('#checkId').click(function() {
 		data: { "id": id },
 		success: function(data) {
 			if (data > 0) {
-			toast('warning', '중복된 아이디입니다.');
+				toast('warning', '중복된 아이디입니다.');
 				$("#id").addClass("is-invalid");
 				idck = 0;
 			} else {
 				toast('success', '사용 가능한 아이디 입니다.');
-			
+
 				$("#id").removeClass("is-invalid");
 				$("#id").addClass("is-valid");
 				idck = 1;
@@ -112,7 +83,7 @@ $('#checkId').click(function() {
 });
 
 // 아이디 변경시 다시 중복검사 진행
-$("#id").change(function(){
+$("#id").change(function() {
 	$("#id").removeClass("is-valid");
 	$("#id").removeClass("is-invalid");
 	idck = 0;
@@ -121,33 +92,33 @@ $("#id").change(function(){
 
 /** 유효성 검사 */
 function checkAll() {
-	
+
 	let path = form.path.value;
 	let alertName = "";
-	
+
 	// 원생 등록 시 아이디 중복체크 필수
 	if (path == '/admin/studentRegist' || path == '/admin/teacherRegist') {
-		alertName= "등록";
+		alertName = "등록";
 		if (idck == 0) {
 			toast('warning', '아이디 중복 검사를 진행해주세요.');
 			return false;
 		}
-	// 원생 수정시 원생을 선택한 상태여야 함.
-	} else if(path == '/admin/updateStudent') {
+		// 원생 수정시 원생을 선택한 상태여야 함.
+	} else if (path == '/admin/updateStudent') {
 		alertName = "수정";
 		if (form.id.value == '') {
 			toast('warning', '원생을 선택해주세요!');
 			return false;
 		}
-	 } else{
+	} else {
 		alertName = "수정";
-		
+
 		if (form.id.value == '') {
 			toast('warning', '강사를 선택해주세요!');
 			return false;
 		}
 	}
-		
+
 	//필수정보 9개
 	let id = form.id.value;
 	let name = form.name.value;
@@ -163,29 +134,29 @@ function checkAll() {
 
 	//프로필사진 1개
 	let file = document.querySelector('#profile');
-	
+
 	const member = JSON.stringify({
-      id : id,
-      name: name,
-      password : password,
-      email : email,
-      phone : phone,
-      gender: gender,
-      birthDay : birthDay,
-      enrollDate : enrollDate,
-      address : address,
-      delDate : delDate,
-      status : status
-    });
-       
+		id: id,
+		name: name,
+		password: password,
+		email: email,
+		phone: phone,
+		gender: gender,
+		birthDay: birthDay,
+		enrollDate: enrollDate,
+		address: address,
+		delDate: delDate,
+		status: status
+	});
+
 
 	//formData에 append
 	let formData = new FormData()
-	
+
 	formData.append("file", file.files[0]);
 	formData.append("member", member);
 
-	if (path == '/admin/studentRegist' || path=='/admin/updateStudent') {
+	if (path == '/admin/studentRegist' || path == '/admin/updateStudent') {
 		//학생 추가정보 5개
 		let studentType = form.studentType.value;
 		let schoolName = form.schoolName.value;
@@ -204,7 +175,7 @@ function checkAll() {
 			schoolName: schoolName,
 			schoolGrade: schoolGrade,
 			schoolClass: schoolClass,
-			consult: consult,
+			consult: consult
 		});
 
 		const parents = JSON.stringify({
@@ -213,11 +184,11 @@ function checkAll() {
 			parentsType: parentsType,
 			parentsPhone: parentsPhone
 		});
-		
-	formData.append("student", student);
-	formData.append("parents", parents);
 
-	} else if (path == '/admin/teacherRegist' || path=='/admin/updateTeacher') {
+		formData.append("student", student);
+		formData.append("parents", parents);
+
+	} else if (path == '/admin/teacherRegist' || path == '/admin/updateTeacher') {
 		//강사 정보 2개
 		let jobCode = form.jobCode.value;
 		let resume = form.resume.value;
@@ -227,14 +198,14 @@ function checkAll() {
 			jobCode: jobCode,
 			resume: resume
 		})
-		
-	formData.append("teacher", teacher);
+
+		formData.append("teacher", teacher);
 
 	}
 
 	// FormData의 값 확인
 	for (var pair of formData.entries()) {
-		 console.log(pair[0]+ ', ' + pair[1]);
+		console.log(pair[0] + ', ' + pair[1]);
 	}
 
 
@@ -248,58 +219,58 @@ function checkAll() {
 	} else if (!checkPhone(phone)) {
 		return false;
 	}
-	
+
 	//회원 가입일 경우에만 비밀번호 체크
-	if(path == '/admin/studentRegist'){
-		
+	if (path == '/admin/studentRegist') {
+
 		if (!checkPassword(id, password)) {
 			return false;
 		}
 	}
-	
+
 	Swal.fire({
-      title: alertName+'하시겠습니까?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#6610f2',
-      cancelButtonColor: '#858796',
-      confirmButtonText: alertName,
-      cancelButtonText: '취소'
-      
-    }).then((result) => {
-      if (result.isConfirmed) {
-		$.ajax({
-		type: "POST",
-		url: path,
-		data: formData,
-		processData: false,
-		contentType: false,
-		enctype: 'multipart/form-data',
-		success: function(data) {
-			
-			Swal.fire({
-				title : alertName + '완료',
-				text: data.message,
-				icon: 'success'
-			});
-			
-			location.href = data.location;
-		},
-		error: function() {
-			toast('error', 'error! 다시 시도해주세요!');
+		title: alertName + '하시겠습니까?',
+		icon: 'question',
+		showCancelButton: true,
+		confirmButtonColor: '#6610f2',
+		cancelButtonColor: '#858796',
+		confirmButtonText: alertName,
+		cancelButtonText: '취소'
+
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				type: "POST",
+				url: path,
+				data: formData,
+				processData: false,
+				contentType: false,
+				enctype: 'multipart/form-data',
+				success: function(data) {
+
+					Swal.fire({
+						title: alertName + '완료',
+						text: data.message,
+						icon: 'success'
+					});
+
+					location.href = data.location;
+				},
+				error: function() {
+					toast('error', 'error! 다시 시도해주세요!');
+				}
+			}); //<-- ajax
+
 		}
-	}); //<-- ajax
-	
-      }
-    })
-	
+	})
+
 }
 
 // 공백 확인
 function checkExistData(value, dataName) {
 	if (value == "") {
 		toast('warning', dataName + ' 입력해주세요!');
-		
+
 		return false;
 	}
 	return true;
@@ -398,191 +369,207 @@ function checkPhone(phone) {
 	return true; //확인이 완료되었을 때
 }
 
-$('input[name=selectMember]').on('click',function() {
+$('input[name=selectMember]').on('click', function() {
 	let id = '';
-	
+
 	let findMemberPath = form.findMemberPath.value;
-	
-	if($(this).prop('checked')){
+
+	if ($(this).prop('checked')) {
 		id = $(this).val();
 
 		$.ajax({
 			type: "POST",
 			url: findMemberPath,
-			data: { "id" : id },
+			data: { "id": id },
 			success: function(data) {
 				studentDetail(data);
 			}, error: function() {
 				toast('error', 'error! 다시 시도해주세요!');
 			}
-		
-	});
-  }
+
+		});
+	}
 });
 
 // 학생 정보 출력
-function studentDetail(mem){
-	
+function studentDetail(mem) {
+
 	form.reset();
-	
+
 	let findMemberPath = form.findMemberPath.value;
-	
+
 	$("#img").removeAttr('src');
-	let profile= '\\img\\profile.jpg';
-	$("#img").attr('src', profile);	
-	
+	let profile = '\\img\\profile.jpg';
+	$("#img").attr('src', profile);
+
 	form.id.value = mem.member.id;
 	form.name.value = mem.member.name;
 	form.password.value = mem.member.password;
 	form.email.value = mem.member.email;
 	form.phone.value = mem.member.phone;
-	
-	if(mem.member.gender == 'F'){	
+
+	if (mem.member.gender == 'F') {
 		$(":radio[name='gender'][value='M']").attr('checked', false);
 		$(":radio[name='gender'][value='F']").attr('checked', true);
-	}else if(mem.member.gender == 'M') {
+	} else if (mem.member.gender == 'M') {
 		$(":radio[name='gender'][value='F']").attr('checked', false);
 		$(":radio[name='gender'][value='M']").attr('checked', true);
 	}
 
 	form.birthDay.value = mem.member.birthDay;
-	
+
 	form.enrollDate.value = mem.member.enrollDate;
-	
+
 	let addr = mem.member.address.split('$');
 	form.zipCode.value = addr[0];
 	form.address.value = addr[1]
 	form.extraAddress.value = addr[2];
 
 
-	if(findMemberPath == '/admin/findStudentById'){
-		
-		if(mem.studentType != null){
+	if (findMemberPath == '/admin/findStudentById') {
+
+		if (mem.studentType != null) {
 			$("#studentType").val(mem.studentType).prop("selected", true);
-		} else{
+		} else {
 			$("#studentType option:eq(0)").prop("selected", true);
 		}
-		
+
 		form.schoolName.value = mem.schoolName;
 		form.schoolGrade.value = mem.schoolGrade;
 		form.schoolClass.value = mem.schoolClass;
-		
+
 		form.parentsName.value = mem.parents.parentsName;
 		form.parentsType.value = mem.parents.parentsType;
 		form.parentsPhone.value = mem.parents.parentsPhone;
 		form.consult.value = mem.consult;
-		
-	} else if (findMemberPath == '/admin/findTeacherById'){
-		
+
+	} else if (findMemberPath == '/admin/findTeacherById') {
+
 		$("#jobCode").val(mem.jobCode).prop("selected", true);
 		$("#status").val(mem.member.status).prop("selected", true);
 		form.delDate.value = mem.member.delDate;
 		form.resume.value = mem.resume;
 	}
-	
-	if(mem.profile != null) {
+
+	if (mem.member.profile != null) {
 		$("#img").removeAttr('src');
-		let src = '\\img\\profile\\' + mem.profile.fileSaveName;
-		$("#img").attr('src', src);	
+		let src = '\\img\\profile\\' + mem.member.profile.fileSaveName;
+		$("#img").attr('src', src);
 	}
-	
+
 }
 
-function deleteMember(){
-	
+function deleteMember() {
+
 	let path = form.path.value;
 	let status = "";
-	
-	if(path == '/admin/updateStudent') {
+
+	if (path == '/admin/updateStudent') {
 		status = "퇴원생";
-		
+
 		if (form.id.value == '') {
 			toast('warning', '원생을 선택해주세요!');
-		    
+
 			return false;
 		}
-	 } else{
-		status= "퇴직";
+	} else {
+		status = "퇴직";
 		if (form.id.value == '') {
 			toast('warning', '강사를 선택해주세요!');
 			return false;
 		}
 	}
-	
-    Swal.fire({
-      title: '삭제하시겠습니까?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#6610f2',
-      cancelButtonColor: '#858796',
-      confirmButtonText: '삭제',
-      cancelButtonText: '취소'
-      
-    }).then((result) => {
-      if (result.isConfirmed) {
-		let id= form.id.value;
-	
-		$.ajax({
+
+	Swal.fire({
+		title: '삭제하시겠습니까?',
+		icon: 'question',
+		showCancelButton: true,
+		confirmButtonColor: '#6610f2',
+		cancelButtonColor: '#858796',
+		confirmButtonText: '삭제',
+		cancelButtonText: '취소'
+
+	}).then((result) => {
+		if (result.isConfirmed) {
+			let id = form.id.value;
+
+			$.ajax({
 				type: "POST",
 				url: "/member/deleteMember",
-			data: {
-				"id": id,
-				"status": status
-			},
-			success: function(data) {
-				Swal.fire({
-					title: "처리 완료!",
-					text: data.message,
-					icon: 'success'
-				})
-			}, error: function() {
-				toast('error', 'error! 다시 시도해주세요!');
-			}
-		}); //<-- ajax 끝!
-      }
-    })
-		
+				data: {
+					"id": id,
+					"status": status
+				},
+				success: function(data) {
+					Swal.fire({
+						title: "처리 완료!",
+						text: data.message,
+						icon: 'success'
+					})
+				}, error: function() {
+					toast('error', 'error! 다시 시도해주세요!');
+				}
+			}); //<-- ajax 끝!
+		}
+	})
+
+}
+
+function search() {
+	
 }
 
 
 /* switealert2 toast 알림창 */
 
-function toast(icon, title){
-		const Toast = Swal.mixin({
-			  toast: true,
-			  position: 'top',
-			  showConfirmButton: false,
-			  timer: 2000
-			})
-			
-			Toast.fire({
-			  icon: icon,
-			  title: title
-			})
-	} 
+function toast(icon, title) {
+	const Toast = Swal.mixin({
+		toast: true,
+		position: 'top',
+		showConfirmButton: false,
+		timer: 2000
+	})
+
+	Toast.fire({
+		icon: icon,
+		title: title
+	})
+}
+
+
+/* 다음 도로명 주소 Api */
+function execDaumPostcode() {
+	new daum.Postcode(
+		{
+		oncomplete: function(data) {
+			// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+			// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+			// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+			var addr = ''; // 주소 변수
+			var extraAddr = ''; // 상세주소 변수
+			//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+			if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+				addr = data.roadAddress;
+			} else { // 사용자가 지번 주소를 선택했을 경우(J)
+				addr = data.jibunAddress;
+			}
+			// 우편번호와 주소 정보를 해당 필드에 넣는다.
+			document.getElementById('zipCode').value = data.zonecode;
+			document.getElementById('address').value = addr;
+			// 커서를 상세주소 필드로 이동한다.
+			document.getElementById('extraAddress').focus();
+			document.getElementById('zipCode').readOnly = true;
+			document.getElementById('address').readOnly = true;
+		}
+	}).open();
+}
+
+
 
 /* 서브 메뉴 이동 함수 */
 const btn = document.querySelectorAll('#menu-btns .btn');
 
- 	btn.forEach((el, index) => {
- 	  el.onclick = () => {
-
- 		let subMenuList = document.querySelectorAll(".menu");
-
- 		subMenuList.forEach((el, index) => {
- 			subMenuList[index].classList.add('d-none');
- 		});
-
- 		subMenuList[index].classList.remove('d-none');
-
- 	  }
-});
-
-
-/* 등록하기 메뉴 이동 함수 */
-const lecbtn = document.querySelectorAll('.btn-lec');
-
-lecbtn.forEach((el, index) => {
+btn.forEach((el, index) => {
 	el.onclick = () => {
 
 		let subMenuList = document.querySelectorAll(".menu");
@@ -591,23 +578,7 @@ lecbtn.forEach((el, index) => {
 			subMenuList[index].classList.add('d-none');
 		});
 
-		subMenuList[2].classList.remove('d-none');
-	}
-});
-
-/* 수정하기 메뉴 이동 함수 */
-const upbtn = document.querySelectorAll('.btn-acc1');
-
-upbtn.forEach((el, index) => {
-	el.onclick = () => {
-
-		let subMenuList = document.querySelectorAll(".menu");
-
-		subMenuList.forEach((el, index) => {
-			subMenuList[index].classList.add('d-none');
-		});
-
-	subMenuList[3].classList.remove('d-none');
+		subMenuList[index].classList.remove('d-none');
 
 	}
 });

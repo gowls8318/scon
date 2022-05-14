@@ -16,6 +16,7 @@
 		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		
+		<association property="profile" resultMap="profileResultMap"/>
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>		
 	</resultMap>
 
@@ -32,7 +33,7 @@
 		<result property="desc" column="AUTHORITY_DESC"/>
 	</resultMap>
 	
-	<resultMap id="fileResultMap" type="com.scon.project.member.model.dto.ProfileDTO">
+	<resultMap id="profileResultMap" type="com.scon.project.member.model.dto.ProfileDTO">
 		<id property="fileId" column="FILE_ID"/>
 		<result property="fileOrginName" column="FILE_ORGNAME"/>
 		<result property="fileSaveName" column="FILE_SAVENAME"/>
@@ -60,9 +61,18 @@
 	, C.AUTHORITY_CODE REF_AUTHORITY_CODE2
 	, C.AUTHORITY_NAME
 	, C.AUTHORITY_DESC
+	, F.FILE_ID
+	, F.FILE_ORGNAME
+	, F.FILE_SAVENAME
+	, F.FILE_PATH
+	, F.FILE_TYPE
+	, F.FILE_THUM_PATH
+	, F.FILE_THUM_NAME
 	FROM TB_MEMBER A
 	LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
 	LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+	LEFT JOIN TB_PROFILE P ON (A.MEMBER_ID = P.MEMBER_ID) 
+	LEFT JOIN TB_FILE F ON (P.FILE_ID = F.FILE_ID) 
 </sql>  
 
 	<insert id="insertMember">
@@ -217,6 +227,12 @@
 		   SET MEMBER_ST = #{ status }
 		 	  , DEL_DATE = SYSDATE
 		 WHERE MEMBER_ID = #{ id }	  
+	</update>
+	
+	<update id="updatePwd">
+		UPDATE TB_MEMBER
+		   SET MEMBER_PWD = #{ password }
+		 WHERE MEMBER_ID = #{ id }	
 	</update>
 	
 

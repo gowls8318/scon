@@ -10,9 +10,6 @@ public class MyProfileController {
 		
 		@GetMapping("/admin/myprofile")
 		public String admMyprofileForm() {
-			
-			
-			
 			return "admin/myprofile/admMyprofile";
 		}
 		

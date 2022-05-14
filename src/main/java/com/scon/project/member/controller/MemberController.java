@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,10 +40,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private MemberService memberService;
+	private static BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, BCryptPasswordEncoder passwordEncoder) {
 		this.memberService = memberService;
+		MemberController.passwordEncoder = passwordEncoder;
 	}
 	
 	@GetMapping("/login") 
@@ -91,13 +94,26 @@ public class MemberController {
 	}
 
 	@GetMapping("/newPwd")
-	public String newPwd() {
+	public String newPwdForm() {
 		return "/member/newPwd";
+	}
+	
+	//비밀번호 변경
+	@ResponseBody
+	@PostMapping("/newPwd")
+	public int newPwd(MemberDTO member) {
+		log.info("member확인 : {}", member);
+		String encodePwd = pwd_encoder(member.getPassword());
+		member.setPassword(encodePwd);
+		
+		int count = memberService.updatePassword(member);
+
+		return count;
 	}
 
 	//아이디 중복 체크
 	@ResponseBody
-	@RequestMapping(value="/checkId", method= RequestMethod.POST)
+	@PostMapping("/checkId")
 	public int checkId(MemberDTO member) {
 		
 		int count = memberService.checkId(member);
@@ -105,6 +121,15 @@ public class MemberController {
 		return count;
 	}
 	
+	
+	
+	// 암호화 메소드
+	public static String pwd_encoder(String pwd) {
+		
+		String encoderPwd = passwordEncoder.encode(pwd);
+		
+		return encoderPwd;
+	}
 	
 	//비밀번호 찾기 이메일 전송 메소드
 	@ResponseBody 

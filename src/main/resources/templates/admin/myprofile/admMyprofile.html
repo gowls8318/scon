@@ -9,7 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>강사 등록</title>
+<title>내 정보</title>
 
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -26,6 +26,8 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
 <link href="/css/student.css" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 </head>
 
@@ -62,9 +64,24 @@
 									<!-- Card Body -->
 									<div class="card-body col-lg-12">
 										<div>
+										
+											<input type="hidden" id="fileSaveName" th:value='${#authentication.principal.profile?.fileSaveName}'/>
+											
 											<img class="profile1" src="/img/profile.jpg" id="img" alt="프로필 사진"><br>
-											<br> <input type="file" name="profile" id="profile" accept=".gif, .jpg, .png"  onchange="readFile(event);"/>
+											<br> <input type="file" name="profile" id="profile" accept=".gif, .jpg, .png" onchange="readFile(event);"/>
+											
 											<!-- 프로필 사진 등록 -->
+											
+											<script>
+												let fileSaveName = document.getElementById('fileSaveName').value;
+												
+												if(fileSaveName != null) {
+													$("#img").removeAttr('src');
+													let src = '\\img\\profile\\' + fileSaveName;
+													$("#img").attr('src', src);	
+												}
+												
+											</script>
 										</div>
 									</div>
 
@@ -78,7 +95,7 @@
 								<!-- Card Header - Dropdown -->
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">강사 필수 정보</h6>
+									<h6 class="m-0 font-weight-bold text-primary">내 기본 정보</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body row">
@@ -262,6 +279,10 @@
 
 		<!-- 원생 관리 자바스크립트 -->
 		<script src="/js/student.js"></script>
+		<!-- 다음 주소 api-->
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+		
 </body>
 
 </html>

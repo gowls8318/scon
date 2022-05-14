@@ -25,6 +25,22 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return scheduleMapper.findSchedule();
 	}
 
+	@Override
+	public int registSchedule(ScheduleDTO sche) {
+		return scheduleMapper.registSchedule(sche);
+	}
+
+	@Override
+	public int updateSchedule(ScheduleDTO sche) {
+		return scheduleMapper.updateSchedule(sche);
+	}
+
+	@Override
+	public int deleteSchedule(ScheduleDTO sche) {
+	
+		return scheduleMapper.deleteSchedule(sche);
+	}
+
 	
 
 }

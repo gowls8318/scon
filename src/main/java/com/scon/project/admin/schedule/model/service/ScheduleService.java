@@ -8,6 +8,10 @@ public interface ScheduleService {
 
 	List<ScheduleDTO> findSchedule();
 
+	int registSchedule(ScheduleDTO sche);
 
+	int updateSchedule(ScheduleDTO sche);
+
+	int deleteSchedule(ScheduleDTO sche);
 
 }

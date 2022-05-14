@@ -35,15 +35,13 @@ public class AdmStudentController {
 	private StudentService studentService;
 	private MemberService memberService;
 	private ObjectMapper objMapper;
-	private BCryptPasswordEncoder passwordEncoder;
 	
 	
 	@Autowired
-	public AdmStudentController(StudentService studentService, MemberService memberService, ObjectMapper objMapper, BCryptPasswordEncoder passwordEncoder) {
+	public AdmStudentController(StudentService studentService, MemberService memberService, ObjectMapper objMapper) {
 		this.studentService = studentService;
 		this.memberService = memberService;
 		this.objMapper = objMapper;
-		this.passwordEncoder = passwordEncoder;
 	}
 	
 	@GetMapping("/studentRegist")
@@ -69,7 +67,7 @@ public class AdmStudentController {
 		ParentsDTO parents = objMapper.readValue(par, ParentsDTO.class);
 		
 		// 비밀번호 암호화 처리
-		String encodePwd = passwordEncoder.encode(member.getPassword());
+		String encodePwd = MemberController.pwd_encoder(member.getPassword());
 		member.setPassword(encodePwd);
 		
 		log.info("멤버 DTO : {}" , member);

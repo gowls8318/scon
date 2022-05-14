@@ -24,7 +24,6 @@ public class StudentDTO {
 	private String consult;				//상담내용
 
 	private MemberDTO member;			//회원 기본정보
-	private ProfileDTO profile; 		//프로필 사진
 	private ParentsDTO parents;			//학부모 정보 
 	
 }

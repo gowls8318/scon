@@ -31,5 +31,7 @@ public interface MemberService extends UserDetailsService {
 
 	MemberDTO findPwd(MemberDTO member);
 
+	int updatePassword(MemberDTO member);
+
 
 }

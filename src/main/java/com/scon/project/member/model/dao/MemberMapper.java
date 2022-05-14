@@ -19,6 +19,8 @@ public interface MemberMapper {
 	// 아이디 찾기
 	MemberDTO findPwd(MemberDTO member);
 
+	//비밀번호 변경
+	int updatePwd(MemberDTO member);
 
 	// 회원 등록
 	int insertMember(MemberDTO member);
@@ -49,6 +51,7 @@ public interface MemberMapper {
 
 	// 회원 삭제
 	int deleteMember(String id, String status);
+
 	
 
 
