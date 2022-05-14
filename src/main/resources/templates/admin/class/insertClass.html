@@ -69,8 +69,7 @@ input[type="checkbox"]::before {
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
 						<!-- Page Heading -->
-						<div
-							class="d-sm-flex align-items-center justify-content-between mb-4">
+						<div class="d-sm-flex align-items-center justify-content-between mb-4">
 							<h1 class="h3 mb-2 text-gray-800">강의등록</h1>
 							<text type="reset" id="resetbtn" onclick="location.href='/admin/classRegist'">
 							<i class="bi bi-arrow-repeat"></i></text>
@@ -106,15 +105,10 @@ input[type="checkbox"]::before {
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
 														<select class="form-control form-select-lg"
-															aria-label=".form-select-lg example" name="FindAllmember" id="FindAllmember">
-
-															<option value="1">우별림</option>
-															<option value="2">우별림</option>
-															<option value="3">우별림</option>
-															<option value="4">우별림</option>
-															<option value="5">우별림</option>
-
-
+															aria-label=".form-select-lg example" name="memberId" id="memberId">
+                                                            	<option th:each=" member : ${ memberList }"
+                                                            		th:value="${ member?.id }" th:utext="${ member?.name }">
+                                                            	</option>
 														</select>
 													</div>
 												</td>

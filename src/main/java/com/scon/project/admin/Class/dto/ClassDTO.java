@@ -24,6 +24,7 @@ public class ClassDTO {
 	 */
 	
 	private int clsId; 
+	private String memberId;
 	private MemberDTO member;
 	private String clsName;
 	private String clsSubject;

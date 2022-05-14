@@ -12,11 +12,12 @@ import com.scon.project.member.model.dto.MemberDTO;
 @Mapper
 public interface ClassMapper {
 	
+
 	//강의리스트조회
 	List<ClassDTO> selectClassList();
 	
 	//멤버조회(강사)
-	List<MemberDTO> findAllmemberList(int clsId);
+	/* List<MemberDTO> findAllmemberList(int clsId); */
 
 	//강의상세보기조회
 	ClassDTO classDetail(int clsId);
@@ -26,6 +27,9 @@ public interface ClassMapper {
 	
 	//강의등록
 	int registClass(ClassDTO classDTO);
+	
+	//강사등록
+	List<MemberDTO> registMember();
 
 	//날짜등록
 	int insertClsAndDay(DayDTO dayDTO);

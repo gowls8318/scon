@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
 import com.scon.project.admin.Class.service.ClassService;
 import com.scon.project.member.model.dto.MemberDTO;
+import com.scon.project.member.model.dto.UserImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,13 +40,11 @@ public class ClassController {
 	}
 
 	//강의 등록용 화면 이동
-	@GetMapping("/classRegist")
-	public String getDashBoard2() {
-
-		return "admin/class/insertClass";
-	}
-
-	/*----------------------------------------------------*/
+	/*
+	 * @GetMapping("/classRegist") public String getDashBoard2() {
+	 * 
+	 * return "admin/class/insertClass"; }
+	 */
 
 	//강의리스트조회
 	@GetMapping("/classList")
@@ -67,6 +67,19 @@ public class ClassController {
 		return classDetail;
 	}
 
+	//강의등록(강사명포함)
+	@GetMapping("classRegist")
+	public ModelAndView registMember(ModelAndView mv) {
+		
+		List<MemberDTO> memberList = classService.registMember();
+		
+		mv.addObject("memberList", memberList);
+		mv.setViewName("admin/class/insertClass");
+		
+		return mv;
+	}
+	
+	
 	//강의등록
 	@PostMapping("classRegist")
 	public String registClass(@ModelAttribute ClassDTO classDTO, RedirectAttributes rttr, Locale locale)
@@ -74,7 +87,7 @@ public class ClassController {
 
 		log.info("등록 요청 강의 : {}", classDTO);
 		MemberDTO member = new MemberDTO();
-		member.setId("director");
+		member.setName("director");
 		classDTO.setMember(member);
 		classService.registClass(classDTO);
 
@@ -83,12 +96,15 @@ public class ClassController {
 		return "redirect:/admin/classList";
 
 	}
+	
+	
 
-	@PostMapping(value = "member", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public List<MemberDTO> findMemberList(int clsId) {
-		return classService.findAllmemberList(clsId);
-	}
+	/*
+	 * @PostMapping(value = "member", produces = "application/json; charset=UTF-8")
+	 * 
+	 * @ResponseBody public List<MemberDTO> findMemberList(int clsId) { return
+	 * classService.findAllmemberList(clsId); }
+	 */
 	
 	
 
@@ -105,28 +121,28 @@ public class ClassController {
 	
 	
 	
-	//강의수정
+	//강의수정 -> get : 화면이동
 	@GetMapping("/classUpdate")
 	public String classUpdate(@RequestParam int clsId, Model model) {
 		
+		List<MemberDTO> memberList = classService.registMember(); //원하는 조건의 멤버 가져오기
+		
+		model.addAttribute("memberList", memberList);
 		model.addAttribute("classUpdate", classService.classDetail(clsId));
-		
 		return "admin/class/updateClass";
-		
 	}
+	
 	
 	//강의수정
 	@PostMapping("/classUpdate")
 	public String classUpdate (@ModelAttribute ClassDTO classDTO, RedirectAttributes rttr, Locale locale) throws Exception {
 		
+		/* classDTO.setMemberId(user.getId()); */
+		/* @AuthenticationPrincipal UserImpl user */
+		
 		classService.classUpdate(classDTO);
-
 		log.info("수정 요청 강의 : {}", classDTO);
-		
-		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("classUpdate", null, locale));
-		
-		
 		return "redirect:/admin/classList";
 		
 	}

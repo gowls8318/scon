@@ -21,7 +21,7 @@ public interface ClassService {
 	List<DayDTO> selectDayList();
 	
 	//강의입력 - 강사명 가져오기
-	List<MemberDTO> findAllmemberList(int clsId);
+	//List<MemberDTO> findAllmemberList(int clsId);
 
 	//강의삭제 - 강의PK값 가져오기
 	int deleteClass(int clsId);
@@ -34,6 +34,9 @@ public interface ClassService {
 	
 	//교시수정
 	int updateTime(TimeDTO time);
+
+	//강사조회
+	List<MemberDTO> registMember();
 
 	
 
