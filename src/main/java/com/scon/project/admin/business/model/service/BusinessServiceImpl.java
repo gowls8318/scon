@@ -17,6 +17,7 @@ public class BusinessServiceImpl implements BusinessService {
 	public BusinessServiceImpl(BusinessMapper businessMapper) {
 		this.businessMapper = businessMapper;
 	}
+	
 	//조회
 	@Override
 	public BusinessDTO selectBusinessInfo() {
@@ -32,9 +33,9 @@ public class BusinessServiceImpl implements BusinessService {
 	
 	//수정
 	@Override
-	public void insertBusinessInfo(BusinessDTO BusinessDTO) {
+	public void updateBusinessInfo(BusinessDTO BusinessDTO) {
 		
-		businessMapper.insertBusinessInfo(BusinessDTO);
+		businessMapper.updateBusinessInfo(BusinessDTO);
 	}
 	
 }
