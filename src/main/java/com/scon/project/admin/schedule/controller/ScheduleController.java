@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scon.project.admin.schedule.model.dto.ScheduleDTO;
 import com.scon.project.admin.schedule.model.service.ScheduleService;
@@ -100,7 +98,7 @@ public class ScheduleController {
 	// 스케쥴 등록
 	@ResponseBody
 	@PostMapping("/schedule") 
-	public int registSchedule(@ModelAttribute ScheduleDTO sche, @AuthenticationPrincipal UserImpl user) throws JsonMappingException, JsonProcessingException { 
+	public int registSchedule(@ModelAttribute ScheduleDTO sche, @AuthenticationPrincipal UserImpl user)  { 
 	
 		log.info("memberId 확인 : {}", user.getId());
 		
@@ -115,7 +113,7 @@ public class ScheduleController {
 	// 스케쥴 수정
 	@ResponseBody
 	@PostMapping("/updateSchedule") 
-	public int updateSchedule(@ModelAttribute ScheduleDTO sche, @AuthenticationPrincipal UserImpl user) throws JsonMappingException, JsonProcessingException { 
+	public int updateSchedule(@ModelAttribute ScheduleDTO sche, @AuthenticationPrincipal UserImpl user) { 
 	
 		log.info("memberId 확인 : {}", user.getId());
 		
@@ -126,6 +124,16 @@ public class ScheduleController {
 		
 		return result; 
 	}
+	
+	@ResponseBody
+	@PostMapping("/deleteSchedule") 
+	public int deleteSchedule(@ModelAttribute ScheduleDTO sche, @AuthenticationPrincipal UserImpl user)  { 
+		
+		int result = scheduleService.deleteSchedule(sche);
+		
+		return result; 
+	}
+
 
 
 	

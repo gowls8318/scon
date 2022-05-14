@@ -63,7 +63,7 @@
 	</update>
 	
 	<delete id="deleteSchedule">
-		UPDATE YB_SCHE
+		UPDATE TB_SCHE
 		   SET SCHE_DELETE = 'Y'
 		 WHERE SCHE_NO= #{ scheNo }      
 	</delete>

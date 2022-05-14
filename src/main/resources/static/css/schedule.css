@@ -35,7 +35,18 @@
     .fc-today-button {
         background-color: #8B169E !important;
         opacity: 100 !important;
+        color: #ffffff !important;
     }
+    
+    .fc-today-button:hover{
+      border: none;
+      background-color: #adadad !important;
+    }
+    
+    .fc-today-button:focus {
+        box-shadow: none !important;
+	}
+    
 
     /* 오른쪽버튼 3개 그룹 */
     .fc .fc-toolbar.fc-header-toolbar {
@@ -63,18 +74,18 @@
     }
 
     /* 일정입력 모달 */
-    #addCalendar {
+    .btn-font {
         background-color: #8B169E
     }
 
-    #addCalendar, #sprintSettingModalClose {
+    .btn-font , #sprintSettingModalClose {
         border: none;
     }
-    #addCalendar:hover, #sprintSettingModalClose:hover {
+    .btn-font:hover, #sprintSettingModalClose:hover {
         border: none;
         background-color: #adadad !important;
 }
-    #addCalendar:focus, #sprintSettingModalClose:focus {
+   	.btn-font :focus, #sprintSettingModalClose:focus {
         box-shadow: none !important;
 }
 	.text-primary{
