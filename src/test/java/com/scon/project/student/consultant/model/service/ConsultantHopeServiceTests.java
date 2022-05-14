@@ -2,6 +2,7 @@ package com.scon.project.student.consultant.model.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.List;
 
@@ -13,10 +14,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.config.SconApplication;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
+@Slf4j
 public class ConsultantHopeServiceTests {
 
 	@Autowired
@@ -32,17 +37,33 @@ public class ConsultantHopeServiceTests {
 	}
 	
 	// success
-	@Test
-	@Disabled
-	@DisplayName("상담 신청 내역 조회용 서비스 메소드 테스트")
-	public void testSelectConsultant() throws Exception {
-		
-		// when
-		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList();
-		
-		// then
-		assertNotNull(consultantList);
-	}
+//	@Test
+//	@Disabled
+//	@DisplayName("상담 신청 내역 조회용 서비스 메소드 테스트")
+//	public void testSelectConsultant() throws Exception {
+//		
+//		// when
+//		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList();
+//		
+//		// then
+//		assertNotNull(consultantList);
+//	}
+	
+	// success
+    @Test
+    @Disabled
+    @DisplayName("상담 신청 내역 조회용(페이징) 매퍼 테스트")
+    public void testGetListPaging() {
+        
+        Criteria cri = new Criteria();
+        
+      //cri.setPageNo(1);
+        cri.setPageNo(2);
+        
+        List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList(cri);
+        
+        consultantList.forEach(board -> log.info("" + board));
+    }
 	
 	// success
 	@Test

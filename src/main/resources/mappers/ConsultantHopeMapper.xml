@@ -41,13 +41,38 @@
 	
 	<!-- 상담 신청 내역 조회용 -->
 	<select id="selectAllConsultantList" resultMap="consultantResultMap">
+			SELECT
+			       CON_NO
+			     , CON_WRITE_DATE
+			     , CON_HTITLE
+			 FROM (SELECT /*+INDEX_DESC(C PK_TB_CONSULTANT)*/
+			              ROWNUM AS RNUM
+			            , CON_NO
+			            , CON_WRITE_DATE
+			            , CON_HTITLE
+			         FROM TB_CONSULTANT C
+			        WHERE CON_HDELETE = 'N'
+			        <![CDATA[
+			          AND ROWNUM <= #{ pageNo } * #{ limit }
+					]]>
+			  		<if test="keyword != null">
+			  		  AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+			  		</if>
+			  	  )
+		<![CDATA[
+			WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
+		]]>
+	</select>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="total" resultType="_int">
 		SELECT
-			   CON_NO
-			 , CON_WRITE_DATE
-			 , CON_HTITLE
+			   COUNT(*)
 		  FROM TB_CONSULTANT
 		 WHERE CON_HDELETE = 'N'
-		 ORDER BY CON_NO DESC
+		 <if test="keyword != null">
+		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+		 </if>
 	</select>
 	
 	<!-- 상담 신청 등록용 -->

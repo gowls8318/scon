@@ -3,11 +3,16 @@ package com.scon.project.student.consultant.model.service;
 import java.util.List;
 
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
+import com.scon.project.common.paging.Criteria;
 
 public interface ConsultantHopeService {
 	
 	/* 상담 신청 내역 조회용 */
-	List<ConsultantDTO> selectAllConsultantList() throws Exception;
+//	List<ConsultantDTO> selectAllConsultantList() throws Exception;
+	List<ConsultantDTO> selectAllConsultantList(Criteria cri);
+	
+	/* 게시물 총 갯수 */
+	int total(Criteria cri);
 	
 	/* 상담 신청 등록용 */
 	boolean insertConsultant(ConsultantDTO con) throws Exception;

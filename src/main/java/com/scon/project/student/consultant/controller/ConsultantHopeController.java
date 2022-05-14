@@ -16,10 +16,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
+import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.student.consultant.model.service.ConsultantHopeService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/student")
+@Slf4j
 public class ConsultantHopeController {
 
 	private ConsultantHopeService consultantHopeService;
@@ -33,11 +38,16 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 내역 조회용 */
 	@GetMapping("/consultant/list")
-	public ModelAndView selectAllConsultantList(ModelAndView mv) throws Exception {
+	public ModelAndView selectAllConsultantList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
 		
-		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList();
-		
+		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList(cri);
+		//log.info("consultantList : {}", consultantList);
 		mv.addObject("consultantList", consultantList);
+		
+		int total = consultantHopeService.total(cri);
+		Pagination page = new Pagination(cri, total);
+		mv.addObject("page", page);
+		
 		mv.setViewName("student/consultant/list");
 		
 		return mv;
@@ -75,9 +85,12 @@ public class ConsultantHopeController {
 //	}
 	
 	@GetMapping("/consultant/detail")
-	public String selectDetailPage(@RequestParam int no, Model model) throws Exception {
+	public String selectDetailPage(@RequestParam int no, Model model, Criteria cri) throws Exception {
 		
 		model.addAttribute("consultantDetail", consultantHopeService.selectConsultantDetail(no));
+		
+		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
+		model.addAttribute("cri", cri);
 		
 		return "student/consultant/detail";
 	}
