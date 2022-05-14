@@ -5,6 +5,7 @@
 	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
 		<id property="clsId" column="CLS_ID"/>
 		<result property="clsName" column="CLS_NAME"/>
+		<result property="memberId" column="MEMBER_ID"/>
 		<result property="clsSubject" column="CLS_SUBJECT"/>
 		<result property="clsStuNum" column="CLS_STUNUM"/>
 		<result property="clsGrade" column="CLS_GRADE"/>
@@ -27,7 +28,7 @@
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="name" column="MEMBER_NAME"/>
-		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="password" column="MEMBER_PWD"/>
 		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
@@ -37,6 +38,14 @@
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="deleteDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
+		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>		
+	</resultMap>
+	
+	<!-- 멤버권한 -->
+	<resultMap id="memberRoleResultMap" type="com.scon.project.member.model.dto.MemberRoleDTO">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<id property="authorityCode" column="REF_AUTHORITY_CODE"/>
 	</resultMap>
 	
 	
@@ -77,7 +86,7 @@
 		 VALUES
 		 (
 		    CLS_ID.NEXTVAL
-		 , #{ member.id }
+		 , #{ memberId }
 		 , #{ clsName }
 		 , #{ clsSubject }
 		 , #{ clsStuNum }
@@ -90,7 +99,6 @@
 		 , 'N'
 		 )
 	</insert>
-	
 
 	<!-- 강의와요일 -->
 	<insert id="insertClsAndDay">
@@ -179,6 +187,14 @@
 	
 	<!-- rownum : 기본적으로 작성시간으로 입력 -->
 	
+	<!-- 강사조회 -->
+	<select id="registMember" resultMap="memberResultMap">
+		SELECT *
+		  FROM TB_MEMBER A
+		  JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE AUTHORITY_CODE = 2
+	</select>
+	
 
 	<!-- 강의삭제 -->
 	<update id="deleteClass">
@@ -193,7 +209,7 @@
 	<update id="classUpdate">
 		UPDATE
 			  TB_CLASS A
-		  SET   A.MEMBER_ID = (SELECT B.MEMBER_ID FROM TB_MEMBER B WHERE B.MEMBER_ID = #{member.id} )
+		  SET   A.MEMBER_ID = (SELECT B.MEMBER_ID FROM TB_MEMBER B WHERE B.MEMBER_ID = #{ memberId } )
 			  , A.CLS_NAME = #{ clsName }
 			  , A.CLS_SUBJECT = #{ clsSubject }
 			  , A.CLS_STUNUM = #{ clsStuNum }

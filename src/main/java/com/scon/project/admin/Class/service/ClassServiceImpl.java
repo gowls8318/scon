@@ -73,10 +73,10 @@ public class ClassServiceImpl implements ClassService {
 	}
 	
 	// 멤버가져오기
-	@Override
-	public List<MemberDTO> findAllmemberList(int clsId) {
-		return classMapper.findAllmemberList(clsId);
-	}
+	/*
+	 * @Override public List<MemberDTO> findAllmemberList(int clsId) { return
+	 * classMapper.findAllmemberList(clsId); }
+	 */
 
 	// 강의삭제
 	@Override
@@ -93,14 +93,23 @@ public class ClassServiceImpl implements ClassService {
 		return result;
 	}
 
+	//요일
 	@Override
 	public int updateDay(DayDTO dayList) {
 		return classMapper.updateDay(dayList);
 	}
 
+	//교시
 	@Override
 	public int updateTime(TimeDTO time) {
 		return classMapper.updateTime(time);
+	}
+
+
+	//강사
+	@Override
+	public List<MemberDTO> registMember() {
+		return classMapper.registMember();
 	}
 
 
