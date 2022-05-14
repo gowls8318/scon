@@ -101,14 +101,15 @@
                                     <thead>
                                     <tr></tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody th:each="detail : ${ detailList }">
                                     <tr>
                                         <th>
                                             작성자 <span id="pointtext"></span>
                                         </th>
                                         <td>
-                                            <input class="form-control" type="text" placeholder="관리자" 
+                                            <input class="form-control" type="text" th:value="${ detail.memberName }" name="memberName"
                                             aria-label="Disabled input example" disabled>
+                                            <input type="hidden" th:value="${detail.taskId}" class="taskId" id="taskId" name="taskId"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -116,7 +117,7 @@
                                             제목 <span id="pointtext"></span>
                                         </th>
                                         <td>
-                                            <input class="form-control" type="text" placeholder="" 
+                                            <input class="form-control" type="text" th:value="${ detail.taskTitle }" name="taskTitle"
                                             aria-label="default input example" readonly>
                                         </td>
                                     </tr>
@@ -140,27 +141,27 @@
                                     <tr>
                                         <th>내용 <span id="pointtext"></span></th>
                                         <td>
-                                            <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3" th:text="${ detail.taskContent }" name="taskContent" readonly></textarea>
                                         </td>
                                     </tr>
-                                    <tr>
+             <!--                   <tr>
                                         <th>댓글 <span id="replytext"></span>
                                         <td>
-                        <!-- Comments section-->
-                        <section class="mb-4">
+                    <!-- Comments section
+                    <section class="mb-4">
                         <div class="card bg-light">
                             <div class="card-body">
-                                <!-- Comment form-->
+                                <!-- Comment form
                                 <form class="mb-4"><textarea class="form-control col-md-12" rows="1" placeholder="댓글을 작성해주세요"></textarea><button id="apply-btn">등록</button></form>
                                 <!-- Comment with nested comments-->
-                                <div class="d-flex mb-4">
-                                    <!-- Parent comment-->
+                   <!--  			<div class="d-flex mb-4">
+                                    <!-- Parent comment
                                     <div class="flex-shrink-0"></div>
                                     <div class="ms-5">
                                         <div class="fw-bold"><span style="color:black; font-weight: bold;">김민아</span>
                                              <a href="#">수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
                                         엄청 잘했다
-                                        <!-- Child comment 1-->
+                                        <!-- Child comment 1
                                         <div class="d-flex mt-4">
                                             <div class="flex-shrink-0"></div>
                                             <div class="ms-3">
@@ -169,7 +170,7 @@
                                                 100점 맞을듯
                                             </div>
                                         </div>
-                                        <!-- Child comment 2-->
+                                        <!-- Child comment 2
                                         <div class="d-flex mt-4">
                                             <div class="flex-shrink-0"></div>
                                             <div class="ms-3">
@@ -180,6 +181,9 @@
                                         </div>
                                     </div>
                                 </div>
+                              </div>
+                            </div>
+                          </section> -->
                                         </td>
                                     </tr>
                                     </tbody>
@@ -188,13 +192,10 @@
                             <!-- 글쓴이만 보이는 버튼 -->
                             <div class="row buttonbox">
                                 <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit">수정</button>
-                                <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="submit">삭제</button>
+                                <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="button" onclick="modal1();">삭제</button>
                             </div>
                         </div>
                     </div>
-                    <h2 >
-
-                    </h2>
 
                </div>
                <!-- /.container-fluid -->
@@ -211,32 +212,45 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
+
+      <!-- Modal (삭제) -->
+             <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title" id="exampleModalLabel">게시글 삭제</h5>
+                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">×</span>
+                             </div>
+                                 <div class="modal-body">
+                                     삭제 하시겠습니까?
+                                 </div>
+                                 <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal();">취소</button>
+                                 <button type="button" class="btn btn-primary delete-btn" onclick="deleteTask();">삭제</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+    
+
+    
 
     <!--  Ajax -->
 	<script>
-	
-    $("#send-btn").click(function(){
-            
-            const taskTitle = document.getElementById("task-title").value;
-            const taskContent = document.getElementById("task-content").value;
-            //여기 파일 담기
-        $.ajax({
-            url : "",
-            type: "post",
-            data : {
-                    taskTitle : taskTitle,
-                    taskContent : taskContent
-                    /* 파일 넣기 */
-                  },
-                  success : function(data){
-                      console.log(data);
-                      console.table(data);
-                  },
-                  error : function(xhr){
-                      console.log(xhr);
-                  }
-        });
-    });
+		
+		// 삭제 모달 
+		function modal1() {
+			$("#delete-modal").modal("show");
+		}
+		
+		// 삭제 모달 닫기
+	    function closeModal() {
+	        $("#delete-modal").modal("hide");
+	    }
+		
+		
       </script>
 
     <!-- Bootstrap core JavaScript-->
