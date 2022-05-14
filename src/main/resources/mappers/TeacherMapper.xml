@@ -9,7 +9,6 @@
 		<result property="resume" column="RESUME"/>
 		
 		<association property="member" resultMap="memberResultMap"/> <!-- 회원 기본정보  -->
-		<association property="profile" resultMap="profileResultMap"/> <!-- 프로필 사진 -->
 		
 	</resultMap>
 	
@@ -26,6 +25,8 @@
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
+		
+		<association property="profile" resultMap="profileResultMap"/> <!-- 프로필 사진 -->
 		
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
 		

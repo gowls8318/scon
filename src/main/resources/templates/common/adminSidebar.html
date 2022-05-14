@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -61,7 +61,7 @@
 
             <!-- Nav Item - 강사 관리 Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTeacher"
+                <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTeacher"
                     aria-expanded="true" aria-controls="collapseTeacher">
                     <span>강사 관리</span>
                     <i class="bi bi-chevron-down"></i>
@@ -70,9 +70,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">강사 관리:</h6>
-                        <a class="collapse-item" href="#">강사 등록</a>
-                        <a class="collapse-item" href="#">강사 목록</a>
-                        <a class="collapse-item" href="#">직급 관리</a>
+                        <a class="collapse-item" href="/admin/teacherRegist">강사 등록</a>
+                        <a class="collapse-item" href="/admin/teacherList">강사 목록</a>
                     </div>
                 </div>
             </li>
@@ -88,7 +87,7 @@
 
             <!-- Nav Item - 원생 관리 Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapseStudent"
+                <a class="nav-link collapsed" href="/admin/studentList" data-target="#collapseStudent"
                     aria-expanded="true" aria-controls="collapseStudent">
                     <span>원생 관리</span>
                     <i class="bi bi-box-arrow-in-right"></i>
@@ -97,7 +96,7 @@
 
              <!-- Nav Item - Pages Collapse Menu -->
              <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapseStudentRegist"
+                <a class="nav-link collapsed" href="/admin/studentRegist" data-target="#collapseStudentRegist"
                     aria-expanded="true" aria-controls="collapseStudentRegist">
                     <span>원생 등록</span>
                     <i class="bi bi-box-arrow-in-right"></i>

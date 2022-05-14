@@ -1,19 +1,27 @@
 package com.scon.project.member.controller;
 
-
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 import java.util.UUID;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,10 +40,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private MemberService memberService;
+	private static BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, BCryptPasswordEncoder passwordEncoder) {
 		this.memberService = memberService;
+		MemberController.passwordEncoder = passwordEncoder;
 	}
 	
 	@GetMapping("/login") 
@@ -45,7 +55,7 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public void loginForm(@RequestParam(required=false) String errorMessage, Model model) {
-		model.addAttribute("errorMessage", errorMessage );
+		model.addAttribute("errorMessage", errorMessage);
 	}
 	
 	@GetMapping("/forgotId")
@@ -84,18 +94,66 @@ public class MemberController {
 	}
 
 	@GetMapping("/newPwd")
-	public String newPwd() {
+	public String newPwdForm() {
 		return "/member/newPwd";
+	}
+	
+	//비밀번호 변경
+	@ResponseBody
+	@PostMapping("/newPwd")
+	public int newPwd(MemberDTO member) {
+		log.info("member확인 : {}", member);
+		String encodePwd = pwd_encoder(member.getPassword());
+		member.setPassword(encodePwd);
+		
+		int count = memberService.updatePassword(member);
+
+		return count;
 	}
 
 	//아이디 중복 체크
 	@ResponseBody
-	@RequestMapping(value="/checkId", method= RequestMethod.POST)
+	@PostMapping("/checkId")
 	public int checkId(MemberDTO member) {
 		
 		int count = memberService.checkId(member);
 
 		return count;
+	}
+	
+	
+	
+	// 암호화 메소드
+	public static String pwd_encoder(String pwd) {
+		
+		String encoderPwd = passwordEncoder.encode(pwd);
+		
+		return encoderPwd;
+	}
+	
+	//비밀번호 찾기 이메일 전송 메소드
+	@ResponseBody 
+	@PostMapping("/authPwd")
+	public int findPsssword(@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("id") String id) throws UnsupportedEncodingException, MessagingException {
+		
+		int result = 0;
+		
+		MemberDTO member = new MemberDTO();
+		member.setId(id);
+		member.setName(name);
+		member.setEmail(email);
+		
+		MemberDTO findMember = memberService.findPwd(member);
+		log.info("findMember 확인 : {}" , findMember);
+		
+		Random r = new Random();
+		int num = r.nextInt(999999); // 랜덤난수설정
+		
+		if(findMember != null) 
+			result = sendMail(findMember.getEmail(), num);
+			
+		
+		return result;
 	}
 	
 	
@@ -157,4 +215,63 @@ public class MemberController {
 		return map;
 	}
 
+	public int sendMail(String memberEmail, int num) throws UnsupportedEncodingException, MessagingException {
+		int result = 0 ;
+				
+		String from ="dmsb14@gmail.com";
+		String fromName = "Scon";
+		String to = memberEmail;
+		
+		String host = "smtp.gmail.com";
+		int port = 587;
+		
+		String smtp_username = "dmsb14@gmail.com";
+		String smtp_password = "Xoal0270!@";
+		 
+		String title = "[SCON] 비밀번호변경 인증 이메일 입니다";
+		String body = String.join(
+		        System.getProperty("line.separator"),
+		        "<h1>[SCON] 비밀번호 찾기(변경)</h1>",
+		        System.getProperty("line.separator"),
+		        "<h3>인증번호는 " + num + "입니다.</h3>",
+		        "<p>비밀번호 찾기 페이지에서 인증번호를 입력해주세요.</p>."
+		    );
+		
+		 Properties props = System.getProperties();
+	        props.put("mail.transport.protocol", "smtp");
+	        props.put("mail.smtp.port", port); 
+	        props.put("mail.smtp.starttls.enable", "true");
+	        props.put("mail.smtp.auth", "true");
+	        Session session = Session.getDefaultInstance(props);
+	        MimeMessage msg = new MimeMessage(session);
+	        
+			msg.setFrom(new InternetAddress(from, fromName));
+	        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+	        msg.setSubject(title);
+	        msg.setContent(body, "text/html;charset=euc-kr");
+	        
+	        Transport transport = session.getTransport();
+	        
+	        try {
+	            System.out.println("Sending...");
+	            
+	            transport.connect(host, smtp_username, smtp_password);
+	            transport.sendMessage(msg, msg.getAllRecipients());
+	            
+	            System.out.println("Sending success!");
+	            
+	            result = num; // 결과로 인증 번호를 반환
+	            
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	            
+	            result = -1; //이메일 전송 실패시 결과 -1 반환
+	            
+	        } finally {
+	            transport.close();
+	        }
+	        
+			return result;
+	}
+	
 }

@@ -18,6 +18,5 @@ public class TeacherDTO {
 	private String resume;
 	
 	private MemberDTO member;			//회원 기본정보
-	private ProfileDTO profile; 		//프로필 사진
 	
 }

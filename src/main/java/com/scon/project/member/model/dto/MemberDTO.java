@@ -45,6 +45,8 @@ public class MemberDTO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
 	private java.sql.Date delDate;					//삭제일
 	private String status;							//회원상태
+	
+	private ProfileDTO profile;
 
 	/* TB_MEMBER_ROLE - 한 멤버는 여러 권한을 가질 수 있다 */
 	private List<MemberRoleDTO> memberRoleList;		//권한 목록

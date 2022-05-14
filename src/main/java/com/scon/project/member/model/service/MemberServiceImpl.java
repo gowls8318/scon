@@ -175,6 +175,19 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.deleteMember(id, status);
 	}
 
+	/* 비밀번호 찾기 - 가입된 회원 조회*/
+	@Override
+	public MemberDTO findPwd(MemberDTO member) {
+		return memberMapper.findPwd(member);
+	}
+	
+	/* 비밀번호 변경 */
+	@Override
+	public int updatePassword(MemberDTO member) {
+		return memberMapper.updatePwd(member);
+	}
+	
+	
 
 
 

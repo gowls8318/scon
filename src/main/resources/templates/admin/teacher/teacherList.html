@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="utf-8">
@@ -42,6 +43,7 @@
         <!-- Main Content -->
         <div id="content">
             <div class="container-fluid">
+            <th:block sec:authorize="hasRole('DIRECTOR')">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">강사 조회</h1>
@@ -51,7 +53,7 @@
 
                 <!-- Content Row -->
                 <div class="content-stu row">
-
+					
                     <!-- Area Chart -->
                     <div class="col-lg-3 mb-6">
                         <div class="card shadow mb-4">
@@ -138,8 +140,7 @@
                     </div>
 
                     <!-- 상단 원생 정보+ 하단 서브메뉴 원생 추가정보 form 태그로 감싸져 있음 (원생 정보 수정하기 위해서) -->
-                    <form name="form" method="post" class="col-lg-9 formcenter needs-validation" novalidate
-							onsubmit="return checkAll()">
+                    <form name="form" class="col-lg-9 formcenter needs-validation" >
 
                         <div class="col-lg-12">
 
@@ -317,14 +318,25 @@
 
                         </div>
 
-                    </form> <!-- 원생 정보 끝 -->
-                </div>
-            </div>
+                    </form>
+					</div>
+					
+					</th:block>
+					
+					<th:block sec:authorize="hasRole('ADMIN')">
+						<h6 class="m-0 font-weight-bold text-primary"><i class="bi bi-exclamation-octagon">&nbsp;&nbsp;</i>원장 전용 페이지 입니다.</h6>
+						<div
+							class="d-sm-flex align-items-center justify-content-between mb-4">
+							<h1 class="h3 mb-0 text-gray-800">강사 등록</h1>
+						</div>
+						<hr class="border-bottom-primary">
+					</th:block>
 
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
+					<!-- /.container-fluid -->
+				</div>
+				<!-- End of Main Content -->
+			</div>
+			<!-- End of Content Wrapper -->
 
             <!-- footer include -->
             <div th:replace="/common/footer.html"></div>

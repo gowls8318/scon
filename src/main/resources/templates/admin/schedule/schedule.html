@@ -1,297 +1,453 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>학사일정</title>
+<title>학사일정</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="/js/sche.js" type="text/javascript" defer></script>
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+<script src="/js/sche.js" type="text/javascript" defer></script>
 
-    <!-- Custom styles for this template-->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
 
-    <!-- 캘린더 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src='fullcalendar/core/main.js'></script>
-    <script src='fullcalendar/core/locales/es.js'></script>
-    
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--  캘린더 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                timeZone: 'UTC',
-                locale: 'ko',
-                initialView: 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할  수 있다.
-                events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
-                    {
-                        title:'content',
-                        start:'start_date',
-                        end:'end_date' 
-                        // color 값을 추가해 색상도 변경 가능 자세한 내용은 하단의 사이트 참조
-                    }
-                ], headerToolbar: {
-                    center: 'addEventButton' // headerToolbar에 버튼을 추가
-                }, customButtons: {
-                    addEventButton: { // 추가한 버튼 설정
-                        text : "일정 추가",  // 버튼 내용
-                        click : function(){ // 버튼 클릭 시 이벤트 추가
-                            $("#calendarModal").modal("show"); // modal 나타내기
-
-                            $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
-                                var content = $("#calendar_content").val();
-                                var start_date = $("#calendar_start_date").val();
-                                var end_date = $("#calendar_end_date").val();
-                                
-                                console.log(content)
-                                
-                                //내용 입력 여부 확인
-                                if(content == null || content == ""){
-                                    alert("내용을 입력하세요.");
-                                }else if(start_date == "" || end_date ==""){
-                                    alert("날짜를 입력하세요.");
-                                }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
-                                    alert("종료일이 시작일보다 먼저입니다.");
-                                }else{ // 정상적인 입력 시
-                                    var obj = {
-                                        "title" : content,
-                                        "start" : start_date,
-                                        "end" : end_date
-                                    }//전송할 객체 생성
-
-                                    console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                }
-                            });
-                        }
-                    }
-                },
-                editable: true, // false로 변경 시 draggable 작동 x 
-                displayEventTime: false // 시간 표시 x
-            });
-            calendar.render();
-        });
-    </script>
-
-    <style>
-        /* 캘린더 */
-    #calendarBox{
-        padding-left : 30%; 
-        padding-right: 30%;
-        border-radius: 2;
-    }
-
-    /* 일정추가, <> */
-    .fc .fc-button-primary {
-        border: none;
-        justify-content: flex-end;
-        float: right;
-        background-color: #fff;
-        color: #858796;
-        padding: 2px;
-    }
-    /* 일정추가 */
-    .fc-addEventButton-button {
-        padding-top: 2px !important;
-    }
-    /* < > */
-    .fc-button-group {
-        margin: 0 !important;
-        padding-bottom: 3px;
-    }
-    .fc .fc-button-primary:hover {
-        border: none;
-        background-color: #adadad !important;
-    }
-    .fc .fc-button-primary:focus {
-        box-shadow: none !important;
-    }
-
-    /* today */
-    .fc-today-button {
-        background-color: #8B169E !important;
-        opacity: 100 !important;
-    }
-
-    /* 오른쪽버튼 3개 그룹 */
-    .fc .fc-toolbar.fc-header-toolbar {
-        display: grid;
-        grid-auto-flow: column;
-        grid-template-columns: 1fr;        
-    }
-
-    /* 이번달/연도 */
-    .fc-toolbar-title {
-        font-family: "GmarketSansMedium";
-        font-weight: bolder;
-    }
-
-    /* 요일 */
-    .fc .fc-daygrid-day-number {
-        color : #858796;
-        pointer-events: none;
-        cursor: default;
-    }
-    /* 날짜 */
-    .fc .fc-col-header-cell-cushion {
-        pointer-events: none;
-        cursor: default;
-    }
-
-    /* 일정입력 모달 */
-    #addCalendar {
-        background-color: #8B169E
-    }
-
-    #addCalendar, #sprintSettingModalClose {
-        border: none;
-    }
-    #addCalendar:hover, #sprintSettingModalClose:hover {
-        border: none;
-        background-color: #adadad !important;
-}
-    #addCalendar:focus, #sprintSettingModalClose:focus {
-        box-shadow: none !important;
-}
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
-</style>
+<!-- sweetalert2 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<!-- Css -->
+<link href="/css/schedule.css" rel="stylesheet">
+
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			timeZone : 'UTC',
+			defaultDate : new Date(),
+			// locale: 'ko',
+			initialView : 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할 수 있다.
+			events :
+			// 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
+
+			// ajax 처리로 데이터를 로딩 시킨다. 
+			$.ajax({
+				type : "get",
+				url : "/admin/allschedule",
+				dataType : "json",
+				success : function(data) {
+					console.log(data);
+					let result = data.schedule;
+					for (i = 0; i < result.length; i++) {
+
+						calendar.addEvent({
+							id : result[i]['scheNo'],
+							title : result[i]['content'],
+							start : result[i]['startDay'],
+							end : result[i]['endDay'],
+							color : result[i]['color'],
+							allDay : false
+						})
+					}
+				}
+			})
+
+			,
+			headerToolbar : {
+				center : 'addEventButton' // headerToolbar에 버튼을 추가
+			},
+			customButtons : {
+				addEventButton : { // 추가한 버튼 설정
+					text : "일정 추가", // 버튼 내용
+					click : function() { // 버튼 클릭 시 이벤트 추가
+
+						// 일정 등록 모달 함수 호출
+						insertModal();
+					}
+				}
+			},
+			eventClick : function(info) {
+
+				//일정 클릭 시 일정 수정 모달 함수 호출
+				updateModal(info);
+
+			},
+			editable : true, // false로 변경 시 draggable 작동 x 
+			displayEventTime : false
+		// 시간 표시 x
+		});
+
+		calendar.render();
+
+	});
+
+	function insertModal() {
+
+		$("#calendarModal").modal("show"); // modal 나타내기
+		
+		$("#addCalendar").removeClass("d-none");
+		$("#upadteCalendar").addClass("d-none");
+		$("#deleteCalendar").addClass("d-none");
+
+		$("#addCalendar").on("click", function() { // modal의 추가 버튼 클릭 시
+			var content = $("#calendar_content").val();
+			var start_date = $("#calendar_start_date").val();
+			var end_date = $("#calendar_end_date").val();
+			var color = $("#calendar_color").val();
+			var clsId = $("#calendar_clsId").val();
+
+			//내용 입력 여부 확인
+			if (content == null || content == "") {
+				toast('warning', '내용을 입력하세요!');
+			} else if (start_date == "" || end_date == "") {
+				toast('warning', '날짜를 입력하세요!');
+			} else if (new Date(end_date) - new Date(start_date) < 0) { // date 타입으로 변경 후 확인
+				toast('warning', '종료일이 시작일보다 먼저 입니다!');
+			} else { // 정상적인 입력 시
+
+				$.ajax({
+					type : 'post',
+					url : '/admin/schedule',
+					data : {
+						"content" : content,
+						"startDay" : start_date,
+						"endDay" : end_date,
+						"color" : color,
+						"clsId" : clsId
+					},
+					dataType : "json",
+					success : function(data) {
+						let result = data;
+						Swal.fire({
+							text : '일정이 등록되었습니다!',
+							icon : 'success'
+						});
+
+						location.href = "/admin/schedule";
+
+					},
+					error : function() {
+						toast('error', 'error! 다시 시도해주세요!');
+					}
+				}); //<-- ajax
+
+			}
+		}); //모달 종료 시점
+	}
+
+	function updateModal(info) {
+
+		$("#calendarModal").modal("show"); // modal 나타내기
+
+		$("#addCalendar").addClass("d-none");
+		$("#upadteCalendar").removeClass("d-none");
+		$("#deleteCalendar").removeClass("d-none");
+
+		console.log(info);
+
+		let startDate = info.event._instance.range.start;
+		let endDate = info.event._instance.range.end;
+
+		let scheNo = info.event.id;
+
+		let start = startDate.toISOString().substring(0, 10);
+		let end = endDate.toISOString().substring(0, 10);
+
+		$("#calendar_content").val(info.event._def.title);
+		$("#calendar_start_date").val(start);
+		$("#calendar_color").val(info.event._def.ui.backgroundColor);
+
+		console.log("확인1 : " + end);
+
+		if (start != end) {
+			var yy = endDate.getFullYear();
+			var mm = endDate.getMonth() + 1;
+			var dd = endDate.getDate() - 1;
+
+			var day = parseInt(dd) - 1;
+
+			end = yy + "-" + (("00" + mm.toString()).slice(-2)) + "-"
+					+ (("00" + dd.toString()).slice(-2));
+
+			console.log("확인2 : " + end);
+
+		}
+
+		$("#calendar_end_date").val(end);
+
+		$("#upadteCalendar").on("click", function() { // modal의 수정 버튼 클릭 시
+
+			var content = $("#calendar_content").val();
+			var start_date = $("#calendar_start_date").val();
+			var end_date = $("#calendar_end_date").val();
+			var color = $("#calendar_color").val();
+			var clsId = $("#calendar_clsId").val();
+
+			//내용 입력 여부 확인
+			if (content == null || content == "") {
+				toast('warning', '내용을 입력하세요!');
+			} else if (start_date == "" || end_date == "") {
+				toast('warning', '날짜를 입력하세요!');
+			} else if (new Date(end_date) - new Date(start_date) < 0) { // date 타입으로 변경 후 확인
+				toast('warning', '종료일이 시작일보다 먼저 입니다!');
+			} else { // 정상적인 입력 시
+
+				$.ajax({
+					type : 'post',
+					url : '/admin/updateSchedule',
+					data : {
+						"scheNo" : scheNo,
+						"content" : content,
+						"startDay" : start_date,
+						"endDay" : end_date,
+						"color" : color,
+						"clsId" : clsId
+					},
+					dataType : "json",
+					success : function(data) {
+						let result = data;
+						Swal.fire({
+							text : '일정이 수정되었습니다!',
+							icon : 'success'
+						});
+
+						location.href = "/admin/schedule";
+
+					},
+					error : function() {
+						toast('error', 'error! 다시 시도해주세요!');
+					}
+				}); //<-- ajax
+				
+			}
+			
+		});
+			
+				// 삭제 버튼 클릭시 
+				$("#deleteCalendar").on("click", function() {
+
+					alert("클릭!");
+					$.ajax({
+						type : 'post',
+						url : '/admin/deleteSchedule',
+						data : {
+							"scheNo" : scheNo,
+						},
+						dataType : "json",
+						success : function(data) {
+							let result = data;
+							Swal.fire({
+								text : '일정이 삭제되었습니다!',
+								icon : 'success'
+							});
+
+							location.href = "/admin/schedule";
+
+						},
+						error : function() {
+							toast('error', 'error! 다시 시도해주세요!');
+						}
+					}); //<-- ajax
+				});
+
+			
+
+
+	}
+
+	//alert창
+	function toast(icon, title) {
+		const Toast = Swal.mixin({
+			toast : true,
+			position : 'top',
+			showConfirmButton : false,
+			timer : 2000
+		})
+
+		Toast.fire({
+			icon : icon,
+			title : title
+		})
+	}
+</script>
+
 
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-        <div th:replace="/common/adminSidebar.html"></div> 
+		<div th:replace="/common/adminSidebar.html"></div>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<div id="content">
 
-                <div th:replace="/common/adminTopbar.html"></div>
+				<div th:replace="/common/adminTopbar.html"></div>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">학사일정</h1>                        
-                    </div>
-                    <hr class="border-bottom-primary">
+					<!-- Page Heading -->
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">학사 일정</h1>
+					</div>
+					<hr class="border-bottom-primary">
 
-                    <!-- contents -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">학사일정</h6>
-                        </div>
-                        <div class="card-body">
-                            <!-- 
+					<!-- contents -->
+					<div class="card shadow mb-4 pb-5">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Calendar</h6>
+						</div>
+						<div class="card-body pb-5">
+							<!-- 
                                 캘린더
                                 https://blog.naver.com/PostView.naver?blogId=iiwvii&logNo=222368096146&parentCategoryNo=&categoryNo=1&viewDate=&isShowPopularPosts=true&from=search
                             -->
-                            <div id="calendarBox">
-                                <div id="calendar"></div>
-                            </div>
+							<div id="calendarBox">
+								<div id="calendar"></div>
+							</div>
 
-                            <!-- 일정 추가 모달 -->
-                            <!-- modal 추가 -->
-                            <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="registModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="registModalLabel">일정을 입력하세요.</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <form id="calendarForm">
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="taskId" class="col-form-label">일정 내용</label>
-                                                <input type="text" class="form-control" id="calendar_content" name="calendar_content">
-                                                <label for="taskId" class="col-form-label">시작 날짜</label>
-                                                <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date">
-                                                <label for="taskId" class="col-form-label">종료 날짜</label>
-                                                <input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                id="sprintSettingModalClose">취소</button>
-                                        </div>
-                                        </form>
-                            
-                                    </div>
-                                </div>
-                            </div>
+							<!-- 일정 추가 모달 -->
+							<!-- modal 추가 -->
+							<div class="modal fade" id="calendarModal" tabindex="-1"
+								role="dialog" aria-labelledby="registModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="registModalLabel">일정을 입력하세요.</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<form id="calendarForm">
+											<div class="modal-body">
+												<div class="form-group">
+													<label for="taskId" class="col-form-label">일정 내용</label> <input
+														type="text" class="form-control" id="calendar_content"
+														name="calendar_content"> <label for="taskId"
+														class="col-form-label">시작 날짜</label> <input type="date"
+														class="form-control" id="calendar_start_date"
+														name="calendar_start_date"> <label for="taskId"
+														class="col-form-label">종료 날짜</label> <input type="date"
+														class="form-control" id="calendar_end_date"
+														name="calendar_end_date"> <label for="taskId"
+														class="col-form-label">색상</label>
+													<div class="row">
+														<input type="color" class="form-control col-5 left"
+															id="calendar_color" name="calendar_color" value="#bc7fcd">
+													</div>
+													<!-- input hidden -->
+													<input type="hidden" id="calendar_clsId"
+														name="calendar_clsId" value="1234">
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary btn-font"
+													id="addCalendar">등록</button>
+												<button type="button"
+													class="btn btn-primary btn-font d-none" id="upadteCalendar">수정</button>
+												<button type="button"
+													class="btn btn-primary btn-font d-none" id="deleteCalendar">삭제</button>
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+											</div>
+										</form>
 
-                        </div>
-                    </div>
+									</div>
+								</div>
+							</div>
 
-                </div>
-                <!-- End of container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <div th:replace="/common/footer.html"></div>
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+							<!--  모달 추가 -->
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+						</div>
+					</div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+				</div>
+				<!-- End of container-fluid -->
 
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+			</div>
+			<!-- End of Main Content -->
 
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+			<div th:replace="/common/footer.html"></div>
 
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
-    <script src="/js/demo/datatables-demo.js"></script>
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="/js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="/vendor/chart.js/Chart.min.js"></script>
+	<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="/js/demo/chart-area-demo.js"></script>
+	<script src="/js/demo/chart-pie-demo.js"></script>
+	<script src="/js/demo/datatables-demo.js"></script>
+
 
 </body>
 

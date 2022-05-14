@@ -29,5 +29,9 @@ public interface MemberService extends UserDetailsService {
 
 	String findIdByName(String name, String email);
 
+	MemberDTO findPwd(MemberDTO member);
+
+	int updatePassword(MemberDTO member);
+
 
 }

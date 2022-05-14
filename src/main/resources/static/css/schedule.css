@@ -1,0 +1,100 @@
+      /* 캘린더 */
+    #calendarBox{
+        padding-left : 20%; 
+        padding-right: 20%;
+        border-radius: 2;
+    }
+
+    /* 일정추가, <> */
+    .fc .fc-button-primary {
+        border: none;
+        justify-content: flex-end;
+        float: right;
+        background-color: #fff;
+        color: #858796;
+        padding: 2px;
+    }
+    /* 일정추가 */
+    .fc-addEventButton-button {
+        padding-top: 2px !important;
+    }
+    /* < > */
+    .fc-button-group {
+        margin: 0 !important;
+        padding-bottom: 3px;
+    }
+    .fc .fc-button-primary:hover {
+        border: none;
+        background-color: #adadad !important;
+    }
+    .fc .fc-button-primary:focus {
+        box-shadow: none !important;
+    }
+
+    /* today */
+    .fc-today-button {
+        background-color: #8B169E !important;
+        opacity: 100 !important;
+        color: #ffffff !important;
+    }
+    
+    .fc-today-button:hover{
+      border: none;
+      background-color: #adadad !important;
+    }
+    
+    .fc-today-button:focus {
+        box-shadow: none !important;
+	}
+    
+
+    /* 오른쪽버튼 3개 그룹 */
+    .fc .fc-toolbar.fc-header-toolbar {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 1fr;        
+    }
+
+    /* 이번달/연도 */
+    .fc-toolbar-title {
+        font-family: "GmarketSansMedium";
+        font-weight: bolder;
+    }
+
+    /* 요일 */
+    .fc .fc-daygrid-day-number {
+        color : #858796;
+        pointer-events: none;
+        cursor: default;
+    }
+    /* 날짜 */
+    .fc .fc-col-header-cell-cushion {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    /* 일정입력 모달 */
+    .btn-font {
+        background-color: #8B169E
+    }
+
+    .btn-font , #sprintSettingModalClose {
+        border: none;
+    }
+    .btn-font:hover, #sprintSettingModalClose:hover {
+        border: none;
+        background-color: #adadad !important;
+}
+   	.btn-font :focus, #sprintSettingModalClose:focus {
+        box-shadow: none !important;
+}
+	.text-primary{
+		color:#8B169E !important;
+	}
+	.btn-font{
+		color: #ffffff;
+	}
+	
+	.left{
+		margin-left: 15px;
+	}

@@ -13,6 +13,8 @@ public interface ScheduleMapper {
 
 	int registSchedule(ScheduleDTO schedule);
 
-	
+	int updateSchedule(ScheduleDTO sche);
+
+	int deleteSchedule(ScheduleDTO sche);
 
 }

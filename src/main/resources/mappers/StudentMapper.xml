@@ -11,7 +11,6 @@
 		<result property="consult" column="CONSULT"/>
 		
 		<association property="member" resultMap="memberResultMap"/> <!-- 회원 기본정보  -->
-		<association property="profile" resultMap="profileResultMap"/> <!-- 프로필 사진 -->
 		<association property="parents" resultMap="parentsResultMap"/> <!-- 학부모 정보 -->
 		
 	</resultMap>
@@ -30,6 +29,7 @@
 		<result property="deleteDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		
+		<association property="profile" resultMap="profileResultMap"/>
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
 		
 	</resultMap>
@@ -47,7 +47,6 @@
 		<result property="desc" column="AUTHORITY_DESC"/>
 	</resultMap>
 	
-
 	<resultMap id="profileResultMap" type="com.scon.project.member.model.dto.ProfileDTO">
 		<id property="fileId" column="FILE_ID"/>
 		<result property="fileOrginName" column="FILE_ORGNAME"/>
