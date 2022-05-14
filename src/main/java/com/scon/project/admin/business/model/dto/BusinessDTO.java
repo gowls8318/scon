@@ -11,7 +11,9 @@ public class BusinessDTO {
 	private String busRep;
 	private String busPhone;
 	private String busFax;
+	private String busPostnumber;
 	private String busAdr;
+	private String busAdr2;
 	private String busHompy;
 	
 

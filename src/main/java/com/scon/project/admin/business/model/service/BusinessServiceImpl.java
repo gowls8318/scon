@@ -32,9 +32,9 @@ public class BusinessServiceImpl implements BusinessService {
 	
 	//수정
 	@Override
-	public void insertBusinessInfo(BusinessDTO BusinessDTO) {
+	public void updateBusinessInfo(BusinessDTO BusinessDTO) {
 		
-		businessMapper.insertBusinessInfo(BusinessDTO);
+		businessMapper.updateBusinessInfo(BusinessDTO);
 	}
 	
 }

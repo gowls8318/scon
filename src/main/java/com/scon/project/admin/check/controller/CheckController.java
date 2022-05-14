@@ -15,24 +15,24 @@ import com.scon.project.admin.check.model.service.CheckService;
 @RequestMapping("/admin/check")
 public class CheckController {
 	
-//	private CheckService checkService;
-//	
-//	@Autowired
-//	public CheckController(CheckService checkService) {
-//		this.checkService = checkService;
-//	}
-//	
-//	/* 반별 출결 조회 */
-//	@GetMapping("/chkViewClass")
-//	public ModelAndView selectAllStudentList(ModelAndView mv) throws Exception {
-//		
-//		List<CheckDTO> checkList = checkService.selectAllStudentList();
-//		
-//		mv.addObject("checkList", checkList);
-//		mv.setViewName("admin/check/chkViewClass");
-//		
-//		return mv;
-//	}
+	private CheckService checkService;
+	
+	@Autowired
+	public CheckController(CheckService checkService) {
+		this.checkService = checkService;
+	}
+	
+	/* 반별 출결 조회 */
+	@GetMapping("/chkViewClass")
+	public ModelAndView selectAllStudentList(ModelAndView mv) throws Exception {
+		
+		List<CheckDTO> checkList = checkService.selectAllStudentList();
+		
+		mv.addObject("checkList", checkList);
+		mv.setViewName("admin/check/chkViewClass");
+		
+		return mv;
+	}
 //
 //	@GetMapping("/chkViewClassNs")
 //	public String chkViewClassNoResult() {

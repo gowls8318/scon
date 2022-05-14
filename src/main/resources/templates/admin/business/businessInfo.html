@@ -90,20 +90,20 @@
 
                     <!-- Content Row -->
                     <div class="mx-auto acaformbox">
-                    <form action="/admin/business/businessInfo" method="post" id="insert_data">
+                    <form th:action="@{/admin/business/businessInfo}" method="post" id="insert_data">
                         <div class="acaformrow mx-auto row g-3 align-items-center">
                             <div class="col-auto">
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">교육원명 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3">
-                                <input type="text" class="infoformbox form-control" id="busTitle" name="busTitle" th:value="${ BusinessDTO.busTitle }" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busTitle" name="busTitle" th:value="${ BusinessDTO.busTitle }" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1" required>
                             </div>
                             <div class="col-2"></div>
                             <div class="col-auto">
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">교육원 코드 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3">
-                                <input type="text" class="infoformbox form-control" id="busCode" name="busCode" th:value="${ BusinessDTO.busCode }" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busCode" name="busCode" th:value="${ BusinessDTO.busCode }" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1" readonly>
                             </div>
                         </div>
                         <div class="acaformrow mx-auto row g-3 align-items-center">
@@ -111,7 +111,7 @@
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">대표자 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3 inputinfo">
-                                <input type="text" class="infoformbox form-control" id="busRep" name="busRep" placeholder="필수 기입" th:value="${BusinessDTO.busRep}" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busRep" name="busRep" placeholder="필수 기입" th:value="${BusinessDTO.busRep}" aria-label="Username" aria-describedby="basic-addon1" required>
                             </div>
                             <div class="col-2"></div>
                             <div class="col-auto">
@@ -126,14 +126,14 @@
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">전화번호 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-3 inputinfo">
-                                <input type="text" class="infoformbox form-control" id="busPhone" name="busPhone" placeholder="필수 기입" th:value="${BusinessDTO.busPhone}" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busPhone" name="busPhone" placeholder="필수 기입" th:value="${BusinessDTO.busPhone}" aria-label="Username" aria-describedby="basic-addon1" required>
                             </div>
                             <div class="col-2"></div>
                             <div class="col-auto">
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">팩스번호 </span>
                             </div>
                             <div class="col-3 inputinfo">
-                                <input type="text" class="infoformbox form-control" aria-label="Username" id="busFax" name="busFax" th:value="${BusinessDTO.busFax}" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busFax" name="busFax" th:value="${BusinessDTO.busFax}" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="acaformrow mx-auto row g-3 align-items-center">
@@ -142,18 +142,18 @@
                             </div>
                             <div class="col-auto row">
                                 <div class="col-3 inputinfo">
-                                    <input type="text" class="infoformbox form-control" id="sample6_postcode" placeholder="우편번호" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="infoformbox form-control" id="busPostnumber" name="busPostnumber" th:value="${BusinessDTO.busPostnumber}" aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                                 <div class="col-3">
-                                    <input type="button" onclick="sample6_execDaumPostcode()" class="postbutton btn btn-user btn-sm stu-btn " value="우편번호 찾기" />
+                                    <input type="button" onclick="sample6_execDaumPostcode()" class="postbutton btn btn-user btn-sm stu-btn "value="우편번호 찾기" />
                                 </div>
                                 <div class="col-6">
                                 </div>
                                 <div class="col-6 inputinfo">
-                                    <input type="text" class="infoformbox form-control" id="busAdr" name="busAdr" placeholder="필수 기입" th:value="${BusinessDTO.busAdr}" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="infoformbox form-control" id="busAdr" name="busAdr" placeholder="필수 기입" th:value="${BusinessDTO.busAdr}" aria-label="Username" aria-describedby="basic-addon1" required>
                                 </div>
                                 <div class="col-6 inputinfo">
-                                    <input type="text" class="infoformbox form-control" id="sample6_extraAddress" placeholder="(상세주소)" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="infoformbox form-control" id="busAdr2" name="busAdr2" placeholder="(상세주소)" aria-label="Username" th:value="${BusinessDTO.busAdr2}" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                         </div>
@@ -162,12 +162,12 @@
                                 <span class="coloumnamebox input-group-text" id="basic-addon1">학원 홈페이지 <span id="pointtext">*</span></span>
                             </div>
                             <div class="col-10 inputinfo">
-                                <input type="text" class="infoformbox form-control" id="busHompy" name="busHompy" th:value="${BusinessDTO.busHompy}" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1">
+                                <input type="text" class="infoformbox form-control" id="busHompy" name="busHompy" th:value="${BusinessDTO.busHompy}" placeholder="필수 기입" aria-label="Username" aria-describedby="basic-addon1" >
                             </div>
                         </div>
                         <br><br><br>
                         <div class="row buttonbox">
-                            <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" onclick=" location.href='/business/updateBusinessInfo'">수정</button>
+                            <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm">수정</button>
                         </div>
                     </form>
                     </div>
@@ -224,17 +224,17 @@
 	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
 	                    }
 	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                    document.getElementById("busAdr2").value = extraAddr;
 	                
 	                } else {
-	                    document.getElementById("sample6_extraAddress").value = '';
+	                    document.getElementById("busAdr2").value = '';
 	                }
 	
 	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById('busPostnumber').value = data.zonecode;
 	                document.getElementById("busAdr").value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("sample6_extraAddress").focus();
+	                document.getElementById("busAdr2").focus();
 	            }
 	        }).open();
 	    }

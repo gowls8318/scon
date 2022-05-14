@@ -6,7 +6,7 @@ import com.scon.project.admin.check.model.dto.CheckDTO;
 
 public interface CheckService {
 
-	//List<CheckDTO> selectAllStudentList() throws Exception;
+	List<CheckDTO> selectAllStudentList() throws Exception;
 	
 	
 

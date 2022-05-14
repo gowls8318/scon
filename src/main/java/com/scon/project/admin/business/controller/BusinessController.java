@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.business.model.dto.BusinessDTO;
 import com.scon.project.admin.business.model.service.BusinessService;
@@ -47,18 +47,14 @@ public class BusinessController {
 	
 	
 	//수정
-	@GetMapping("/business/insertBusinessInfo")
-	public String insertBusinessInfo(@RequestParam BusinessDTO businessDTO, Model model) {
-		
-		model.addAttribute("BusinessDTO", businessService.selectBusinessInfo());
-		return "admin/business/insertBuinessInfo";
-	}
 	
-	@PostMapping("/business/insertBusinessInfo")
-	public String insertBusinessInfoForm(@RequestParam BusinessDTO BusinessDTO, Model model) {
+	@PostMapping("/business/businessInfo")
+	public String updateBusinessInfoForm(BusinessDTO BusinessDTO, Model model) {
 		
-		businessService.insertBusinessInfo(BusinessDTO);
-		return "admin/business/buinessInfo";
+		businessService.updateBusinessInfo(BusinessDTO);
+		log.info("넘기는 값 : {}", BusinessDTO);
+		
+		return "redirect:/admin/business/businessInfo";
 		
 	}
 	

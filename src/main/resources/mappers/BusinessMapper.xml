@@ -9,7 +9,9 @@
 		<result property="busRep" column="BUS_REP"/>
 		<result property="busPhone" column="BUS_PHONE"/>
 		<result property="busFax" column="BUS_FAX"/>
+		<result property="busPostnumber" column="BUS_POSTNUMBER"/>
 		<result property="busAdr" column="BUS_ADR"/>
+		<result property="busAdr2" column="BUS_ADR2"/>
 		<result property="busHompy" column="BUS_HOMPY"/>
 	</resultMap>
 	
@@ -22,50 +24,27 @@
 		     , BUS_REP
 		     , BUS_PHONE
 		     , BUS_FAX
+		     , BUS_POSTNUMBER
 		     , BUS_ADR
+		     , BUS_ADR2
 		     , BUS_HOMPY		     
 		  FROM TB_BUSINESS
 	</select>
 	
-	<!-- 교육원 정보 입력 -->
-	<insert id="updatetBusinessInfo">
-		INSERT 
-		INTO TB_BUSINESS
-		(
-		   BUS_CODE
-	     , BUS_NUM
-	     , BUS_TITLE
-	     , BUS_REP
-	     , BUS_PHONE
-	     , BUS_FAX
-	     , BUS_ADR
-	     , BUS_HOMPY
-		)
-		VALUES
-		(
-			#{ busCode }
-		  , #{ busNum }
-		  , #{ busTitle }
-	      , #{ busRep }
-	      , #{ busPhone }
-  	      , #{ busFax }
-	      , #{ busAdr }
-	      , #{ busHompy }
-	     )
-	</insert>
-	
 	
 	<!-- 교육원 정보 수정 -->
-	<update id="insertBusinessInfo">
+	<update id="updateBusinessInfo">
 		UPDATE TB_BUSINESS
-			SET BUS_CODE = #{ busCode }
-			  , BUS_NUM = #{ busNum }
+			SET BUS_NUM = #{ busNum }
 			  , BUS_TITLE = #{ busTitle }
 		      , BUS_REP = #{ busRep }
 		      , BUS_PHONE = #{ busPhone }
 	  	      , BUS_FAX = #{ busFax }
+	  	      , BUS_POSTNUMBER = #{ busPostnumber }
 		      , BUS_ADR = #{ busAdr }
+		      , BUS_ADR2 = #{ busAdr2 }
 		      , BUS_HOMPY = #{ busHompy }
+		   WHERE BUS_CODE = #{ busCode }
 	</update>
 	
 	

@@ -13,7 +13,7 @@ public interface BusinessMapper {
 	//BusinessDTO selectBusinessInfo(int busCode);
 	
 	//교육원 정보 입력
-	void insertBusinessInfo(BusinessDTO businessDTO);
+	void updateBusinessInfo(BusinessDTO businessDTO);
 
 
 }
