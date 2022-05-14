@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.student.consultant.model.dao.ConsultantHopeMapper;
 
 @Service("consultantHopeService")
@@ -23,16 +24,29 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 	}
 	
 	/* 상담 신청 내역 조회용 */	
+//	@Override
+//	public List<ConsultantDTO> selectAllConsultantList() throws Exception {
+//		
+//		List<ConsultantDTO> consultantList = consultantHopeMapper.selectAllConsultantList();
+//		
+//		if(consultantList == null) {
+//			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
+//		}
+//		
+//		return consultantList;
+//	}
+
 	@Override
-	public List<ConsultantDTO> selectAllConsultantList() throws Exception {
+	public List<ConsultantDTO> selectAllConsultantList(Criteria cri) {
 		
-		List<ConsultantDTO> consultantList = consultantHopeMapper.selectAllConsultantList();
+		return consultantHopeMapper.selectAllConsultantList(cri);
+	}
+	
+	/* 게시물 총 갯수 */
+	@Override
+	public int total(Criteria cri) {
 		
-		if(consultantList == null) {
-			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
-		}
-		
-		return consultantList;
+		return consultantHopeMapper.total(cri);
 	}
 
 	/* 상담 신청 등록용 */
