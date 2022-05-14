@@ -38,6 +38,8 @@ public class GradeController {
 		
 		List<GradeDTO> gradeList = gradeService.findAllGrade(clsId);
 		
+		log.info("gradeList : {} ", gradeList);
+		
 		mv.addObject("gradeList", gradeList);
 		mv.setViewName("admin/grade/gradeList");
 		

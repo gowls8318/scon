@@ -25,33 +25,47 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 	}
 	
 	//게시판 전체 목록 조회
+//	@Override
+//	public List<TaskBoardDTO> findAllTask(int clsId) {
+//		return taskBoardMapper.findAllTask(clsId);
+//	}
 	@Override
-	public List<TaskBoardDTO> findAllTask(int clsId) {
-		return taskBoardMapper.findAllTask(clsId);
+	public List<TaskBoardDTO> findAllTask() {
+		return taskBoardMapper.findAllTask();
 	}
 	
+
 	//게시판 글 입력
-//	@Override
-//	public int insertTask(TaskBoardDTO task) throws Exception {
-//		
-//		int result = 0;
-//		
-//		int result1 = taskBoardMapper.insertTask(task);
-//		
-//		int result2 = 0;
-//		
-//		for(FileDTO files : task.getFileList()) {
-//			result2 += taskBoardMapper.insertFile(files);
-//		}
-//		
-//		if(result1 > 0 && result2 > task.getFileList().size()) {
-//			result = 1;
-//		} else {
-//			throw new Exception("게시글 등록 실패");
-//		}
-//		
-//		return result;
-//	}
+	@Override
+	public int insertTask(TaskBoardDTO task) throws Exception {
+		
+		int result = 0;
+		
+		int result1 = taskBoardMapper.insertTask(task);
+		
+		int result2 = 0;
+		
+		int result3 = 0;
+		
+		for(FileDTO files : task.getFileList()) {
+			result2 += taskBoardMapper.insertFile(files);
+		} 
+		
+		if(result1 > 0 && result2 == task.getFileList().size()) {
+			result3 = taskBoardMapper.insertTaskFileTB(task);
+			result = (result3 > 0) ? 1 : 0;
+		} else {
+			throw new Exception("게시글 등록 실패");
+		}
+
+		return result;
+	}
+
+	//게시판 게시글 상세 조회 
+	@Override
+	public List<TaskBoardDTO> findDetail(String taskId) {
+		return taskBoardMapper.findDetail(taskId);
+	}
 
 	
 }

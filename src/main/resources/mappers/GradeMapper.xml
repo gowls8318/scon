@@ -53,6 +53,7 @@
 			  , M.MEMBER_NAME
               , G.GRADE_ID
               , G.GRADE
+              , G.GRADE_DATE
 			  FROM TB_CLASS C
 			  JOIN TB_MEMBER M ON (C.MEMBER_ID = M.MEMBER_ID)
               JOIN TB_GRADE G ON (M.MEMBER_ID = G.MEMBER_ID)
