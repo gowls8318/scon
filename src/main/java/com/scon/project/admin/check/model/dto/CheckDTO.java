@@ -19,5 +19,6 @@ public class CheckDTO {
 	private String chkFinish;
 	private Date chkDate;
 	
+	
 
 }

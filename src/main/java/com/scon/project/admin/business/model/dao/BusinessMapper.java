@@ -15,5 +15,6 @@ public interface BusinessMapper {
 	//교육원 정보 입력
 	void updateBusinessInfo(BusinessDTO businessDTO);
 
+	
 
 }

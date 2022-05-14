@@ -22,6 +22,7 @@ public class CheckServiceImpl implements CheckService {
 		this.checkMapper = checkMapper;
 	}
 	
+	
 	@Override
 	public List<CheckDTO> selectAllStudentList() throws Exception {
 		

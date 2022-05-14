@@ -58,6 +58,7 @@ public class CheckController {
 	}
 	
 	
+	
 	@GetMapping("/chkViewStudent")
 	public String chkViewStudent() {
 		return "admin/check/chkViewStudent";

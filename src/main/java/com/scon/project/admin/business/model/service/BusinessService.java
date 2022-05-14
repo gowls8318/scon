@@ -12,6 +12,7 @@ public interface BusinessService {
 	//교육원 정보 입력용
 	void updateBusinessInfo(BusinessDTO BusinessDTO);
 	
+	
 	//교육원 정보 수정용
 	//BusinessDTO updateBusinessInfo(ModelAndView mv);
 

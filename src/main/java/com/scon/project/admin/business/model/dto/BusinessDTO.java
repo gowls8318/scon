@@ -17,4 +17,5 @@ public class BusinessDTO {
 	private String busHompy;
 	
 
+	
 }

@@ -17,6 +17,7 @@ public class BusinessServiceImpl implements BusinessService {
 	public BusinessServiceImpl(BusinessMapper businessMapper) {
 		this.businessMapper = businessMapper;
 	}
+	
 	//조회
 	@Override
 	public BusinessDTO selectBusinessInfo() {

@@ -11,4 +11,5 @@ public interface CheckMapper {
 	
 	List<CheckDTO> selectAllStudentList();
 
+	
 }

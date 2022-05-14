@@ -8,6 +8,5 @@ public interface CheckService {
 
 	List<CheckDTO> selectAllStudentList() throws Exception;
 	
-	
 
 }

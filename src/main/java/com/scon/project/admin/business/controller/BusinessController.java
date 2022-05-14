@@ -27,6 +27,7 @@ public class BusinessController {
 		this.businessService = businessService;
 	}
 	
+	
 	//조회
 //	@GetMapping("/business/businessInfo")
 //	public String businessInfo(@RequestParam("busCode") int busCode, Model model) {
