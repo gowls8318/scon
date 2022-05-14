@@ -16,6 +16,19 @@ public interface NoticeService {
 //	게시물 총 갯수
 //	int allNoticeCount() throws Exception;
 	
+	
+//	공지 게시글 등록
+	int registNotice(NoticeDTO notice) throws Exception;
+
+//	게시글 상세 조회
+	NoticeDTO selectNoticeDetail(int no) throws Exception;
+	
+//  게시글 수정 하고 등록	
+	int modifyNotice(NoticeDTO notice) throws Exception;
+	
+//	게시글 삭제
+	int deleteNotice(int no) throws Exception;
+
 
 	
 	
@@ -24,14 +37,8 @@ public interface NoticeService {
 	
 	
 	
-//	공지 게시글 등록
-	int registNotice(NoticeDTO noti);
 	
-//	게시글 상세 조회
-	NoticeDTO selectNoticeDetail(int no) throws Exception;
 	
-//  게시글 수정
-	void updateNoticeDetail(NoticeDTO noti);
 	
 
 	

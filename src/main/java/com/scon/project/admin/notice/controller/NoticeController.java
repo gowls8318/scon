@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,21 +46,10 @@ public class NoticeController {
 //		pageMaker.setCri(cri);
 //		pageMaker.setTotalCount(noticeService.allNoticeCount());
 //		mv.addObject("paceMaker", pageMaker);
-		
-		
+				
 		return mv;
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 //	공지 작성 페이지 이동
@@ -89,58 +77,34 @@ public class NoticeController {
 
     }
 	
-//	게시글 수정
-	@PutMapping("notiDetail")
-	public String selectNoticeAction(NoticeDTO noti) throws Exception {
-
-		noticeService.registNotice(noti);
+//	게시글 수정(조회)
+	@GetMapping("notiModify") 
+	public String modifyNoticeDetail(@RequestParam int no, Model model) throws Exception {
 		
-		return "redirect:notiDetail";
+		model.addAttribute("modifyNotice", noticeService.selectNoticeDetail(no));
+
+		return "admin/notice/notiModify";
+    }
+//	게시글 수정(등록)
+	@PostMapping("notiModify")
+	public String modifyNotice(@ModelAttribute NoticeDTO notice, RedirectAttributes rttr) throws Exception {
+
+		noticeService.modifyNotice(notice);
+		log.info("notice{}", notice);
+		
+		return "redirect:notiTables";
 	}
 	
-	
-	
-	
-	
-	
-	
-//	게시글 상세 조회
-//	@GetMapping("notiDetail")
-//	public ModelAndView openNoticeDetail(@RequestParam int idx) throws Exception {
-//		
-//		ModelAndView mv = new ModelAndView("/admin/notiDetail");
-//				
-//		NoticeDTO notice = noticeService.sellectNoticeDetail(idx);
-//		
-//		mv.addObject("notice", notice);
-//
-//		return mv;
-//
-//    }
+// 	게시글 삭제
+	@PostMapping("notiDelete")
+	public String deleteNotice(@RequestParam int no, RedirectAttributes rttr) throws Exception {
+		
+		noticeService.deleteNotice(no);
+		
+		return "redirect:notiTables";		
+	}
+
+
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	
-//	@GetMapping("/notiForm")
-//	public String noticeForm() {
-//		
-//		return "admin/notice/notiForm";
-//	}
-//	
-//	@GetMapping("/notiDetail")
-//	public String noticeDetail() {
-//		
-//		return "admin/notice/notiDetail";
-//	}	
-//	
 }

@@ -155,13 +155,12 @@
                                                 </div>
                                             </th>
                                             <!-- 내용 -->
-                                            <td th:text="${ notice.notiNo }"></td>
+                                            <td th:text="${ notice.no }"></td>
                                             <td>
                                             	<a class="notiTitleDetail" 
-                                            		th:href="@{/admin/notiDetail(no=${notice.notiNo})}">[[${notice.notiTitle}]]</a>
+                                            		th:href="@{/admin/notiDetail(no=${notice.no})}">[[${notice.notiTitle}]]</a>
                                             </td>
-                                            <td>관리자</td>                                            
-                                           <!--  <td th:text="${ notice.memberId }"></td> -->
+                                            <td>관리자</td>
                                             <td th:text="${ notice.notiDate }"></td>
                                             <td th:text="${ notice.notiView }"></td>
                                         </tr>

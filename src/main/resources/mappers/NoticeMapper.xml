@@ -3,7 +3,7 @@
 <mapper namespace="com.scon.project.admin.notice.model.dao.NoticeMapper">
 
 	<resultMap id="noticeResultMap" type="com.scon.project.admin.notice.model.dto.NoticeDTO">
-		<id property="notiNo" column="NOTI_NO"/>
+		<id property="no" column="NOTI_NO"/>
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="clsId" column="CLS_ID"/>
 		<result property="notiTitle" column="NOTI_TITLE"/>
@@ -106,17 +106,27 @@
 	</update>
 	
 	
- 	<!-- 수정 -->
-<!--	<update id="updateNoticeDetail" parameterType="com.scon.project.admin.notice.notiDetail">
+	
+	
+  	<!-- 수정등록 -->
+	<update id="modifyNotice">
 		UPDATE 
 			   TB_NOTICE
 		   SET NOTI_TITLE = #{ notiTitle }
 			 , NOTI_CONTENT	= #{ notiContent }
-			 , NOTI_DATE = #{ notiUpdate }
-		 WHERE NOTI_DELETE = 'N' 
-	</update> -->
+			 , NOTI_UPDATE = SYSDATE
+		 WHERE NOTI_NO = #{ no }
+	</update>
 		
-
+		
+	<!-- 삭제 -->
+ 	<delete id="deleteNotice">
+		UPDATE
+		  	   TB_NOTICE
+		   SET NOTI_DELETE = 'Y'
+		   	   NOTI_UPDATE = SYSDATE
+		 WHERE NOTI_NO = #{ no }
+	</delete> 
 	
 	
 	
@@ -138,7 +148,7 @@ NOTI_DELETE
 	
 	
 		
-	private int notiNo;
+	private int no;
 	private String memberId;
 	private int clsId;
 	private String notiTitle;
