@@ -9,9 +9,7 @@ import lombok.Data;
 @Data	
 public class NoticeDTO {
 	
-	private int notiNo;
-//	private String memberId;
-//	private int clsId;
+	private int no;
 	private String notiTitle;
 	private String notiContent;
 	private Date notiDate;

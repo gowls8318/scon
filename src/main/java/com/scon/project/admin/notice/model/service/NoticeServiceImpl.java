@@ -45,8 +45,8 @@ public class NoticeServiceImpl implements NoticeService {
 	
 // 게시글 등록
 	@Override
-	public int registNotice(NoticeDTO noti) {
-		return noticeMapper.registNotice(noti);
+	public int registNotice(NoticeDTO notice) throws Exception {
+		return noticeMapper.registNotice(notice);
 	}
 
 //	게시글 상세 조회
@@ -61,11 +61,25 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDetail;
 	}
 
-
-//  게시글 수정
-	public void updateNoticeDetail(NoticeDTO noti) {
-		noticeMapper.updateNoticeDetail(noti);
+//  게시글 수정하고 등록		
+	@Override
+	public int modifyNotice(NoticeDTO notice) throws Exception {
+				
+		return noticeMapper.modifyNotice(notice);
 	}
+
+//	게시글 삭제
+	@Override
+	public int deleteNotice(int no) throws Exception {
+		
+		return noticeMapper.deleteNotice(no);
+		
+	}
+
+
+
+
+
 
 
 
