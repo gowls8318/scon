@@ -169,38 +169,46 @@
                                 </table>
                             </div>
 
-                            <!-- 페이지네이션 -->
-<!--                             <nav aria-label="">
-                                <ul class="pagination"
-                                	th:with="start=${T(Math).floor(noticeList.number/10)*10 + 1},	
-                   							 last=(${start + 9 < noticeList.totalPages ? start + 9 : noticeList.totalPages})"> -->
-                   			<!-- 첫페이지로 이동 -->
-<!--                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/notiTables(page=1)}" aria-label="First">
-                                        	<span aria-hidden="true">&lt;&lt;</span>
-                                        </a>
-                                    </li> -->
-                                    
-                             <!-- 현재페이지 나열 -->
-<!--                                     <li class="page-item" th:each="page: ${ #numbers.sequence(start, last) }" th:class="${page == noticeList.number + 1} ? 'active'">
-                                    	<a class="page-link" th:text="${ page }" th:href="@{/notiTables(page=${ page })}"></a>
-                                    </li> -->
-                                    
-                             		 <!--       
-                                    <li class="page-item active" aria-current="page">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                                    
-                              <!-- 마지막페이지로 이동 -->
-<!--                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/notiTables(page=${ noticeList.totalPages })}" aria-label="Last">
-                                        	<span aria-hidden="true">&gt;&gt;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav> -->
+	<!-- 페이징 -->
+                            <nav aria-label="Page navigation">
+								<div class="pageInfo_area">
+									<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
+									
+										<!-- 첫 페이지 이동 -->
+										<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
+										<li class="page-item">
+											<a th:if="${ page.startPage > 1 }" th:href="@{/admin/notiTables/?pageNo=1}" th:text="'<<'" class="page-link"></a>
+										</li>
 
+										<!-- 이전 페이지 버튼 -->
+										<li th:if="${ page.prev }" class="page-item">
+											<a th:href="@{/admin/notiTables(pageNo=${page.startPage - 1})}" th:text="'<'" class="page-link"></a>
+										</li>
+										
+										<!-- 각 번호 페이지 버튼 -->
+										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
+												<a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a>
+												<a th:if="${ page.cri.pageNo != num }" th:href="@{/admin/notiTables(pageNo=${num})}" th:text="${ num }" class="page-link"></a>
+											</li>
+										</th:block>
+										
+										<!-- 다음 페이지 버튼 -->
+										<li th:if="${ page.next }" class="page-item">
+											<a th:href="@{/admin/notiTables(pageNo=${page.endPage + 1})}" th:text="'>'" class="page-link"></a>
+										</li>
+										
+										<!-- 마지막 페이지 이동 -->
+										<li class="page-item">
+									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link" disabled></a>
+									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="@{/admin/notiTables(pageNo=${page.maxPage})}" th:text="'>>'" class="page-link"></a>
+									    </li> 
+							    
+									</ul>
+								</div>
+							</nav>
+							
+							<!-- 하단 버튼 박스 -->
                             <div class="row buttonbox">
                                 <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal" type="delete">삭제</button>
                                 <a class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="button" th:href="@{/admin/notiForm}">등록</a>
