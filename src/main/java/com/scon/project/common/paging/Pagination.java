@@ -90,10 +90,19 @@ public class Pagination {
 		this.cri = cri;
 	}
 
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
+
 	@Override
 	public String toString() {
-		return "Pagination [startPage=" + startPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next
-				+ ", total=" + total + ", cri=" + cri + "]";
+		return "Pagination [startPage=" + startPage + ", endPage=" + endPage + ", maxPage=" + maxPage
+				+ ", buttonAmount=" + buttonAmount + ", prev=" + prev + ", next=" + next + ", total=" + total + ", cri="
+				+ cri + "]";
 	}
 
 }

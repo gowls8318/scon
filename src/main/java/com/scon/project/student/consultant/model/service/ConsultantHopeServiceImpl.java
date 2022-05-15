@@ -36,17 +36,30 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 //		return consultantList;
 //	}
 
+	/* 상담 신청 내역 조회용(페이징) */
 	@Override
-	public List<ConsultantDTO> selectAllConsultantList(Criteria cri) {
+	public List<ConsultantDTO> selectAllConsultantList(Criteria cri) throws Exception {
 		
-		return consultantHopeMapper.selectAllConsultantList(cri);
+		List<ConsultantDTO> consultantList = consultantHopeMapper.selectAllConsultantList(cri);
+		
+		if(consultantList == null) {
+			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
+		}
+		
+		return consultantList;
 	}
 	
-	/* 게시물 총 갯수 */
+	/* 게시물 총 갯수(페이징) */
 	@Override
-	public int total(Criteria cri) {
+	public int total(Criteria cri) throws Exception {
 		
-		return consultantHopeMapper.total(cri);
+		int result = consultantHopeMapper.total(cri);
+		
+		if(result <= 0) {
+			throw new Exception("게시물 조회에 실패하였습니다.");
+		}
+		
+		return result;
 	}
 
 	/* 상담 신청 등록용 */

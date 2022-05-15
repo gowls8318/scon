@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.dto.RefundDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 
 public interface LectureService {
@@ -28,5 +29,8 @@ public interface LectureService {
 
 	/* 수강 삭제용 */
 	int deleteLecture(int no) throws Exception;
+
+	/* 환불 등록용 */
+	int insertRefund(RefundDTO ref) throws Exception;
 
 }

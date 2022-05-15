@@ -146,4 +146,18 @@ public class LectureMapperTests {
 		assertNotNull(result);
 	}
 	
+//	@Test
+//	@DisplayName("환불 등록용 매퍼 테스트")
+//	public void testInsertRefund() {
+//		
+//		// given
+//		int no = 48;
+//		
+//		// when
+//		int result = lectureMapper.insertRefund(no);
+//		
+//		// then
+//		assertNotNull(result);
+//	}
+	
 }

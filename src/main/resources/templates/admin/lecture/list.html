@@ -67,6 +67,8 @@
                         	<div class="col-lg-3 ml-2">
                         		<button type="button" class="btn btn-primary btn-search"
                                 	th:onclick="location.href='/admin/lecture/insertForm'">수강 등록</button>
+                                	<!-- th:onclick="location.href='/admin/lecture/insertForm'" -->
+                                	<!-- id="insertForm" -->
                         	</div>
 	                        <form class="form-inline" action="" method="get">
 	                            <div class="search-area col-lg-12">
@@ -120,7 +122,9 @@
                                                     <button type="button" class="btn btn-primary btn-acc1"
                                                     	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no})} + '\';'">수정</button>
                                                     <button type="button" class="btn btn-light btn-acc2 refBtn"
-                                                    	th:onclick="refund(this, [[${lec.no}]])">환불</button>
+                                                    	data-toggle="modal" data-target="#refundModal"
+                                                    	th:onclick="|refundDetail(${lec.no})|">환불</button>
+                                                    	<!-- th:onclick="refund(this, [[${lec.no}]])" -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -160,67 +164,98 @@
             <!-- footer include -->
             <div th:replace="/common/footer.html"></div>
 
-            <!-- 환불모달-->
-            <div id="refModal" class="modal refModal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="mt-2">환불 처리</h5>
-                        <span class="refClose">&times;</span>
-                    </div>
-                    <form action="" method="post" name="refundForm">
+            <!-- refundModal-->
+            <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content ref-modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">환불 처리</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
                         <div class="modal-body">
-                            <div class="row mb-3">
-                                <div class="col-lg-1"></div>
-                                <label for="std" class="col-sm-2 col-form-label col-lg-3">원생</label>
-                                <div class="col-sm-10 col-lg-7">
-                                    <input type="text" class="form-control" id="std" readonly>
-                                </div>
-                                <div class="col-lg-1"></div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-lg-1"></div>
-                                <label for="cls" class="col-sm-2 col-form-label col-lg-3">수강 강의</label>
-                                <div class="col-sm-10 col-lg-7">
-                                    <input type="text" class="form-control" id="cls" readonly>
-                                </div>
-                                <div class="col-lg-1"></div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-lg-1"></div>
-                                <label for="refDate" class="col-sm-2 col-form-label col-lg-3">환불일</label>
-                                <div class="col-sm-10 col-lg-7">
-                                    <input type="date" class="form-control" id="refDate">
-                                </div>
-                                <div class="col-lg-1"></div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-lg-1"></div>
-                                <label for="refPay" class="col-sm-2 col-form-label col-lg-3">환불 금액</label>
-                                <div class="col-sm-10 col-lg-7">
-                                    <input type="number" class="form-control" id="refPay" required>
-                                </div>
-                                <div class="col-lg-1"></div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-lg-1"></div>
-                                <label for="refContent" class="col-sm-2 col-form-label col-lg-3">환불 사유</label>
-                                <div class="col-sm-10 col-lg-7">
-                                    <div class="input-group refContent">
-                                        <textarea class="form-control" aria-label="With textarea"
-                                            id="refContent"></textarea>
+                            <form action="@{/admin/lecture/refund}" method="get" name="">
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="std" class="col-sm-2 col-form-label col-lg-3">원생 <span id="pointtext">*</span></label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="text" class="form-control" id="memberId" readonly>
                                     </div>
+                                    <div class="col-lg-1"></div>
                                 </div>
-                                <div class="col-lg-1"></div>
-                            </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="clsId" class="col-sm-2 col-form-label col-lg-3">수강 강의 <span id="pointtext">*</span></label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="text" class="form-control" id="clsId" readonly>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refDate" class="col-sm-2 col-form-label col-lg-3">환불일 <span id="pointtext">*</span></label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="date" class="form-control" id="refDate">
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refPay" class="col-sm-2 col-form-label col-lg-3">환불 금액 <span id="pointtext">*</span></label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="number" class="form-control" id="refPay" required>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refContent" class="col-sm-2 col-form-label col-lg-3">환불 사유</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <div class="input-group refContent">
+                                            <textarea class="form-control" aria-label="With textarea"
+                                                id="refContent"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="modal-footer pb-0">
+                                    <button type="button" class="btn btn-light resetbuttonbox"
+                                        data-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-primary submitbuttonbox"  id="registRef">환불처리</button>
+                                    <!-- data-toggle="modal"
+                                        data-target="#refModal2" -->
+                                </div>
+                            </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary submitbuttonbox">환불처리</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-            <!-- /환불모달 -->
+            <!-- /refundModal -->
+            
+            <!-- 환불 모달 -->
+            <!-- <div class="modal fade modal-bg-acc" id="refModal2" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content refModal2 ref-modal-content2">
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">환불처리를 하시겠습니까?</div>
+                        <form action="" method="post">
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary resetbuttonbox" type="button"
+                                    data-dismiss="modal">취소</button>
+                                <button type="submit" class="btn btn-primary submitbuttonbox">확인</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> -->
+            <!-- /환불 모달 -->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -256,9 +291,23 @@
 				}
 			}
 		}
+		
+		$("#insertForm").click(function() {
+			
+			$.ajax({
+				url : "",
+				type : "get",
+				success : function(data) {
+					console.log(data);
+				},
+				error : function(xhr) {
+					console.log(xhr);
+				}
+			});
+		});
 
 		/* 환불 모달 */
-		var modal = document.getElementById("refModal");
+		/* var modal = document.getElementById("refModal");
 		var btn = document.getElementsByClassName("refBtn");
 		var span = document.getElementsByClassName("refClose")[0];
 
@@ -282,7 +331,6 @@
 			}
 		}
 
-
 		span.onclick = function() {
 			modal.style.display = "none";
 		}
@@ -291,22 +339,55 @@
 			if (event.target == modal) {
 				modal.style.display = "none";
 			}
+		} */
+		
+		function refundDetail(no) {
+			 
+			 $.ajax({
+					url : "/admin/lecture/refund",
+					type : "get",
+					data : { no : no },
+					success : function(data) {
+						console.log(data);
+						
+						$("#memberId").val(data.member.name);
+						$("#clsId").val(data.cls.clsName);
+					},
+					error : function(xhr) {
+						console.log(xhr);
+					}
+				});
 		}
-
-		/* 환불 모달에 값 넣기 */
-		$(".refBtn").click(function () {
-		     var std = $(".std").text();
-		     var cls = $(".cls").text();
-		     console.log(std);
-		     console.log(cls);
-		     
-		    /*  for(var i = 0; i < std.length; i++){
-		    	 console.log(std[i]);
-		     } */
-		     	
-		     $("#std").val(std);
-		     $("#cls").val(cls);
-		 });
+		
+		$("#registRef").click(function() {
+			
+			const refDate = document.getElementById("refDate").value;
+			const refPay = document.getElementById("refPay").value;
+			const refContent = document.getElementById("refContent").value;
+			console.log(refDate);
+			console.log(refPay);
+			console.log(refContent);
+			
+			const refund = {
+					refDate : refDate,
+					refPay : refPay,
+					refContent : refContent
+			};
+			
+			$.ajax({
+				url : "/admin/lecture/registRefund",
+				type : "post",
+				data : refund,
+				success : function(data) {
+					console.log(data);
+					alert(data);
+					location.href="/admin/lecture/list";
+				},
+				error : function(xhr) {
+					console.log(xhr);
+				}
+			});
+		});
 	</script>
 
 	<!-- Bootstrap core JavaScript-->

@@ -9,10 +9,10 @@ public interface ConsultantHopeService {
 	
 	/* 상담 신청 내역 조회용 */
 //	List<ConsultantDTO> selectAllConsultantList() throws Exception;
-	List<ConsultantDTO> selectAllConsultantList(Criteria cri);
+	List<ConsultantDTO> selectAllConsultantList(Criteria cri) throws Exception;
 	
 	/* 게시물 총 갯수 */
-	int total(Criteria cri);
+	int total(Criteria cri) throws Exception;
 	
 	/* 상담 신청 등록용 */
 	boolean insertConsultant(ConsultantDTO con) throws Exception;

@@ -2,7 +2,6 @@ package com.scon.project.student.consultant.model.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.List;
 
@@ -53,16 +52,20 @@ public class ConsultantHopeServiceTests {
     @Test
     @Disabled
     @DisplayName("상담 신청 내역 조회용(페이징) 매퍼 테스트")
-    public void testGetListPaging() {
+    public void testGetListPaging() throws Exception {
         
         Criteria cri = new Criteria();
         
       //cri.setPageNo(1);
         cri.setPageNo(2);
         
+        // when
         List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList(cri);
         
         consultantList.forEach(board -> log.info("" + board));
+        
+        // then
+        assertNotNull(consultantList);
     }
 	
 	// success

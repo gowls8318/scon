@@ -217,9 +217,17 @@
 
     <script type="text/javascript">
     	function updateConsultant(no) {
+			var form = document.forms.consultantForm;
+    		
+    		if(form.conContent.value.length != 20) {
+    			alert('상담 일지 내용은 최소 20글자 이상 입력해주시기 바랍니다.');
+    			form.conContent.focus();
+    			return;
+    		}
+    		
     		if(confirm('상담 일지 내용을 수정하시겠습니까?')) {
-    			document.forms.consultantForm.action = "updateForm?no=" + no;
-    			document.forms.consultantForm.submit();
+    			form.action = "updateForm?no=" + no;
+    			form.submit();
     		}
     	}
     	

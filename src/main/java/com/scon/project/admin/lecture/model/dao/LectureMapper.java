@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.dto.RefundDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 
 @Mapper
@@ -31,5 +32,8 @@ public interface LectureMapper {
 
 	/* 수강 삭제용 */
 	int deleteLecture(int no);
+	
+	/* 환불 등록용 */
+	int insertRefund(RefundDTO ref);
 
 }
