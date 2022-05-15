@@ -29,6 +29,7 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 //	public List<TaskBoardDTO> findAllTask(int clsId) {
 //		return taskBoardMapper.findAllTask(clsId);
 //	}
+	//게시판 전체 목록 조회
 	@Override
 	public List<TaskBoardDTO> findAllTask() {
 		return taskBoardMapper.findAllTask();
@@ -65,6 +66,12 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 	@Override
 	public List<TaskBoardDTO> findDetail(String taskId) {
 		return taskBoardMapper.findDetail(taskId);
+	}
+
+	//게시판 게시글 상세 조회 (파일)
+	@Override
+	public List<FileDTO> findFiles(String taskId) {
+		return taskBoardMapper.findFiles(taskId);
 	}
 
 	

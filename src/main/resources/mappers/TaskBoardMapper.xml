@@ -59,6 +59,7 @@
 			FROM TB_TASK T
 			JOIN TB_MEMBER M ON(T.MEMBER_ID = M.MEMBER_ID)
 			WHERE T.TASK_DELETE = 'N'
+			ORDER BY T.TASK_ID DESC
 	<!--	WHERE T.CLS_ID = #{ clsId }
 			AND T.TASK_DELETE = 'N' -->
 		</select>
@@ -83,7 +84,7 @@
 	 		)
 	 </insert>-->
 
-	<!-- 과제 게시판 게시글 입력 -->
+	<!-- 과제 게시판 게시글 입력  -->
  	<insert id="insertTask">
 		INSERT
 			INTO TB_TASK
@@ -126,7 +127,7 @@
 		 )
 	</insert> 
 	
-	<!-- TB_TASKFILE에 insert하는 쿼리문 작성하기! -->
+	
   	<insert id="insertTaskFileTB">
 		INSERT 
 		  INTO TB_TASK_FILE
@@ -140,6 +141,7 @@
 		  , SEQ_FILE_NO.CURRVAL
 		  )
 	</insert>
+	<!--               -->
 	
 	<!-- 과제 게시판 게시글 상세 조회 -->
 	<select id="findDetail" resultMap="taskBoardResultMap" resultType="list">
@@ -157,8 +159,23 @@
   	WHERE T.TASK_DELETE = 'N'
   	AND T.TASK_ID = #{ taskId }
 	</select> 
+	
+	<!--  과제 게시판 게시글 상세 조회 (파일) -->
+	<select id="findFiles" resultMap="fileResultMap" resultType="list">
+		SELECT
+		    T.TASK_ID,
+		    T.FILE_ID,
+		    F.FILE_ORGNAME,
+		    F.FILE_SAVENAME,
+		    F.FILE_PATH,
+		    F.FILE_TYPE
+		    FROM TB_TASK_FILE T
+		    JOIN TB_FILE F ON(T.FILE_ID = F.FILE_ID)
+		    WHERE T.TASK_ID = #{ taskId }
+	</select> 
 
-<!--  	<select id="fileDetail" resultMap="taskBoardResultMap" resultType="list">
+<!--  
+<select id="findDetail" resultMap="taskBoardResultMap" resultType="list">
 		SELECT
 	    	T.TASK_ID,
 	    	T.MEMBER_ID,
