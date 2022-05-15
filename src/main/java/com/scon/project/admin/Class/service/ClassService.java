@@ -4,15 +4,17 @@ import java.util.List;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
 import com.scon.project.admin.Class.dto.TimeDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.MemberDTO;
 
 public interface ClassService {
 	
 
+	//강의등록
 	boolean registClass(ClassDTO classDTO) throws Exception;
 
 	//강의리스트조회
-	List<ClassDTO> selectClassList(); 
+	List<ClassDTO> selectClassList(Criteria cri); 
 	
 	//강의상세조회
 	ClassDTO classDetail(int clsId);
@@ -37,6 +39,9 @@ public interface ClassService {
 
 	//강사조회
 	List<MemberDTO> registMember();
+
+	//게시글 전체 갯수
+	int total(Criteria cri);
 
 	
 

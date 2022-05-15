@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
-import com.scon.project.admin.Class.dto.DayDTO;
 import com.scon.project.admin.Class.service.ClassService;
+import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.MemberDTO;
-import com.scon.project.member.model.dto.UserImpl;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // log테스트
@@ -48,11 +46,17 @@ public class ClassController {
 
 	//강의리스트조회
 	@GetMapping("/classList")
-	public ModelAndView selectClass(ModelAndView mv) {
+	public ModelAndView selectClass(@ModelAttribute Criteria cri, ModelAndView mv) {
 
-		List<ClassDTO> classList = classService.selectClassList();
+		List<ClassDTO> classList = classService.selectClassList(cri);
 
 		mv.addObject("classList", classList);
+		
+		int total = classService.total(cri);
+		Pagination page = new Pagination(cri, total);
+		mv.addObject("page", page);
+		
+		
 		mv.setViewName("admin/class/selectClass");
 		return mv;
 	}
@@ -68,7 +72,7 @@ public class ClassController {
 	}
 
 	//강의등록(강사명포함)
-	@GetMapping("classRegist")
+	@GetMapping("/classRegist")
 	public ModelAndView registMember(ModelAndView mv) {
 		
 		List<MemberDTO> memberList = classService.registMember();
@@ -81,7 +85,7 @@ public class ClassController {
 	
 	
 	//강의등록
-	@PostMapping("classRegist")
+	@PostMapping("/classRegist")
 	public String registClass(@ModelAttribute ClassDTO classDTO, RedirectAttributes rttr, Locale locale)
 			throws Exception {
 

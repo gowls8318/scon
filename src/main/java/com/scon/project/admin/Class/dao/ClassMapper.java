@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
 import com.scon.project.admin.Class.dto.TimeDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.MemberDTO;
 
 @Mapper
@@ -14,7 +15,7 @@ public interface ClassMapper {
 	
 
 	//강의리스트조회
-	List<ClassDTO> selectClassList();
+	List<ClassDTO> selectClassList(Criteria cri);
 	
 	//멤버조회(강사)
 	/* List<MemberDTO> findAllmemberList(int clsId); */
@@ -48,6 +49,9 @@ public interface ClassMapper {
 
 	//교시수정
 	int updateTime(TimeDTO time);
+
+	//강의게시글 총 갯수
+	int total(Criteria cri);
 
 
 
