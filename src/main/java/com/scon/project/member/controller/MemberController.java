@@ -122,7 +122,6 @@ public class MemberController {
 	}
 	
 	
-	
 	// 암호화 메소드
 	public static String pwd_encoder(String pwd) {
 		

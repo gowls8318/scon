@@ -110,7 +110,7 @@ public class MemberServiceImpl implements MemberService{
 		int result = 0;
 		/* 프로필 사진 있을 시 프로필 사진 등록 */
 		if(profile.getFileSaveName() != null) {
-			int fileResult = memberMapper.insertFile(profile);
+			int fileResult = memberMapper.insertFile(profile); 
 			int profileResult =memberMapper.insertProfile(member.getId());
 			
 			if(fileResult > 0 && profileResult > 0) {
@@ -122,14 +122,14 @@ public class MemberServiceImpl implements MemberService{
 	
 	/* 원생 목록 조회 */
 	@Override
-	public List<MemberDTO> findAllStudentList() {
-		return memberMapper.findAllStudentList();
+	public List<MemberDTO> findAllStudentList(MemberDTO member) {
+		return memberMapper.findAllStudentList(member);
 	}
 
 	/* 강사 목록 조회 */
 	@Override
-	public List<MemberDTO> findAllTeacherList() {
-		return memberMapper.findAllTeacherList();
+	public List<MemberDTO> findAllTeacherList(MemberDTO member) {
+		return memberMapper.findAllTeacherList(member);
 	}
 	
 	/* 회원 상세 조회*/

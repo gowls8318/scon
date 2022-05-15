@@ -26,7 +26,7 @@
 		<result property="address" column="ADDRESS"/>
 		<result property="gender" column="GENDER"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		
 		<association property="profile" resultMap="profileResultMap"/>

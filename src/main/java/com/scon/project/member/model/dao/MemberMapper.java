@@ -3,6 +3,7 @@ package com.scon.project.member.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.scon.project.member.model.dto.ProfileDTO;
 import com.scon.project.member.model.dto.MemberDTO;
@@ -37,10 +38,10 @@ public interface MemberMapper {
 	int checkId(MemberDTO member);
 
 	// 모든 원생 조회 
-	List<MemberDTO> findAllStudentList();
+	List<MemberDTO> findAllStudentList(MemberDTO member);
 
 	// 모든 강사 조회
-	List<MemberDTO> findAllTeacherList();
+	List<MemberDTO> findAllTeacherList(MemberDTO member);
 	
 	// 회원 필수정보 수정
 	int updateMember(MemberDTO member);

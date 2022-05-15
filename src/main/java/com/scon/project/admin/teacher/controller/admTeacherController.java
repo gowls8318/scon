@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,11 +102,13 @@ public class admTeacherController {
 
 	
 	@GetMapping("/teacherList")
-	public ModelAndView findStudentList(ModelAndView mv) {
+	public ModelAndView findStudentList(@ModelAttribute MemberDTO member, ModelAndView mv) {
 		
-		List<MemberDTO> memberList = memberService.findAllTeacherList();
+		List<MemberDTO> memberList = memberService.findAllTeacherList(member);
 		
 		mv.addObject("memberList", memberList);
+		mv.addObject("keyword", member.getKeyword());
+		mv.addObject("name", member.getName());
 		mv.setViewName("/admin/teacher/teacherList");
 		
 		return mv;

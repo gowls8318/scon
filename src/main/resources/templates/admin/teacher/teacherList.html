@@ -63,55 +63,44 @@
                             </div>
 
                             <!-- Card Body -->
+                           <form name="form1" action="/admin/teacherList" method="get">
                             <div class="card-body col-lg-12 list-box">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <table>
                                             <tr>
                                                 <td class="sel">
-                                                    <select name="student-"
+                                                    <select name="keyword"
                                                         class="form-control form-select-lg infoformbox">
-                                                        <option value="" selected>근무</option>
-                                                        <option value="">휴직</option>
-                                                        <option value="">퇴직</option>
+                                                       
+                                                        <option value="근무" th:selected="${ keyword == '근무'}">근무</option>
+                                                        <option value="휴직" th:selected="${ keyword == '휴직'}">휴직</option>
+                                                        <option value="퇴직" th:selected="${ keyword == '퇴직'}">퇴직</option>
                                                     </select>
+                                                </td>
+                                              	 <td>
+                                                    <input name="name" class="form-control infoformbox" type="text">
                                                 </td>
                                                 <td>
-                                                    <select class="form-control form-select-lg infoformbox">
-                                                        <option value="1" selected disabled>강의 선택</option>
-                                                        <option value="2">스프링 4 입문</option>
-                                                        <option value="3">자바 웹을 다루을 다루을 다루는 기술</option>
-                                                    </select>
-                                                </td>
-                                                <td rowspan='2'>
-                                                    <button type="button" class="btn btn-secondary btn-sm pb-4 pt-4"
-                                                        style=" width:80px;">검색하기</button>
+                                                    <button type="submit" th:value="${ name }" class="btn btn-secondary btn-sm"
+                                                        style="width:80px;">검색하기</button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td class="sel">
-                                                    <select class="form-control form-select-lg infoformbox">
-                                                        <option value="1" selected disabled>검색조건</option>
-                                                        <option value="1">이름</option>
-                                                        <option value="2">연락처</option>
-                                                    </select>
-                                                </td>
-
-                                                <td>
-                                                    <input class="form-control infoformbox" type="text">
-                                                </td>
-                                            </tr>
+                                            
                                         </table>
                                     </div>
                                 </div>
-                                <p class="text-right pt-3 small">전체 강사수 : [[${ memberList.size() }]] 명</p>
+                                <div class="text-right p-2">
+                                <span class="small align-middle">전체 강사수 : [[${ memberList.size() }]] 명</span>
+                                <span class="align-middle"><a href="/admin/teacherList"><i class="bi bi-arrow-repeat"></i></a></span>
+                                </div>
                                 <div class="table-responsive tb-h">
                                     <table class="table table-bordered table-hover small">
                                         <tr>
                                             <th class="notiCheck checkNO">
                                                 <div class="form-check">
                                                     <label class="form-check-label" for=""></label>
-                                                    <input class="form-check-input checkNO" type="checkbox" id="" value="">
+                                                    <input class="form-check-input checkNO" type="checkbox">
                                                 </div>
                                             </th>
                                             <th>이름</th>
@@ -136,9 +125,9 @@
                                 </div>
                             </div>
 
+					</form>
                         </div><!-- 강사 목록 끝! -->
                     </div>
-
                     <!-- 상단 원생 정보+ 하단 서브메뉴 원생 추가정보 form 태그로 감싸져 있음 (원생 정보 수정하기 위해서) -->
                     <form name="form" class="col-lg-9 formcenter needs-validation" >
 

@@ -369,6 +369,7 @@ function checkPhone(phone) {
 	return true; //확인이 완료되었을 때
 }
 
+// 조회하기
 $('input[name=selectMember]').on('click', function() {
 	let id = '';
 
@@ -425,7 +426,12 @@ function studentDetail(mem) {
 	form.address.value = addr[1]
 	form.extraAddress.value = addr[2];
 
-
+	if (mem.member.profile != null) {
+		$("#img").removeAttr('src');
+		let src = '\\img\\profile\\' + mem.member.profile.fileSaveName;
+		$("#img").attr('src', src);
+	}
+	
 	if (findMemberPath == '/admin/findStudentById') {
 
 		if (mem.studentType != null) {
@@ -451,11 +457,6 @@ function studentDetail(mem) {
 		form.resume.value = mem.resume;
 	}
 
-	if (mem.member.profile != null) {
-		$("#img").removeAttr('src');
-		let src = '\\img\\profile\\' + mem.member.profile.fileSaveName;
-		$("#img").attr('src', src);
-	}
 
 }
 

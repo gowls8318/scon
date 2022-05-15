@@ -63,32 +63,37 @@
                             </div>
 
                             <!-- Card Body -->
+                          <form name="form1" action="/admin/studentList" method="get">
                             <div class="card-body col-lg-12 list-box">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <table>
                                             <tr>
                                                 <td class="sel">
-                                                    <select name="student-"
+                                                    <select name="keyword"
                                                         class="form-control form-select-lg infoformbox">
-                                                        <option value="" selected>수강생</option>
-                                                        <option value="">대기생</option>
-                                                        <option value="">퇴원생</option>
+                                                        
+                                                        <option value="수강생" th:selected="${ keyword == '수강생'}">수강생</option>
+                                                        <option value="대기생" th:selected="${ keyword == '대기생'}">대기생</option>
+                                                        <option value="퇴원생" th:selected="${ keyword == '퇴원생'}">퇴원생</option>
                                                     </select>
                                                 </td>
                                               	 <td>
-                                                    <input class="form-control infoformbox" type="text">
+                                                    <input name="name" th:value="${name}" class="form-control infoformbox" type="text">
                                                 </td>
                                                 <td rowspan='1'>
-                                                    <button type="button" class="btn btn-secondary btn-sm"
-                                                        style=" width:80px;" onclick="search();">검색하기</button>
+                                                    <button type="submit" class="btn btn-secondary btn-sm"
+                                                        style="width:80px;">검색하기</button>
                                                 </td>
                                             </tr>
                                             
                                         </table>
                                     </div>
                                 </div>
-                                <p class="text-right pt-3 small">전체 학생수 : [[${ memberList.size() }]] 명</p>
+                               <div class="text-right p-2">
+                                <span class="small align-middle">전체 원생수 : [[${ memberList.size() }]] 명</span>
+                                <span class="align-middle"><a href="/admin/studentList"><i class="bi bi-arrow-repeat"></i></a></span>
+                                </div>
                                 <div class="table-responsive tb-h">
                                     <table class="table table-bordered table-hover small">
 
@@ -119,7 +124,7 @@
 
                                 </div>
                             </div>
-
+					    	</form>
                         </div><!-- 원생 목록 끝! -->
                     </div>
 

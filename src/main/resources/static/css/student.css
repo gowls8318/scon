@@ -94,3 +94,12 @@ option {
     font-size: 1.2em;
     color: rgb(100, 100, 100) !important;
 }
+
+.bi-arrow-repeat{
+	font-weight : bold;
+	font-size : 1.3em;
+}
+
+a:hover{
+	color : #8B169E !important;
+}

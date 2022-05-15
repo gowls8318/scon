@@ -15,6 +15,7 @@
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
+		<result property="keyword" column="MEMBER_ST2"/>
 		
 		<association property="profile" resultMap="profileResultMap"/>
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>		
@@ -44,7 +45,7 @@
 	</resultMap>
 
 <sql id="memberColumn">
-	A.MEMBER_ID
+	 A.MEMBER_ID
 	, A.MEMBER_NAME
 	, A.MEMBER_PWD
 	, A.TEMP_PWD_YN
@@ -152,7 +153,6 @@
 		 , null
 		 , null
 		 )
-
 	</insert>
 
 	<insert id="insertProfile">
@@ -187,6 +187,12 @@
 		  FROM TB_MEMBER A
 		  JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
 		 WHERE AUTHORITY_CODE = 1
+		 <if test="keyword != null">
+			  	AND MEMBER_ST LIKE '%' || #{ keyword } || '%'
+		 </if>
+		 <if test="name != null">
+			  	AND MEMBER_NAME LIKE '%' || #{ name } || '%'
+		 </if>
 	</select>
 	
 	<select id="findAllTeacherList" resultMap="memberResultMap">
@@ -194,6 +200,12 @@
 		  FROM TB_MEMBER A
 		  JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
 		 WHERE AUTHORITY_CODE = 2
+		  <if test="keyword != null">
+			  	AND MEMBER_ST LIKE '%' || #{ keyword } || '%'
+		 </if>
+		 <if test="name != null">
+			  	AND MEMBER_NAME LIKE '%' || #{ name } || '%'
+		 </if>
 	</select>
 
 	<update id="updateMember">

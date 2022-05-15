@@ -7,8 +7,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,6 +93,7 @@ public class AdmStudentController {
 			if(!parents.getParentsName().isEmpty() ) {
 				int result3 = studentService.insertParents(parents);
 			}
+			
 		}
 		
 		// 프로필 사진 등록시 수행할 파일업로드 메소드 호출
@@ -110,10 +112,14 @@ public class AdmStudentController {
 
 
 	@GetMapping("/studentList")
-	public ModelAndView findStudentList(ModelAndView mv) {
+	public ModelAndView findStudentList(@ModelAttribute MemberDTO member, ModelAndView mv) throws Exception{
 		
-		List<MemberDTO> memberList = memberService.findAllStudentList();
+		log.info("검색조건 확인 : {}", member);
 		
+		List<MemberDTO> memberList = memberService.findAllStudentList(member);
+
+		mv.addObject("keyword", member.getKeyword());
+		mv.addObject("name", member.getName());
 		mv.addObject("memberList", memberList);
 		mv.setViewName("/admin/student/studentList");
 		

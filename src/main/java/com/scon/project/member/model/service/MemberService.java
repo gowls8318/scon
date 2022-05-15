@@ -15,9 +15,9 @@ public interface MemberService extends UserDetailsService {
 	
 	int checkId(MemberDTO member);
 
-	List<MemberDTO> findAllStudentList();
+	List<MemberDTO> findAllStudentList(MemberDTO member);
 
-	List<MemberDTO> findAllTeacherList();
+	List<MemberDTO> findAllTeacherList(MemberDTO member);
 	
 	MemberDTO selectMember(String id);
 	
