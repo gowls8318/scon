@@ -1,3 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mappers.ClassFileMapper"></mapper>
+<mapper namespace="com.scon.project.admin.classfile.dao.ClassFileMapper">
+
+	<!-- 강의첨부파일 테이블 -->
+	<resultMap id="classFileResultMap" type="com.scon.project.admin.classfile.dto.ClassFileDTO">
+		<id property = "fileId" column="FILE_ID"/>
+		<result property="clsId" column="CLS_ID"/>
+		<result property="clfName" column="CLF_NAME"/>
+		<result property="clfStatus" column="CLF_STATUS"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		
+		<!-- 강사명 -->
+		<association property="member" resultMap="memberResultMap"/>
+		
+		<!-- 공통파일테이블 -->
+		<collection property="TaskFile" resultMap="TaskFileResultMap"/>
+	</resultMap>
+	
+	<!-- TB_FILE 테이블 -->
+	<resultMap id="TaskFileResultMap" type="com.scon.project.admin.classfile.dto.TaskFileDTO">
+		<id property="fileId" column="FILE_ID"/>
+		<result property="fileOrginName" column="FILE_ORGNAME"/>
+		<result property="fileSaveName" column="FILE_SAVENAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileType" column="FILE_TYPE"/>
+	</resultMap>
+	
+	<!-- 강의테이블 -->
+	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
+		<id property="clsId" column="CLS_ID"/>
+		<result property="clsName" column="CLS_NAME"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="clsSubject" column="CLS_SUBJECT"/>
+		<result property="clsStuNum" column="CLS_STUNUM"/>
+		<result property="clsGrade" column="CLS_GRADE"/>
+		<result property="clsPay" column="CLS_PAY"/>
+		<result property="clsRoom" column="CLS_ROOM"/>
+		<result property="clsStart" column="CLS_START"/>
+		<result property="clsEnd" column="CLS_END"/>
+		<result property="clsNote" column="CLS_NOTE"/>
+		<result property="clsStatus" column="CLS_STATUS"/>
+	</resultMap>
+	
+	<!-- 멤버테이블 -->
+	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="password" column="MEMBER_PWD"/>
+		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="address" column="GENDER"/>
+		<result property="gender" column="ADDRESS"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="status" column="MEMBER_ST"/>
+		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>		
+	</resultMap>
+	
+	<!-- 멤버권한 -->
+	<resultMap id="memberRoleResultMap" type="com.scon.project.member.model.dto.MemberRoleDTO">
+		<id property="memberId" column="REF_MEMBER_ID"/>
+		<id property="authorityCode" column="REF_AUTHORITY_CODE"/>
+	</resultMap>
+	
+	
+	<!-- 페이징 처리 필요 -->
+	<select id="classFileDetail" resultMap="classFileResultMap">
+	SELECT
+		    FILE_ID
+		  , CLS_ID
+		  , CLF_NAME
+		  , CLF_STATUS
+		  , MEMBER_NAME
+	   FROM TB_REFRENCE
+	  WHERE CLF_STATUS = 'Y'
+	  ORDER BY FILE_ID DESC
+	</select> 
+	
+	<!-- 
+	SELECT
+		    A.FILE_ID
+		  , B.CLS_ID
+		  , A.CLF_NAME
+		  , A.CLF_STATUS
+		  , C.MEMBER_NAME
+	   FROM TB_REFRENCE A
+	   JOIN TB_CLASS B ON (A.CLS_ID = B.CLS_ID)
+	   JOIN TB_MEMBER C ON (B.MEMBER_ID = C.MEMBER_ID)
+	  WHERE CLF_STATUS = 'Y'
+	  ORDER BY FILE_ID DESC
+	
+	 -->
+	
+	<!-- 강사조회 -->
+	<select id="selectMember" resultMap="memberResultMap">
+		SELECT *
+		  FROM TB_MEMBER A
+		  JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE AUTHORITY_CODE = 2
+	</select>
+	
+	
+	<!-- 강의명조회 -->
+	<select id="selectClassName" resultMap="classResultMap">
+		SELECT CLS_NAME
+		  FROM TB_CLASS
+		 WHERE CLS_STATUS = 'Y'
+	</select>
+
+
+	<!-- 클래스첨부파일 -->
+	<insert id="registClassFile">
+		INSERT
+			 INTO TB_REFRENCE
+			 (
+			   FILE_ID
+			 , CLS_ID
+			 , CLF_NAME
+			 , MEMBER_ID
+			 , CLF_STATUS
+			 )
+			 VALUES
+			 ( 
+			 	SEQ_FILE_ID.NEXVAL
+			  , #{ clsId }
+			  , #{ clfName }
+			  , #{ memberId }
+			  , 'Y'
+			 ) 
+	</insert>
+	
+	<!-- TaskFile DTO -->
+	<insert id="registTaskFile">
+	INSERT
+		  INTO TB_FILE
+		  (
+		   FILE_ID
+	 	 , FILE_ORGNAME
+		 , FILE_SAVENAME
+		 , FILE_PATH
+		 , FILE_TYPE
+		  )
+		 VALUES(
+		 	SEQ_TASK_FILE_ID.NEXTVAL
+		 , #{ fileOrginName }
+		 , #{ fileSaveName }
+		 , #{ filePath }
+		 , #{ fileType }
+		 )
+	</insert> 
+	
+	
+	
+
+
+</mapper>

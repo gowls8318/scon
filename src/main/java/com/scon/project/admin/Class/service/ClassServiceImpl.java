@@ -10,6 +10,7 @@ import com.scon.project.admin.Class.dao.ClassMapper;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
 import com.scon.project.admin.Class.dto.TimeDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -55,8 +56,8 @@ public class ClassServiceImpl implements ClassService {
 
 	// 강의리스트조회
 	@Override
-	public List<ClassDTO> selectClassList() {
-		return classMapper.selectClassList();
+	public List<ClassDTO> selectClassList(Criteria cri) {
+		return classMapper.selectClassList(cri);
 	}
 
 	//강의상세조회
@@ -110,6 +111,12 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public List<MemberDTO> registMember() {
 		return classMapper.registMember();
+	}
+
+	//강의게시글 총 갯수
+	@Override
+	public int total(Criteria cri) {
+		return classMapper.total(cri);
 	}
 
 

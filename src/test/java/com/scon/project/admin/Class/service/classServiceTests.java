@@ -19,6 +19,7 @@ import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.DayDTO;
 
 import com.scon.project.admin.Class.dto.TimeDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.config.SconApplication;
 import com.scon.project.member.model.dto.MemberDTO;
 
@@ -29,6 +30,7 @@ public class classServiceTests {
 	// 의존성주입
 	@Autowired
 	private ClassService classService;
+	private Criteria Criteria;
 	
 	
 	
@@ -40,7 +42,7 @@ public class classServiceTests {
 
 	
 	//when
-	List<ClassDTO> classList = classService.selectClassList();
+	List<ClassDTO> classList = classService.selectClassList(Criteria);
 	
 	//then
 	assertNotNull(classList);

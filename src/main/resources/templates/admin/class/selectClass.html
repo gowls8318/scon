@@ -144,15 +144,43 @@ input[type="checkbox"]::before {
 								<nav aria-label="Page navigation example"
 									style="margin-left: 45%;">
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#"
-											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										<li class="page-item">
+											<a th:if="${ page.startPage > 1 }" th:href="@{/admin/classList/?pageNo=1}" th:text="'<<'" class="page-link"></a>
+										</li>
+										
+										
+										
+										<l1 th:if="${ page.prev }" class="page-item">
+											<a th:href="@{/admin/classList(pageNo=${page.startPage - 1})}" th:text="'<'" class="page-link"></a>
+										</l1>
+										
+										
+										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
+												<a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a>
+												<a th:if="${ page.cri.pageNo != num }" th:href="@{/admin/classList(pageNo=${num})}" th:text="${ num }" class="page-link"></a>
+											</li>
+										</th:block>
+										
+										
+										<l1 th:if="${ page.next }" class="page-item">
+											<a th:href="@{/admin/classList(pageNo=${page.endPage + 1})}" th:text="'>'" class="page-link"></a>
+										</l1>
+									
+									
+										<li class="page-item">
+									    	<!-- <a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link" disabled></a>
+									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="@{/admin/classList(pageNo=${page.maxPage})}" th:text="'>>'" class="page-link"></a> -->
+									    </li>
+									
+										<!-- <li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 										</a></li>
 										<li class="page-item"><a class="page-link" href="#">1</a></li>
 										<li class="page-item"><a class="page-link" href="#">2</a></li>
 										<li class="page-item"><a class="page-link" href="#">3</a></li>
 										<li class="page-item"><a class="page-link" href="#"
 											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-										</a></li>
+										</a></li> -->
 									</ul>
 								</nav>
 							</div>
@@ -397,14 +425,15 @@ input[type="checkbox"]::before {
 									<div class="input-group input-group-lg">
 										<span class="input-group-text" style="margin: 2em; height: 3em;">비고</span>
 										<textarea class="form-control" th:text="${ clsNote }" id="clsNote" style="font-size: medium; width: 35em;"></textarea>
-									</div>
+									</div> 
+									
+								</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 	</form>
 	<!-- 강의상세보기 모달창 끝-->
 
@@ -480,8 +509,6 @@ input[type="checkbox"]::before {
 
 		}
 	</script>
-	
-
 
 
 	<script>

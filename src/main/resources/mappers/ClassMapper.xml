@@ -62,10 +62,7 @@
 	</resultMap>
 	
 	
-	
-	<!-- 강의등록 : [추후수정] 태미님 테이블에서 강사명 JOIN 필요 
-		@ 요일과 교시는 강의1개당 여러개를 가져야함	
-	--> 
+	<!-- 강의등록 -->
 	<insert id="registClass">
 		INSERT
 		  INTO TB_CLASS
@@ -134,20 +131,47 @@
 	
 	
 	<!-- 강의리스트조회 -->
-	<!--  JOIN TB_MEMBER : 태미님 테이블 연결할 때 사용 -->
 	<select id="selectClassList" resultMap="classResultMap">
 		  SELECT
-			   A.CLS_ID
-		     , A.CLS_SUBJECT
-		     , D.MEMBER_NAME 
-		     , A.CLS_NAME
-		     , A.CLS_START
-		 	 , A.CLS_END
-		 	 , A.CLS_ROOM
-		 FROM TB_CLASS A
+			   CLS_ID
+		     , CLS_SUBJECT
+		     , MEMBER_NAME 
+		     , CLS_NAME
+		     , CLS_START
+		 	 , CLS_END
+		 	 , CLS_ROOM
+		 FROM (SELECT 
+		 			 ROWNUM AS RNUM
+		 		 , A.CLS_ID
+			     , A.CLS_SUBJECT
+			     , D.MEMBER_NAME 
+			     , A.CLS_NAME
+			     , A.CLS_START
+			 	 , A.CLS_END
+			 	 , A.CLS_ROOM
+				 FROM TB_CLASS A
 		  JOIN TB_MEMBER D ON (A.MEMBER_ID = D.MEMBER_ID)
-		 WHERE A.CLS_STATUS = 'N'
-		 ORDER BY A.CLS_ID DESC
+		 WHERE CLS_STATUS = 'N'
+		    <![CDATA[
+			          AND ROWNUM <= #{ pageNo } * #{ limit }
+			      ]]>
+		 		)
+		 <![CDATA[
+			WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
+		]]>
+		 ORDER BY CLS_ID DESC
+	</select>
+	
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="total" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM TB_CONSULTANT
+		 WHERE CON_HDELETE = 'N'
+		 <if test="keyword != null">
+		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+		 </if>
 	</select>
 	
 	
