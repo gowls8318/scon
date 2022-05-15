@@ -46,45 +46,57 @@
 		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
-	<select id="selectAllStudentList" resultMap="checkResultMap">
+	<select id="selectAllClassList" resultMap="checkResultMap">
 		SELECT
-			  A.CHQ_NO
-			, C.MEMBER_ID
-			, B.MEMBER_NAME
-			, C.CLS_ID
-			, C.CLS_NAME
-			, A.CHQ_DATE
-			, A.CHQ_START
-			, A.CHQ_FINISH
-		FROM TB_CHECK A
-		JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
-		JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
-		ORDER BY A.CHQ_NO DESC
-	</select>
-	
-	<select id="selectAllStudentList" resultMap="checkResultMap">
-	SELECT
 		  A.CHQ_NO
-		, C.MEMBER_ID
+		, B.MEMBER_ID
 		, B.MEMBER_NAME
 		, C.CLS_ID
 		, C.CLS_NAME
 		, A.CHQ_DATE
 		, A.CHQ_START
 		, A.CHQ_FINISH
-	FROM TB_CHECK A
-	JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
-	JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
-	ORDER BY A.CHQ_NO DESC
+		FROM TB_CHECK A
+		JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
+		WHERE B.MEMBER_ID = #{ memberId } 
+		ORDER BY A.CHQ_NO DESC
 	</select>
 	
+	<select id="selectAllStudentList" resultMap="checkResultMap">
+		SELECT
+		  A.CHQ_NO
+		, B.MEMBER_ID
+		, B.MEMBER_NAME
+		, C.CLS_ID
+		, C.CLS_NAME
+		, A.CHQ_DATE
+		, A.CHQ_START
+		, A.CHQ_FINISH
+		FROM TB_CHECK A
+		JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
+		WHERE B.MEMBER_ID = #{ memberId } 
+		ORDER BY A.CHQ_NO DESC
+	</select>
+
 	
 	<!-- 강의 목록 조회 -->
-	<select id="selectCLassList" resultMap="classResultMap">
+	<select id="selectClassList" resultMap="classResultMap">
 		SELECT
-			CLS_ID
-		,	CLS_NAME
+			CLS_NAME
+		FROM TB_CLASS
+		WHERE CLS_STATUS = 'Y'
 	</select>
+	
+	<!-- 출결 등록 -->
+	<insert id="insertAttList">
+		INSERT
+			INTO TB_ATTENDANCE
+			
+	</insert>
+	
+	
 	<!-- 강의 목록 불러오기 -->
 	<!-- <select id="getClassList" resultType="com.scon.project.admin.Class.dto.ClassDTO">
 			SELECT

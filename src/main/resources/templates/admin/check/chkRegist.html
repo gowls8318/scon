@@ -89,7 +89,7 @@
                             <div class="col-2">
                                 <select name="clsId" id="clsId" class="browser-default custom-select selectclassbox">
                                     <optgroup label="------ 강의 선택 ------">
-                                    <option th:each="val : ${ getClassList }" th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
+                                    <option th:each="val : ${ classList }" th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
                                     </optgroup>
                                 </select>
                             </div>
