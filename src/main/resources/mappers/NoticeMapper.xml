@@ -14,52 +14,45 @@
 		<result property="notiDelete" column="NOTI_DELETE"/>
 	</resultMap>
 	
-<!-- 공지사항 목록 + 페이징 -->
-	<select id="findAllNoticeList" resultMap="noticeResultMap" 
-	parameterType="com.scon.project.admin.notice.paging.Criteria">
+	<!-- 공지사항 목록 + 페이징 -->
+	<select id="findAllNoticeList" resultMap="noticeResultMap">
 		SELECT
 		       NOTI_NO
 		     , NOTI_TITLE
 		     , NOTI_DATE
 		     , NOTI_VIEW
-		     , NOTI_DELETE     
-		 FROM (
-		      SELECT
-		             NOTI_NO
-		           , NOTI_TITLE
-		           , NOTI_DATE
-		           , NOTI_VIEW
-		           , NOTI_DELETE
-		           , ROW_NUMBER()
-		        OVER(ORDER BY NOTI_NO DESC) AS RNUM             
-		       FROM TB_NOTICE
-		       WHERE NOTI_DELETE = 'N'
-		       ) MB
-		WHERE RNUM BETWEEN #{ rowStart } AND #{ rowEnd }
-		ORDER BY NOTI_NO DESC
+		 FROM (SELECT /*+INDEX_DESC(N PK_TB_NOTICE)*/
+		 	  		  ROWNUM AS RNUM
+		 	  		, NOTI_NO
+				    , NOTI_TITLE
+				    , NOTI_DATE
+				    , NOTI_VIEW
+		 		 FROM TB_NOTICE N
+		 		WHERE NOTI_DELETE = 'N'
+		 		<![CDATA[
+			          AND ROWNUM <= #{ pageNo } * #{ limit }
+					]]>
+			  		<if test="keyword != null">
+			  		  AND NOTI_TITLE LIKE '%' || #{ keyword } || '%'
+			  		</if>
+			  	  )
+		<![CDATA[
+			WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
+		]]>
 	</select>
-	
 
-
-<!-- 페이지네이션 -->
-<!-- 게시물의 총 갯수를 구하는 쿼리 -->
-<!-- 	<select id="allNoticeCount" resultMap="noticeResultMap" > -->
-
-<!-- 페이징 -->
-<!-- 	<select id="noticeTotalCount" resultType="int">
-
+	<!-- 게시물 총 갯수 -->
+	<select id="total" resultType="_int">
 		SELECT
-			   COUNT(NOTI_NO)
+			   COUNT(*)
 		  FROM TB_NOTICE
-		 WHERE NOTI_NO > 0	 
-	</select> -->
+		 WHERE NOTI_DELETE = 'N'
+		 <if test="keyword != null">
+		   AND NOTI_TITLE LIKE '%' || #{ keyword } || '%'
+		 </if>
+	</select>
 
 
-
-
-
-
-	
 	<!-- 공지등록 폼 -->
 	<insert id="registNotice">
 		INSERT
@@ -105,9 +98,7 @@
 			 WHERE NOTI_NO = #{ no }  		
 	</update>
 	
-	
-	
-	
+
   	<!-- 수정등록 -->
 	<update id="modifyNotice">
 		UPDATE 
@@ -120,13 +111,13 @@
 		
 		
 	<!-- 삭제 -->
- 	<delete id="deleteNotice">
+ 	<update id="deleteNotice">
 		UPDATE
 		  	   TB_NOTICE
 		   SET NOTI_DELETE = 'Y'
 		   	   NOTI_UPDATE = SYSDATE
 		 WHERE NOTI_NO = #{ no }
-	</delete> 
+	</update> 
 	
 	
 	
