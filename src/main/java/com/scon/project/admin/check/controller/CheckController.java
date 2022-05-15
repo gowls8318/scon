@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.check.model.dto.CheckDTO;
 import com.scon.project.admin.check.model.service.CheckService;
 
@@ -24,44 +25,35 @@ public class CheckController {
 	
 	/* 반별 출결 조회 */
 	@GetMapping("/chkViewClass")
-	public ModelAndView selectAllStudentList(ModelAndView mv) throws Exception {
+	public ModelAndView selectAllClassDayList(ModelAndView mv) throws Exception {
 		
-		List<CheckDTO> checkList = checkService.selectAllStudentList();
+		List<CheckDTO> checkClassList = checkService.selectAllClassList();
+		List<ClassDTO> classList = checkService.selectClassList();
 		
-		mv.addObject("checkList", checkList);
+		mv.addObject("checkClassList", checkClassList);
+		mv.addObject("classList", classList);
 		mv.setViewName("admin/check/chkViewClass");
 		
 		return mv;
 	}
-//
-//	@GetMapping("/chkViewClassNs")
-//	public String chkViewClassNoResult() {
-//		return "admin/check/chkViewClassNs";
-//	}
-//	
-//	@GetMapping("/chkRegist")
-//	public String chkRegist() {
-//		
-//		return "admin/check/chkRegist";
-//	}
 	
-	
-	
-//	@GetMapping("/chkRegist")
-//	public void chkRegist(Model model) {
-//	model.addAttribute("getClassList", CheckService.getClassList());
-//	}
-	
+	/* 학생별 출결 조회 */
+	@GetMapping("/chkViewStudent")
+	public ModelAndView selectAllStudentList(ModelAndView mv) throws Exception {
+		
+		List<CheckDTO> checkStudentList = checkService.selectAllStudentList();
+		List<ClassDTO> classList = checkService.selectClassList();
+		
+		mv.addObject("checkStudentList", checkStudentList);
+		mv.addObject("classList", classList);
+		mv.setViewName("admin/check/chkViewStudent");
+		
+		return mv;
+	}
+
 	@GetMapping("/chkRegistNs")
 	public String chkRegistNoResult() {
 		return "admin/check/chkRegistNs";
-	}
-	
-	
-	
-	@GetMapping("/chkViewStudent")
-	public String chkViewStudent() {
-		return "admin/check/chkViewStudent";
 	}
 	
 	@GetMapping("/chkViewStudentNs")

@@ -1,6 +1,5 @@
 package com.scon.project.admin.check.model.dto;
 
-import java.util.Date;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.Class.dto.MemberDTO;
@@ -17,8 +16,7 @@ public class CheckDTO {
 	private ClassDTO cls;
 	private String chkStart;
 	private String chkFinish;
-	private Date chkDate;
-	
+	private java.sql.Date chkDate;
 	
 
 }

@@ -87,12 +87,10 @@
                     <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-0 selectclasstext">강의 선택</div>
                         <div class="col-2">
-                            <select class="browser-default custom-select selectclassbox">
-                                <option selected>------ 강의 선택 ------</option>
-                                <option value="1">자바뿌시기</option>
-                                <option value="2">스프링으깨기</option>
-                                <option value="3">자스뽀개기</option>
-                            </select>
+                            <select name="clsId" id="clsId" class="browser-default custom-select selectclassbox">
+                                    <option selected label="------ 강의 선택 ------"></option>
+                                    <option th:each="val : ${ classList }" th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
+                             </select>
                         </div>
                         <div class="col-0 selectstudenttext">학생</div>
                             <div class="col-2">
@@ -117,23 +115,21 @@
                                 <thead>
                                 <tr>
                                     <th>번호</th>
-                                    <th>학생 이름</th>
-                                    <th>수강 강의</th>
-                                    <th>출석시간</th>
-                                    <th>귀가시간</th>
+                                    <th>학생이름</th>
+                                    <th>수강강의</th>
+                                    <th>출석상태</th>
+                                    <th>귀가상태</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <tr th:each="chk : ${ checkList }">
-                                    <td th:text="${chk.no}">1</td>
-                                    <td th:text="${ chk.member.name }">김바리</td>
-                                    <td th:text="${ chk.cls.clsName }">자바뿌시기</td>
-                                    <td th:text="${ chk.chkStart}" class="attandancestatusbox">출석</td>
-                                    <td th:text="${ chk.chkFinish}" class="attandancestatusbox">귀가</td>
-                                    <td style="visibility:hidden;" th:text=" ${chk.chkDate} "></td>
+                                <tr th:each="chk : ${ checkClassList }">
+                                    <td th:text="${chk.no}"></td>
+                                    <td th:text="${ chk.member.name }"></td>
+                                    <td th:text="${ chk.cls.clsName }"></td>
+                                    <td th:text="${ chk.chkStart}" class="attandancestatusbox"></td>
+                                    <td th:text="${ chk.chkFinish}" class="attandancestatusbox"></td>
                                 </tr>
-                              
                                 </tbody>
                             </table>
                         </div>
