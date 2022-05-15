@@ -29,6 +29,9 @@ public interface TaskBoardMapper {
 	//과제 게시판 게시글 상세 조회
 	List<TaskBoardDTO> findDetail(String taskId);
 
+	//과제 게시판 게시글 상세 조회 (파일)
+	List<FileDTO> findFiles(String taskId);
+
 	
 	//TaskBoardDTO findMemberName(int clsId);
 

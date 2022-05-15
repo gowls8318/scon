@@ -31,10 +31,10 @@ public class TaskBoardServiceTests {
 	@Test
 	public void 과제_게시판_전체_조회_테스트() {
 		//given
-		int clsId = 1; //수업별 게시판으로 들어가기 위해 clsId 받아오기
+//		int clsId = 1; //수업별 게시판으로 들어가기 위해 clsId 받아오기
 		
 		//when
-		List<TaskBoardDTO> taskList = taskBoardService.findAllTask(clsId);
+		List<TaskBoardDTO> taskList = taskBoardService.findAllTask(); //clsId
 		
 		//then
 		assertNotNull(taskList);

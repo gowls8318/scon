@@ -1,27 +1,41 @@
 package com.scon.project.admin.taskBoard.controller;
 
-
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +44,7 @@ import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.admin.taskBoard.model.dto.TaskBoardDTO;
 import com.scon.project.admin.taskBoard.model.service.TaskBoardService;
 import com.scon.project.member.model.dto.UserImpl;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,15 +82,26 @@ public class TaskBoardController {
 	public ModelAndView findDetail(@RequestParam String taskId, ModelAndView mv) {
 		
 		List<TaskBoardDTO> detailList = taskBoardService.findDetail(taskId);
+		List<FileDTO> fileList = taskBoardService.findFiles(taskId);
 		
 		log.info("taskDetail : {} ",  detailList);
+		log.info("fileList : {} " , fileList);
+		
+/*		if(fileList == null) {
+			mv.setViewName("admin/taskBoard/taskDetail");
+		} else {
+		//	mv.addObject("file", taskBoardService.findFiles(taskId));
+		 * mv.addObject("file", fileList);
+			mv.setViewName("admin/taskBoard/taskDetail");
+		}  */
 		
 		mv.addObject("detailList", detailList);
+		mv.addObject("fileList", fileList);
 		mv.setViewName("admin/taskBoard/taskDetail");
 		
 		return mv;
-	}
-	
+	} 
+
 	
 	@GetMapping("/insertTask")
 	public String insertTask() {
@@ -171,7 +197,36 @@ public class TaskBoardController {
 		return page;
 		
 	} 
-	 
+
+
+	
+	//첨부파일 다운로드
+//	@RequestMapping("/fileDown/*")
+//	@RequestMapping("/taskBoard/download/{clsId}")
+//	public ResponseEntity<Resource> download(@ModelAttribute FileDTO file) throws IOException {
+//		
+//		String filePath = file.getFilePath();
+//		
+//		Path path = Paths.get(filePath + "/" + file.getFileOrginName());
+//		String contentType = Files.probeContentType(path);
+//		
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setContentDisposition(
+//		ContentDisposition.builder("attachment")
+//				.filename(file.getFileOrginName(), StandardCharsets.UTF_8)
+//				.build());
+//		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+//		
+//		Resource resource = new InputStreamResource(Files.newInputStream(path));
+//		
+//		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+//		
+//		
+//		
+//	}  
+	
+	
+	
 	
 	
 	

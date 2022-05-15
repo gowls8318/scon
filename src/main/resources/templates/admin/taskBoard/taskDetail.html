@@ -121,23 +121,17 @@
                                             aria-label="default input example" readonly>
                                         </td>
                                     </tr>
+                                    <!-- 첨부 파일 다운로드 -->
                                     <tr>
                                         <th>파일첨부</th>
-                                        <td>
-                                           <form method="post" enctype="multipart/form-data"> 
-                                                <label for="file-input"></label> 
-                                                <input id="file-input" type="file" /> 
-                                            </form> 
-
-
-                                            <!-- <form method="post" enctype="multipart/form-data">
-                                                <div class="form-group">
-                                                <label for="exampleFormControlFile1">파일 선택</label>
-                                                <input type="file" class="form-control-file notiFile" id="exampleFormControlFile1">
-                                                </div>
-                                            </form> -->
+                                        <td th:each="files : ${ fileList }">
+                                           <span></span>
+                       <!--    		 			<a th:if="fileList" th:href="@{/admin/taskBoard/download?fileId=${files.fileId}}" th:text="${files.fileOrginName}"></a> -->
+                           		 			<input type="hidden" th:value="${files.fileOrginName}">
+                           		 			<input type="hidden" th:value="${files.fileId}">
                                         </td>
                                     </tr>
+                                    <!--               -->
                                     <tr>
                                         <th>내용 <span id="pointtext"></span></th>
                                         <td>

@@ -30,10 +30,10 @@ public class TaskBoardMapperTests {
 	@Test
 	public void 과제_게시판_전체_조회_테스트() {
 		//given
-		int clsId = 1;
+//		int clsId = 1;
 		
 		//when
-		List<TaskBoardDTO> taskList = taskBoardMapper.findAllTask(clsId);
+		List<TaskBoardDTO> taskList = taskBoardMapper.findAllTask(); //clsId
 		
 		//then
 		assertNotNull(taskList);

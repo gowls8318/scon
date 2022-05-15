@@ -74,8 +74,8 @@
                 <h1 class="h3 mb-0 text-gray-800">성적</h1>
             </div>
                 <hr class="border-bottom-primary">
-
-                <button type="button" class="btn btn-primary" onclick="location.href='/admin/insertGrade'">성적 추가 하기</button>
+                <button type="button" class="btn btn-primary"
+                th:onclick="'location.href=\'' + @{/admin/insertGrade(clsId=1)} + '\';'">성적 추가 하기</button>
 
 
                     <br><br>
