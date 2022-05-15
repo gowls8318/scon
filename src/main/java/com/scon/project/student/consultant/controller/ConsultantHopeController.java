@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
 import com.scon.project.common.paging.Criteria;
 import com.scon.project.common.paging.Pagination;
+import com.scon.project.member.model.dto.UserImpl;
 import com.scon.project.student.consultant.model.service.ConsultantHopeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,10 +40,13 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 내역 조회용 */
 	@GetMapping("/consultant/list")
-	public ModelAndView selectAllConsultantList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
+	public ModelAndView selectAllConsultantList(@ModelAttribute Criteria cri, ModelAndView mv, @AuthenticationPrincipal UserImpl user) throws Exception {
+		
+//		String userId = user.getId();
+//		log.info("userId : {}", userId);
 		
 		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList(cri);
-		//log.info("consultantList : {}", consultantList);
+//		log.info("consultantList : {}", consultantList);
 		mv.addObject("consultantList", consultantList);
 		
 		int total = consultantHopeService.total(cri);
@@ -61,7 +66,10 @@ public class ConsultantHopeController {
 	}
 	
 	@PostMapping("/consultant/insertForm")
-	public String insertConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String insertConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale, @AuthenticationPrincipal UserImpl user) throws Exception {
+		
+		log.info("로그인 유저 : {} ", user);
+		con.setMemberId(user.getId());
 		
 		consultantHopeService.insertConsultant(con);
 		
@@ -117,6 +125,8 @@ public class ConsultantHopeController {
 	/* 상담 신청 삭제용 */
 	@PostMapping("/consultant/delete")
 	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) throws Exception {
+		
+		log.info("no : {}", no);
 		
 		consultantHopeService.deleteConsultant(no);
 		

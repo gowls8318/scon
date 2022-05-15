@@ -121,6 +121,39 @@
   box-shadow: none !important;
 }
 
+/* 수납, 환불, 등록 모달 */
+.accModal2 .modal-header,
+.accModal2 .modal-footer,
+.refModal2 .modal-header,
+.refModal2 .modal-footer,
+.modal-dml .modal-header,
+.modal-dml .modal-footer{
+  border: none;
+}
+.accModal2,
+.refModal2,
+.modal-dml{
+  text-align: center;
+  font-size: 20px;
+}
+
+/* 모달 위치 정렬, 그림자 */
+.acc-modal-content,
+.ref-modal-content,
+.modal-content-yj{
+  margin-top: 50%;
+  box-shadow: 0px 2px 30px 10px rgba(0,0,0,0.3);
+}
+.acc-modal-content2,
+.ref-modal-content2{
+  margin: 60% 10%;
+  box-shadow: 0px 2px 30px 10px rgba(0,0,0,0.3);
+}
+
+.modal-bg-acc{
+  background-color: rgba(0,0,0,0.4);
+}
+
 /* list 제목 hover */
 .conHTitle,
 .conTitle {

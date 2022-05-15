@@ -16,6 +16,7 @@
 		
 		<association property="member" resultMap="memberResultMap"/>
 		<association property="cls" resultMap="classResultMap"/>
+		<association property="ref" resultMap="refundResultMap"/>
 	</resultMap>
 	
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
@@ -49,6 +50,14 @@
 		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
+	<resultMap id="refundResultMap" type="com.scon.project.admin.lecture.model.dto.RefundDTO">
+		<id property="no" column="REF_NO"/>
+		<result property="lecNo" column="LEC_NO"/>
+		<result property="refPay" column="REF_PAY"/>
+		<result property="refDate" column="REF_DATE"/>
+		<result property="refContent" column="REF_CONTENT"/>
+	</resultMap>
+	
 	<!-- 수강 내역 조회용 -->
 	<select id="selectAllLectureList" resultMap="lectureResultMap">
 		SELECT
@@ -75,14 +84,16 @@
 	<!-- 강의 조회용 -->
 	<select id="selectAllClassList" resultMap="classResultMap">
 		SELECT
-			   CLS_ID
-			 , CLS_NAME
-			 , CLS_SUBJECT
-			 , CLS_GRADE
-			 , CLS_PAY
-			 , CLS_START
-			 , CLS_END
-		  FROM TB_CLASS
+			   A.CLS_ID
+			 , A.CLS_NAME
+			 , A.CLS_SUBJECT
+			 , A.CLS_GRADE
+			 , A.CLS_PAY
+			 , A.CLS_START
+			 , A.CLS_END
+			 , B.MEMBER_NAME
+		  FROM TB_CLASS A
+		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		 WHERE CLS_STATUS = 'Y'
 	</select>
 	
@@ -173,5 +184,31 @@
 		   SET LEC_DELETE = 'Y'
 		 WHERE LEC_NO = #{ no }
 	</update>
+	
+	<!-- 환불 등록용 -->
+	<insert id="insertRefund">
+		<selectKey keyProperty="lecNo" order="BEFORE" resultType="_int">
+			SELECT
+				   SEQ_LEC_NO.CURRVAL
+			  FROM TB_LECTURE
+		</selectKey>
+		INSERT
+		  INTO TB_REFUND
+		(
+		  REF_NO
+		, LEC_NO
+		, REF_PAY
+		, REF_DATE
+		, REF_CONTENT
+		)
+		VALUES
+		(
+		  SEQ_REF_NO.NEXTVAL
+		, #{ lecNo }
+		, #{ refPay }
+		, #{ refDate }
+		, #{ refContent }
+		)
+	</insert>
 
 </mapper>

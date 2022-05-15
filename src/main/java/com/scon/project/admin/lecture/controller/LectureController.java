@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.dto.RefundDTO;
 import com.scon.project.admin.lecture.model.service.LectureService;
 import com.scon.project.member.model.dto.MemberDTO;
 
@@ -64,6 +66,16 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 수강 등록용 - 강의 조회 */
+//	@GetMapping("/lecture/insertForm")
+//	@ResponseBody
+//	public LectureDTO selectLectureDetail(@RequestParam int no) throws Exception {
+//		
+//		LectureDTO lectureDetail = lectureService.selectLectureDetail(no);
+//		
+//		return lectureDetail;
+//	}
+	
 	/* 수강 등록용 */
 	@PostMapping("/lecture/insertForm")
 	public String insertLecture(@ModelAttribute LectureDTO lec, RedirectAttributes rttr, Locale locale) throws Exception {
@@ -107,6 +119,26 @@ public class LectureController {
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteLecture", null, locale));
 		
 		return "redirect:/admin/lecture/list";
+	}
+
+	/* 환불 모달 */
+	@GetMapping("/lecture/refund")
+	@ResponseBody
+	public LectureDTO selectRefundDetail(@RequestParam int no) throws Exception {
+		
+		LectureDTO lectureDetail = lectureService.selectLectureDetail(no);
+		
+		return lectureDetail;
+	}
+	
+	/* 환불 등록용 */
+	@PostMapping("/lecture/registRefund")
+	@ResponseBody
+	public String insertRefund(@ModelAttribute RefundDTO ref, RedirectAttributes rttr, Locale locale) throws Exception {
+		
+		lectureService.insertRefund(ref);
+		
+		return messageSource.getMessage("insertRefund", null, locale);
 	}
 	
 }

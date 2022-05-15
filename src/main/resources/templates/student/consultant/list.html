@@ -72,7 +72,7 @@
 								<div class="search-area col-lg-12">
 									<div class="form-group mx-sm-3">
 										<input type="text" name="keyword" th:value="${ page.cri.keyword }" class="form-control"
-											id="accSearch" placeholder="검색어를 입력하세요"></div>
+											id="keyword" placeholder="검색어를 입력하세요"></div>
 									<button type="submit" class="btn btn-primary btn-search">검색</button>
 								</div>
 							</form>
@@ -110,12 +110,14 @@
 									
 										<!-- 첫 페이지 이동 -->
 										<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
-										<!-- <li class="page-item">
-											<a th:href="@{/student/consultant/list/?pageNo=1}" class="page-link"><span aria-hidden="true"><<</span></a>
-										</li> -->
+										<li class="page-item">
+											<a th:if="${ page.startPage > 1 }" th:href="@{/student/consultant/list/?pageNo=1}" th:text="'<<'" class="page-link"></a>
+										</li>
 
-										<!-- 이전페이지 버튼 -->
-										<l1 th:if="${ page.prev }" class="page-item"><a th:href="@{/student/consultant/list(pageNo=${page.startPage - 1})}" class="page-link"><</a></l1>
+										<!-- 이전 페이지 버튼 -->
+										<l1 th:if="${ page.prev }" class="page-item">
+											<a th:href="@{/student/consultant/list(pageNo=${page.startPage - 1})}" th:text="'<'" class="page-link"></a>
+										</l1>
 										
 										<!-- 각 번호 페이지 버튼 -->
 										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
@@ -125,13 +127,16 @@
 											</li>
 										</th:block>
 										
-										<!-- 다음페이지 버튼 -->
-										<l1 th:if="${ page.next }" class="page-item"><a th:href="@{/student/consultant/list(pageNo=${page.endPage + 1})}" class="page-link">></a></l1>
+										<!-- 다음 페이지 버튼 -->
+										<l1 th:if="${ page.next }" class="page-item">
+											<a th:href="@{/student/consultant/list(pageNo=${page.endPage + 1})}" th:text="'>'" class="page-link"></a>
+										</l1>
 										
-										<!-- 마지막 페이지 이동 - 오류 -->
-										<!-- <li class="page-item">
-									    	<a th:href="@{/student/consultant/list(pageNo=${page.maxPage})}" class="page-link"><span aria-hidden="true"><<</span></a>
-									    </li> -->
+										<!-- 마지막 페이지 이동 -->
+										<li class="page-item">
+									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link d-none" disabled></a>
+									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="@{/student/consultant/list(pageNo=${page.maxPage})}" th:text="'>>'" class="page-link"></a>
+									    </li>
 							    
 									</ul>
 								</div>
@@ -170,6 +175,15 @@
                 });
             });
         }); */
+        
+        $(".search_area button").on("click", function(e) {
+    		e.preventDefault();
+    		var url = "student/consultant/list";
+    		url = url + "?pageNo=1" + "&keyword=" + $("#keyword").val();
+    		location.href = url;
+    		
+    		console.log(url);
+    	});
     </script>
 
     <!-- Bootstrap core JavaScript-->

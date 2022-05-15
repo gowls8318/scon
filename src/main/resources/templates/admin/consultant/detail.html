@@ -140,11 +140,12 @@
                                         class="btn btn-primary btn-margin submitbuttonbox"
                                         th:onclick="'location.href=\'' + @{/admin/consultant/updateForm(no=${consultantDetail.no})} + '\';'">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
-                                    	th:onclick="deleteConsultant([[${consultantDetail.no}]])">삭제하기</button>
+                                    	data-toggle="modal" data-target="#deleteModal">삭제하기</button>
+                                    	<!-- th:onclick="deleteConsultant([[${consultantDetail.no}]])" -->
                                 </div>
-                            <form method="post" name="consultantForm">
-                        		<input type="hidden" name="no" value="${ consultantDetail.no }">
-                            </form>
+                            <!-- <form method="post" name="consultantForm">
+                        		<input type="hidden" name="no" th:value="${ consultantDetail.no }">
+                            </form> -->
                         </div>
                     </div>
 
@@ -167,14 +168,43 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
+    <!-- 삭제 모달 -->
+    <div class="modal fade modal-bg-acc" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-dml modal-content-yj">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">상담 일지를 삭제하시겠습니까?</div>
+                <form method="post" name="consultantForm">
+                    <input type="hidden" name="no" th:value="${ consultantDetail.no }"/>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary resetbuttonbox" type="button" data-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary submitbuttonbox"
+                        	th:onclick="deleteConsultant([[${consultantDetail.no}]])">확인</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /삭제 모달 -->
 
     <script type="text/javascript">
-    	function deleteConsultant(no) {
+    	/* function deleteConsultant(no) {
     		if(confirm('상담 일지 내역을 삭제하시겠습니까?')) {
     			document.forms.consultantForm.action = "delete?no=" + no;
     			document.forms.consultantForm.submit();
     		}
-    	}
+    	} */
+    	
+    	function deleteConsultant(no) {
+    		document.forms.consultantForm.action = "delete?no=" + no;
+			document.forms.consultantForm.submit();
+		}
     </script>
 
     <!-- Bootstrap core JavaScript-->

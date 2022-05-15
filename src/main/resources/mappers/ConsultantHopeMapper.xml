@@ -62,6 +62,7 @@
 		<![CDATA[
 			WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
 		]]>
+			  <!-- AND MEMBER_ID = #{ memberId } -->
 	</select>
 	
 	<!-- 게시물 총 갯수 -->
@@ -91,7 +92,7 @@
 		VALUES
 		(
 		  SEQ_CON_NO.NEXTVAL
-		, 'user01'
+		, #{ memberId }
 		, SYSDATE
 		, #{ conHDate }
 		, #{ conHTime }

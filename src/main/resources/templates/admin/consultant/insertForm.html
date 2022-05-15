@@ -59,7 +59,7 @@
                         </div>
                         <div class="card-body">
                             <form action="/admin/consultant/insertForm" method="post" name="consultantForm">
-                            	<input type="hidden" name="no" value="${ consultant.no }">
+                            	<input type="hidden" name="no" th:value="${ consultant.no }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody>
@@ -176,8 +176,9 @@
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
                                     	onclick="cancelRegist()">취소하기</button>
-                                    <button type="submit" class="btn btn-primary submitbuttonbox"
+                                    <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="registConsultant([[${consultant.no}]])">등록하기</button>
+                                    <!-- data-toggle="modal" data-target="#registModal" -->
                                 </div>
                             </form>
                         </div>
@@ -203,11 +204,43 @@
         <i class="fas fa-angle-up"></i>
     </a>
     
+    <!-- 등록 모달 -->
+    <!-- <div class="modal fade modal-bg-acc" id="registModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-dml modal-content-yj">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">상담 일지를 등록하시겠습니까?</div>
+                <form name="consultantForm" method="post">
+                	<input type="hidden" name="no" th:value="${ consultant.no }"/>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary resetbuttonbox" type="button" data-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary submitbuttonbox"
+                        	th:onclick="registConsultant([[${consultant.no}]])">확인</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+    <!-- /등록 모달 -->
+    
     <script type="text/javascript">
     	function registConsultant(no) {
+    		var form = document.forms.consultantForm;
+    		
+    		if(form.conContent.value.length != 20) {
+    			alert('상담 일지 내용은 최소 20글자 이상 입력해주시기 바랍니다.');
+    			form.conContent.focus();
+    			return;
+    		}
+    		
     		if(confirm('상담 일지를 등록하시겠습니까?')) {
-    			document.forms.consultantForm.action = "insertForm?no=" + no;
-    			document.forms.consultantForm.submit();
+    			form.action = "insertForm?no=" + no;
+    			form.submit();
     		}
     	}
     	

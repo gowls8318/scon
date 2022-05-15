@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dao.LectureMapper;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.dto.RefundDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 
 @Service("lectureService")
@@ -108,6 +109,19 @@ public class LectureServiceImpl implements LectureService {
 		
 		if(result <= 0) {
 			throw new Exception("수강 삭제에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+
+	/* 환불 등록용 */
+	@Override
+	public int insertRefund(RefundDTO ref) throws Exception {
+		
+		int result = lectureMapper.insertRefund(ref);
+		
+		if(result <= 0) {
+			throw new Exception("환불 등록에 실패하였습니다.");
 		}
 		
 		return result;
