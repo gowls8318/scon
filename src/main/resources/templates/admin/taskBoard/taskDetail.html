@@ -110,6 +110,7 @@
                                             <input class="form-control" type="text" th:value="${ detail.memberName }" name="memberName"
                                             aria-label="Disabled input example" disabled>
                                             <input type="hidden" th:value="${detail.taskId}" class="taskId" id="taskId" name="taskId"/>
+                                            <input type="hidden" th:value="${detail.memberId}" class="memberId" id="memberId" name="memberId"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -126,7 +127,7 @@
                                         <th>파일첨부</th>
                                         <td th:each="files : ${ fileList }">
                                            <span></span>
-                       <!--    		 			<a th:if="fileList" th:href="@{/admin/taskBoard/download?fileId=${files.fileId}}" th:text="${files.fileOrginName}"></a> -->
+                          		 			<a th:if="fileList" th:href="@{/uploadFiles/taskFiles/{fileSaveName}(fileSaveName=${files.fileSaveName})}" th:text="${files.fileOrginName}" th:download="${files.fileOrginName}"></a> 
                            		 			<input type="hidden" th:value="${files.fileOrginName}">
                            		 			<input type="hidden" th:value="${files.fileId}">
                                         </td>
@@ -183,10 +184,12 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- 글쓴이만 보이는 버튼 -->
+                            <!-- 수정 / 삭제 버튼 -->
                             <div class="row buttonbox">
+                            <th:block th:if="${session.loginUser == 'Y'}">
                                 <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit">수정</button>
                                 <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="button" onclick="modal1();">삭제</button>
+                           	</th:block>
                             </div>
                         </div>
                     </div>
@@ -220,9 +223,9 @@
                                  <div class="modal-body">
                                      삭제 하시겠습니까?
                                  </div>
-                                 <div class="modal-footer">
+                                 <div class="modal-footer" th:each="detail : ${ detailList }">
                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal();">취소</button>
-                                 <button type="button" class="btn btn-primary delete-btn" onclick="deleteTask();">삭제</button>
+                                 <button type="button" class="btn btn-primary delete-btn" th:onclick="'location.href=\'' + @{/admin/deleteBoard(taskId=${detail.taskId})} + '\';'">삭제</button>
                              </div>
                          </div>
                      </div>
@@ -233,10 +236,20 @@
 
     <!--  Ajax -->
 	<script>
+	
+	let memberId = $("#memberId").val();
 		
 		// 삭제 모달 
 		function modal1() {
-			$("#delete-modal").modal("show");
+			if(window.sessionStorage.getItem("loginUser")==null) {
+				alert("로그인 해주세요.");
+			} else if(window.sessionStorage.getItem("loginUser") != memberId) {
+				alert("작성자만 삭제할 수 있습니다.");
+			} else if(window.sessionStorage.getItem("loginUser") == memberId) {
+				
+				$("#delete-modal").modal("show");
+				
+			}
 		}
 		
 		// 삭제 모달 닫기

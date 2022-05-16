@@ -25,15 +25,15 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 	}
 	
 	//게시판 전체 목록 조회
-//	@Override
-//	public List<TaskBoardDTO> findAllTask(int clsId) {
-//		return taskBoardMapper.findAllTask(clsId);
-//	}
-	//게시판 전체 목록 조회
 	@Override
-	public List<TaskBoardDTO> findAllTask() {
-		return taskBoardMapper.findAllTask();
+	public List<TaskBoardDTO> findAllTask(int clsId) {
+		return taskBoardMapper.findAllTask(clsId);
 	}
+	//게시판 전체 목록 조회
+//	@Override
+//	public List<TaskBoardDTO> findAllTask() {
+//		return taskBoardMapper.findAllTask();
+//	}
 	
 
 	//게시판 글 입력
@@ -73,6 +73,21 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 	public List<FileDTO> findFiles(String taskId) {
 		return taskBoardMapper.findFiles(taskId);
 	}
+
+	//게시판 게시글 삭제
+	@Override
+	public boolean deleteBoard(String taskId) throws Exception {
+		
+		int result = taskBoardMapper.deleteBoard(taskId);
+		
+		if(result <= 0) {
+			throw new Exception("게시글 삭제 실패");
+		}
+		
+		return result > 0 ? true : false;
+	}
+
+
 
 	
 }
