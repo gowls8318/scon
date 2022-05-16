@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="김소영">
+
+<title>강의첨부자료 조회</title>
+
+<!-- Custom fonts for this template-->
+<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- bootstrap-icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+
+<style>
+.bi {
+	color: purple;
+}
+
+input[type="checkbox"]::before {
+	content: "\2713";
+	position: absolute;
+	top: 60% !important;
+	left: 10PX !important;
+	overflow: hidden;
+	transform: scale(0) translate(-50%, -50%);
+	line-height: 1;
+}
+</style>
+
+
+
+</head>
+
+
+<body id="page-top">
+	<div id="wrapper">
+		<!-- navbar include -->
+		<div th:replace="/common/adminSidebar.html"></div>
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- header include -->
+			<div th:replace="/common/adminTopbar.html"></div>
+
+
+			<!-- Main Content -->
+
+
+			<div id="content">
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+					<!-- Page Heading -->
+
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-2 text-gray-800">강의첨부자료조회</h1>
+					</div>
+					<hr class="border-bottom-primary">
+
+					<!-- DataTales Example -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">강의첨부자료조회목록</h6>
+						</div>
+
+						<!-- 검색창 -->
+						<div class="form-inline"
+							style="margin-left: auto; margin-right: 1em; margin-top: 1em;">
+							<input type="text" class="form-control" id="accSearch"
+								onkeyup='searchTable()' placeholder="검색 키워드를 입력하세요"
+								aria-label="Search" style="font-size: small;">
+							<button class="btn btn-outline-success my-2 my-sm-0"
+								name="getSearch()" type="submit"
+								style="color: #8B169E; background-color: white; border-color: #8B169E; font-size: small;">검색</button>
+						</div>
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<thead>
+										<tr>
+											<th style="text-align: center">강의명</th>
+											<th style="text-align: center">참고자료명</th>
+											<th style="text-align: center">강사명</th>
+											<th style="text-align: center">Action</th>
+										</tr>
+									</thead>
+
+
+									<tbody class="classBody" style="text-align: center">
+										<tr th:each="classfile : ${ classFileList }">
+											<!-- <input type="hidden" th:value="${class.clsId}" class="clsId" />
+											<td th:text="${ class.clsSubject }"></td>
+											<td th:text="${ class.member.name }"></td>
+
+											<td th:onclick="|detailclass(${class.clsId})|"><text
+													class="classdetail" type="text" data-toggle="modal"
+													data-target="#classdetail"> <class
+													th:text="${ class.clsName }" /> </text></td>
+
+											<td th:text="|${ class.clsStart} ~ ${ class.clsEnd }|"></td>
+											<td th:text="${ class.clsRoom }"></td>
+ -->
+											<td>
+												<!-- 파일다운로드 -->
+												<text onclick="location.href='/admin/ClassFileList'">
+												<i class="bi bi-arrow-right-square-fill"></i>&nbsp;</text> 
+												<!-- 강의첨부자료 수정-->
+												<text th:onclick="'location.href=\'' + @{/admin/ClassFileUpdate(FileId=${classFile.FileId})} + '\';'">
+												<i class="bi bi-pencil-square"></i>&nbsp;</text> 
+												<!-- 강의첨부자료 삭제 --> 
+												<text class="" data-toggle="modal" data-target="#classdelModal"
+												th:onclick="|deleteClassFile(${classFile.clsId})|"> 
+												<i class="bi bi-trash"></i>&nbsp;</text>
+											</td>
+											
+										</tr>
+									</tbody>
+								</table>
+
+
+								<!-- 페이징 -->
+								<nav aria-label="Page navigation example"
+									style="margin-left: 45%;">
+									<ul class="pagination">
+
+										<!-- 페이징 -->
+										<nav aria-label="Page navigation">
+											<div class="pageInfo_area">
+												<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
+
+													<!-- 첫 페이지 이동 -->
+													<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
+													<li class="page-item"><a
+														th:if="${ page.startPage > 1 }"
+														th:href="@{/admin/classFileList?pageNo=1}" th:text="'<<'"
+														class="page-link"></a></li>
+
+													<!-- 이전 페이지 버튼 -->
+													<l1 th:if="${ page.prev }" class="page-item"> <a
+														th:href="@{/admin/classFileList(pageNo=${page.startPage - 1})}"
+														th:text="'<'" class="page-link"></a> </l1>
+
+													<!-- 각 번호 페이지 버튼 -->
+													<th:block
+														th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+														<li th:each="num : ${ #numbers.sequence(start, end) }"
+															class="pageInfo_btn page-item"><a
+															th:if="${ page.cri.pageNo == num }" th:text="${ num }"
+															class="page-link" disabled></a> <a
+															th:if="${ page.cri.pageNo != num }"
+															th:href="@{/admin/classFileList(pageNo=${num})}"
+															th:text="${ num }" class="page-link"></a></li>
+													</th:block>
+
+													<!-- 다음 페이지 버튼 -->
+													<l1 th:if="${ page.next }" class="page-item"> <a
+														th:href="@{/admin/classFileList(pageNo=${page.endPage + 1})}"
+														th:text="'>'" class="page-link"></a> </l1>
+
+													<!-- 마지막 페이지 이동 -->
+													<li class="page-item"><a
+														th:if="${ page.cri.pageNo == page.maxPage }"
+														th:text="'>>'" class="page-link d-none" disabled></a> <a
+														th:if="${ page.cri.pageNo != page.maxPage }"
+														th:href="@{/admin/classFileList(pageNo=${page.maxPage})}"
+														th:text="'>>'" class="page-link"></a></li>
+
+												</ul>
+											</div>
+										</nav>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			</form>
+			<!-- End of Main Content -->
+			<!-- footer include -->
+			<div th:replace="/common/footer.html"></div>
+
+		</div>
+		<!-- End of Main Content -->
+
+	</div>
+	<!-- End of Content Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> 
+	<i class="fas fa-angle-up"></i>
+	</a>

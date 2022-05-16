@@ -140,7 +140,7 @@
 		     , CLS_START
 		 	 , CLS_END
 		 	 , CLS_ROOM
-		 FROM (SELECT 
+		 FROM (SELECT <!-- /*+INDEX_DESC(A PK_TB_CLASS)*/ -->
 		 			 ROWNUM AS RNUM
 		 		 , A.CLS_ID
 			     , A.CLS_SUBJECT
@@ -149,7 +149,7 @@
 			     , A.CLS_START
 			 	 , A.CLS_END
 			 	 , A.CLS_ROOM
-				 FROM TB_CLASS A
+			 FROM TB_CLASS A
 		  JOIN TB_MEMBER D ON (A.MEMBER_ID = D.MEMBER_ID)
 		 WHERE CLS_STATUS = 'N'
 		    <![CDATA[
@@ -159,7 +159,6 @@
 		 <![CDATA[
 			WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
 		]]>
-		 ORDER BY CLS_ID DESC
 	</select>
 	
 	
@@ -167,11 +166,8 @@
 	<select id="total" resultType="_int">
 		SELECT
 			   COUNT(*)
-		  FROM TB_CONSULTANT
-		 WHERE CON_HDELETE = 'N'
-		 <if test="keyword != null">
-		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
-		 </if>
+		  FROM TB_CLASS
+		 WHERE CLS_STATUS = 'N'
 	</select>
 	
 	
@@ -180,6 +176,7 @@
 	SELECT
 		    A.CLS_ID
 		  , B.MEMBER_NAME
+		  , B.MEMBER_ID
 		  , A.CLS_NAME
 		  , A.CLS_SUBJECT
 		  , A.CLS_STUNUM
@@ -209,7 +206,6 @@
 		 WHERE CLS_ID = #{ clsId }
 	</select>
 	
-	<!-- rownum : 기본적으로 작성시간으로 입력 -->
 	
 	<!-- 강사조회 -->
 	<select id="registMember" resultMap="memberResultMap">
@@ -233,7 +229,8 @@
 	<update id="classUpdate">
 		UPDATE
 			  TB_CLASS A
-		  SET   A.MEMBER_ID = (SELECT B.MEMBER_ID FROM TB_MEMBER B WHERE B.MEMBER_ID = #{ memberId } )
+		  SET   A.MEMBER_ID = #{ memberId } 
+		  <!-- (SELECT B.MEMBER_ID FROM TB_MEMBER B WHERE B.MEMBER_ID =  -->
 			  , A.CLS_NAME = #{ clsName }
 			  , A.CLS_SUBJECT = #{ clsSubject }
 			  , A.CLS_STUNUM = #{ clsStuNum }
@@ -244,6 +241,8 @@
 			  , A.CLS_END = #{ clsEnd }
 			  , A.CLS_NOTE = #{ clsNote }
 		 WHERE 	A.CLS_ID = #{ clsId }
+		   <!-- AND exists (select 1 from TB_MEMBER B 
+               where B.MEMBER_ID = A.MEMBER_ID) -->
 		   AND  A.CLS_STATUS = 'N'
  	</update>
  	

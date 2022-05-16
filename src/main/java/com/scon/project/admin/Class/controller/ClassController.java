@@ -64,9 +64,12 @@ public class ClassController {
 	//강의상세조회
 	@GetMapping("/classDetail")
 	@ResponseBody // clssDTO 반환, JSON 컴벌트
-	public ClassDTO selectClassDetail(@RequestParam int clsId) {
+	public ClassDTO selectClassDetail(@RequestParam int clsId, @ModelAttribute Criteria cri, ModelAndView mv) {
 
 		ClassDTO classDetail = classService.classDetail(clsId);
+		int total = classService.total(cri);
+		Pagination page = new Pagination(cri, total);
+		mv.addObject("page", page);
 
 		return classDetail;
 	}
@@ -90,6 +93,7 @@ public class ClassController {
 			throws Exception {
 
 		log.info("등록 요청 강의 : {}", classDTO);
+
 		MemberDTO member = new MemberDTO();
 		member.setName("director");
 		classDTO.setMember(member);
@@ -130,9 +134,12 @@ public class ClassController {
 	public String classUpdate(@RequestParam int clsId, Model model) {
 		
 		List<MemberDTO> memberList = classService.registMember(); //원하는 조건의 멤버 가져오기
-		
+		//서비스에서.. 조회: transaction처리 조회 여러번해도 
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("classUpdate", classService.classDetail(clsId));
+		
+		ClassDTO classDTO = classService.classDetail(clsId);
+		model.addAttribute("classUpdate", classDTO);
+		log.info("classUpdate : {}" , classDTO);
 		return "admin/class/updateClass";
 	}
 	
@@ -144,8 +151,8 @@ public class ClassController {
 		/* classDTO.setMemberId(user.getId()); */
 		/* @AuthenticationPrincipal UserImpl user */
 		
-		classService.classUpdate(classDTO);
 		log.info("수정 요청 강의 : {}", classDTO);
+		classService.classUpdate(classDTO);
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("classUpdate", null, locale));
 		return "redirect:/admin/classList";
 		

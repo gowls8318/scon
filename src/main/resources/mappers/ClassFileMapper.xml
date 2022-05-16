@@ -68,16 +68,27 @@
 	
 	
 	<!-- 페이징 처리 필요 -->
-	<select id="classFileDetail" resultMap="classFileResultMap">
+	<select id="selectClassFileList" resultMap="classFileResultMap">
 	SELECT
 		    FILE_ID
 		  , CLS_ID
 		  , CLF_NAME
 		  , CLF_STATUS
-		  , MEMBER_NAME
-	   FROM TB_REFRENCE
-	  WHERE CLF_STATUS = 'Y'
-	  ORDER BY FILE_ID DESC
+	   FROM (SELECT  /*+INDEX_DESC(A PK_TB_REFRENCE)*/ 
+		 		ROWNUM AS RNUM
+		 	   , A.FILE_ID
+		 	   , A.CLS_ID
+		       , A.CLF_NAME
+		       , A.CLF_STATUS
+			 FROM TB_REFRENCE A
+		    WHERE CLF_STATUS = 'Y'
+		    <![CDATA[
+			          AND ROWNUM <= #{ pageNo } * #{ limit }
+			      ]]>
+		 		)
+		 <![CDATA[
+			WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
+		]]>
 	</select> 
 	
 	<!-- 
@@ -94,6 +105,14 @@
 	  ORDER BY FILE_ID DESC
 	
 	 -->
+	 
+	 <!-- 게시물 총 갯수 -->
+	<select id="total" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM TB_REFRENCE
+		 WHERE CLF_STATUS = 'Y'
+	</select>
 	
 	<!-- 강사조회 -->
 	<select id="selectMember" resultMap="memberResultMap">
@@ -108,7 +127,7 @@
 	<select id="selectClassName" resultMap="classResultMap">
 		SELECT CLS_NAME
 		  FROM TB_CLASS
-		 WHERE CLS_STATUS = 'Y'
+		 WHERE CLS_STATUS = 'N'
 	</select>
 
 
@@ -120,7 +139,6 @@
 			   FILE_ID
 			 , CLS_ID
 			 , CLF_NAME
-			 , MEMBER_ID
 			 , CLF_STATUS
 			 )
 			 VALUES
@@ -128,10 +146,10 @@
 			 	SEQ_FILE_ID.NEXVAL
 			  , #{ clsId }
 			  , #{ clfName }
-			  , #{ memberId }
 			  , 'Y'
 			 ) 
 	</insert>
+
 	
 	<!-- TaskFile DTO -->
 	<insert id="registTaskFile">

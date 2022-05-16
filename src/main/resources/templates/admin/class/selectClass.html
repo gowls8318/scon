@@ -21,7 +21,8 @@
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- 채팅 cs -->
 <!-- <link href="/css/chat.css" rel="stylesheet">-->
@@ -84,9 +85,9 @@ input[type="checkbox"]::before {
 						<!-- 검색창 -->
 						<div class="form-inline"
 							style="margin-left: auto; margin-right: 1em; margin-top: 1em;">
-							<input type="text" class="form-control" id="accSearch" onkeyup='searchTable()'
-								placeholder="검색 키워드를 입력하세요" aria-label="Search"
-								style="font-size: small;">
+							<input type="text" class="form-control" id="accSearch"
+								onkeyup='searchTable()' placeholder="검색 키워드를 입력하세요"
+								aria-label="Search" style="font-size: small;">
 							<button class="btn btn-outline-success my-2 my-sm-0"
 								name="getSearch()" type="submit"
 								style="color: #8B169E; background-color: white; border-color: #8B169E; font-size: small;">검색</button>
@@ -127,13 +128,11 @@ input[type="checkbox"]::before {
 												<text onclick="location.href='/admin/classList'"> 
 												<i class="bi bi-arrow-right-square-fill"></i>&nbsp;</text> 
 												<!-- 강의 수정-->
-												<text th:onclick="'location.href=\'' + @{/admin/classUpdate(clsId=${class.clsId})} + '\';'"> 
+												<text th:onclick="'location.href=\'' + @{/admin/classUpdate(clsId=${class.clsId})} + '\';'">
 												<i class="bi bi-pencil-square"></i>&nbsp;</text> 
 												<!-- 강의 삭제 --> 
-												<text class="" data-toggle="modal" data-target="#classdelModal"
-												th:onclick="|deleteClass(${class.clsId})|"> 
+												<text class="" data-toggle="modal" data-target="#classdelModal" th:onclick="|deleteClass(${class.clsId})|">
 												<i class="bi bi-trash"></i>&nbsp;</text>
-
 											</td>
 										</tr>
 									</tbody>
@@ -144,43 +143,51 @@ input[type="checkbox"]::before {
 								<nav aria-label="Page navigation example"
 									style="margin-left: 45%;">
 									<ul class="pagination">
-										<li class="page-item">
-											<a th:if="${ page.startPage > 1 }" th:href="@{/admin/classList/?pageNo=1}" th:text="'<<'" class="page-link"></a>
-										</li>
-										
-										
-										
-										<l1 th:if="${ page.prev }" class="page-item">
-											<a th:href="@{/admin/classList(pageNo=${page.startPage - 1})}" th:text="'<'" class="page-link"></a>
-										</l1>
-										
-										
-										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
-											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
-												<a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a>
-												<a th:if="${ page.cri.pageNo != num }" th:href="@{/admin/classList(pageNo=${num})}" th:text="${ num }" class="page-link"></a>
-											</li>
-										</th:block>
-										
-										
-										<l1 th:if="${ page.next }" class="page-item">
-											<a th:href="@{/admin/classList(pageNo=${page.endPage + 1})}" th:text="'>'" class="page-link"></a>
-										</l1>
-									
-									
-										<li class="page-item">
-									    	<!-- <a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link" disabled></a>
-									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="@{/admin/classList(pageNo=${page.maxPage})}" th:text="'>>'" class="page-link"></a> -->
-									    </li>
-									
-										<!-- <li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-										</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#"
-											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-										</a></li> -->
+
+										<!-- 페이징 -->
+										<nav aria-label="Page navigation">
+											<div class="pageInfo_area">
+												<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
+
+													<!-- 첫 페이지 이동 -->
+													<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
+													<li class="page-item"><a
+														th:if="${ page.startPage > 1 }"
+														th:href="@{/admin/classList?pageNo=1}" th:text="'<<'"
+														class="page-link"></a></li>
+
+													<!-- 이전 페이지 버튼 -->
+													<l1 th:if="${ page.prev }" class="page-item"> <a
+														th:href="@{/admin/classList(pageNo=${page.startPage - 1})}"
+														th:text="'<'" class="page-link"></a> </l1>
+
+													<!-- 각 번호 페이지 버튼 -->
+													<th:block
+														th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+														<li th:each="num : ${ #numbers.sequence(start, end) }"
+															class="pageInfo_btn page-item"><a
+															th:if="${ page.cri.pageNo == num }" th:text="${ num }"
+															class="page-link" disabled></a> <a
+															th:if="${ page.cri.pageNo != num }"
+															th:href="@{/admin/classList(pageNo=${num})}"
+															th:text="${ num }" class="page-link"></a></li>
+													</th:block>
+
+													<!-- 다음 페이지 버튼 -->
+													<l1 th:if="${ page.next }" class="page-item"> <a
+														th:href="@{/admin/classList(pageNo=${page.endPage + 1})}"
+														th:text="'>'" class="page-link"></a> </l1>
+
+													<!-- 마지막 페이지 이동 -->
+													<li class="page-item"><a
+														th:if="${ page.cri.pageNo == page.maxPage }"
+														th:text="'>>'" class="page-link d-none" disabled></a> <a
+														th:if="${ page.cri.pageNo != page.maxPage }"
+														th:href="@{/admin/classList(pageNo=${page.maxPage})}"
+														th:text="'>>'" class="page-link"></a></li>
+												</ul>
+											</div>
+										</nav>
 									</ul>
 								</nav>
 							</div>
@@ -201,8 +208,8 @@ input[type="checkbox"]::before {
 	<!-- End of Content Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top"> 
+	<i class="fas fa-angle-up"></i>
 	</a>
 
 
@@ -254,30 +261,35 @@ input[type="checkbox"]::before {
 								</div>
 								<div class="col-8" style="margin-top: 1em;">
 									<text type="text" id="clsSubject" th:text="${ clsSubject }"
-										name="clsSubject" class="infoformbox form-control"> 
-									<input type="hidden" name="clsSubject" id="clsSubject" />
+										name="clsSubject" class="infoformbox form-control"> <input
+										type="hidden" name="clsSubject" id="clsSubject" />
 								</div>
 
 								<div class="col-auto" style="margin-top: 1em;">
-								<span class="coloumnamebox input-group-text" style="width: 8em">강사명</span>
+									<span class="coloumnamebox input-group-text" style="width: 8em">강사명</span>
 								</div>
 								<div class="col-8" style="margin-top: 1em;">
-									<text type="text" class="infoformbox form-control" id="memberId" th:text="${ memberId }"></text>
+									<text type="text" class="infoformbox form-control"
+										id="memberId" th:text="${ memberId }"></text>
 								</div>
 								<div class="col-auto" style="margin-top: 1em;">
-									<span class="coloumnamebox input-group-text" style="width: 8em">실수강생<span id="pointtext">*</span>
+									<span class="coloumnamebox input-group-text" style="width: 8em">실수강생<span
+										id="pointtext">*</span>
 									</span>
 								</div>
 								<div class="col-8" style="margin-top: 1em;">
-									<text type="text" class="infoformbox form-control" id="clsStuNum" th:text="${ clsStuNum }"></text>
+									<text type="text" class="infoformbox form-control"
+										id="clsStuNum" th:text="${ clsStuNum }"></text>
 								</div>
 
 								<div class="col-auto" style="margin-top: 1em;">
-									<span class="coloumnamebox input-group-text" style="width: 8em">강의명<span id="pointtext">*</span>
+									<span class="coloumnamebox input-group-text" style="width: 8em">강의명<span
+										id="pointtext">*</span>
 									</span>
 								</div>
 								<div class="col-8" style="margin-top: 1em;">
-									<text type="text" class="infoformbox form-control" id="clsName" name="clsName" th:text="${ clsName }"></text>
+									<text type="text" class="infoformbox form-control" id="clsName"
+										name="clsName" th:text="${ clsName }"></text>
 								</div>
 
 								<div class="col-auto" style="margin-top: 1em;">
@@ -285,7 +297,8 @@ input[type="checkbox"]::before {
 									</span>
 								</div>
 								<div class="col-8" style="margin-top: 1em;">
-									<text type="text" class="infoformbox form-control" id="clsGrade" th:text="${ clsGrade }">
+									<text type="text" class="infoformbox form-control"
+										id="clsGrade" th:text="${ clsGrade }">
 								</div>
 
 								<div class="col-auto" style="margin-top: 1em;">
@@ -294,7 +307,8 @@ input[type="checkbox"]::before {
 									</span>
 								</div>
 								<div class="col-8" style="margin-top: 1em;">
-									<text type="text" class="infoformbox form-control" id="clsPay" th:text="${ clsPay }"></text>
+									<text type="text" class="infoformbox form-control" id="clsPay"
+										th:text="${ clsPay }"></text>
 								</div>
 
 
@@ -302,23 +316,29 @@ input[type="checkbox"]::before {
 
 
 								<div class="mx-auto row">
-									<h5 style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E;">수업정보</h5>
+									<h5
+										style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E;">수업정보</h5>
 									<div class=" mx-auto row align-items-center">
 										<div class="col-auto" style="margin-top: 1em">
-											<span class="coloumnamebox input-group-text" style="width: 8em">수업일</span>
+											<span class="coloumnamebox input-group-text"
+												style="width: 8em">수업일</span>
 										</div>
 										<div class="col-4" style="margin-top: 1em;">
-											<text type="text" class="infoformbox form-control" id="clsStart" th:text="${ clsStart }"></text>
+											<text type="text" class="infoformbox form-control"
+												id="clsStart" th:text="${ clsStart }"></text>
 										</div>
 										~
 										<div class="col-4" style="margin-top: 1em;">
-											<text type="text" class="infoformbox form-control" id="clsEnd" th:text="${ clsEnd }">
+											<text type="text" class="infoformbox form-control"
+												id="clsEnd" th:text="${ clsEnd }">
 										</div>
 										<div class="col-auto" style="margin-top: 1em;">
-											<span class="coloumnamebox input-group-text" style="width: 8em">강의실 <span id="pointtext">*</span></span>
+											<span class="coloumnamebox input-group-text"
+												style="width: 8em">강의실 <span id="pointtext">*</span></span>
 										</div>
 										<div class="col-8" style="margin-top: 1em;">
-											<text type="text" class="infoformbox form-control" id="clsRoom" th:text="${ clsRoom }">
+											<text type="text" class="infoformbox form-control"
+												id="clsRoom" th:text="${ clsRoom }">
 										</div>
 									</div>
 								</div>
@@ -349,28 +369,28 @@ input[type="checkbox"]::before {
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													id="dayList" value="option1"> 
-												<label class="form-check-label" for="inlineCheckbox1">수</label>
+													id="dayList" value="option1"> <label
+													class="form-check-label" for="inlineCheckbox1">수</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													id="dayList" value="option1"> <label class="form-check-label"
-													for="inlineCheckbox1">목</label>
+													id="dayList" value="option1"> <label
+													class="form-check-label" for="inlineCheckbox1">목</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													id="dayList" value="option1"> <label class="form-check-label "
-													for="inlineCheckbox1">금</label>
+													id="dayList" value="option1"> <label
+													class="form-check-label " for="inlineCheckbox1">금</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													id="dayList" value="option1"> <label class="form-check-label"
-													for="inlineCheckbox1">토</label>
+													id="dayList" value="option1"> <label
+													class="form-check-label" for="inlineCheckbox1">토</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													id="dayList" value="option1"> <label class="form-check-label"
-													for="inlineCheckbox1">일</label>
+													id="dayList" value="option1"> <label
+													class="form-check-label" for="inlineCheckbox1">일</label>
 											</div>
 										</div>
 									</div>
@@ -413,27 +433,26 @@ input[type="checkbox"]::before {
 										</div>
 									</div>
 								</th:block>
-								<br>
-								<br>
-								<br>
-								<br>
+								<br> <br> <br> <br>
 
 
 
 								<div class="form-inline ">
 									<input type="hidden" th:value="${clsId}" class="clsId" />
 									<div class="input-group input-group-lg">
-										<span class="input-group-text" style="margin: 2em; height: 3em;">비고</span>
-										<textarea class="form-control" th:text="${ clsNote }" id="clsNote" style="font-size: medium; width: 35em;"></textarea>
-									</div> 
-									
-								</div>
+										<span class="input-group-text"
+											style="margin: 2em; height: 3em;">비고</span>
+										<textarea class="form-control" th:text="${ clsNote }"
+											id="clsNote" style="font-size: medium; width: 35em;"></textarea>
+									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	</form>
 	<!-- 강의상세보기 모달창 끝-->
 
@@ -443,57 +462,86 @@ input[type="checkbox"]::before {
 			$.ajax({
 				type : 'GET',
 				url : '/admin/classDetail',
-				data : { clsId : clsId },
+				data : {
+					clsId : clsId
+				},
 
-				success : function(data){
+				success : function(data) {
 					console.log(data);
-					
-					 $("#clsName").text(data.clsName);
-					 $("#memberId").text(data.member.name);
-					 $("#clsSubject").text(data.clsSubject);
-					 $("#clsStuNum").text(data.clsStuNum);
-					 $("#clsGrade").text(data.clsGrade);
-					 $("#clsPay").text(data.clsPay);
-					 $("#clsRoom").text(data.clsRoom);
-					 $("#clsStart").text(data.clsStart);
-					 $("#clsEnd").text(data.clsEnd);
-					 $("#clsNote").text(data.clsNote); 
-					 
-					 //요일체크박스
-					 const daycheck = document.querySelectorAll(".daycheck");
-					 console.log(daycheck);
-					 for(const index in data.dayList) {
-						 const clsDayId = data.dayList[index].clsDayId; 
-						 console.log(clsDayId);
-						 switch(clsDayId){
-						 case 1 : daycheck[0].checked = true; break;
-						 case 2 : daycheck[1].checked = true; break;
-						 case 3 : daycheck[2].checked = true; break;
-						 case 4 : daycheck[3].checked = true; break;
-						 case 5 : daycheck[4].checked = true; break;
-						 case 6 : daycheck[5].checked = true; break;
-						 case 7 : daycheck[6].checked = true; break;
-						 }
-					 }
-					 
-					 //교시체크박스
-					 const timecheck = document.querySelectorAll(".timecheck");
-					 console.log(timecheck);
-					 for(const index in data.time) {
-						 const clsTimeId = data.time[index].clsTimeId; 
-						 console.log(clsTimeId);
-						 switch(clsTimeId){
-						 case 1 : timecheck[0].checked = true; break;
-						 case 2 : timecheck[1].checked = true; break;
-						 case 3 : timecheck[2].checked = true; break;
-						 case 4 : timecheck[3].checked = true; break;
-						 case 5 : timecheck[4].checked = true; break;
-						 case 6 : timecheck[5].checked = true; break;
-						 case 7 : timecheck[6].checked = true; break;
-						 }
-					 }
-					 
-					
+
+					$("#clsName").text(data.clsName);
+					$("#memberId").text(data.member.name);
+					$("#clsSubject").text(data.clsSubject);
+					$("#clsStuNum").text(data.clsStuNum);
+					$("#clsGrade").text(data.clsGrade);
+					$("#clsPay").text(data.clsPay);
+					$("#clsRoom").text(data.clsRoom);
+					$("#clsStart").text(data.clsStart);
+					$("#clsEnd").text(data.clsEnd);
+					$("#clsNote").text(data.clsNote);
+
+					//요일체크박스
+					const daycheck = document.querySelectorAll(".daycheck");
+					console.log(daycheck);
+					for ( const index in data.dayList) {
+						const clsDayId = data.dayList[index].clsDayId;
+						console.log(clsDayId);
+						switch (clsDayId) {
+						case 1:
+							daycheck[0].checked = true;
+							break;
+						case 2:
+							daycheck[1].checked = true;
+							break;
+						case 3:
+							daycheck[2].checked = true;
+							break;
+						case 4:
+							daycheck[3].checked = true;
+							break;
+						case 5:
+							daycheck[4].checked = true;
+							break;
+						case 6:
+							daycheck[5].checked = true;
+							break;
+						case 7:
+							daycheck[6].checked = true;
+							break;
+						}
+					}
+
+					//교시체크박스
+					const timecheck = document.querySelectorAll(".timecheck");
+					console.log(timecheck);
+					for ( const index in data.time) {
+						const clsTimeId = data.time[index].clsTimeId;
+						console.log(clsTimeId);
+						switch (clsTimeId) {
+						case 1:
+							timecheck[0].checked = true;
+							break;
+						case 2:
+							timecheck[1].checked = true;
+							break;
+						case 3:
+							timecheck[2].checked = true;
+							break;
+						case 4:
+							timecheck[3].checked = true;
+							break;
+						case 5:
+							timecheck[4].checked = true;
+							break;
+						case 6:
+							timecheck[5].checked = true;
+							break;
+						case 7:
+							timecheck[6].checked = true;
+							break;
+						}
+					}
+
 				},
 				error : function(xhr) {
 					console.log("강의상세조회 실패")
@@ -512,14 +560,14 @@ input[type="checkbox"]::before {
 
 
 	<script>
-	 $(document).ready(function(){
-         $("#search-input").keyup(function(){
-             var k = $(this).val();
-             $("tr").hide();
-             var temp = $("tr:contains('" + k + "')");
-             $(temp).show();
-         });
-     });
+		$(document).ready(function() {
+			$("#search-input").keyup(function() {
+				var k = $(this).val();
+				$("tr").hide();
+				var temp = $("tr:contains('" + k + "')");
+				$(temp).show();
+			});
+		});
 	</script>
 
 	<!-- Bootstrap core JavaScript-->
