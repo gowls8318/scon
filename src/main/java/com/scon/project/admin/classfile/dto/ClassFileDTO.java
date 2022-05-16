@@ -1,6 +1,9 @@
 package com.scon.project.admin.classfile.dto;
 
+import java.util.List;
+
 import com.scon.project.admin.Class.dto.ClassDTO;
+import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.Data;
@@ -35,7 +38,8 @@ public class ClassFileDTO {
 		private String fileOrginName;				
 		private String fileSaveName;				
 		private String filePath;				
-		private String fileType;	
+		private String fileType;
+		private List<FileDTO> fileList;     //하나의 게시글에 여러개의 파일
 	
 
 

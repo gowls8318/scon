@@ -23,3 +23,9 @@ mybatis:
 custom:
   path:
     upload-files: C:/Users/jayeo/git/scon project/src/main/resources/uploadFiles/
+   
+    
+# file upload path / soyeong
+# custom:
+#  path:
+#    upload-files: C:\Users\thdud\git\scon\src\main\resources\uploadFiles/

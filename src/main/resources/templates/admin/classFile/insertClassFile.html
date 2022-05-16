@@ -97,10 +97,10 @@ input[type="checkbox"]::before {
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
 														<select class="form-control form-select-lg"
-															aria-label=".form-select-lg example" name="clsName" id="clsName">
-															<option th:each=" class : ${ classNameList }" 
-															th:value="{ class?.clsId }" th:utext="${ class?.clsName}">
-															</option>
+															aria-label=".form-select-lg example" name="className" id="clsName">
+															<th:block th:each="class : ${ classNameList }">
+															<option th:text="${class.clsName}"></option>
+															</th:block>
 														</select>
 													</div>
 												</td>
@@ -108,17 +108,16 @@ input[type="checkbox"]::before {
 											
 											<!-- 강사명 -->
 												<tr>
-												<th class="col-lg-1"><label for="std"
+												<th class="col-lg-1"><label for="memberName"
 													class="col-form-label">강사명 <span id="pointtext">*</span></label>
 												</th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
 														<select class="form-control form-select-lg"
-															aria-label=".form-select-lg example" name="clsName"
-															id="clsName">
-															<option th:each=" member : ${ memberList }"
-                                                            		th:value="${ member?.id }" th:utext="${ member?.name }">
-                                                            	</option>
+														aria-label=".form-select-lg example" name="memberName" id="memberName">
+														<option th:each=" member : ${ memberList }"
+                                                           th:value="${ member?.id }" th:utext="${ member?.name }">
+                                                         </option>
 														</select>
 													</div>
 												</td>
@@ -126,31 +125,28 @@ input[type="checkbox"]::before {
 											
 											<!-- 강의첨부파일 제목 -->
 											<tr>
-											<th class="col-lg-1"><label for="clfName"
+											<th class="col-lg-1"><label for="std"
 													class="col-form-label">참고자료명 <span id="pointtext">*</span></label>
-												</th>
+											</th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
 														<input type="text" class="form-control" name="clfName">
 													</div>
 												</td>
+											</tr>
 											
 											<!-- 파일업로드 -->
-											<th class="col-lg-1"><label for="clfName"
-													class="col-form-label">강의첨부자료 <span id="pointtext">*</span></label>
-												</th>             
-		                                        <!-- <th>파일업로드 <span id="pointtext">*</span></th>
-		                                        <td>
-		                                                <label for="file-input"></label> 
-		                                                <input id="file-input" name="taskFile" type="file" multiple/> 
-		                                        </td> -->
-		                                        <td class="col-lg-3">
+											<tr>
+											<th class="col-lg-1">
+											<label for="customFile" class="col-form-label">강의첨부자료 <span id="pointtext">*</span></label>
+											</th>             
+		                                     <td class="col-lg-3">
 		                                        <div class="custom-file">
 									            <label class="custom-file-label" for="customFile">강의첨부파일</label>
 									            <input type="file" class="custom-file-input" id="customFile" multiple>
 									        	</div>
 		                                    </td>
-		                                    </tr>
+		                                   </tr>
 										</tbody>
 									</table>
 								</div>
@@ -162,8 +158,8 @@ input[type="checkbox"]::before {
 							<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" 
 							data-toggle="modal" data-target="#classupdateModal">등록</button>
 							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset"
-							onclick="location.href='/admin/classFileList'">취소</button>
-						</div>
+							onclick="location.href='/admin/ClassFileList'">취소</button>
+						   </div>
 			</form>
 		</div>
 	</div>
@@ -173,10 +169,6 @@ input[type="checkbox"]::before {
 
 	</div>
 	<!-- End of Content Wrapper -->
-
-
-
-
 
 
 	<!-- footer include -->
