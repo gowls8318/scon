@@ -14,7 +14,6 @@ public class TeacherDTO {
 	
 	private String id;
 	private int jobCode;
-	private String jobName;
 	private String resume;
 	
 	private MemberDTO member;			//회원 기본정보
