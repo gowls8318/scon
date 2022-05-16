@@ -53,6 +53,9 @@ public interface MemberMapper {
 	// 회원 삭제
 	int deleteMember(String id, String status);
 
+	// 현재 비밀번호 확인
+	String findPwdById(String id);
+
 	
 
 

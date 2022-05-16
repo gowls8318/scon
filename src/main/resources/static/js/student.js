@@ -3,6 +3,7 @@
  * @since 2022.05.04
  */
 
+
 /* 프로필 사진 미리보기 */
 function readFile() {
 	let file = event.target.files[0];
@@ -46,6 +47,8 @@ msg4.onblur = function() {
 msg5.onblur = function() {
 	result5.innerHTML = "";
 };
+
+
 
 
 //아이디 중복검사
@@ -516,10 +519,6 @@ function deleteMember() {
 
 }
 
-function search() {
-	
-}
-
 
 /* switealert2 toast 알림창 */
 
@@ -582,6 +581,79 @@ btn.forEach((el, index) => {
 		subMenuList[index].classList.remove('d-none');
 
 	}
+});
+
+
+
+$('#updatePwd').click(function() {
+
+	let id = document.getElementById("id").value;
+	
+	 if( id == ''){
+		return false;
+	 }
+	
+	Swal.fire({
+		title: '비밀번호 변경',
+	  	html:
+		    '<input type="password" id="pwd" class="swal2-input" placeholder="현재 비밀번호">' +
+		    '<input type="password" id="pwd2" class="swal2-input" placeholder="새로운 비밀번호">',
+		showCancelButton: true,
+		confirmButtonColor: '#6610f2',
+		cancelButtonColor: '#858796',
+		confirmButtonText: '변경',
+		cancelButtonText: '취소'
+
+	}).then((result) => {
+		if (result.isConfirmed) {
+		     let pwd = document.getElementById('pwd').value;
+		     let pwd2 = document.getElementById('pwd2').value;
+		    
+		    if( pwd == '' || pwd2 == ''){
+				toast('warning', '비밀번호를 입력하세요!');
+				 return false;
+			}
+		    
+		    if( pwd == pwd2){
+				toast('warning', '새로운 비밀번호를 입력하세요!');
+				 return false;
+			}
+		    
+		    var passwordRegExp = /^[a-zA-z0-9]{8,20}$/; //비밀번호 유효성 검사
+			if (!passwordRegExp.test(pwd2)) {
+				toast('warning', '비밀번호는 영문 대소문자와 숫자 8~20자리로 입력해야합니다!');
+				return false;
+			}
+
+			//유효성 검사 만족 후 비동기식 처리
+			$.ajax({
+				type: "POST",
+				url: '/member/updatePwd',
+				dataType: "json",
+				data: { "id": id ,
+						"pwd" : pwd,
+						"pwd2" : pwd2
+				},
+				success: function(data) {
+					if (data > 0) {
+						Swal.fire({
+						title: '변경 완료!',
+						text: '비밀번호를 변경했습니다.',
+						icon: 'success'
+					})
+					
+					location.reload();
+						
+					} else {
+						toast('warning', '현재 비밀번호가 일치하지 않습니다.');
+					}
+				}, error: function() {
+					toast('error', 'error! 다시 시도해주세요!');
+				}
+			});
+
+		  }
+	});
 });
 
 

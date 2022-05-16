@@ -17,15 +17,15 @@
 		<collection property="TaskFile" resultMap="TaskFileResultMap"/>
 	</resultMap>
 	
-	<!-- TB_FILE 테이블 -->
-	<resultMap id="TaskFileResultMap" type="com.scon.project.admin.classfile.dto.TaskFileDTO">
+ 	<!-- TB_FILE 테이블 -->
+<!-- 	<resultMap id="TaskFileResultMap" type="com.scon.project.admin.classfile.dto.TaskFileDTO">
 		<id property="fileId" column="FILE_ID"/>
 		<result property="fileOrginName" column="FILE_ORGNAME"/>
 		<result property="fileSaveName" column="FILE_SAVENAME"/>
 		<result property="filePath" column="FILE_PATH"/>
 		<result property="fileType" column="FILE_TYPE"/>
 	</resultMap>
-	
+	 -->
 	<!-- 강의테이블 -->
 	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
 		<id property="clsId" column="CLS_ID"/>

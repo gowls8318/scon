@@ -29,6 +29,13 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    
+    <!-- 제이쿼리 -->    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -91,7 +98,8 @@
 						  <input type="hidden" name="userid"/>
 						  
 							<!-- Pie Chart -->
-							<div class="card shadow mb-4 col-lg-10">
+							<div class="col-lg-10">
+							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -131,9 +139,15 @@
 											</label>
 											<div class="col-sm-2"></div>
 											<div class="col-sm-7 col-lg-7 row">
+												<div class="col-sm-9 col-lg-8 row">
 												<input type="password" class="form-control infoformbox"
 													id="password" name="password" maxlength="20" th:value='${#authentication.principal.pwd}'> <small
 													id="passwordHelp" class="text-danger"></small>
+												</div>	
+												<div class="col-sm-2">
+													<input type="button" id="updatePwd"
+														class="btn btn-secondary btn-sm stu-btn" value="비밀번호 변경" />
+												</div>
 											</div>
 											<label for="" class="col-lg-3"> <span
 												class="coloumnamebox input-group-text colbox">이메일 <span
@@ -243,6 +257,7 @@
 									<button type="button" class="btn btn-primary submitbuttonbox float-right">수정 하기</button>
 								</div>
 							</div>
+						</div>
 						</form>
 					</div>
 					<!-- /.container-fluid -->
@@ -261,22 +276,8 @@
 			class="fas fa-angle-up"></i>
 		</a>
 
-		<!-- Bootstrap core JavaScript-->
-		<script src="/vendor/jquery/jquery.min.js"></script>
-		<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- Core plugin JavaScript-->
-		<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 		<!-- Custom scripts for all pages-->
 		<script src="/sb-admin-2.min.js"></script>
-		<!-- Page level plugins -->
-		<script src="/vendor/chart.js/Chart.min.js"></script>
-		<!-- <script src="/js/vendor/datatables/jquery.dataTables.min.js"></script> -->
-		<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-		<!-- Page level custom scripts -->
-		<script src="/demo/chart-area-demo.js"></script>
-		<script src="/demo/chart-pie-demo.js"></script>
-		<script src="/demo/datatables-demo.js"></script>
-
 		<!-- 원생 관리 자바스크립트 -->
 		<script src="/js/student.js"></script>
 		<!-- 다음 주소 api-->

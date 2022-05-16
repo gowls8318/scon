@@ -33,5 +33,7 @@ public interface MemberService extends UserDetailsService {
 
 	int updatePassword(MemberDTO member);
 
+	String findPwdById(String id);
+
 
 }

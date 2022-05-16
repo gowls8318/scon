@@ -1,102 +1,62 @@
-const events = [
-    {
-      summary: 'JS Conference',
-      start: {
-        date: Calendar.dayjs().format('DD/MM/YYYY'),
-      },
-      end: {
-        date: Calendar.dayjs().format('DD/MM/YYYY'),
-      },
-      color: {
-        background: '#cfe0fc',
-        foreground: '#0a47a9',
-      },
-    },
-    {
-      summary: 'Vue Meetup',
-      start: {
-        date: Calendar.dayjs().add(1, 'day').format('DD/MM/YYYY'),
-      },
-      end: {
-        date: Calendar.dayjs().add(5, 'day').format('DD/MM/YYYY'),
-      },
-      color: {
-        background: '#ebcdfe',
-        foreground: '#6e02b1',
-      },
-    },
-    {
-      summary: 'Angular Meetup',
-      description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
-      start: {
-        date: Calendar.dayjs().subtract(3, 'day').format('DD/MM/YYYY'),
-        dateTime: Calendar.dayjs().subtract(3, 'day').format('DD/MM/YYYY') + ' 10:00',
-      },
-      end: {
-        date: Calendar.dayjs().add(3, 'day').format('DD/MM/YYYY'),
-        dateTime: Calendar.dayjs().add(3, 'day').format('DD/MM/YYYY') + ' 14:00',
-      },
-      color: {
-        background: '#c7f5d9',
-        foreground: '#0b4121',
-      },
-    },
-    {
-      summary: 'React Meetup',
-      start: {
-        date: Calendar.dayjs().add(5, 'day').format('DD/MM/YYYY'),
-      },
-      end: {
-        date: Calendar.dayjs().add(8, 'day').format('DD/MM/YYYY'),
-      },
-      color: {
-        background: '#fdd8de',
-        foreground: '#790619',
-      },
-    },
-    {
-      summary: 'Meeting',
-      start: {
-        date: Calendar.dayjs().add(1, 'day').format('DD/MM/YYYY'),
-        dateTime: Calendar.dayjs().add(1, 'day').format('DD/MM/YYYY') + ' 8:00',
-      },
-      end: {
-        date: Calendar.dayjs().add(1, 'day').format('DD/MM/YYYY'),
-        dateTime: Calendar.dayjs().add(1, 'day').format('DD/MM/YYYY') + ' 12:00',
-      },
-      color: {
-        background: '#cfe0fc',
-        foreground: '#0a47a9',
-      },
-    },
-    {
-      summary: 'Call',
-      start: {
-        date: Calendar.dayjs().add(2, 'day').format('DD/MM/YYYY'),
-        dateTime: Calendar.dayjs().add(2, 'day').format('DD/MM/YYYY') + ' 11:00',
-      },
-      end: {
-        date: Calendar.dayjs().add(2, 'day').format('DD/MM/YYYY'),
-        dateTime: Calendar.dayjs().add(2, 'day').format('DD/MM/YYYY') + ' 14:00',
-      },
-      color: {
-        background: '#292929',
-        foreground: '#f5f5f5',
-      },
-    }
-  ];
-  
-  const calendarElement = document.getElementById('calendar');
-  const calendarInstance = Calendar.getInstance(calendarElement);
-  calendarInstance.addEvents(events);
-  
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>학사일정</title>
+
+
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+<script src="/js/sche.js" type="text/javascript" defer></script>
+
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+
+<!--  캘린더 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+<!-- sweetalert2 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<!-- Css -->
+<link href="/css/schedule2.css" rel="stylesheet">
+
+
+<script>
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			timeZone : 'UTC',
 			defaultDate : new Date(),
-			// locale: 'ko',
+			//locale: 'ko',
 			initialView : 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할 수 있다.
 			events :
 			// 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
@@ -282,7 +242,7 @@ const events = [
 							icon : 'success'
 						});
 
-						location.href = "/admin/schedule";
+						location.reload();
 
 					},
 					error : function() {
@@ -337,3 +297,70 @@ const events = [
 			title : title
 		})
 	}
+</script>
+
+
+</head>
+
+<body id="page-top">
+
+							<div id="calendarBox">
+								<div id="calendar"></div>
+							</div>
+
+							<!-- 일정 추가 모달 -->
+							<!-- modal 추가 -->
+							<div class="modal fade" id="calendarModal" tabindex="-1"
+								role="dialog" aria-labelledby="registModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="registModalLabel">일정을 입력하세요.</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<form id="calendarForm">
+											<div class="modal-body">
+												<div class="form-group">
+													<label for="taskId" class="col-form-label">일정 내용</label> <input
+														type="text" class="form-control" id="calendar_content"
+														name="calendar_content"> <label for="taskId"
+														class="col-form-label">시작 날짜</label> <input type="date"
+														class="form-control" id="calendar_start_date"
+														name="calendar_start_date"> <label for="taskId"
+														class="col-form-label">종료 날짜</label> <input type="date"
+														class="form-control" id="calendar_end_date"
+														name="calendar_end_date"> <label for="taskId"
+														class="col-form-label">색상</label>
+													<div class="row">
+														<input type="color" class="form-control col-5 left"
+															id="calendar_color" name="calendar_color" value="#bc7fcd">
+													</div>
+													<!-- input hidden -->
+													<input type="hidden" id="calendar_clsId"
+														name="calendar_clsId" value="1234">
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary btn-font"
+													id="addCalendar">등록</button>
+												<button type="button"
+													class="btn btn-primary btn-font d-none" id="upadteCalendar">수정</button>
+												<button type="button"
+													class="btn btn-primary btn-font d-none" id="deleteCalendar">삭제</button>
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+
+
+</body>
+
+</html>

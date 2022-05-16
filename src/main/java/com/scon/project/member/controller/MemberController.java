@@ -16,8 +16,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.naming.StringManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.scon.project.member.model.dto.MemberDTO;
 import com.scon.project.member.model.dto.ProfileDTO;
+import com.scon.project.member.model.dto.UserImpl;
 import com.scon.project.member.model.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -119,6 +122,32 @@ public class MemberController {
 		int count = memberService.checkId(member);
 
 		return count;
+	}
+	
+	
+	//비밀번호 변경
+	@ResponseBody
+	@PostMapping("/updatePwd")
+	public int updatePwd(String pwd, String pwd2, String id) {
+
+		int result = 0;
+		
+		String beforePwd = memberService.findPwdById(id);
+		
+		if(passwordEncoder.matches(pwd, beforePwd)){
+			
+			MemberDTO member = new MemberDTO();
+			String encodePwd = pwd_encoder(pwd2);
+			member.setId(id);
+			member.setPassword(encodePwd);
+			
+			log.info("변경한 비밀번호 확인 : {} ", encodePwd);
+			
+			result = memberService.updatePassword(member);
+			
+		} 
+		
+		return result;
 	}
 	
 	

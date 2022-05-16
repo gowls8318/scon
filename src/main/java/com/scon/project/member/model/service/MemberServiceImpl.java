@@ -186,6 +186,12 @@ public class MemberServiceImpl implements MemberService{
 	public int updatePassword(MemberDTO member) {
 		return memberMapper.updatePwd(member);
 	}
+
+	/* 현재 비밀번호 확인 */
+	@Override
+	public String findPwdById(String id) {
+		return memberMapper.findPwdById(id);
+	}
 	
 	
 

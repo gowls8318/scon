@@ -28,6 +28,11 @@
     <!-- sweetalert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	
+	<!-- 제이쿼리 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	
 
 </head>
 
@@ -172,16 +177,21 @@
 													class="text-danger"></small>
 											</div>
 
-
-											<label for="" class="col-lg-3"> <span
+										<label for="" class="col-lg-3"> <span
 												class="coloumnamebox input-group-text colbox">비밀번호 <span
 													id="pointtext">*</span></span>
 											</label>
 											<div class="col-sm-2"></div>
 											<div class="col-sm-7 col-lg-7 row">
+												<div class="col-sm-9 col-lg-8 row">
 												<input type="password" class="form-control infoformbox"
 													id="password" name="password" maxlength="20"> <small
 													id="passwordHelp" class="text-danger"></small>
+												</div>	
+												<div class="col-sm-2">
+													<input type="button" id="updatePwd"
+														class="btn btn-secondary btn-sm stu-btn" value="비밀번호 변경" />
+												</div>
 											</div>
 											<label for="" class="col-lg-3"> <span
 												class="coloumnamebox input-group-text colbox">이메일 <span
@@ -341,29 +351,16 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-   <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
-	
 	<!-- 원생 관리 자바스크립트 -->
 	<script src="/js/student.js"></script>
 	
 	<!-- 다음 주소 api-->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+	
 
 </body>
 

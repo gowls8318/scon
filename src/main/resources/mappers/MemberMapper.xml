@@ -131,6 +131,13 @@
 		  AND A.EMAIL = #{ email }	
 	</select>
 	
+	<select id="findPwdById" resultType="String">
+		SELECT MEMBER_PWD
+		  FROM TB_MEMBER
+		WHERE MEMBER_ID = #{ id }
+	</select>
+	
+
 		
 	<insert id="insertFile">
 		INSERT
