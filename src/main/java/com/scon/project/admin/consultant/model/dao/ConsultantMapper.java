@@ -5,18 +5,31 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
+import com.scon.project.common.paging.Criteria;
 
 @Mapper
 public interface ConsultantMapper {
 
 	/* 상담 신청 내역 조회용 */
-	List<ConsultantDTO> selectAllConsultantHopeList();
+//	List<ConsultantDTO> selectAllConsultantHopeList();
+	
+	/* 상담 신청 내역 조회용(페이징) */
+	List<ConsultantDTO> selectAllConsultantHopeList(Criteria cri);
+	
+	/* 게시물 총 갯수(페이징) - 상담 신청 */
+	int totalHope(Criteria cri);
 
 	/* 상담 신청 상세 조회용 */
 	ConsultantDTO selectConsultantHopeDetail(int no);
 
 	/* 상담 일지 내역 조회용 */
-	List<ConsultantDTO> selectAllConsultantList();
+//	List<ConsultantDTO> selectAllConsultantList();
+	
+	/* 상담 일지 내역 조회용(페이징) */
+	List<ConsultantDTO> selectAllConsultantList(Criteria cri);
+	
+	/* 게시물 총 갯수(페이징) - 상담 일지 */
+	int total(Criteria cri);
 	
 	/* 상담 일지 등록용 */
 	int insertConsultant(ConsultantDTO con);
@@ -29,5 +42,6 @@ public interface ConsultantMapper {
 
 	/* 상담 일지 삭제용 */
 	int deleteConsultant(int no);
+
 
 }

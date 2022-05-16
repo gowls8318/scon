@@ -20,6 +20,8 @@ import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.admin.lecture.model.dto.RefundDTO;
 import com.scon.project.admin.lecture.model.service.LectureService;
+import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +42,15 @@ public class LectureController {
 	
 	/* 수강 내역 조회용 */
 	@GetMapping("/lecture/list")
-	public ModelAndView selectAllLectureList(ModelAndView mv) throws Exception {
+	public ModelAndView selectAllLectureList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
 		
-		List<LectureDTO> lectureList = lectureService.selectAllLectureList();
+		List<LectureDTO> lectureList = lectureService.selectAllLectureList(cri);
+		log.info("lectureList : {}", lectureList);
 		List<ClassDTO> classList = lectureService.selectAllClassList();
+		
+		int total = lectureService.total(cri);
+		Pagination page = new Pagination(cri, total);
+		mv.addObject("page", page);
 		
 		mv.addObject("lectureList", lectureList);
 		mv.addObject("classList", classList);
@@ -121,7 +128,7 @@ public class LectureController {
 		return "redirect:/admin/lecture/list";
 	}
 
-	/* 환불 모달 */
+	/* 환불 모달에 값 넣기 */
 	@GetMapping("/lecture/refund")
 	@ResponseBody
 	public LectureDTO selectRefundDetail(@RequestParam int no) throws Exception {
@@ -136,7 +143,11 @@ public class LectureController {
 	@ResponseBody
 	public String insertRefund(@ModelAttribute RefundDTO ref, RedirectAttributes rttr, Locale locale) throws Exception {
 		
+		log.info("환불 정보 : {}", ref);
+		
 		lectureService.insertRefund(ref);
+		
+//		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertRefund", null, locale));
 		
 		return messageSource.getMessage("insertRefund", null, locale);
 	}

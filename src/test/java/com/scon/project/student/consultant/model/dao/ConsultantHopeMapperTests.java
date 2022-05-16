@@ -58,10 +58,14 @@ public class ConsultantHopeMapperTests {
         
         //cri.setPageNo(1);
         cri.setPageNo(2);
-                         
+        
+        // when
         List<ConsultantDTO> consultantList = consultantHopeMapper.selectAllConsultantList(cri);
         
         consultantList.forEach(board -> log.info("" + board));
+        
+        // then
+        assertNotNull(consultantList);
     }
 	
 	// success

@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
 import com.scon.project.admin.consultant.model.service.ConsultantService;
+import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.UserImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +40,16 @@ public class ConsultantController {
 	
 	/* 상담 신청 내역 조회용 */
 	@GetMapping("/consultant/hopeList")
-	public ModelAndView selectAllConsultantHopeList(ModelAndView mv) throws Exception {
+	public ModelAndView selectAllConsultantHopeList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
 		
-		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList();
-		
+		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList(cri);
+//		log.info("consultantHopeList : {}", consultantHopeList);
 		mv.addObject("consultantHopeList", consultantHopeList);
+		
+		int totalHope = consultantService.totalHope(cri);
+		Pagination page = new Pagination(cri, totalHope);
+		mv.addObject("page", page);
+		
 		mv.setViewName("admin/consultant/hopeList");
 		
 		return mv;
@@ -59,11 +66,16 @@ public class ConsultantController {
 	
 	/* 상담 일지 내역 조회용 */
 	@GetMapping("/consultant/list")
-	public ModelAndView selectAllConsultantList(ModelAndView mv) throws Exception {
+	public ModelAndView selectAllConsultantList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
 		
-		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList();
-		
+		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList(cri);
+//		log.info("consultantList : {}", consultantList);
 		mv.addObject("consultantList", consultantList);
+		
+		int total = consultantService.total(cri);
+		Pagination page = new Pagination(cri, total);
+		mv.addObject("page", page);
+		
 		mv.setViewName("admin/consultant/list");
 		
 		return mv;
@@ -94,6 +106,8 @@ public class ConsultantController {
 	/* 상담 일지 상세 조회용 */
 	@GetMapping("/consultant/detail")
 	public String selectDetailPage(@RequestParam int no, Model model) throws Exception {
+		
+		log.info("게시글 번호 : {}", no);
 		
 		model.addAttribute("consultantDetail", consultantService.selectConsultantDetail(no));
 		

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scon.project.admin.consultant.model.dao.ConsultantMapper;
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
+import com.scon.project.common.paging.Criteria;
 
 @Service("consultantService")
 @Transactional
@@ -21,16 +22,38 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 	
 	/* 상담 신청 내역 조회용 */
+//	@Override
+//	public List<ConsultantDTO> selectAllConsultantHopeList() throws Exception {
+//		
+//		List<ConsultantDTO> consultantHopeList = consultantMapper.selectAllConsultantHopeList();
+//		
+//		if(consultantHopeList == null) {
+//			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
+//		}
+//		
+//		return consultantHopeList;
+//	}
+
+	/* 상담 신청 내역 조회용(페이징) */
 	@Override
-	public List<ConsultantDTO> selectAllConsultantHopeList() throws Exception {
+	public List<ConsultantDTO> selectAllConsultantHopeList(Criteria cri) throws Exception {
 		
-		List<ConsultantDTO> consultantHopeList = consultantMapper.selectAllConsultantHopeList();
+		List<ConsultantDTO> consultantHopeList = consultantMapper.selectAllConsultantHopeList(cri);
 		
 		if(consultantHopeList == null) {
 			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
 		}
 		
 		return consultantHopeList;
+	}
+
+	/* 게시물 총 갯수(페이징) - 상담 신청 */
+	@Override
+	public int totalHope(Criteria cri) {
+
+		int result = consultantMapper.totalHope(cri);
+		
+		return result;
 	}
 
 	/* 상담 신청 상세 조회용 */
@@ -47,10 +70,23 @@ public class ConsultantServiceImpl implements ConsultantService {
 	}
 	
 	/* 상담 일지 내역 조회용 */
+//	@Override
+//	public List<ConsultantDTO> selectAllConsultantList() throws Exception {
+//		
+//		List<ConsultantDTO> consultantList = consultantMapper.selectAllConsultantList();
+//		
+//		if(consultantList == null) {
+//			throw new Exception("상담 일지 내역 조회에 실패하였습니다.");
+//		}
+//		
+//		return consultantList;
+//	}
+	
+	/* 상담 일지 내역 조회용(페이징) */
 	@Override
-	public List<ConsultantDTO> selectAllConsultantList() throws Exception {
+	public List<ConsultantDTO> selectAllConsultantList(Criteria cri) throws Exception {
 		
-		List<ConsultantDTO> consultantList = consultantMapper.selectAllConsultantList();
+		List<ConsultantDTO> consultantList = consultantMapper.selectAllConsultantList(cri);
 		
 		if(consultantList == null) {
 			throw new Exception("상담 일지 내역 조회에 실패하였습니다.");
@@ -68,6 +104,15 @@ public class ConsultantServiceImpl implements ConsultantService {
 		if(result <= 0) {
 			throw new Exception("상담 일지 등록에 실패하였습니다.");
 		}
+		
+		return result;
+	}
+
+	/* 게시물 총 갯수(페이징) - 상담 일지 */
+	@Override
+	public int total(Criteria cri) {
+		
+		int result = consultantMapper.total(cri);
 		
 		return result;
 	}

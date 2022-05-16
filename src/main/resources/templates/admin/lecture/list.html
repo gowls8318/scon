@@ -21,6 +21,7 @@
     <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -73,10 +74,10 @@
 	                        <form class="form-inline" action="" method="get">
 	                            <div class="search-area col-lg-12">
 	                                <div class="form-group mx-sm-3">
-	                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()'
-	                                        placeholder="검색어를 입력하세요">
+	                                    <input type="text" name="keyword" th:value="${ page.cri.keyword }" class="form-control"
+	                                    	id="keyword" onkeyup='searchTable()' placeholder="원생 이름을 입력하세요">
 	                                </div>
-	                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
+	                                <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
 	                            </div>
 	                        </form>
                         </div>
@@ -101,14 +102,14 @@
                                     </thead>
                                     <tbody class="accTbody">
                                         <tr th:each="lec : ${ lectureList }" class="lecTr">
-                                            <td th:text="${ lec.no }" class="no">번호</td>
-                                            <td th:text="${ lec.member.name }" class="std">원생</td>
-                                            <td th:text="${ lec.cls.clsName }" class="cls">강의명</td>
+                                            <td th:text="${ lec.no }" class="lecNo">번호</td>
+                                            <td th:text="${ lec.member.name }" class="memberId">원생</td>
+                                            <td th:text="${ lec.cls.clsName }" class="clsId">강의명</td>
                                             <td>
                                             	<div class="clsDate3">
-													<div th:text="${ lec.cls.clsStart }" id="clsSrt2">수강 시작일</div>
+													<div th:text="${ lec.cls.clsStart }" id="clsSrt">수강 시작일</div>
 													<span>&nbsp;~&nbsp;</span>
-													<div th:text="${ lec.cls.clsEnd }" id="clsEnd2">수강 종료일</div>
+													<div th:text="${ lec.cls.clsEnd }" id="clsEnd">수강 종료일</div>
 												</div>
                                             </td>
                                             <td th:text="${ lec.lecStatus }">수강 상태</td>
@@ -120,11 +121,12 @@
                                             <td class="btn-no">
                                                 <div class="btn-acc">
                                                     <button type="button" class="btn btn-primary btn-acc1"
-                                                    	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no})} + '\';'">수정</button>
+                                                    	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no})} + '\';'">상세</button>
                                                     <button type="button" class="btn btn-light btn-acc2 refBtn"
                                                     	data-toggle="modal" data-target="#refundModal"
                                                     	th:onclick="|refundDetail(${lec.no})|">환불</button>
                                                     	<!-- th:onclick="refund(this, [[${lec.no}]])" -->
+                                                    	<!-- th:onclick="|refundDetail(${lec.no})|" -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -134,24 +136,50 @@
 
                             <!-- 페이징 -->
                             <nav aria-label="Page navigation">
-                                <ul class="pagination mt-1 mb-0">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+								<div class="pageInfo_area">
+									<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
+									
+										<!-- 첫 페이지 이동 -->
+										<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
+										<li class="page-item">
+											<a th:if="${ page.startPage > 1 }" th:href="${ 1 }" th:text="'<<'" class="page-link"></a>
+										</li>
+
+										<!-- 이전 페이지 버튼 -->
+										<l1 th:if="${ page.prev }" class="page-item">
+											<a th:href="${ page.startPage - 1 }" th:text="'<'" class="page-link"></a>
+										</l1>
+										
+										<!-- 각 번호 페이지 버튼 -->
+										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
+												<!-- <a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a> -->
+												<a th:href="${ num }" th:text="${ num }" class="page-link"></a>
+												<!-- <a th:if="${ page.cri.pageNo != num }" th:href="@{/student/consultant/list(pageNo=${num})}" th:text="${ num }" class="page-link"></a> -->
+											</li>
+										</th:block>
+										
+										<!-- 다음 페이지 버튼 -->
+										<l1 th:if="${ page.next }" class="page-item">
+											<a th:href="${ page.endPage + 1 }" th:text="'>'" class="page-link"></a>
+										</l1>
+										
+										<!-- 마지막 페이지 이동 -->
+										<li class="page-item">
+									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link d-none" disabled></a>
+									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="${ page.maxPage }" th:text="'>>'" class="page-link"></a>
+									    </li>
+							    
+									</ul>
+								</div>
+							</nav>
+							
+							<form id="searchForm" method="get">	
+								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
+								<!-- <input type="hidden" name="limit" th:value="${ page.cri.limit }"> -->
+								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
+								<!-- <input type="hidden" name="type" th:value="${ page.cri.type }"> -->	
+							</form>
 
                         </div>
                     </div>
@@ -176,7 +204,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="@{/admin/lecture/refund}" method="get" name="">
+                            <form action="" method="post" name="">
+                            	<input type="hidden" name="no" id="lecNo" th:value="${no}"/>
                                 <div class="row mb-3">
                                     <div class="col-lg-1"></div>
                                     <label for="std" class="col-sm-2 col-form-label col-lg-3">원생 <span id="pointtext">*</span></label>
@@ -268,9 +297,9 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-	<script>
+	<script type="text/javascript">
 		/* 입력 검색 - 원하는 td만 검색 */
-		function searchTable() {
+		/* function searchTable() {
 			var input, filter, table, tr, td, i, j, found;
 			input = document.getElementById("accSearch");
 			filter = input.value.toLowerCase();
@@ -290,85 +319,98 @@
 					tr[i].style.display = "none";
 				}
 			}
-		}
+		} */
 		
-		$("#insertForm").click(function() {
-			
+		/* 페이징 & 검색 */
+		let searchForm = $("#searchForm");   	
+        
+        $(".pageInfo a").on("click", function(e){
+        	e.preventDefault();
+            searchForm.find("input[name='pageNo']").val($(this).attr("href"));
+            searchForm.attr("action", "/admin/lecture/list");
+	        searchForm.submit();
+        });
+    	
+    	
+    	$(".search-area button").on("click", function(e){
+    		e.preventDefault();
+    		
+    		//let type = $(".search-area select").val();
+	    	let keyword = $(".search-area input[name='keyword']").val();
+	    	
+	    	/* if(!type){
+				alert("검색 유형을 선택하세요.");
+				return false;
+			} */
+	    	
+    		if(!keyword){
+    			//alert("원생 이름을 입력하세요.");
+    			swal({
+    				text: "원생 이름을 입력하세요",
+    				icon: "warning",
+    				button: "확인"
+    			});
+    			return false;
+    		}		
+    		
+    		searchForm.find("input[name='keyword']").val(keyword);
+    		searchForm.find("input[name='pageNo']").val(1);
+    		searchForm.submit();
+    	});
+
+		/* 환불 모달 */
+		/* var modal = document.getElementById("refModal");
+		var btn = document.getElementsByClassName("refBtn");
+		var span = document.getElementsByClassName("refClose")[0]; */
+
+		/* function refund(elem, no) {
+			document.getElementsByClassName('no').value = no;
+			console.log(document.getElementsByClassName('no').value);
+
+			document.getElementsByClassName('memberId').value = elem.closest('.lecTr').querySelector('.memberId').innerHTML;
+			console.log(document.getElementsByClassName('memberId').value);
+
+			document.getElementsByClassName('clsId').value = elem.closest('.lecTr').querySelector('.clsId').innerHTML;
+			console.log(document.getElementsByClassName('clsId').value);
+		} */
+		
+		/* 환불 모달에 값 넣기 */
+		function refundDetail(no) {
 			$.ajax({
-				url : "",
+				url : "/admin/lecture/refund",
 				type : "get",
+				data : { no : no },
 				success : function(data) {
 					console.log(data);
+					$("#lecNo").val(no);
+					$("#memberId").val(data.member.name);
+					$("#clsId").val(data.cls.clsName);
 				},
 				error : function(xhr) {
 					console.log(xhr);
 				}
 			});
-		});
-
-		/* 환불 모달 */
-		/* var modal = document.getElementById("refModal");
-		var btn = document.getElementsByClassName("refBtn");
-		var span = document.getElementsByClassName("refClose")[0];
-
-		function refund(elem, no) {
-			document.getElementsByClassName('no').value = no;
-			console.log(document.getElementsByClassName('no').value);
-
-			document.getElementsByClassName('std').value = elem.closest('.lecTr').querySelector('.std').innerHTML;
-			console.log(document.getElementsByClassName('std').value);
-
-			document.getElementsByClassName('cls').value = elem.closest('.lecTr').querySelector('.cls').innerHTML;
-			console.log(document.getElementsByClassName('cls').value);
 		}
 		
-		if(refund) {
-			for(i = 0; i < btn.length; i++){
-			    btn[i].onclick = function () {
-			    	
-			        modal.style.display = "block";
-			    }
-			}
-		}
-
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		} */
-		
-		function refundDetail(no) {
-			 
-			 $.ajax({
-					url : "/admin/lecture/refund",
-					type : "get",
-					data : { no : no },
-					success : function(data) {
-						console.log(data);
-						
-						$("#memberId").val(data.member.name);
-						$("#clsId").val(data.cls.clsName);
-					},
-					error : function(xhr) {
-						console.log(xhr);
-					}
-				});
-		}
-		
+		/* 환불 등록 */
 		$("#registRef").click(function() {
 			
+			const no = document.getElementById("lecNo").value;
 			const refDate = document.getElementById("refDate").value;
 			const refPay = document.getElementById("refPay").value;
 			const refContent = document.getElementById("refContent").value;
+			
+			/* let no = $("#lecNo").val();
+			let refDate = $("#refDate").val();
+			let refPay = $("#refPay").val();
+			let refContent = $("#refContent").val(); */
+			console.log(no);
 			console.log(refDate);
 			console.log(refPay);
 			console.log(refContent);
 			
 			const refund = {
+					lecNo : no,
 					refDate : refDate,
 					refPay : refPay,
 					refContent : refContent

@@ -69,7 +69,7 @@ public class LectureControllerTests {
 				.andDo(MockMvcResultHandlers.print());	
 	}
 	
-	
+	// success
 	@Test
 	@Disabled
 	@DisplayName("수강 등록용 컨트롤러 테스트")
@@ -77,10 +77,9 @@ public class LectureControllerTests {
 		
 		// given
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("memberId", "user02");
 		params.add("clsId", "22");
-		params.add("", "");
-		params.add("", "");
-		params.add("", "");
+		params.add("lecPay", "100000");
 		
 		// when & then
 		mockMvc.perform(MockMvcRequestBuilders.post("/admin/lecture/insertForm").params(params))
@@ -140,6 +139,24 @@ public class LectureControllerTests {
 		
 		// when & then
 		mockMvc.perform(MockMvcRequestBuilders.post("/admin/lecture/delete/?no=" + no))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
+				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/lecture/list"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+	
+	@Test
+	@DisplayName("환불 등록용 컨트롤러 테스트")
+	public void testInsertRefund() throws Exception {
+		
+		// given
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("lecNo", "50");
+		params.add("refPay", "100000");
+		params.add("refDate", "2022-05-16");
+		
+		// when & then
+		mockMvc.perform(MockMvcRequestBuilders.post("/admin/lecture/registRefund").params(params))
 				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 				.andExpect(MockMvcResultMatchers.flash().attributeCount(1))
 				.andExpect(MockMvcResultMatchers.redirectedUrl("/admin/lecture/list"))

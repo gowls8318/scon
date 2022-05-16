@@ -51,13 +51,9 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 	
 	/* 게시물 총 갯수(페이징) */
 	@Override
-	public int total(Criteria cri) throws Exception {
+	public int total(Criteria cri) {
 		
 		int result = consultantHopeMapper.total(cri);
-		
-		if(result <= 0) {
-			throw new Exception("게시물 조회에 실패하였습니다.");
-		}
 		
 		return result;
 	}

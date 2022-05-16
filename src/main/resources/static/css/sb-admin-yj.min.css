@@ -356,3 +356,22 @@
   padding: 2px 16px;
   color: #8B169E;
 }
+
+/* alert */
+.swal-button{
+  background-color: #8B169E;
+}
+.swal-button:focus,
+.swal2-confirm:focus,
+.swal2-cancel:focus{
+  box-shadow: none !important;
+}
+.swal-button:hover,
+.swal2-confirm:hover{
+  border: none;
+  background-color: #651C70 !important;
+}
+.swal-footer{
+  display: flex;
+  justify-content: center;
+}

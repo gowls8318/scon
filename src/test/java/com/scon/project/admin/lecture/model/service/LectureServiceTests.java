@@ -14,11 +14,16 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.dto.RefundDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.config.SconApplication;
 import com.scon.project.member.model.dto.MemberDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
+@Slf4j
 public class LectureServiceTests {
 
 	@Autowired
@@ -34,13 +39,31 @@ public class LectureServiceTests {
 	}
 	
 	// success
+//	@Test
+//	@Disabled
+//	@DisplayName("수강 내역 조회용 서비스 메소드 테스트")
+//	public void testSelectLecture() throws Exception {
+//		
+//		// when
+//		List<LectureDTO> lectureList = lectureService.selectAllLectureList();
+//		
+//		// then
+//		assertNotNull(lectureList);
+//	}
+	
 	@Test
-	@Disabled
-	@DisplayName("수강 내역 조회용 서비스 메소드 테스트")
+	@DisplayName("수강 내역 조회용(페이징) 서비스 메소드 테스트")
 	public void testSelectLecture() throws Exception {
 		
+		Criteria cri = new Criteria();
+		
+		//cri.setPageNo(1);
+        cri.setPageNo(2);
+		
 		// when
-		List<LectureDTO> lectureList = lectureService.selectAllLectureList();
+		List<LectureDTO> lectureList = lectureService.selectAllLectureList(cri);
+		
+		lectureList.forEach(board -> log.info("" + board));
 		
 		// then
 		assertNotNull(lectureList);
@@ -141,6 +164,24 @@ public class LectureServiceTests {
 		
 		// when
 		int result = lectureService.deleteLecture(no);
+		
+		// then
+		assertNotNull(result);
+	}
+	
+	@Test
+	@DisplayName("환불 등록용 서비스 메소드 테스트")
+	public void testInsertRefund() throws Exception {
+		
+		// given
+		RefundDTO ref = new RefundDTO();
+		ref.setLecNo(9);
+		ref.setRefDate("2022-05-16");
+		ref.setRefPay(100000);
+		ref.setRefContent("이벤트");
+		
+		// when
+		int result = lectureService.insertRefund(ref);
 		
 		// then
 		assertNotNull(result);

@@ -42,15 +42,51 @@
 	<!-- 상담 신청 내역 조회용 -->
 	<select id="selectAllConsultantHopeList" resultMap="consultantResultMap">
 		SELECT
-			   A.CON_NO
-			 , B.MEMBER_NAME
-			 , A.CON_WRITE_DATE
-			 , A.CON_HTITLE
-			 , A.CON_HANDLE
-		  FROM TB_CONSULTANT A
-		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
-		 WHERE A.CON_HDELETE = 'N'
-		 ORDER BY A.CON_NO DESC
+		       D.RNUM
+		     , D.CON_NO
+		     , D.MEMBER_NAME
+		     , D.CON_WRITE_DATE
+		     , D.CON_HTITLE
+		     , D.CON_HANDLE
+		  FROM (SELECT
+		               ROWNUM AS RNUM
+		             , C.CON_NO
+		             , C.MEMBER_NAME
+		             , C.CON_WRITE_DATE
+		             , C.CON_HTITLE
+		             , C.CON_HANDLE
+		          FROM (SELECT 
+		                       A.CON_NO
+		                     , B.MEMBER_NAME
+		                     , A.CON_WRITE_DATE
+		                     , A.CON_HTITLE
+		                     , A.CON_HANDLE
+		                  FROM TB_CONSULTANT A
+		                  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		                 WHERE A.CON_HDELETE = 'N'
+						<if test="keyword != null">
+				  		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+						</if>
+		                 ORDER BY A.CON_NO DESC
+		               ) C
+			 <![CDATA[
+				 WHERE ROWNUM <= #{ pageNo } * #{ limit }
+			 ]]>
+		       ) D
+	<![CDATA[
+		WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
+	]]>
+	</select>
+	
+	<!-- 게시물 총 갯수 - 상담 신청 -->
+	<select id="totalHope" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM TB_CONSULTANT
+		 WHERE CON_HDELETE = 'N'
+		 <if test="keyword != null">
+		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+		 </if>
 	</select>
 	
 	<!-- 상담 신청 상세 조회용 -->
@@ -73,18 +109,58 @@
 	<!-- 상담 일지 내역 조회용 -->
 	<select id="selectAllConsultantList" resultMap="consultantResultMap">
 		SELECT
-			   A.CON_NO
-			 , B.MEMBER_NAME
-			 , A.CON_HTITLE
-			 , A.CON_DATE
-			 , A.CON_IMP
-			 , A.CON_CONTENT
-		  FROM TB_CONSULTANT A
-		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
-		 WHERE CON_DELETE = 'N'
+		       D.RNUM
+		     , D.CON_NO
+		     , D.MEMBER_NAME
+		     , D.CON_HTITLE
+		     , D.CON_DATE
+		     , D.CON_IMP
+		     , D.CON_CONTENT
+		  FROM (SELECT
+		               ROWNUM AS RNUM
+		             , C.CON_NO
+		             , C.MEMBER_NAME
+		             , C.CON_HTITLE
+		             , C.CON_DATE
+		             , C.CON_IMP
+		             , C.CON_CONTENT
+		          FROM (SELECT 
+		                       A.CON_NO
+		                     , B.MEMBER_NAME
+		                     , A.CON_HTITLE
+		                     , A.CON_DATE
+		                     , A.CON_IMP
+		                     , A.CON_CONTENT
+		                  FROM TB_CONSULTANT A
+		                  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		                 WHERE A.CON_HDELETE = 'N'
+		                   AND A.CON_HANDLE = '완료'
+		   			       AND A.CON_DELETE = 'N'
+						<if test="keyword != null">
+				  		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+						</if>
+		                 ORDER BY A.CON_NO DESC
+		               ) C
+			 <![CDATA[
+				 WHERE ROWNUM <= #{ pageNo } * #{ limit }
+			 ]]>
+		       ) D
+	<![CDATA[
+		WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
+	]]>
+	</select>
+	
+	<!-- 게시물 총 갯수 - 상담 일지 -->
+	<select id="total" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM TB_CONSULTANT
+		 WHERE CON_HDELETE = 'N'
+		   AND CON_DELETE = 'N'
 		   AND CON_HANDLE = '완료'
-		   AND CON_HDELETE = 'N'
-		 ORDER BY A.CON_NO DESC
+		 <if test="keyword != null">
+		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+		 </if>
 	</select>
 	
 	<!-- 상담 일지 등록용 -->
