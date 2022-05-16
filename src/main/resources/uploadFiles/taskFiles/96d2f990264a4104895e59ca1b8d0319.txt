@@ -1,0 +1,30 @@
+		$("#apply-btn").on('click', function() {
+			let grade = $("#stu-grade").val();
+        	let memberId = $("#memberId").val();
+        	let gradeDate = $("#selected-date").val();
+        	/* 여기는 나중에 바꿔야 됨 (세션에서 가져오는걸로)*/
+   	    	let clsId = 1;
+        	
+        	let data = {
+				'grade' : grade,
+				'memberId' : memberId,
+				'gradeDate' : gradeDate,
+				'clsId' : clsId
+				
+			}
+        	$.ajax({
+				type: 'POST', 						
+				url: '/admin/insertGrade', 							
+				data: data, 						
+			
+				success: function(data) { 					
+					alert("등록이 완료 되었습니다.")
+					location.reload()
+				},
+				error: function(xhr) { 
+					console.log("등록 실패")
+					alert("등록 실패!")
+				}
+			
+			})
+		});

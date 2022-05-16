@@ -26,7 +26,7 @@
 		<result property="fileType" column="FILE_TYPE"/>
 </resultMap>
 
-<resultMap id="taskFileResultMap" type="com.scon.project.admin.taskBoard.model.dto.TaskFile">
+<resultMap id="taskFileResultMap" type="com.scon.project.admin.taskBoard.model.dto.TaskFileDTO">
 	<result property="taskId" column="TASK_ID" />
 	<result property="fileId" column="FILE_ID"/>
 </resultMap>
@@ -58,10 +58,8 @@
 			  , M.MEMBER_NAME
 			FROM TB_TASK T
 			JOIN TB_MEMBER M ON(T.MEMBER_ID = M.MEMBER_ID)
-			WHERE T.TASK_DELETE = 'N'
-			ORDER BY T.TASK_ID DESC
-	<!--	WHERE T.CLS_ID = #{ clsId }
-			AND T.TASK_DELETE = 'N' -->
+			WHERE T.CLS_ID = #{ clsId }
+			AND T.TASK_DELETE = 'N' 
 		</select>
 
 	 <!--  파일 업로드 전 -->
@@ -100,11 +98,11 @@
 			(
 				SEQ_TASK_NO.NEXTVAL
 			  , #{ memberId }
-			  , #{ clsId }
+			  , 1               <!-- , #{ clsId } -->
 			  , #{ taskTitle }
 			  , #{ taskContent }
 			  , SYSDATE
-			)
+			) 
 	</insert> 
 	
 	
@@ -145,7 +143,15 @@
 	
 	<!-- 과제 게시판 게시글 상세 조회 -->
 	<select id="findDetail" resultMap="taskBoardResultMap" resultType="list">
-		SELECT
+  	SELECT *
+  	 FROM TB_TASK T
+   	JOIN TB_MEMBER M ON (T.MEMBER_ID = M.MEMBER_ID)
+    JOIN TB_TASK_FILE TF ON(T.TASK_ID = TF.TASK_ID)
+    JOIN TB_FILE F ON(TF.FILE_ID = F.FILE_ID)
+  	WHERE T.TASK_DELETE = 'N'
+  	AND T.TASK_ID = #{ taskId }
+	</select> 
+	<!-- 	SELECT
 	    	T.TASK_ID,
 	    	T.MEMBER_ID,
 	    	T.CLS_ID,
@@ -153,12 +159,12 @@
 	    	T.TASK_CONTENT,
 	    	T.TASK_DATE,
 	    	T.TASK_VIEW,
+	    	T.TASK_DELETE,
 	    	M.MEMBER_NAME
   	 FROM TB_TASK T
    	JOIN TB_MEMBER M ON (T.MEMBER_ID = M.MEMBER_ID)
   	WHERE T.TASK_DELETE = 'N'
-  	AND T.TASK_ID = #{ taskId }
-	</select> 
+  	AND T.TASK_ID = #{ taskId } -->
 	
 	<!--  과제 게시판 게시글 상세 조회 (파일) -->
 	<select id="findFiles" resultMap="fileResultMap" resultType="list">
@@ -196,5 +202,12 @@
   	AND T.TASK_ID = #{ taskId }
 	</select> -->
 
+	<!-- 과제 게시판 게시글 삭제 -->
+	<update id="deleteBoard">
+		UPDATE 
+			TB_TASK 
+		SET TASK_DELETE = 'Y' 
+		WHERE TASK_ID = #{ taskId }
+	</update>
 
 </mapper>

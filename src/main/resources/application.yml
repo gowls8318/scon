@@ -18,3 +18,8 @@ mybatis:
   mapper-locations: mappers/**/*.xml
   configuration:
     jdbc-type-for-null: 'NULL'
+    
+# file upload path
+custom:
+  path:
+    upload-files: C:/Users/jayeo/git/scon project/src/main/resources/uploadFiles/

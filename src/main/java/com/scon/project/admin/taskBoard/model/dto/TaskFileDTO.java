@@ -3,7 +3,7 @@ package com.scon.project.admin.taskBoard.model.dto;
 import lombok.Data;
 
 @Data
-public class TaskFile {
+public class TaskFileDTO {
 
 	/*
 	 * TASK_ID	VARCHAR2(50 BYTE)	No		1	과제번호

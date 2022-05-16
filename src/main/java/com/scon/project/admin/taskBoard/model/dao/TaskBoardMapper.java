@@ -14,8 +14,8 @@ import com.scon.project.member.model.dto.ProfileDTO;
 public interface TaskBoardMapper {
 
 	//과제 게시판 전체 조회
-//	List<TaskBoardDTO> findAllTask(int clsId);
-	List<TaskBoardDTO> findAllTask();
+	List<TaskBoardDTO> findAllTask(int clsId);
+//	List<TaskBoardDTO> findAllTask();
 
 	//과제 게시판 게시글 입력 (글 제목, 내용 insert)
 	int insertTask(TaskBoardDTO task) throws Exception;
@@ -31,6 +31,9 @@ public interface TaskBoardMapper {
 
 	//과제 게시판 게시글 상세 조회 (파일)
 	List<FileDTO> findFiles(String taskId);
+
+	//게시판 게시글 삭제
+	int deleteBoard(String taskId);
 
 	
 	//TaskBoardDTO findMemberName(int clsId);
