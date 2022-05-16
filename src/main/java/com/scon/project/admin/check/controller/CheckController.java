@@ -12,6 +12,9 @@ import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.check.model.dto.CheckDTO;
 import com.scon.project.admin.check.model.service.CheckService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin/check")
 public class CheckController {
@@ -23,7 +26,7 @@ public class CheckController {
 		this.checkService = checkService;
 	}
 	
-	/* 반별 출결 조회 */
+	/* 날짜별 반 출석 조회 */
 	@GetMapping("/chkViewClass")
 	public ModelAndView selectAllClassDayList(ModelAndView mv) throws Exception {
 		
@@ -34,10 +37,12 @@ public class CheckController {
 		mv.addObject("classList", classList);
 		mv.setViewName("admin/check/chkViewClass");
 		
+		log.info("checkClassList : {}" , mv);
+		
 		return mv;
 	}
 	
-	/* 학생별 출결 조회 */
+	/* 학생별 출석 조회 */
 	@GetMapping("/chkViewStudent")
 	public ModelAndView selectAllStudentList(ModelAndView mv) throws Exception {
 		
