@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scon.project.admin.notice.model.dao.NoticeMapper;
 import com.scon.project.admin.notice.model.dto.NoticeDTO;
+import com.scon.project.common.paging.Criteria;
 
 @Service("noticeService")
 @Transactional
@@ -20,11 +21,17 @@ public class NoticeServiceImpl implements NoticeService {
 		this.noticeMapper = noticeMapper;
 	}
 
-//	목록조회
+//	목록조회 + 페이징
 	@Override
-	public List<NoticeDTO> findAllNoticeList() {
-		return noticeMapper.findAllNoticeList();
+	public List<NoticeDTO> findAllNoticeList(Criteria cri) throws Exception {
+		
+		return noticeMapper.findAllNoticeList(cri);
 	}	
+//	글 전체 갯수
+	@Override
+	public int total(Criteria cri) {
+		return noticeMapper.total(cri);
+	}
 	
 		
 // 게시글 등록
@@ -66,26 +73,6 @@ public class NoticeServiceImpl implements NoticeService {
 
 
 
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Override
-//	public boolean registNotice(NoticeDTO noti) throws Exception {
-//		int result = noticeMapper.registNotice(noti);
-//		
-//		if(result <= 0) {
-//			throw new Exception("게시글 등록에 실패하였습니다.");
-//		}
-//		
-//		return result > 0 ? true : false;
-//	}
 
 
 }

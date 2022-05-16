@@ -15,6 +15,17 @@
 	</resultMap>
 	
 	<!-- 공지사항 목록 + 페이징 -->
+<!-- 	<select id="findAllNoticeList" resultMap="noticeResultMap">
+		SELECT
+		       NOTI_NO
+		     , NOTI_TITLE
+		     , NOTI_DATE
+		     , NOTI_DELETE
+		  FROM TB_NOTICE
+		 WHERE NOTI_DELETE = 'N'
+		 ORDER BY NOTI_NO DESC
+	</select>	 -->
+	
 	<select id="findAllNoticeList" resultMap="noticeResultMap">
 		SELECT
 		       NOTI_NO
@@ -51,6 +62,10 @@
 		   AND NOTI_TITLE LIKE '%' || #{ keyword } || '%'
 		 </if>
 	</select>
+
+	
+	
+	
 
 
 	<!-- 공지등록 폼 -->
@@ -115,7 +130,7 @@
 		UPDATE
 		  	   TB_NOTICE
 		   SET NOTI_DELETE = 'Y'
-		   	   NOTI_UPDATE = SYSDATE
+		   	 , NOTI_UPDATE = SYSDATE
 		 WHERE NOTI_NO = #{ no }
 	</update> 
 	
