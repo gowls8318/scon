@@ -21,6 +21,7 @@
     <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -64,11 +65,10 @@
                         </div>
                         <br>
                         <form class="form-inline" action="/admin/consultant/list" method="get">
-                            <div class="col-lg-9"></div>
-                            <div class="search-area col-lg-3">
+                            <div class="search-area col-lg-12">
                                 <div class="form-group mx-sm-3">
-                                    <label for="search" class="sr-only"></label>
-                                    <input type="text" class="form-control" id="accSearch" onkeyup='searchTable()' placeholder="원생 이름을 입력하세요">
+                                    <input type="text" name="keyword" class="form-control" id="keyword" th:value="${ page.cri.keyword }"
+                                    	onkeyup='searchTable()' placeholder="원생 이름을 입력하세요">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
                             </div>
@@ -100,24 +100,50 @@
 
                             <!-- 페이징 -->
                             <nav aria-label="Page navigation">
-                                <ul class="pagination mt-1 mb-0">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+								<div class="pageInfo_area">
+									<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
+									
+										<!-- 첫 페이지 이동 -->
+										<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
+										<li class="page-item">
+											<a th:if="${ page.startPage > 1 }" th:href="${ 1 }" th:text="'<<'" class="page-link"></a>
+										</li>
+
+										<!-- 이전 페이지 버튼 -->
+										<l1 th:if="${ page.prev }" class="page-item">
+											<a th:href="${ page.startPage - 1 }" th:text="'<'" class="page-link"></a>
+										</l1>
+										
+										<!-- 각 번호 페이지 버튼 -->
+										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
+												<!-- <a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a> -->
+												<a th:href="${ num }" th:text="${ num }" class="page-link"></a>
+												<!-- <a th:if="${ page.cri.pageNo != num }" th:href="@{/student/consultant/list(pageNo=${num})}" th:text="${ num }" class="page-link"></a> -->
+											</li>
+										</th:block>
+										
+										<!-- 다음 페이지 버튼 -->
+										<l1 th:if="${ page.next }" class="page-item">
+											<a th:href="${ page.endPage + 1 }" th:text="'>'" class="page-link"></a>
+										</l1>
+										
+										<!-- 마지막 페이지 이동 -->
+										<li class="page-item">
+									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link d-none" disabled></a>
+									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="${ page.maxPage }" th:text="'>>'" class="page-link"></a>
+									    </li>
+							    
+									</ul>
+								</div>
+							</nav>
+							
+							<form id="searchForm" method="get">	
+								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
+								<!-- <input type="hidden" name="limit" th:value="${ page.cri.limit }"> -->
+								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
+								<!-- <input type="hidden" name="type" th:value="${ page.cri.type }"> -->	
+							</form>
 
                         </div>
                     </div>
@@ -143,7 +169,7 @@
 
     <script type="text/javascript">
     	/* 입력 검색 - 원하는 td만 검색 */
-        function searchTable() {
+        /* function searchTable() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("accSearch");
             filter = input.value.toLowerCase();
@@ -160,10 +186,46 @@
                     }
                 }
             }
-        }
+        } */
         
         var title = document.getElementById("conTitle").innerHTML;
     	console.log(title.substring(0, 19));
+    	
+		let searchForm = $("#searchForm");   	
+        
+        $(".pageInfo a").on("click", function(e){
+        	e.preventDefault();
+            searchForm.find("input[name='pageNo']").val($(this).attr("href"));
+            searchForm.attr("action", "/admin/consultant/list");
+	        searchForm.submit();
+        });
+    	
+    	
+    	$(".search-area button").on("click", function(e){
+    		e.preventDefault();
+    		
+    		//let type = $(".search-area select").val();
+	    	let keyword = $(".search-area input[name='keyword']").val();
+	    	
+	    	/* if(!type){
+				alert("검색 유형을 선택하세요.");
+				return false;
+			} */
+	    	
+    		if(!keyword){
+    			//alert("원생 이름을 입력하세요.");
+    			swal({
+    				text: "원생 이름을 입력하세요",
+    				icon: "warning",
+    				button: "확인"
+    			});
+    			return false;
+    		}		
+    		
+    		searchForm.find("input[name='keyword']").val(keyword);
+    		searchForm.find("input[name='pageNo']").val(1);
+    		searchForm.submit();
+    	});
     </script>
 
     <!-- Bootstrap core JavaScript-->

@@ -12,9 +12,11 @@ public interface ConsultantHopeMapper {
 
 	/* 상담 신청 내역 조회용 */
 //	List<ConsultantDTO> selectAllConsultantList();
+	
+	/* 상담 신청 내역 조회용(페이징) */
 	List<ConsultantDTO> selectAllConsultantList(Criteria cri);
 	
-	/* 게시물 총 갯수 */
+	/* 게시물 총 갯수(페이징) */
 	int total(Criteria cri);
 	
 	/* 상담 신청 등록용 */

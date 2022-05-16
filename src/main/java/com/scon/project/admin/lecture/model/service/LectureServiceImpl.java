@@ -10,6 +10,7 @@ import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dao.LectureMapper;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.admin.lecture.model.dto.RefundDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.MemberDTO;
 
 @Service("lectureService")
@@ -24,16 +25,38 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	/* 수강 내역 조회용 */
+//	@Override
+//	public List<LectureDTO> selectAllLectureList() throws Exception {
+//		
+//		List<LectureDTO> lectureList = lectureMapper.selectAllLectureList();
+//		
+//		if(lectureList == null) {
+//			throw new Exception("강의 내역 조회에 실패하였습니다.");
+//		}
+//		
+//		return lectureList;
+//	}
+	
+	/* 수강 내역 조회용(페이징) */
 	@Override
-	public List<LectureDTO> selectAllLectureList() throws Exception {
-		
-		List<LectureDTO> lectureList = lectureMapper.selectAllLectureList();
+	public List<LectureDTO> selectAllLectureList(Criteria cri) throws Exception {
+
+		List<LectureDTO> lectureList = lectureMapper.selectAllLectureList(cri);
 		
 		if(lectureList == null) {
 			throw new Exception("강의 내역 조회에 실패하였습니다.");
 		}
 		
 		return lectureList;
+	}
+
+	/* 게시물 총 갯수(페이징) */
+	@Override
+	public int total(Criteria cri) {
+		
+		int result = lectureMapper.total(cri);
+		
+		return result;
 	}
 	
 	/* 강의 조회용 */

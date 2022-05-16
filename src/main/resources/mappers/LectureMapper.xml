@@ -61,24 +61,76 @@
 	<!-- 수강 내역 조회용 -->
 	<select id="selectAllLectureList" resultMap="lectureResultMap">
 		SELECT
-			   A.LEC_NO
-			 , A.LEC_PAY
-			 , A.LEC_STATUS
-			 , A.ACC_STATUS
-			 , A.ACC_DATE
-			 , A.ACC_OPTION
-			 , B.MEMBER_NAME
-			 , C.CLS_ID
-             , C.MEMBER_ID
-			 , C.CLS_NAME
-			 , C.CLS_PAY
-			 , C.CLS_START
-			 , C.CLS_END
-		  FROM TB_LECTURE A
-		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
-		  JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
-		 WHERE A.LEC_DELETE = 'N'
-		 ORDER BY A.LEC_NO DESC
+		       RNUM
+		     , E.LEC_NO
+             , E.LEC_PAY
+             , E.LEC_STATUS
+             , E.ACC_STATUS
+             , E.ACC_DATE
+             , E.ACC_OPTION
+             , E.MEMBER_ID
+             , E.MEMBER_NAME
+             , E.CLS_ID
+			 , E.CLS_NAME
+			 , E.CLS_PAY
+			 , E.CLS_START
+			 , E.CLS_END
+		  FROM (SELECT
+		               ROWNUM AS RNUM
+		             , D.LEC_NO
+		             , D.LEC_PAY
+		             , D.LEC_STATUS
+		             , D.ACC_STATUS
+		             , D.ACC_DATE
+		             , D.ACC_OPTION
+		             , D.MEMBER_ID
+		             , D.MEMBER_NAME
+                     , D.CLS_ID
+					 , D.CLS_NAME
+					 , D.CLS_PAY
+					 , D.CLS_START
+					 , D.CLS_END
+		          FROM (SELECT 
+		                       A.LEC_NO
+		                     , A.LEC_PAY
+		                     , A.LEC_STATUS
+		                     , A.ACC_STATUS
+		                     , A.ACC_DATE
+		                     , A.ACC_OPTION
+				             , A.MEMBER_ID
+		                     , B.MEMBER_NAME
+		                     , C.CLS_ID
+							 , C.CLS_NAME
+							 , C.CLS_PAY
+							 , C.CLS_START
+							 , C.CLS_END
+		                  FROM TB_LECTURE A
+		                  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		                  JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
+		                 WHERE A.LEC_DELETE = 'N'
+						<if test="keyword != null">
+				  		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+						</if>
+		                 ORDER BY A.LEC_NO DESC
+		               ) D
+			 <![CDATA[
+				 WHERE ROWNUM <= #{ pageNo } * #{ limit }
+			 ]]>
+		      ) E
+	<![CDATA[
+		WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
+	]]>
+	</select>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="total" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM TB_LECTURE
+		 WHERE LEC_DELETE = 'N'
+		 <if test="keyword != null">
+		   AND LEC_STATUS LIKE '%' || #{ keyword } || '%'
+		 </if>
 	</select>
 		
 	<!-- 강의 조회용 -->
@@ -187,11 +239,6 @@
 	
 	<!-- 환불 등록용 -->
 	<insert id="insertRefund">
-		<selectKey keyProperty="lecNo" order="BEFORE" resultType="_int">
-			SELECT
-				   SEQ_LEC_NO.CURRVAL
-			  FROM TB_LECTURE
-		</selectKey>
 		INSERT
 		  INTO TB_REFUND
 		(

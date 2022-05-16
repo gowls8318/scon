@@ -14,11 +14,16 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.admin.lecture.model.dto.RefundDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.config.SconApplication;
 import com.scon.project.member.model.dto.MemberDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
+@Slf4j
 public class LectureMapperTests {
 
 	@Autowired
@@ -34,16 +39,36 @@ public class LectureMapperTests {
 	}
 	
 	// success
+//	@Test
+//	@Disabled
+//	@DisplayName("수강 내역 조회용 매퍼 테스트")
+//	public void testSelectLecture() {
+//		
+//		// when
+//		List<LectureDTO> lectureList = lectureMapper.selectAllLectureList();
+//		
+//		// then
+//		assertNotNull(lectureList);
+//	}
+	
+	// success
 	@Test
 	@Disabled
-	@DisplayName("수강 내역 조회용 매퍼 테스트")
-	public void testSelectLecture() {
+	@DisplayName("수강 내역 조회용(페이징) 매퍼 테스트")
+	public void testSelectConsultantHope() {
 		
-		// when
-		List<LectureDTO> lectureList = lectureMapper.selectAllLectureList();
-		
-		// then
-		assertNotNull(lectureList);
+		Criteria cri = new Criteria();
+        
+        cri.setPageNo(1);
+        //cri.setPageNo(2);
+        
+        // when
+        List<LectureDTO> lectureList = lectureMapper.selectAllLectureList(cri);
+        
+        lectureList.forEach(board -> log.info("" + board));		
+        
+        // then
+        assertNotNull(lectureList);
 	}
 	
 	// success
@@ -146,18 +171,22 @@ public class LectureMapperTests {
 		assertNotNull(result);
 	}
 	
-//	@Test
-//	@DisplayName("환불 등록용 매퍼 테스트")
-//	public void testInsertRefund() {
-//		
-//		// given
-//		int no = 48;
-//		
-//		// when
-//		int result = lectureMapper.insertRefund(no);
-//		
-//		// then
-//		assertNotNull(result);
-//	}
+	@Test
+	@DisplayName("환불 등록용 매퍼 테스트")
+	public void testInsertRefund() {
+		
+		// given
+		RefundDTO ref = new RefundDTO();
+		ref.setLecNo(4);
+		ref.setRefDate("2022-05-16");
+		ref.setRefPay(100000);
+		ref.setRefContent("불만족");
+		
+		// when
+		int result = lectureMapper.insertRefund(ref);
+		
+		// then
+		assertNotNull(result);
+	}
 	
 }

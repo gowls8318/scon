@@ -2,6 +2,7 @@ package com.scon.project.admin.consultant.model.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.List;
 
@@ -13,10 +14,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.config.SconApplication;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @ContextConfiguration(classes = {SconApplication.class})
+@Slf4j
 public class ConsultantServiceTests {
 
 	@Autowired
@@ -32,16 +37,35 @@ public class ConsultantServiceTests {
 	}
 	
 	// success
+//	@Test
+//	@Disabled
+//	@DisplayName("상담 신청 내역 조회용 서비스 메소드 테스트")
+//	public void testSelectConsultantHope() throws Exception {
+//		
+//		// when
+//		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList();
+//		
+//		// then
+//		assertNotNull(consultantHopeList);
+//	}
+	
+	// success
 	@Test
-	@Disabled
-	@DisplayName("상담 신청 내역 조회용 서비스 메소드 테스트")
+	@DisplayName("상담 신청 내역 조회용(페이징) 서비스 메소드 테스트")
 	public void testSelectConsultantHope() throws Exception {
 		
-		// when
-		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList();
-		
-		// then
-		assertNotNull(consultantHopeList);
+		Criteria cri = new Criteria();
+        
+      //cri.setPageNo(1);
+        cri.setPageNo(2);
+        
+        // when
+        List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList(cri);
+        
+        consultantHopeList.forEach(board -> log.info("" + board));
+        
+        // then
+        assertNotNull(consultantHopeList);
 	}
 	
 	// success
@@ -61,13 +85,30 @@ public class ConsultantServiceTests {
 	}
 	
 	// success
+//	@Test
+//	@Disabled
+//	@DisplayName("상담 일지 내역 조회용 서비스 메소드 테스트")
+//	public void testSelectConsultantList() throws Exception {
+//		
+//		// when
+//		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList();
+//		
+//		// then
+//		assertNotNull(consultantList);
+//	}
+	
 	@Test
-	@Disabled
-	@DisplayName("상담 일지 내역 조회용 서비스 메소드 테스트")
+	@DisplayName("상담 일지 내역 조회용(페이징) 서비스 메소드 테스트")
 	public void testSelectConsultantList() throws Exception {
 		
+		Criteria cri = new Criteria();
+        
+	    cri.setPageNo(1);
+	        
 		// when
-		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList();
+		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList(cri);
+		
+		consultantList.forEach(board -> log.info("" + board));
 		
 		// then
 		assertNotNull(consultantList);

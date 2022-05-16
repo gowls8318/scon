@@ -5,12 +5,19 @@ import java.util.List;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.admin.lecture.model.dto.RefundDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.MemberDTO;
 
 public interface LectureService {
 
 	/* 수강 내역 조회용 */
-	List<LectureDTO> selectAllLectureList() throws Exception;
+//	List<LectureDTO> selectAllLectureList() throws Exception;
+	
+	/* 수강 내역 조회용(페이징) */
+	List<LectureDTO> selectAllLectureList(Criteria cri) throws Exception;
+	
+	/* 게시물 총 갯수(페이징) */
+	int total(Criteria cri);
 	
 	/* 강의 조회용 */
 	List<ClassDTO> selectAllClassList() throws Exception;
