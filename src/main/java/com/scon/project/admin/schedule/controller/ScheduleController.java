@@ -44,8 +44,7 @@ public class ScheduleController {
 	public String schedule() { 
 		return "/admin/schedule/schedule"; 
 	}
-	
-	
+		
 	@GetMapping("/allschedule")
     @ResponseBody
     public Map<String, Object> monthPlan() {

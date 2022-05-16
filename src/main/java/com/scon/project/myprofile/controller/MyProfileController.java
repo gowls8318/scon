@@ -18,5 +18,5 @@ public class MyProfileController {
 			return "student/myprofile/stdMyprofile";
 		}
 			
-	
+		
 }
