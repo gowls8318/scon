@@ -5,7 +5,6 @@
 	<resultMap id="TeacherResultMap" type="com.scon.project.admin.teacher.model.dto.TeacherDTO">
 		<id property="id" column="REF_MEMBER_ID2"/>
 		<result property="jobCode" column="JOB_CODE"/>
-		<result property="jobName" column="JOB_NAME"/>
 		<result property="resume" column="RESUME"/>
 		
 		<association property="member" resultMap="memberResultMap"/> <!-- 회원 기본정보  -->
@@ -96,7 +95,6 @@
 		     , T.MEMBER_ID REF_MEMBER_ID2
 		     , T.JOB_CODE
 		     , T.RESUME
-		     , J.JOB_NAME
 			 , F.FILE_ID
 			 , F.FILE_ORGNAME
 			 , F.FILE_SAVENAME
@@ -108,7 +106,6 @@
 		  LEFT JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
 		  LEFT JOIN TB_AUTHORITY C ON (B.AUTHORITY_CODE = C.AUTHORITY_CODE) 
 		  LEFT JOIN TB_TEACHER T ON (A.MEMBER_ID = T.MEMBER_ID)
-		  LEFT JOIN TB_JOB J ON (T.JOB_CODE = J.JOB_CODE)
 		  LEFT JOIN TB_PROFILE P ON (A.MEMBER_ID = P.MEMBER_ID) 
 		  LEFT JOIN TB_FILE F ON (P.FILE_ID = F.FILE_ID) 
 		 WHERE A.MEMBER_ID = #{ id }
