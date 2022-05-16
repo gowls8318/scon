@@ -27,6 +27,10 @@ public class CheckServiceImpl implements CheckService {
 		
 		List<CheckDTO> checkClassList = checkMapper.selectAllClassList();
 		
+		if(checkClassList == null) {
+			throw new Exception("강의 조회에 실패하였습니다.");
+		}
+		
 		return checkClassList;
 	}
 	

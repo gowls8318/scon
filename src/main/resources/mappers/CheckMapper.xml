@@ -18,17 +18,18 @@
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="name" column="MEMBER_NAME"/>
-		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="password" column="MEMBER_PWD"/>
 		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
 		<result property="birthDay" column="BIRTHDAY"/>
-		<result property="address" column="GENDER"/>
-		<result property="gender" column="ADDRESS"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="gender" column="GENDER"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
-	</resultMap>
+		<result property="keyword" column="MEMBER_ST2"/>
+		</resultMap>
 	
 	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
 		<id property="clsId" column="CLS_ID"/>
@@ -46,6 +47,23 @@
 		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
+	<select id="classFind" parameterType="com.scon.project.admin.check.model.dto.CheckDTO" resultType="int">
+		SELECT 
+			*
+		FROM TB_CHECK
+  			<if test="datePicker != null and datePicker != ''">
+			<choose>
+				<when test="searchCls != null and searchCls != ''">
+					<choose>
+						<when test="searchCls == 'class'">
+							AND CLS_ID LIKE '%' || #{clsId} || '%'
+						</when>
+					</choose>
+				</when>
+			</choose>
+		</if>
+	</select>
+
 	<select id="selectAllClassList" resultMap="checkResultMap">
 		SELECT
 		  A.CHQ_NO
