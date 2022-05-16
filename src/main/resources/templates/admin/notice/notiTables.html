@@ -16,12 +16,14 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
     
     <script>
 	const successMessage = '[[${successMessage}]]';
@@ -125,7 +127,9 @@
                             <h6 class="m-0 font-weight-bold text-primary">공지사항 조회</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive"> 
+                            <form action="/admin/notiDelete" method="post" id="notiSubmitForm" enctype="multipart/form-data">
+                            <input type="hidden" value="${ notice.no }" name="no"/>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <!-- 테이블 제목 -->
                                     <thead>
@@ -151,7 +155,7 @@
                                             <!-- 체크박스 -->
                                             <th class="notiCheck">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <input class="form-check-input" type="checkbox" th:value="${ notice.no }" id="flexCheckDefault" name="flexCheckDefaultRow">
                                                 </div>
                                             </th>
                                             <!-- 내용 -->
@@ -167,9 +171,10 @@
                                         <tr>
                                     </tbody>
                                 </table>
+                                </form>
                             </div>
 
-	<!-- 페이징 -->
+							<!-- 페이징 -->
                             <nav aria-label="Page navigation">
 								<div class="pageInfo_area">
 									<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
@@ -200,14 +205,15 @@
 										
 										<!-- 마지막 페이지 이동 -->
 										<li class="page-item">
-									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link" disabled></a>
+									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link d-none" disabled></a>
 									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="@{/admin/notiTables(pageNo=${page.maxPage})}" th:text="'>>'" class="page-link"></a>
-									    </li> 
+									    </li>
 							    
 									</ul>
 								</div>
 							</nav>
-							
+					<!-- 페이징 끝	 -->
+					
 							<!-- 하단 버튼 박스 -->
                             <div class="row buttonbox">
                                 <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal" type="delete">삭제</button>
@@ -251,11 +257,56 @@
                 <div class="modal-body">삭제하시려면 확인버튼을 눌러주세요.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" href="/notiTables.html">확인</button>
+                    <button class="btn btn-primary" id="submitBtn" type="button" data-dismiss="modal" 
+                    		onclick="notiDeleteClick()">확인</button>
                 </div>
             </div>
         </div>
     </div>
+    
+	<script type='text/javascript'>
+	// 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
+/* 	function notiDeleteClick(){
+	  var no = []; 
+	  $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
+	  no.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	  console.log(no);
+	});
+		
+	  if(no == ""){
+			alert("삭제할 항목을 선택해주세요.");
+			return false;
+	  } else {
+			  $.ajax({
+			      type  : "POST",
+			      url    : "/admin/notiDelete",
+			      data: {
+			      no : no       // folder seq 값을 가지고 있음.
+			      },
+			      success: function(result){
+			    	  alert("해당글이 정상적으로 삭제되었습니다.");
+			    	  console.log(result);
+			    	  location.href="/admin/notiTables"
+			      },
+			      error: function(request, status, error) {
+			      	alert("삭제에 실패하였습니다.");
+			      }  
+			   });
+	  }
+	} 
+	
+	컨트롤러부터 다중 삭제 되는 걸로 새로 작성 해야함..ㅠㅠ
+	
+	 */
+	
+	// 확인 누르면 글 삭제
+/*      window.onload = function() {
+        document.getElementById('submitBtn').onclick = function() {
+            document.getElementById('notiSubmitForm').submit();
+            return false;
+        };
+    }; */
+	</script>
 
 
 
@@ -264,23 +315,7 @@
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
-    <script src="/js/demo/datatables-demo.js"></script>
-
-    <!--모달-->
-    <script>$('#myModal').modal(options)</script>
     
 
 </body>

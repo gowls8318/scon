@@ -5,14 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.scon.project.admin.notice.model.dto.NoticeDTO;
+import com.scon.project.common.paging.Criteria;
 
 @Mapper
 public interface NoticeMapper {
 	
 //	공지사항 목록 조회
-	List<NoticeDTO> findAllNoticeList();
-	
-	
+	List<NoticeDTO> findAllNoticeList(Criteria cri) throws Exception;
+//	글 전체 갯수
+	int total(Criteria cri);
 
 //	공지사항 게시글 등록
 	int registNotice(NoticeDTO notice) throws Exception;
@@ -31,6 +32,8 @@ public interface NoticeMapper {
 
 	
 
+	
+
 
 	
 	
@@ -41,11 +44,4 @@ public interface NoticeMapper {
 	
 	
 }
-	
 
-	
-//	페이징
-//	public List<NoticeDTO> findAllNoticeList(Criteria criteria);
-//	
-//	public int NoticeTotalCount(Criteria criteria);
-//}

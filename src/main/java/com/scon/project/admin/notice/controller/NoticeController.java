@@ -16,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.notice.model.dto.NoticeDTO;
 import com.scon.project.admin.notice.model.service.NoticeService;
+import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeController {
 
 	private NoticeService noticeService;
-	private MessageSource messageSource;
 
 	@Autowired
 	public NoticeController(NoticeService noticeService) {
@@ -34,9 +35,13 @@ public class NoticeController {
 	}
 //	등록된 공지사항 목록 조회
 	@GetMapping("notiTables")
-	public ModelAndView findNoticeList(ModelAndView mv) throws Exception {
+	public ModelAndView findNoticeList(ModelAndView mv, Criteria cri) throws Exception {
 
-		List<NoticeDTO> noticeList = noticeService.findAllNoticeList();
+		List<NoticeDTO> noticeList = noticeService.findAllNoticeList(cri);
+		
+		int total = noticeService.total(cri);
+		Pagination page = new Pagination(cri, total);
+		mv.addObject("page", page);
 
 		mv.addObject("noticeList", noticeList);
 		mv.setViewName("admin/notice/notiTables");
