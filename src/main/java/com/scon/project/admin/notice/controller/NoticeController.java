@@ -3,7 +3,6 @@ package com.scon.project.admin.notice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.scon.project.admin.notice.model.dto.NoticeCmtDTO;
 import com.scon.project.admin.notice.model.dto.NoticeDTO;
 import com.scon.project.admin.notice.model.service.NoticeService;
 import com.scon.project.common.paging.Criteria;
@@ -37,14 +37,14 @@ public class NoticeController {
 	@GetMapping("notiTables")
 	public ModelAndView findNoticeList(ModelAndView mv, Criteria cri) throws Exception {
 
-		List<NoticeDTO> noticeList = noticeService.findAllNoticeList(cri);
-		
+		List<NoticeDTO> noticeList = noticeService.findAllNoticeList(cri);		
+
+		mv.addObject("noticeList", noticeList);
+		mv.setViewName("admin/notice/notiTables");		
+
 		int total = noticeService.total(cri);
 		Pagination page = new Pagination(cri, total);
 		mv.addObject("page", page);
-
-		mv.addObject("noticeList", noticeList);
-		mv.setViewName("admin/notice/notiTables");
 
 		return mv;
 
@@ -71,10 +71,23 @@ public class NoticeController {
 	public String selectNotice(@RequestParam int no, Model model) throws Exception {
 		
 		model.addAttribute("noticeDetail", noticeService.selectNoticeDetail(no));
-
+		// 댓글 조회
+		List<NoticeCmtDTO> cmtList = noticeService.readCmt(no);
+		model.addAttribute("cmtList", cmtList);
+		log.info("cmtList : {}", cmtList);
 		return "admin/notice/notiDetail";
-
     }
+	
+//	댓글 등록
+	@PostMapping("cmtRegi")
+	public String registCmt(@ModelAttribute NoticeCmtDTO notiCmt, RedirectAttributes rttr) throws Exception {
+
+		noticeService.registCmt(notiCmt);
+		
+		return "redirect:notiTables";
+	}
+	
+	
 	
 //	게시글 수정(조회)
 	@GetMapping("notiModify") 

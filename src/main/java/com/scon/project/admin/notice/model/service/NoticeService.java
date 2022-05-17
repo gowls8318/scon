@@ -2,6 +2,7 @@ package com.scon.project.admin.notice.model.service;
 
 import java.util.List;
 
+import com.scon.project.admin.notice.model.dto.NoticeCmtDTO;
 import com.scon.project.admin.notice.model.dto.NoticeDTO;
 import com.scon.project.common.paging.Criteria;
 
@@ -19,11 +20,19 @@ public interface NoticeService {
 //	게시글 상세 조회
 	NoticeDTO selectNoticeDetail(int no) throws Exception;
 	
+//	댓글조회
+	List<NoticeCmtDTO> readCmt(int no) throws Exception;
+	
+//	댓글 등록
+	int registCmt(NoticeCmtDTO notiCmt) throws Exception;
+	
 //  게시글 수정 하고 등록	
 	int modifyNotice(NoticeDTO notice) throws Exception;
 	
 //	게시글 삭제
 	int deleteNotice(int no) throws Exception;
+
+	
 
 	
 

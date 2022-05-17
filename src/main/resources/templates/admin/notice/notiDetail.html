@@ -123,7 +123,7 @@
                     </div>
                     <hr class="border-bottom-primary">
 
-                    <!-- 공지사항 내용 테이블 -->
+<!-- 공지사항 내용 테이블 -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">공지사항 상세 조회</h6>
@@ -173,8 +173,49 @@
                                 <button id="modifyBtn" class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="button"
                                 		th:onclick="|location.href='/admin/notiModify?no=${noticeDetail.no}'|">수정</button>
                                 <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal" type="button">삭제</button>
-
                             </div>
+<!-- 게시글 본문끝 -->
+                            <!-- 
+                                댓글                                
+                            -->
+                            <div class="card mb-2 mt-5">
+                                <div class="card-header bg-light">
+                                    <i class="fa fa-comment fa"></i> 댓글
+                                </div>
+                                <form action="/admin/cmtRegi" method="post" id="cmtSubmitForm">
+                                   	 <div class="card-body">                                       
+                                          <input type="hidden" id="bNo" th:value="${ noticeDetail.no }"> 
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                	<textarea class="form-control" id="reply-content" rows="1"
+                                                				name="cmtContent"></textarea>                                                
+                                                <button id="reply-btn-save" type="button" class="btn btn-dark mt-3">등록</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                            <br/>
+                            <div class="card">
+<!--  등록된 댓글 -->
+                                <div class="card-header">댓글</div>
+                                <ul id="reply--box" class="list-group" th:each="comment : ${ cmtList }">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div id="cmtName" th:text="${comment.memberId}"></div>
+                                            <div class="text-monospace mr-1" th:text="${ comment.cmtContent }"></div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <button class="cmtReple">답글</button>&nbsp
+                                            <button class="cmtModify">수정</button>&nbsp
+                                            <button class="cmtDelete">삭제</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!--  등록된 댓글 끝-->
+                                
+                            </div>
+
                         </div>
                     </div>
 					<!-- 공지사항 내용 테이블 끝 -->
@@ -192,7 +233,14 @@
     </div>
     <!-- End of Page Wrapper -->
 
-
+    <script>
+    window.onload = function() {
+        document.getElementById('cmtSubmitBtn').onclick = function() {
+            document.getElementById('cmtSubmitForm').submit();
+            return false;
+        };
+    };
+	</script>
 
 
     <!-- Scroll to Top Button-->

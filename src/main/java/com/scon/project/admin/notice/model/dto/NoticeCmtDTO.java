@@ -9,10 +9,12 @@ import lombok.Data;
 @Data	
 public class NoticeCmtDTO {
 	
-	private int cmtNo;
-	private int brdNo;
-	private int cmtPNo;
+	private int cNo;
+	private int bNo;
+	private NoticeDTO notiNo;
+	private String cmtPNo;
 	private String memberId;
+	private MemberDTO member;
 	private String cmtContent;
 	private Date cmtDate;
 	private Date cmtUpdate;

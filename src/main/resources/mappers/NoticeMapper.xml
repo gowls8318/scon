@@ -14,6 +14,48 @@
 		<result property="notiDelete" column="NOTI_DELETE"/>
 	</resultMap>
 	
+	<resultMap id="noticeCmtResultMap" type="com.scon.project.admin.notice.model.dto.NoticeCmtDTO">
+		<id property="cNo" column="CMT_NO"/>
+		<result property="bNo" column="NOTI_NO"/>
+		<result property="cmtPNo" column="CMT_P_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="cmtContent" column="CMT_CONTENT"/>
+		<result property="cmtDate" column="CMT_DATE"/>
+		<result property="cmtUpdate" column="CMT_UPDATE"/>
+		<result property="cmtDelete" column="CMT_DELETE"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
+		<association property="notiNo" resultMap="noticeResultMap"/>
+	</resultMap>
+	
+		<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="gender" column="ADDRESS"/>
+		<result property="address" column="GENDER"/>		
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="status" column="MEMBER_ST"/>
+	</resultMap>
+	
+	
+<!--private int cNo;
+	private int bNo;
+	private int cmtPNo;
+	private String memberId;
+	private String cmtContent;
+	private Date cmtDate;
+	private Date cmtUpdate;
+	private String cmtDelete;
+	-->
+	
+	
+	
 	<!-- 공지사항 목록 + 페이징 -->
 <!-- 	<select id="findAllNoticeList" resultMap="noticeResultMap">
 		SELECT
@@ -64,9 +106,6 @@
 	</select>
 
 	
-	
-	
-
 
 	<!-- 공지등록 폼 -->
 	<insert id="registNotice">
@@ -104,6 +143,58 @@
 	 WHERE NOTI_DELETE = 'N'
 	   AND NOTI_NO = #{ no }	
 	</select>
+	
+	<!-- 댓글 조회 -->
+	<select id="readCmt" resultMap="noticeCmtResultMap">
+		SELECT
+			   CMT_NO
+			 , CMT_CONTENT
+			 , MEMBER_ID
+			 , CMT_DATE
+		  FROM TB_COMMENT	 
+	 	 WHERE NOTI_NO = #{ no }
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="registCmt" >
+		INSERT
+		  INTO TB_COMMENT
+		(
+  	      CMT_NO
+        , BRD_NO
+        , MEMBER_ID
+        , CMT_CONTENT
+        , CMT_DATE
+        , CMT_DELETE
+        )
+   VALUES 
+   		( 
+          SEQ_CMT_NO.NEXTVAL
+		, #{ bNo }
+		, #{ memberId }
+		, #{ notiContent }
+		, SYSDATE
+		, 'N'
+		)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<!-- 게시글 조회수 증가 -->
 	<update id="updateHitCount" parameterType="int" >		

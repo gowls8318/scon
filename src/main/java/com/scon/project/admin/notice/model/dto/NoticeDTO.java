@@ -11,6 +11,8 @@ public class NoticeDTO {
 	
 	private int no;
 	private String notiTitle;
+	private String memberId;
+	private MemberDTO member;
 	private String notiContent;
 	private Date notiDate;
 	private Date notiUpdate;
