@@ -7,6 +7,7 @@ import com.scon.project.member.model.dto.MemberDTO;
 
 public interface GradeService {
 
+	//성적 조회
 	List<GradeDTO> findAllGrade(int clsId);
 
 	//성적 입력 전 학생 조회 (O)

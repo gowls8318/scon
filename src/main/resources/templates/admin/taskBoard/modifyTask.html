@@ -187,7 +187,7 @@
                             </div>
                             <!-- 수정 / 삭제 버튼 -->
                             <div class="row buttonbox">
-                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit">수정</button>
+                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit" th:onclick="'location.href=\'' + @{/admin/modifyTask(clsId=${detail.clsId},taskId=${detail.taskId})} + '\';'">수정</button>
                                 <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="button" onclick="modal1();">삭제</button>
                             </div>
                         </div>

@@ -11,13 +11,13 @@ import com.scon.project.member.model.dto.MemberDTO;
 public interface GradeMapper {
 
 	//학생 성적 조회(complete)
-	List<GradeDTO> findAllGrade(int classId);
+	List<GradeDTO> findAllGrade(int clsId);
 	
 	//성적 수정(complete)
 	int updateGrade(GradeDTO gradeDTO) throws Exception;
 
 	//성적 입력 전 학생 조회 (complete)
-	List<GradeDTO> findAllStudent(int classId);
+	List<GradeDTO> findAllStudent(int clsId);
 
 	//성적 입력 (complete)
 	int insertGradeList(GradeDTO grade);

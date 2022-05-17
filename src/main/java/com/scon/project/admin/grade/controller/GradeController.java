@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,7 +33,7 @@ public class GradeController {
 		this.gradeService = gradeSerivce;
 	}
 
-	/* 성적 조회 complete */
+	/* 성적 조회 complete (gradeList) */
 	@GetMapping("/gradeList")
 	public ModelAndView findGradeList(@RequestParam int clsId, ModelAndView mv) {
 		
@@ -43,12 +44,12 @@ public class GradeController {
 		mv.addObject("gradeList", gradeList);
 		mv.setViewName("admin/grade/gradeList");
 		
-		log.info(gradeList.toString());
+//		log.info("gradeList toString : {} ", gradeList.toString());
 		
 		return mv;
 	}
 	
-	/* 성적 수정 complete */
+	/* 성적 수정 complete (gradeList) */
 	@PostMapping("/grade")
 	public String updateGrade(GradeDTO gradeDTO, HttpServletRequest request) throws Exception {
 		
@@ -57,7 +58,7 @@ public class GradeController {
 		return "redirect:"+ referer;
 	}
 	
-	/* 성적 등록 페이지 (학생 조회) complete */
+	/* 성적 등록 학생 조회 complete (insertGrade) */
 	@GetMapping("/insertGrade")
 	public ModelAndView findAllStudent(@RequestParam int clsId, ModelAndView mv){
 		
@@ -69,10 +70,10 @@ public class GradeController {
 		return mv;
 	}
 	
-	/* 성적 입력 (complete) */
+	/* 성적 입력 complete (insertGrade) */
 	@PostMapping("/insertGrade") //@RequestParam int clsId
 	public String insertGrade(GradeDTOList gradeList, HttpServletRequest request) throws Exception {
-		log.info(gradeList.getGradeList().toString());
+	//	log.info(gradeList.getGradeList().toString());
 		boolean result = gradeService.insertGradeList(gradeList.getGradeList());
 		String referer = request.getHeader("Referer");
 		return "redirect:"+ referer;
@@ -111,7 +112,10 @@ public class GradeController {
 		return "admin/grade/gradeRank";
 	}
 	
-	
+	@GetMapping("/modifyBoard")
+	public String modifyBoard() {
+		return "admin/grade/modifyTask";
+	}
 	
 	
 }

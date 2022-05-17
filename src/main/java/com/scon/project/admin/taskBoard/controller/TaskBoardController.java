@@ -39,6 +39,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,11 +50,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.admin.taskBoard.model.dto.TaskBoardDTO;
 import com.scon.project.admin.taskBoard.model.service.TaskBoardService;
+import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.UserImpl;
 
 import ch.qos.logback.classic.Logger;
@@ -83,11 +87,23 @@ public class TaskBoardController {
 
 	// 과제 게시판 전체 조회 (O)
 	@GetMapping("/taskBoardList")
-	public ModelAndView findAllTask(@RequestParam int clsId, ModelAndView mv) {
+	public ModelAndView findAllTask(@RequestParam int clsId, @RequestParam(value="keyword", required=false) String keyword, ModelAndView mv, @ModelAttribute Criteria cri) {
 		
-		List<TaskBoardDTO> taskList = taskBoardService.findAllTask(clsId);
+		TaskBoardDTO taskBoard = new TaskBoardDTO();	
+		taskBoard.setKeyword(keyword);
+		taskBoard.setClsId(clsId);		
+	
+		
+			log.info("clsId : {} ", clsId);
+//			log.info("keyword : {} ", keyword);
+			
 	//	List<TaskBoardDTO> taskList = taskBoardService.findAllTask();
 		
+		int total = taskBoardService.total(taskBoard);
+		Pagination page = new Pagination(cri, total);
+		List<TaskBoardDTO> taskList = taskBoardService.findAllTask(taskBoard,cri);
+		mv.addObject("page", page);
+		log.info("pagunation : {} ", page);
 		log.info("taskList : {} ", taskList);
 		
 		mv.addObject("taskList", taskList);
@@ -98,7 +114,7 @@ public class TaskBoardController {
 	
 	//게시판 게시글 상세 조회
 	@GetMapping("/taskDetail")
-	public ModelAndView findDetail(@RequestParam String taskId, ModelAndView mv, @AuthenticationPrincipal UserImpl user ) {
+	public ModelAndView findDetail(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv, @AuthenticationPrincipal UserImpl user ) {
 		
 		List<TaskBoardDTO> detailList = taskBoardService.findDetail(taskId);
 		List<FileDTO> fileList = taskBoardService.findFiles(taskId);
@@ -210,19 +226,15 @@ public class TaskBoardController {
 	
 	//게시글 삭제
 	@GetMapping("/deleteBoard")
-	public String deleteBoard(@RequestParam String taskId, HttpServletRequest request) throws Exception {
+	public String deleteBoard(@RequestParam int clsId, @RequestParam String taskId, RedirectAttributes redirectAttr) throws Exception {
 		
-		log.info("삭제 하려는 게시글 아이디 : {} ", taskId);
 		
+		log.info("삭제 게시글 아이디 : {} ", taskId);
 		taskBoardService.deleteBoard(taskId);
 		
-		String referer = request.getHeader("Referer");
-
-		return "redirect:" + referer;
+		redirectAttr.addFlashAttribute("clsId", clsId);
+		return "redirect:/admin/taskBoardList";
 	}
-	
-	
-
 	
 	
 	

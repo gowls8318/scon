@@ -87,19 +87,19 @@
                 <hr class="border-bottom-primary">
                
                 <!-- 검색창 -->
-                <div class="mx-auto searchbox">
-                    <form action="" method="GET">
+                <div class="mx-auto search-area">
+                    <form action="/admin/taskBoardList?clsId=1" method="GET">
                       <div class="input-group mb-4 border rounded-pill p-1">
                           <div class="input-group-prepend border-0">
-                              <button id="button-addon4" type="button" class="btn btn-link text-warning"><i class="fa fa-search"></i></button>
+                              <button id="button-addon4" type="submit" class="btn btn-link text-warning"><i class="fa fa-search"></i></button>
                           </div>
-                          <input type="search" placeholder="검색" aria-describedby="button-addon4" class="form-control bg-none border-0" id="search-input" style="margin-right: 20px; background-color: ghostwhite;">
+                          <input type="search"  th:value="${ page.cri.keyword }" placeholder="검색" name="keyword" aria-describedby="button-addon4" class="form-control bg-none border-0" id="search-input" style="margin-right: 20px; background-color: ghostwhite;">
                       </div>
                     </form>
                   </div>
                   <!---->
-       <!--           <button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask(clsId=${task.clsId})} + '\';'"> -->
-       				<button type="button" class="btn btn-primary float-right" id="btn-write" onclick="location.href='/admin/insertTask'">
+       <!--           <button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask(clsId=${task.clsId})} + '\';'"> --> <!--  onclick="location.href='/admin/insertTask'"  -->
+       				<button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask/(clsId=${taskList[0].clsId])} + '\';'">
                     <li style="list-style: none;" id="wrtie">글쓰기</li></button><br><br>
                 <table class="table">
                     <thead>
@@ -113,7 +113,7 @@
                  		<tr th:each=" task : ${ taskList }">
                         	<input type="hidden" th:value="${ task.memberId }" class="memberId" name="memberId"/>
                             <th scope="row" th:text="${ task.taskId }" class="taskId" name="taskId"></th>
-                            <td class="pointer" th:text="${ task.taskTitle }" th:onclick="'location.href=\'' + @{/admin/taskDetail(taskId=${task.taskId})} + '\';'"></td>
+                            <td class="pointer" th:text="${ task.taskTitle }" th:onclick="'location.href=\'' + @{/admin/taskDetail(clsId=${task.clsId},taskId=${task.taskId})} + '\';'"></td>
                             <td th:text="${ task.memberName }"></td>
                             <td th:text="${ task.taskDate }"></td>
                             <td th:text="${ task.taskView }"></td>
@@ -121,24 +121,52 @@
                     </tbody>
                   </table>
 
-                  <!-- 페이징 -->
-                  <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
+                   <!-- 페이징 -->
+                            <nav aria-label="Page navigation">
+								<div class="pageInfo_area">
+									<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
+									
+										<!-- 첫 페이지 이동 -->
+										<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
+										<li class="page-item">
+											<a th:if="${ page.startPage > 1 }" th:href="${ 1 }" th:text="'<<'" class="page-link"></a>
+										</li>
+
+										<!-- 이전 페이지 버튼 -->
+										<l1 th:if="${ page.prev }" class="page-item">
+											<a th:href="${ page.startPage - 1 }" th:text="'<'" class="page-link"></a>
+										</l1>
+										
+										<!-- 각 번호 페이지 버튼 -->
+										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
+												<!-- <a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a> -->
+												<a th:href="${ num }" th:text="${ num }" class="page-link"></a>
+												<!-- <a th:if="${ page.cri.pageNo != num }" th:href="@{/student/consultant/list(pageNo=${num})}" th:text="${ num }" class="page-link"></a> -->
+											</li>
+										</th:block>
+										
+										<!-- 다음 페이지 버튼 -->
+										<l1 th:if="${ page.next }" class="page-item">
+											<a th:href="${ page.endPage + 1 }" th:text="'>'" class="page-link"></a>
+										</l1>
+										
+										<!-- 마지막 페이지 이동 -->
+										<li class="page-item">
+									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link d-none" disabled></a>
+									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="${ page.maxPage }" th:text="'>>'" class="page-link"></a>
+									    </li>
+							    
+									</ul>
+								</div>
+							</nav>
+							
+							<form id="searchForm" method="get">	
+								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
+								<!-- <input type="hidden" name="limit" th:value="${ page.cri.limit }"> -->
+								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
+								<!-- <input type="hidden" name="type" th:value="${ page.cri.type }"> -->	
+							</form>
 
                </div>
                <!-- /.container-fluid -->
@@ -157,14 +185,52 @@
 
 
 	<script>
-	      $(document).ready(function(){
+   /*      $(document).ready(function(){
 	          $("#search-input").keyup(function(){
 	              var k = $(this).val();
 	              $("tr").hide();
 	              var temp = $("tr:contains('" + k + "')");
 	              $(temp).show();
 	          });
-	      });
+	      }); */
+	      
+	      
+	      /* 페이징 & 검색 */
+			let searchForm = $("#searchForm");   	
+	        
+	        $(".pageInfo a").on("click", function(e){
+	        	e.preventDefault();
+	            searchForm.find("input[name='pageNo']").val($(this).attr("href"));
+	            searchForm.attr("action", "/admin/taskBoardList?clsId=1");
+		        searchForm.submit();
+	        });
+	    	
+	    	
+	    	$(".search-area button").on("click", function(e){
+	    		e.preventDefault();
+	    		
+	    		//let type = $(".search-area select").val();
+		    	let keyword = $(".search-area input[name='keyword']").val();
+		    	
+		    	/* if(!type){
+					alert("검색 유형을 선택하세요.");
+					return false;
+				} */
+		    	
+	    		if(!keyword){
+	    			//alert("원생 이름을 입력하세요.");
+	    			swal({
+	    				text: "검색어를 입력하세요",
+	    				icon: "warning",
+	    				button: "확인"
+	    			});
+	    			return false;
+	    		}		
+	    		
+	    		searchForm.find("input[name='keyword']").val(keyword);
+	    		searchForm.find("input[name='pageNo']").val(1);
+	    		searchForm.submit();
+	    	});
 	    </script>
 
     <!-- Bootstrap core JavaScript-->

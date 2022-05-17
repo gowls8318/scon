@@ -2,6 +2,7 @@ package com.scon.project.admin.taskBoard.controller;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,12 +28,15 @@ public class TaskBoardControllerTests {
 		assertNotNull(taskBoardController);
 	}
 
-	@Test
-	public void 과제_게시판_전체_조회_테스트() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/admin/taskBoardList"))
-			   .andExpect(MockMvcResultMatchers.status().isOk())
-			   .andExpect(MockMvcResultMatchers.forwardedUrl("admin/taskBoard/taskBoardList"))
-			   .andDo(MockMvcResultHandlers.print());
-	}
+//	@Test
+//	@Disabled
+//	public void 과제_게시판_전체_조회_테스트() throws Exception {
+//		mockMvc.perform(MockMvcRequestBuilders.get("/admin/taskBoardList"))
+//			   .andExpect(MockMvcResultMatchers.status().isOk())
+//			   .andExpect(MockMvcResultMatchers.forwardedUrl("admin/taskBoard/taskBoardList"))
+//			   .andDo(MockMvcResultHandlers.print());
+//	}
+//
+	
 }
 
