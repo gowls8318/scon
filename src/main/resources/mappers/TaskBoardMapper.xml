@@ -45,22 +45,72 @@
 		<result property="clsStatus" column="CLS_STATUS"/>
 </resultMap> -->
 
+<!-- 검색 조건 -->
+	<sql id="criteria">
+        <trim prefix="AND (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            CON_HTITLE LIKE '%' || #{ keyword } || '%' 
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            CON_HCONTENT LIKE '%' || #{ keyword } || '%' 
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+
 	<!--  과제 게시판 목록 조회 -->
 		<select id="findAllTask" resultMap="taskBoardResultMap">
 			SELECT
-				T.TASK_ID
-			  , T.MEMBER_ID
-			  , T.CLS_ID
-			  , T.TASK_TITLE
-			  , T.TASK_CONTENT
-			  , T.TASK_DATE
-			  , T.TASK_VIEW
-			  , M.MEMBER_NAME
+				TASK_ID
+			  , MEMBER_ID
+			  , CLS_ID
+			  , TASK_TITLE
+			  , TASK_CONTENT
+			  , TASK_DATE
+			  , TASK_VIEW
+			  , MEMBER_NAME
+			FROM ( SELECT /*+INDEX_DESC(N PK_TB_TASK)*/
+						ROWNUM AS RNUM
+			      , T.TASK_ID
+				  , T.MEMBER_ID
+				  , T.CLS_ID
+				  , T.TASK_TITLE
+				  , T.TASK_CONTENT
+				  , T.TASK_DATE
+				  , T.TASK_VIEW
+				  , M.MEMBER_NAME
 			FROM TB_TASK T
 			JOIN TB_MEMBER M ON(T.MEMBER_ID = M.MEMBER_ID)
-			WHERE T.CLS_ID = #{ clsId }
+			WHERE T.CLS_ID = #{ taskBoard.clsId }
 			AND T.TASK_DELETE = 'N' 
+			<![CDATA[
+			          AND ROWNUM <= #{ cri.pageNo } * #{ cri.limit }
+					]]>
+			  		<if test="taskBoard.keyword != null">
+			  		  AND TASK_TITLE LIKE '%' || #{ taskBoard.keyword } || '%'
+			  		</if>
+			  	  )
+		<![CDATA[
+			WHERE RNUM > (#{ cri.pageNo } - 1) * #{ cri.limit }
+		]]>
 		</select>
+		
+		<!-- 게시물 총 갯수 -->
+		<select id="total" resultType="_int">
+				SELECT
+					   COUNT(*)
+				  FROM TB_TASK
+				 WHERE TASK_DELETE = 'N'
+				 <if test="keyword != null">
+				   AND TASK_TITLE LIKE '%' || #{ keyword } || '%'
+				 </if>
+		</select>
+
 
 	 <!--  파일 업로드 전 -->
 	<!--  <insert id="insert">

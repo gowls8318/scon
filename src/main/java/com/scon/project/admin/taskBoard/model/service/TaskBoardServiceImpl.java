@@ -11,6 +11,7 @@ import com.scon.project.admin.grade.model.dto.GradeDTO;
 import com.scon.project.admin.taskBoard.model.dao.TaskBoardMapper;
 import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.admin.taskBoard.model.dto.TaskBoardDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.ProfileDTO;
 
 @Service("taskBoardService")
@@ -24,11 +25,24 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		this.taskBoardMapper = taskBoardMapper;
 	}
 	
-	//게시판 전체 목록 조회
+	//게시판 전체 목록 조회 + 페이징
 	@Override
-	public List<TaskBoardDTO> findAllTask(int clsId) {
-		return taskBoardMapper.findAllTask(clsId);
+	public List<TaskBoardDTO> findAllTask(TaskBoardDTO taskBoard, Criteria cri) {
+		return taskBoardMapper.findAllTask(taskBoard, cri); 
+		
 	}
+	
+	//글 전체 갯수
+	@Override
+	public int total(TaskBoardDTO taskBoard) {
+		
+		int result = taskBoardMapper.total(taskBoard);
+		
+		return result;
+	}
+
+	
+	
 	//게시판 전체 목록 조회
 //	@Override
 //	public List<TaskBoardDTO> findAllTask() {
@@ -86,6 +100,7 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		
 		return result > 0 ? true : false;
 	}
+
 
 
 

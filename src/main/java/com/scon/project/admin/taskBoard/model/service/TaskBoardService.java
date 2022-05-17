@@ -5,13 +5,17 @@ import java.util.Map;
 
 import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.admin.taskBoard.model.dto.TaskBoardDTO;
+import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.ProfileDTO;
 
 public interface TaskBoardService {
 
 	//게시판 전체 목록 조회
-	List<TaskBoardDTO> findAllTask(int clsId);
+	List<TaskBoardDTO> findAllTask(TaskBoardDTO taskBoard, Criteria cri);
 //	List<TaskBoardDTO> findAllTask();
+	
+	//게시판 전체 글 갯수
+	int total(TaskBoardDTO taskBoard);
 
 	//게시판 입력
 	int insertTask(TaskBoardDTO task) throws Exception;
@@ -24,6 +28,8 @@ public interface TaskBoardService {
 
 	//게시판 게시글 삭제
 	boolean deleteBoard(String taskId) throws Exception;
+
+	
 
 
 
