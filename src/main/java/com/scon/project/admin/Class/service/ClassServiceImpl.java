@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.scon.project.admin.Class.dao.ClassMapper;
 import com.scon.project.admin.Class.dto.ClassDTO;
@@ -86,25 +87,48 @@ public class ClassServiceImpl implements ClassService {
 		return classMapper.deleteClass(clsId);
 	}
 
+	//강의수정
 	@Override
-	public int classUpdate(ClassDTO classDTO) throws Exception {
+	public boolean classUpdate(ClassDTO classDTO) throws Exception {
 		
+		
+		log.info("dayList {}:" , classDTO.getDayList());
+		log.info("time {} : ", classDTO.getTime());
 		int result = classMapper.classUpdate(classDTO);
-		
-		return result;
+		/*
+		 * int result2 = classMapper.updateDay(classDTO.getDayList()); int result3 =
+		 * classMapper.updateTime(classDTO.getTime());
+		 */
+		int result2 = 0;
+		for (DayDTO day : classDTO.getDayList()) {
+			if (day.getClsDayId() != 0)
+				result2 += classMapper.updateDay(day, classDTO.getClsId()); //dto에 id
+		}
+
+		int result3 = 0;
+		for (TimeDTO time : classDTO.getTime()) {
+			if (time.getClsTimeId() != 0)
+				result3 += classMapper.updateTime(time, classDTO.getClsId());
+		}
+
+		if (result <= 0 || result2 <= 0 || result3 <= 0) {
+			throw new Exception("강의 등록에 실패했습니다.");
+		}
+
+		return result > 0 ? true : false;
 	}
 
-	//요일
-	@Override
-	public int updateDay(DayDTO dayList) {
-		return classMapper.updateDay(dayList);
-	}
-
-	//교시
-	@Override
-	public int updateTime(TimeDTO time) {
-		return classMapper.updateTime(time);
-	}
+	/*
+	 * //요일
+	 * 
+	 * @Override public int updateDay(DayDTO dayList) { return
+	 * classMapper.updateDay(dayList); }
+	 * 
+	 * //교시
+	 * 
+	 * @Override public int updateTime(TimeDTO time) { return
+	 * classMapper.updateTime(time); }
+	 */
 
 
 	//강사

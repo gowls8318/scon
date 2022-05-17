@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.classfile.dao.ClassFileMapper;
 import com.scon.project.admin.classfile.dto.ClassFileDTO;
+import com.scon.project.admin.classfile.dto.TaskFileDTO;
 import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.MemberDTO;
@@ -27,6 +28,7 @@ public class ClassFileServiceImpl implements ClassFileService {
 		this.classFileMapper = classFileMapper;
 	}
 
+	//강의첨부자료게시글 등록
 	@Override
 	public int registClassFile(ClassFileDTO classFileList) throws Exception {
 		
@@ -41,7 +43,7 @@ public class ClassFileServiceImpl implements ClassFileService {
 		
 		int result3 = 0;
 		
-		for(FileDTO classFile : classFileList.getFileList() ) {
+		for(TaskFileDTO classFile : classFileList.getFileList() ) {
 			result2 += classFileMapper.registClassFile(classFileList);
 		}
 		

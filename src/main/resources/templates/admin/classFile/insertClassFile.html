@@ -64,7 +64,7 @@ input[type="checkbox"]::before {
 
 
 			<!-- Main Content -->
-			<form th:action="@{/admin/registClassFile}" method="post" enctype="multipart/form-data">
+			<form th:action="@{/admin/registClassFile}" method="post" enctype="multipart/form-data" name="dataForm" id="dataForm">
 				 <input type="hidden" th:value="${classFile?.clsId}" /> 
 				<div id="content">
 					<!--  Begin Page Content -->
@@ -91,8 +91,8 @@ input[type="checkbox"]::before {
 										<tbody>
 											<!-- 강의명 -->
 											<tr>
-												<th class="col-lg-1"><label for="std"
-													class="col-form-label">강의명 <span id="pointtext">*</span></label>
+												<th class="col-lg-1">
+												<label for="std" class="col-form-label">강의명 <span id="pointtext">*</span></label>
 												</th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
@@ -154,25 +154,27 @@ input[type="checkbox"]::before {
 						</div>
 					</div>
 				</div>
+				
 							<div class="row buttonbox">
 							<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" 
 							data-toggle="modal" data-target="#classupdateModal">등록</button>
 							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset"
 							onclick="location.href='/admin/ClassFileList'">취소</button>
 						   </div>
-			</form>
-		</div>
-	</div>
+						</form>
+					</div>
+				</div>
 
-	</div>
 	<!-- End of Main Content -->
+	<!-- footer include -->
+	<div th:replace="/common/footer.html"></div>
 
 	</div>
 	<!-- End of Content Wrapper -->
 
 
-	<!-- footer include -->
-	<div th:replace="/common/footer.html"></div>
+</div>
+	
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i

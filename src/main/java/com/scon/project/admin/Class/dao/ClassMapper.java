@@ -45,10 +45,10 @@ public interface ClassMapper {
 	int classUpdate(ClassDTO clsId);
 
 	//요일수정
-	int updateDay(DayDTO dayList);
+	int updateDay(DayDTO day, int clsId);
 
 	//교시수정
-	int updateTime(TimeDTO time);
+	int updateTime(TimeDTO time, int clsId);
 
 	//강의게시글 총 갯수
 	int total(Criteria cri);

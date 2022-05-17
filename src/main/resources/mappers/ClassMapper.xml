@@ -100,7 +100,7 @@
 	<!-- 강의와요일 -->
 	<insert id="insertClsAndDay">
 		INSERT
-			 INTO TB_CLANDDA
+			 INTO TB_CLS_DAY
 	      (
 	      	CLS_ID
 	      , CLS_DAY_ID
@@ -116,7 +116,7 @@
 	<!-- 강의와교시 -->
 	<insert id="insertClsAndTime">
 		INSERT
-			 INTO TB_CLANDTI
+			 INTO TB_CLS_TIME
 	      (
 	      	CLS_ID
 	      , CLS_TIME_ID
@@ -191,8 +191,8 @@
 		  , D.CLS_TIME_ID
 	   FROM TB_CLASS A
 	   JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
-	   JOIN TB_CLANDDA C ON (C.CLS_ID = A.CLS_ID)
-	   JOIN TB_CLANDTI D ON (D.CLS_ID = A.CLS_ID)
+	   JOIN TB_CLS_DAY C ON (C.CLS_ID = A.CLS_ID)
+	   JOIN TB_CLS_TIME D ON (D.CLS_ID = A.CLS_ID)
 	  WHERE A.CLS_STATUS = 'N'
 	    AND A.CLS_ID = #{clsId}
 	  ORDER BY A.CLS_ID DESC
@@ -202,7 +202,7 @@
 	<select id="selectDayList" resultMap="classResultMap">
 		SELECT
 		      CLS_DAY_ID
-		  FROM TB_CLANDDA
+		  FROM TB_CLS_DAY
 		 WHERE CLS_ID = #{ clsId }
 	</select>
 	
@@ -230,7 +230,6 @@
 		UPDATE
 			  TB_CLASS A
 		  SET   A.MEMBER_ID = #{ memberId } 
-		  <!-- (SELECT B.MEMBER_ID FROM TB_MEMBER B WHERE B.MEMBER_ID =  -->
 			  , A.CLS_NAME = #{ clsName }
 			  , A.CLS_SUBJECT = #{ clsSubject }
 			  , A.CLS_STUNUM = #{ clsStuNum }
@@ -241,8 +240,6 @@
 			  , A.CLS_END = #{ clsEnd }
 			  , A.CLS_NOTE = #{ clsNote }
 		 WHERE 	A.CLS_ID = #{ clsId }
-		   <!-- AND exists (select 1 from TB_MEMBER B 
-               where B.MEMBER_ID = A.MEMBER_ID) -->
 		   AND  A.CLS_STATUS = 'N'
  	</update>
  	
@@ -250,7 +247,7 @@
 	<!-- 요일수정 -->
 	<update id="updateDay">
 	UPDATE
-		 TB_CLANDDA
+		 TB_CLS_DAY
 	  SET CLS_DAY_ID = #{ clsDayId }
 	WHERE CLS_ID = #{ clsId }
 	</update>
@@ -259,7 +256,7 @@
 	<!-- 교시수정 -->
 	<update id="updateTime">
  	UPDATE
- 		 TB_CLANDTI
+ 		 TB_CLS_TIME
  	  SET CLS_TIME_ID = #{ clsTimeId }
 	WHERE CLS_ID = #{ clsId }
 	</update>
