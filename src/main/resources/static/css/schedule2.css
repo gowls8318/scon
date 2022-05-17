@@ -1,9 +1,10 @@
       /* 캘린더 */
-/*     #calendarBox{
-        padding-left : 20%; 
-        padding-right: 20%;
+     #calendarBox{
+        padding-left : 5%; 
+        padding-right: 5%;
         border-radius: 2;
-    } */
+        margin : 2%;
+    } 
 
     /* 일정추가, <> */
     .fc .fc-button-primary {

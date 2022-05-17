@@ -50,6 +50,7 @@
 			 , SCHE_DELETE
 		  FROM TB_SCHE
 		 WHERE SCHE_DELETE = 'N'   
+		  AND MEMBER_ID = #{id}
 	</select>
 	
 	

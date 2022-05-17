@@ -22,13 +22,14 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 
- td {
+
+.side-table td {
 	 text-overflow:ellipsis; 
 	 overflow:hidden; 
 	 white-space:nowrap;
  }
  
- table {
+.side-table table {
  	table-layout:fixed;
  }
  
@@ -57,14 +58,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 							<!-- Earnings (Monthly) Card Example -->
 							<div class="col-md-3 mb-4 ">
-								<div class="card border-left-primary shadow py-2">
+								<div class="card border-left-primary shadow">
 									<div class="card-body">
 										<div class="row no-gutters align-items-center">
 											<div class="col mr-2">
 												<div class="m-0 font-weight-bold text-primary">Today</div>
 												<div class="font-weight-bold date"></div>
 												<div class="font-weight-bold time"></div>
-												<div class="h5 font-weight-bold text-gray-800 text-primary day"></div>
+												<div
+													class="h5 font-weight-bold text-gray-800 text-primary day"></div>
 
 											</div>
 											<div class="col-auto">
@@ -75,7 +77,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								</div>
 							</div>
 							<div class="col-md-3 mb-4">
-								<div class="card border-left-primary shadow py-2">
+								<div class="card border-left-primary shadow">
 									<div class="card-body">
 										<div class="row no-gutters align-items-center">
 											<div class="col mr-2">
@@ -104,13 +106,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 							<!-- Earnings (Annual) Card Example -->
 							<div class="col-md-6 mb-4 ">
-								<div class="card border-left-success shadow py-2">
+								<div class="card border-left-primary shadow">
 									<div class="card-body">
 										<h6 class="m-0 font-weight-bold text-primary">오늘의 일정</h6>
 										<div class="row no-gutters align-items-center">
 											<div class="col mr-2">
-												<p class="mb-0 font-weight-bold text-gray-800">[공지] 오전 9시 회의 있습니다.</p>
-												<p class="mb-0 font-weight-bold text-gray-800">[공지] 수요일 원내 소독 진행합니다.</p>
+												<p class="mb-0 font-weight-bold text-gray-800">[공지] 오전
+													9시 회의 있습니다.</p>
+												<p class="mb-0 font-weight-bold text-gray-800">[공지] 수요일
+													원내 소독 진행합니다.</p>
 											</div>
 										</div>
 									</div>
@@ -132,9 +136,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 											style="width: 25rem;" src="img/undraw_posting_photo.svg"
 											alt="...">
 									</div>
-									<p>
-										Add some quality, svg illustrations to your project courtesy
-									</p>
+									<p>Add some quality, svg illustrations to your project
+										courtesy</p>
 									<a target="_blank" rel="nofollow" href="https://undraw.co/">Browse
 										Illustrations on unDraw &rarr;</a>
 								</div>
@@ -149,40 +152,40 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 										</div>
-										<div class="card-body">
-											
+										<div class="card-body side-table">
+
 											<table class="table table-hover table-sm">
 												<caption class="small">최근 5개 게시글</caption>
-											  <thead>
-											    <tr>
-											      <th>작성일</th>
-											      <th>제목</th>
-											    </tr>
-											  </thead>
-											  <tbody>
-											    <tr>
-											      <td>22-05-16</td>
-											      <td>공지사항입니다.</td>
-											    </tr>
-											    <tr>
-											      <td>22-05-16</td>
-											      <td>공지사항입니다.</td>
-											    </tr>
-											    <tr>
-											      <td>22-05-16</td>
-											      <td>공지사항입니다.공지사항입니다.공지사항입니다.</td>
-											    </tr>
-											     <tr>
-											      <td>22-05-16</td>
-											      <td>공지사항입니다.</td>
-											    </tr>
-											     <tr>
-											      <td>22-05-16</td>
-											      <td>공지사항입니다.</td>
-											    </tr>
-											  </tbody>
+												<thead>
+													<tr>
+														<th>작성일</th>
+														<th>제목</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>22-05-16</td>
+														<td>공지사항입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>공지사항입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>공지사항입니다.공지사항입니다.공지사항입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>공지사항입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>공지사항입니다.</td>
+													</tr>
+												</tbody>
 											</table>
-											
+
 										</div>
 									</div>
 
@@ -193,39 +196,40 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 									<div class="card shadow mb-4">
 
 										<div class="card-header py-3">
-											<h6 class="m-0 font-weight-bold text-primary">상담</h6>
+											<h6 class="m-0 font-weight-bold text-primary"
+												onclick="location.href='/admin/'">상담</h6>
 										</div>
-										<div class="card-body">
+										<div class="card-body side-table">
 											<table class="table table-hover table-sm">
 												<caption class="small">최근 5개 게시글</caption>
-											  <thead>
-											    <tr>
-											      <th>작성일</th>
-											      <th>제목</th>
-											    </tr>
-											  </thead>
-											  <tbody>
-											    <tr>
-											      <td>22-05-16</td>
-											      <td>상담 게시글입니다.</td>
-											    </tr>
-											    <tr>
-											      <td>22-05-16</td>
-											      <td>상담 게시글입니다.</td>
-											    </tr>
-											    <tr>
-											      <td>22-05-16</td>
-											      <td>상담 게시글입니다.</td>
-											    </tr>
-											     <tr>
-											      <td>22-05-16</td>
-											      <td>상담 게시글입니다.상담 게시글입니다.</td>
-											    </tr>
-											     <tr>
-											      <td>22-05-16</td>
-											      <td>상담 게시글입니다.</td>
-											    </tr>
-											  </tbody>
+												<thead>
+													<tr>
+														<th>작성일</th>
+														<th>제목</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>22-05-16</td>
+														<td>상담 게시글입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>상담 게시글입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>상담 게시글입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>상담 게시글입니다.상담 게시글입니다.</td>
+													</tr>
+													<tr>
+														<td>22-05-16</td>
+														<td>상담 게시글입니다.</td>
+													</tr>
+												</tbody>
 											</table>
 										</div>
 									</div>
@@ -235,18 +239,35 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 
 						<div class="col-md-6 mb-4">
-							
-							<div class="card shadow mb-4">
+
+							<div class="card shadow">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">일정</h6>
+									<h6 onclick="location.href='/admin/schedule'"
+										class="h6 m-0 font-weight-bold text-primary">일정</h6>
 								</div>
 								<div class="card-body">
 									<div th:replace="/admin/schedule/schedule2.html"></div>
+
+
 								</div>
 							</div>
-							
+									
+									<div class="pt-5">
+										<div class="card shadow" style="width:70%">
+										<div class="card-body">
+											<h6 class="m-0 font-weight-bold text-primary">토스트 자리</h6>
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2"></div>
+											</div>
+										</div>
+									</div>
+									</div>
+									
 						</div>
+
 					</div>
+
+				</div>
 				</div>
 
 		<div th:replace="/common/footer.html"></div>

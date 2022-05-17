@@ -5,11 +5,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.scon.project.admin.schedule.model.dto.ScheduleDTO;
+import com.scon.project.member.model.dto.UserImpl;
 
 @Mapper
 public interface ScheduleMapper {
 
-	List<ScheduleDTO> findSchedule();
+	List<ScheduleDTO> findSchedule(UserImpl user);
 
 	int registSchedule(ScheduleDTO schedule);
 

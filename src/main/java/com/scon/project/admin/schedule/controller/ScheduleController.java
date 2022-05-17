@@ -47,11 +47,11 @@ public class ScheduleController {
 		
 	@GetMapping("/allschedule")
     @ResponseBody
-    public Map<String, Object> monthPlan() {
+    public Map<String, Object> monthPlan(@AuthenticationPrincipal UserImpl user) {
 	
         Map<String, Object> map = new HashMap<>();
  
-        List<ScheduleDTO> sche = scheduleService.findSchedule();
+        List<ScheduleDTO> sche = scheduleService.findSchedule(user);
         
         Date date = null;
         
