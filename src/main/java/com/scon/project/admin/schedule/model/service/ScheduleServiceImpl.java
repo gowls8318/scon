@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scon.project.admin.schedule.model.dao.ScheduleMapper;
 import com.scon.project.admin.schedule.model.dto.ScheduleDTO;
+import com.scon.project.member.model.dto.UserImpl;
 
 @Service("ScheduleService")
 @Transactional
@@ -21,8 +22,8 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public List<ScheduleDTO> findSchedule() {
-		return scheduleMapper.findSchedule();
+	public List<ScheduleDTO> findSchedule(UserImpl user) {
+		return scheduleMapper.findSchedule(user);
 	}
 
 	@Override
