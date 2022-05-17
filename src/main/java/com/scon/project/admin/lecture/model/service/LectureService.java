@@ -40,4 +40,7 @@ public interface LectureService {
 	/* 환불 등록용 */
 	int insertRefund(RefundDTO ref) throws Exception;
 
+	/* 환불 조회용 */
+	RefundDTO selectRefundDetail(int no) throws Exception;
+
 }

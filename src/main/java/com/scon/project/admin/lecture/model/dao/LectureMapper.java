@@ -43,4 +43,7 @@ public interface LectureMapper {
 	/* 환불 등록용 */
 	int insertRefund(RefundDTO ref);
 
+	/* 환불 조회용 */
+	RefundDTO selectRefundDetail(int no);
+
 }

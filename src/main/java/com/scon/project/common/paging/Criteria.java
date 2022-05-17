@@ -1,7 +1,5 @@
 package com.scon.project.common.paging;
 
-import java.util.Arrays;
-
 public class Criteria {
 
 	private int pageNo;			// 현재 페이지

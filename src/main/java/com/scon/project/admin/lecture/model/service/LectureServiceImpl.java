@@ -150,4 +150,17 @@ public class LectureServiceImpl implements LectureService {
 		return result;
 	}
 
+	/* 환불 조회용 */
+	@Override
+	public RefundDTO selectRefundDetail(int no) throws Exception {
+		
+		RefundDTO refund = lectureMapper.selectRefundDetail(no);
+		
+		if(refund == null) {
+			throw new Exception("환불 조회에 실패하였습니다.");
+		}
+		
+		return refund;
+	}
+
 }

@@ -171,7 +171,9 @@ public class LectureMapperTests {
 		assertNotNull(result);
 	}
 	
+	// success
 	@Test
+	@Disabled
 	@DisplayName("환불 등록용 매퍼 테스트")
 	public void testInsertRefund() {
 		

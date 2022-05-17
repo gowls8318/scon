@@ -82,10 +82,11 @@
 	<select id="totalHope" resultType="_int">
 		SELECT
 			   COUNT(*)
-		  FROM TB_CONSULTANT
-		 WHERE CON_HDELETE = 'N'
+		  FROM TB_CONSULTANT A
+		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		 WHERE A.CON_HDELETE = 'N'
 		 <if test="keyword != null">
-		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
 		 </if>
 	</select>
 	
@@ -136,8 +137,8 @@
 		                 WHERE A.CON_HDELETE = 'N'
 		                   AND A.CON_HANDLE = '완료'
 		   			       AND A.CON_DELETE = 'N'
-						<if test="keyword != null">
-				  		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+					 	<if test="keyword != null">
+						   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
 						</if>
 		                 ORDER BY A.CON_NO DESC
 		               ) C
@@ -154,12 +155,13 @@
 	<select id="total" resultType="_int">
 		SELECT
 			   COUNT(*)
-		  FROM TB_CONSULTANT
+		  FROM TB_CONSULTANT A
+		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		 WHERE CON_HDELETE = 'N'
 		   AND CON_DELETE = 'N'
 		   AND CON_HANDLE = '완료'
 		 <if test="keyword != null">
-		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
 		 </if>
 	</select>
 	

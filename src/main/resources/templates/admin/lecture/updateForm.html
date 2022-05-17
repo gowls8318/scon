@@ -60,7 +60,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">수강 등록 & 수납</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-body-acc pr-5">
                             <form action="/admin/lecture/updateForm" method="post" name="lectureForm">
                             	<input type="hidden" name="no" value="${ lecture.no }">
                                 <div class="col-lg-9 con-table-center">
@@ -87,7 +87,8 @@
                                                     class="col-form-label">수강료</label>
                                                 </th>
                                                 <td class="col-lg-9 p-2">
-                                                    <div th:text="*{ lecPay }" class="col-sm-10 col-lg-4"></div>
+                                                    <span th:text="${#numbers.formatInteger(lecture.lecPay, 0, 'COMMA')}" class="col-sm-10 col-lg-4 pr-0"></span>
+                                                    <span>원</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -149,13 +150,49 @@
                                 </div>
                                 <div class="buttonbox">
                                		<button type="button" class="btn btn-light resetbuttonbox"
-                                    	onclick = "location.href = '/admin/lecture/list'">취소하기</button>
+                                    	onclick = "location.href = '/admin/lecture/list'">돌아가기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="updateLecture([[${lecture.no}]])">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="deleteLecture([[${lecture.no}]])">삭제하기</button>
                                 </div>
                             </form>
+                            
+                            <div class="card shadow ref-table">
+                                <table class="table">
+                                    <tbody th:object="${ lecture }">
+                                        <tr>
+                                            <th><h5>환불 내역</h5></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-lg-4 pl-4">
+                                                <label for="std" class="col-form-label">환불일</label>
+                                            </th>
+                                            <td class="col-lg-8">
+                                                <div th:text="*{ ref.refDate }" class="col-sm-10">환불일</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-lg-4 pl-4">
+                                                <label for="clsId" class="col-form-label">환불금액</span></label>
+                                            </th>
+                                            <td class="col-lg-8">
+                                                <span th:text="${#numbers.formatInteger(lecture.ref.refPay, 0, 'COMMA')}" class="col-sm-10 pr-0"></span>
+                                                <span>원</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-lg-4 pl-4"><label for="lecPay"
+                                                class="col-form-label">사유</label>
+                                            </th>
+                                            <td class="col-lg-8">
+                                                <div th:text="*{ ref.refContent }" class="col-sm-10">사유</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
                         </div>
                     </div>
 

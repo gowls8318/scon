@@ -169,7 +169,9 @@ public class LectureServiceTests {
 		assertNotNull(result);
 	}
 	
+	// success
 	@Test
+	@Disabled
 	@DisplayName("환불 등록용 서비스 메소드 테스트")
 	public void testInsertRefund() throws Exception {
 		

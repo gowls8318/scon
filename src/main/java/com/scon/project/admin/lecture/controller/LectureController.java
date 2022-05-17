@@ -49,8 +49,10 @@ public class LectureController {
 		List<ClassDTO> classList = lectureService.selectAllClassList();
 		
 		int total = lectureService.total(cri);
+		log.info("cri : {}", cri);
 		Pagination page = new Pagination(cri, total);
 		mv.addObject("page", page);
+		log.info("page : {}", page);
 		
 		mv.addObject("lectureList", lectureList);
 		mv.addObject("classList", classList);
@@ -87,7 +89,7 @@ public class LectureController {
 	@PostMapping("/lecture/insertForm")
 	public String insertLecture(@ModelAttribute LectureDTO lec, RedirectAttributes rttr, Locale locale) throws Exception {
 		
-		log.info("lectureDTO : {}", lec);
+		log.info("수강 등록 : {}", lec);
 		
 		lectureService.insertLecture(lec);
 		
@@ -129,14 +131,14 @@ public class LectureController {
 	}
 
 	/* 환불 모달에 값 넣기 */
-	@GetMapping("/lecture/refund")
-	@ResponseBody
-	public LectureDTO selectRefundDetail(@RequestParam int no) throws Exception {
-		
-		LectureDTO lectureDetail = lectureService.selectLectureDetail(no);
-		
-		return lectureDetail;
-	}
+//	@GetMapping("/lecture/refund")
+//	@ResponseBody
+//	public LectureDTO selectRefundDetail(@RequestParam int no) throws Exception {
+//		
+//		LectureDTO lectureDetail = lectureService.selectLectureDetail(no);
+//		
+//		return lectureDetail;
+//	}
 	
 	/* 환불 등록용 */
 	@PostMapping("/lecture/registRefund")
@@ -146,8 +148,6 @@ public class LectureController {
 		log.info("환불 정보 : {}", ref);
 		
 		lectureService.insertRefund(ref);
-		
-//		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertRefund", null, locale));
 		
 		return messageSource.getMessage("insertRefund", null, locale);
 	}

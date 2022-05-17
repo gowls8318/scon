@@ -75,7 +75,7 @@
 	                            <div class="search-area col-lg-12">
 	                                <div class="form-group mx-sm-3">
 	                                    <input type="text" name="keyword" th:value="${ page.cri.keyword }" class="form-control"
-	                                    	id="keyword" onkeyup='searchTable()' placeholder="원생 이름을 입력하세요">
+	                                    	id="keyword" placeholder="원생 이름을 입력하세요">
 	                                </div>
 	                                <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
 	                            </div>
@@ -113,20 +113,26 @@
 												</div>
                                             </td>
                                             <td th:text="${ lec.lecStatus }">수강 상태</td>
-                                            <td th:text="${ lec.lecPay }">수강료</td>
+                                            <td >
+                                            	<span th:text="${#numbers.formatInteger(lec.lecPay, 0, 'COMMA')}" class="lecPay"></span><span> 원</span>
+                                            </td>
                                             <td th:text="${ lec.accDate }">수납일</td>
                                             <td th:text="${ lec.accOption }">결제 방법</td>
                                             <td th:text="${ lec.accStatus }">수납 여부</td>
-                                            <td></td>
+                                            <td>
+                                            	<span th:if="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${'환불'}" class="refund"></span>
+                                            	<span th:unless="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${''}" class="refund"></span>
+                                            </td>
                                             <td class="btn-no">
                                                 <div class="btn-acc">
                                                     <button type="button" class="btn btn-primary btn-acc1"
                                                     	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no})} + '\';'">상세</button>
                                                     <button type="button" class="btn btn-light btn-acc2 refBtn"
-                                                    	data-toggle="modal" data-target="#refundModal"
-                                                    	th:onclick="|refundDetail(${lec.no})|">환불</button>
+                                                    	data-toggle="modal"
+                                                    	th:onclick="refund(this, [[${lec.no}]])">환불</button>
                                                     	<!-- th:onclick="refund(this, [[${lec.no}]])" -->
                                                     	<!-- th:onclick="|refundDetail(${lec.no})|" -->
+                                                    	<!--  data-target="#refundModal" -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -208,7 +214,7 @@
                             	<input type="hidden" name="no" id="lecNo" th:value="${no}"/>
                                 <div class="row mb-3">
                                     <div class="col-lg-1"></div>
-                                    <label for="std" class="col-sm-2 col-form-label col-lg-3">원생 <span id="pointtext">*</span></label>
+                                    <label for="memberId" class="col-sm-2 col-form-label col-lg-3">원생 <span id="pointtext">*</span></label>
                                     <div class="col-sm-10 col-lg-7">
                                         <input type="text" class="form-control" id="memberId" readonly>
                                     </div>
@@ -252,9 +258,7 @@
                                 <div class="modal-footer pb-0">
                                     <button type="button" class="btn btn-light resetbuttonbox"
                                         data-dismiss="modal">취소</button>
-                                    <button type="button" class="btn btn-primary submitbuttonbox"  id="registRef">환불처리</button>
-                                    <!-- data-toggle="modal"
-                                        data-target="#refModal2" -->
+                                    <button type="button" class="btn btn-primary submitbuttonbox" id="registRef">환불처리</button>
                                 </div>
                             </form>
                         </div>
@@ -262,29 +266,6 @@
                 </div>
             </div>
             <!-- /refundModal -->
-            
-            <!-- 환불 모달 -->
-            <!-- <div class="modal fade modal-bg-acc" id="refModal2" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content refModal2 ref-modal-content2">
-                        <div class="modal-header">
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">환불처리를 하시겠습니까?</div>
-                        <form action="" method="post">
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary resetbuttonbox" type="button"
-                                    data-dismiss="modal">취소</button>
-                                <button type="submit" class="btn btn-primary submitbuttonbox">확인</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> -->
-            <!-- /환불 모달 -->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -358,12 +339,8 @@
     		searchForm.submit();
     	});
 
-		/* 환불 모달 */
-		/* var modal = document.getElementById("refModal");
-		var btn = document.getElementsByClassName("refBtn");
-		var span = document.getElementsByClassName("refClose")[0]; */
-
-		/* function refund(elem, no) {
+		/* 환불 모달에 값 넣기 - 보여지는 화면에서 모든 값이 존재하기 때문에 ajax 통신 사용 불필요 */
+		function refund(elem, no) {
 			document.getElementsByClassName('no').value = no;
 			console.log(document.getElementsByClassName('no').value);
 
@@ -372,10 +349,30 @@
 
 			document.getElementsByClassName('clsId').value = elem.closest('.lecTr').querySelector('.clsId').innerHTML;
 			console.log(document.getElementsByClassName('clsId').value);
-		} */
+			
+			document.getElementsByClassName('refund').value = elem.closest('.lecTr').querySelector('.refund').innerHTML;
+			console.log(document.getElementsByClassName('refund').value);
+			
+			$("#lecNo").val(document.getElementsByClassName('no').value);
+			$("#memberId").val(document.getElementsByClassName('memberId').value);
+			$("#clsId").val(document.getElementsByClassName('clsId').value);
+			$("#refund").val(document.getElementsByClassName('refund').value);
+			
+			//$("#refundModal").modal("show");
+			
+			if(document.getElementsByClassName('refund').value == "환불") {
+    			swal({
+    				text: "환불 처리가 완료된 수강 내역입니다",
+    				icon: "warning",
+    				button: "확인"
+    			});
+    		} else if(document.getElementsByClassName('refund').value == "") {
+    			$("#refundModal").modal("show");
+    		}
+		}
 		
 		/* 환불 모달에 값 넣기 */
-		function refundDetail(no) {
+		/* function refundDetail(no) {
 			$.ajax({
 				url : "/admin/lecture/refund",
 				type : "get",
@@ -390,7 +387,7 @@
 					console.log(xhr);
 				}
 			});
-		}
+		} */
 		
 		/* 환불 등록 */
 		$("#registRef").click(function() {
@@ -423,6 +420,11 @@
 				success : function(data) {
 					console.log(data);
 					alert(data);
+					/* swal({
+	    				text: "data",
+	    				icon: "success",
+	    				button: "확인"
+	    			}); */
 					location.href="/admin/lecture/list";
 				},
 				error : function(xhr) {
