@@ -29,19 +29,21 @@ public interface ClassService {
 	int deleteClass(int clsId);
 
 	//강의수정
-	int classUpdate(ClassDTO classDTO) throws Exception;
+	boolean classUpdate(ClassDTO classDTO) throws Exception;
 	
-	//요일수정
-	int updateDay(DayDTO dayList);
 	
-	//교시수정
-	int updateTime(TimeDTO time);
+	 //요일수정 int updateDay(DayDTO dayList);
+	 
+	 //교시수정 int updateTime(TimeDTO time);
+	 
+	
 
 	//강사조회
 	List<MemberDTO> registMember();
 
 	//게시글 전체 갯수
 	int total(Criteria cri);
+
 
 	
 

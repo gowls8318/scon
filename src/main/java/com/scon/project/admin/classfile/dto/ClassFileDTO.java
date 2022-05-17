@@ -39,7 +39,7 @@ public class ClassFileDTO {
 		private String fileSaveName;				
 		private String filePath;				
 		private String fileType;
-		private List<FileDTO> fileList;     //하나의 게시글에 여러개의 파일
+		private List<TaskFileDTO> fileList;     //하나의 게시글에 여러개의 파일
 	
 
 

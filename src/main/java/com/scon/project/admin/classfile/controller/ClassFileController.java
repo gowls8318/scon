@@ -3,9 +3,7 @@ package com.scon.project.admin.classfile.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.classfile.dto.ClassFileDTO;
+import com.scon.project.admin.classfile.dto.TaskFileDTO;
 import com.scon.project.admin.classfile.service.ClassFileService;
-import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.common.paging.Criteria;
 import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.MemberDTO;
@@ -78,9 +76,9 @@ public class ClassFileController {
 
 	}
 
-	// 강의첨부자료 등록 (GET)
+	// 강의첨부자료 등록 (GET) - OK
 	@GetMapping("/registClassFile")
-	public String registClassFile(Model model) {
+	public String registClassFile(Model model) { //ModelAndView (X)
 
 		// 여기에 mapper.xml에도 동일하게 있어야함
 		List<MemberDTO> memberList = classFileService.selectMember();
@@ -96,25 +94,24 @@ public class ClassFileController {
 	}
 
 	// 강의첨부자료 등록(POST)
-	// @AuthenticationPrincipal UserImpl user : 넣는 이유 question
 	@PostMapping("/registClassFile")
 	public String classFileUpload(@RequestParam(value="classFile", required = false) List<MultipartFile> multiFiles, 
 			HttpServletRequest request, @ModelAttribute ClassFileDTO classFile) throws Exception {
 		//@RequestParam int clsId,
 		
+		log.info("classFile : {} ", classFile);
 		String page = "";
 		
-		log.info("classFile : {} ", classFile);
 		
 		File mkdir = new File(uploadFilesPath + "\\classFiles");
 		if(!mkdir.exists()) {
 			mkdir.mkdirs();
 		}
 		
-		List<FileDTO> fileList = new ArrayList<>();
+		List<TaskFileDTO> fileList = new ArrayList<>();
 		
 		for(int i = 0; i < multiFiles.size(); i++) {
-			FileDTO fileInfo = new FileDTO();
+			TaskFileDTO fileInfo = new TaskFileDTO();
 			
 			//파일명 변경 처리
 			String originFileName = multiFiles.get(i).getOriginalFilename();
@@ -132,19 +129,17 @@ public class ClassFileController {
 			fileList.add(fileInfo);
 			
 		}
-		/* TaskDTO에 담기 */
+		/* TaskFileDTO에 담기 */
 		classFile.setFileList(fileList);
 
-	//	log.info("files : {}", files);
 		log.info("fileList : {} ", fileList);
-	//	log.info("클래스 아이디 : {}" , clsId);
 
 		//task 객체 안에 파일 정보까지 담아서 1.테스크 테이블 insert 2.파일 테이블 insert 3.테스트 파일 테이블 insert 3개가 잘 됐을 때 로직 성공
 		// 3개 DAO에 선언 된 메소드를 호출 
 		int result = classFileService.registClassFile(classFile);
 
 		if(result > 0) {
-			page = "redirect:/admin/ClassFileList?";
+			page = "redirect:/admin/ClassFileList";
 		} else {
 			throw new Exception("게시글 등록 실패!");
 		}
@@ -166,11 +161,6 @@ public class ClassFileController {
 			
 		}
 		return page;
-	
-		
-		
-		
-	
 
 		/*
 		 * multipart로 전송 된 request에 대한 인코딩 처리를 해주어야 하는데 일반 인코딩 필터보다 구현하기 어려우므로 스프링에서

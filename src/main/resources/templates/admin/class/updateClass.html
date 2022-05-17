@@ -75,7 +75,7 @@ input[type="checkbox"]::before {
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-2 text-gray-800">강의수정</h1>
-						<text onclick="location.href='/admin/classRegist'" type="reset" id="resetbtn" > 
+						<text onclick="location.href='/admin/classUpdate'" type="reset" id="resetbtn" > 
 						<i class="bi bi-arrow-repeat"></i>
 						</text>
 					</div>
@@ -211,9 +211,6 @@ input[type="checkbox"]::before {
 							</div>
 
 						<!-- 수업요일 -->
-							
-								<!-- th:each=" days : ${ classUpdate.dayList }" -->
-								<!-- th:object="${ classUpdate }" -->
 								<div class="col-lg-12 table-center table-sy">
 									<table class="table">
 										<tr>
@@ -223,43 +220,43 @@ input[type="checkbox"]::before {
 
 											<td class="col-lg-5">
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="days1" name="clsDayId" value="1"
+													<input type="checkbox" id="days1" name="dayList[0].clsDayId" value="1"
 														class="form-check form-check-inline"
 														th:checked="${ not classUpdate.dayList.?[clsDayId == 1].isEmpty() }">
 													<label class="form-check-label" for="days1">월</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="days2" name="clsDayId" value="2"
+													<input type="checkbox" id="days2" name="dayList[1].clsDayId" value="2"
 														class="form-check form-check-inline"
 														th:checked="${ not classUpdate.dayList.?[clsDayId == 2].isEmpty() }">
 													<label class="form-check-label" for="days2">화</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="days3" name="clsDayId" value="3"
+													<input type="checkbox" id="days3" name="dayList[2].clsDayId" value="3"
 														class="form-check form-check-inline"
 														th:checked="${ not classUpdate.dayList.?[clsDayId == 3].isEmpty() }">
 													<label class="form-check-label" for="days3">수</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="days4" name="clsDayId" value="4"
+													<input type="checkbox" id="days4" name="dayList[3].clsDayId" value="4"
 														class="form-check form-check-inline"
 														th:checked="${ not classUpdate.dayList.?[clsDayId == 4].isEmpty() }">
 													<label class="form-check-label" for="days4">목</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="days5" name="clsDayId" value="5"
+													<input type="checkbox" id="days5" name="dayList[4].clsDayId" value="5"
 														class="form-check form-check-inline"
 														th:checked="${ not classUpdate.dayList.?[clsDayId == 5].isEmpty() }">
 													<label class="form-check-label" for="days5">금</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="days6" name="clsDayId" value="6"
+													<input type="checkbox" id="days6" name="dayList[5].clsDayId" value="6"
 														class="form-check form-check-inline"
 														th:checked="${ not classUpdate.dayList.?[clsDayId == 6].isEmpty() }">
 													<label class="form-check-label" for="days6">토</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="days7" name="clsDayId" value="7"
+													<input type="checkbox" id="days7" name="dayList[6].clsDayId" value="7"
 														class="form-check form-check-inline"
 														th:checked="${ not classUpdate.dayList.?[clsDayId == 7].isEmpty() }">
 													<label class="form-check-label" for="days7">일</label>
@@ -273,31 +270,31 @@ input[type="checkbox"]::before {
 											<td class="col-lg-5">
 												<!-- 인풋박스 -->
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="times1" name="clsTimeId"
-														value="1" class="form-check form-check-inline"
+													<input type="checkbox" id="times1" name="time[0].clsTimeId"
+														value="1" class="form-check form-check-inline" 
 														th:checked="${ not classUpdate.time.?[clsTimeId == 1].isEmpty() }">
 													<label class="form-check-label" for="inlineCheckbox1">1교시</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="times2" name="clsTimeId"
+													<input type="checkbox" id="times2" name="time[1].clsTimeId"
 														value="2" class="form-check form-check-inline"
 														th:checked="${ not classUpdate.time.?[clsTimeId == 2].isEmpty() }">
 													<label class="form-check-label" for="inlineCheckbox2">2교시</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="times3" name="clsTimeId"
-														value="3" class="form-check form-check-inline"
+													<input type="checkbox" id="times3" name="time[2].clsTimeId"
+														value="3" class="form-check form-check-inline" 
 														th:checked="${ not classUpdate.time.?[clsTimeId == 3].isEmpty() }">
 													<label class="form-check-label" for="inlineCheckbox1">3교시</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="times4" name="clsTimeId"
+													<input type="checkbox" id="times4" name="time[3].clsTimeId"
 														value="4" class="form-check form-check-inline"
 														th:checked="${ not classUpdate.time.?[clsTimeId == 4].isEmpty() }">
 													<label class="form-check-label" for="inlineCheckbox1">4교시</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input type="checkbox" id="times5" name="clsTimeId"
+													<input type="checkbox" id="times5" name="time[4].clsTimeId"
 														value="5" class="form-check form-check-inline"
 														th:checked="${ not classUpdate.time.?[clsTimeId == 5].isEmpty() }">
 													<label class="form-check-label" for="inlineCheckbox1">5교시</label>
@@ -354,8 +351,7 @@ input[type="checkbox"]::before {
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">강의수정</h5>
-						<button class="close" type="button" data-dismiss="modal"
-							aria-label="Close">
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">×</span>
 						</button>
 					</div>
@@ -363,11 +359,9 @@ input[type="checkbox"]::before {
 					<div class="modal-footer">
 						<button class="btn btn-secondary" type="button"
 							onclick="location.href='/admin/classList'">취소</button>
-						<button class="btn btn-primary submitbuttonbox" type="submit">
-						수정</button>
-						<!-- th:onclick="classUpdate([[${classUpdate.clsId}]])" -->
+						<button class="btn btn-primary submitbuttonbox" type="submit">수정</button>
 					</div>
-					<input type="hidden" name="clsId" id="updatecls" />
+					<input type="hidden" name="clsId" id="clsId" />
 				</div>
 			</div>
 	</div>
