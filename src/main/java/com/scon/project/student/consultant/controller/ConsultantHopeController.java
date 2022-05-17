@@ -126,7 +126,7 @@ public class ConsultantHopeController {
 	@PostMapping("/consultant/delete")
 	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) throws Exception {
 		
-		log.info("no : {}", no);
+		log.info("상담 신청 삭제 번호 : {}", no);
 		
 		consultantHopeService.deleteConsultant(no);
 		

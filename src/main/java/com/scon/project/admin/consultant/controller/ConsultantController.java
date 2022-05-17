@@ -47,8 +47,10 @@ public class ConsultantController {
 		mv.addObject("consultantHopeList", consultantHopeList);
 		
 		int totalHope = consultantService.totalHope(cri);
+//		log.info("cri : {}", cri);
 		Pagination page = new Pagination(cri, totalHope);
 		mv.addObject("page", page);
+//		log.info("page : {}", page);
 		
 		mv.setViewName("admin/consultant/hopeList");
 		
@@ -73,8 +75,10 @@ public class ConsultantController {
 		mv.addObject("consultantList", consultantList);
 		
 		int total = consultantService.total(cri);
+		log.info("cri : {}", cri);
 		Pagination page = new Pagination(cri, total);
 		mv.addObject("page", page);
+		log.info("page : {}", page);
 		
 		mv.setViewName("admin/consultant/list");
 		
