@@ -6,6 +6,11 @@ $("#datePicker").datepicker({
     });
 
 
+$(function() {
+	$('#datePicker').datePicker();
+	$('#datePicker').datePicker('setDate','today');
+})
+
 /*
 	$(function() {	
 		$('#datePicker').datepicker({

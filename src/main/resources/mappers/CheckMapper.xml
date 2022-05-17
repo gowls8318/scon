@@ -4,16 +4,29 @@
 
 	<resultMap id="checkResultMap" type="com.scon.project.admin.check.model.dto.CheckDTO">
 		<id property="no" column="CHQ_NO"/>
-		<result property="memberId" column="MEMBER_ID"/>
-		<result property="clsId" column="CLS_ID"/>
+		<result property="lecNo" column="LEC_NO"/>
 		<result property="chkDate" column="CHQ_DATE"/>
 		<result property="chkStart" column="CHQ_START"/>
 		<result property="chkFinish" column="CHQ_FINISH"/>
 		
+		<association property="lec" resultMap="lectureResultMap"/>
 		<association property="member" resultMap="memberResultMap"/>
 		<association property="cls" resultMap="classResultMap"/>
 	</resultMap>
 	
+	<resultMap id="lectureResultMap" type="com.scon.project.admin.lecture.model.dto.LectureDTO">
+		<id property="no" column="LEC_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="clsId" column="CLS_ID"/>
+		<result property="lecPay" column="LEC_PAY"/>
+		<result property="lecStatus" column="LEC_STATUS"/>
+		<result property="lecDiscount" column="LEC_DISCOUNT"/>
+		<result property="lecDelete" column="LEC_DELETE"/>
+		<result property="accStatus" column="ACC_STATUS"/>
+		<result property="accDate" column="ACC_DATE"/>
+		<result property="accOption" column="ACC_OPTION"/>
+		
+	</resultMap>
 	
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
 		<id property="id" column="MEMBER_ID"/>
@@ -29,11 +42,13 @@
 		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		<result property="keyword" column="MEMBER_ST2"/>
-		</resultMap>
+			
+	</resultMap>
 	
 	<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
 		<id property="clsId" column="CLS_ID"/>
 		<result property="clsName" column="CLS_NAME"/>
+		<result property="memberId" column="MEMBER_ID"/>
 		<result property="clsSubject" column="CLS_SUBJECT"/>
 		<result property="clsStuNum" column="CLS_STUNUM"/>
 		<result property="clsGrade" column="CLS_GRADE"/>
@@ -43,13 +58,48 @@
 		<result property="clsEnd" column="CLS_END"/>
 		<result property="clsNote" column="CLS_NOTE"/>
 		<result property="clsStatus" column="CLS_STATUS"/>
-		
-		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
 	
-	<select id="classFind" parameterType="com.scon.project.admin.check.model.dto.CheckDTO" resultType="int">
+	
+
+
+<select id="selectAllClassList" resultMap="checkResultMap">
+SELECT 
+	 A.LEC_NO
+	,A.MEMBER_ID
+	,B.MEMBER_NAME
+	,D.CLS_ID
+	,D.CLS_NAME
+	,C.CHQ_NO
+	,C.CHQ_DATE
+	,C.CHQ_START
+	,C.CHQ_FINISH
+FROM TB_LECTURE A
+JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+JOIN TB_CHECK C ON (C.LEC_NO = A.LEC_NO)
+JOIN TB_CLASS D ON (A.CLS_ID = D.CLS_ID)
+ORDER BY B.MEMBER_NAME
+</select>
+
+<!-- select id="selectAllClassList" resultMap="checkResultMap">
+SELECT 
+	 A.LEC_NO
+	,A.MEMBER_ID
+	,B.MEMBER_NAME
+	,C.CHQ_NO
+	,C.CHQ_DATE
+	,C.CHQ_START
+	,C.CHQ_FINISH
+FROM TB_LECTURE A
+JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+JOIN TB_CHECK C ON (C.LEC_NO = A.LEC_NO)
+WHERE A.LEC_NO = 1 AND TO_CHAR(C.CHQ_DATE, 'YYYY/MM/DD') = '2022/05/16'
+ORDER BY B.MEMBER_NAME;
+</select-->
+
+<!--  select id="classFind" parameterType="com.scon.project.admin.check.model.dto.CheckDTO" resultType="int">
 		SELECT 
-			*
+			
 		FROM TB_CHECK
   			<if test="datePicker != null and datePicker != ''">
 			<choose>
@@ -62,26 +112,9 @@
 				</when>
 			</choose>
 		</if>
-	</select>
-
-	<select id="selectAllClassList" resultMap="checkResultMap">
-		SELECT
-		  A.CHQ_NO
-		, B.MEMBER_ID
-		, B.MEMBER_NAME
-		, C.CLS_ID
-		, C.CLS_NAME
-		, A.CHQ_DATE
-		, A.CHQ_START
-		, A.CHQ_FINISH
-		FROM TB_CHECK A
-		JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
-		JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
-		WHERE B.MEMBER_ID = #{ memberId } 
-		ORDER BY A.CHQ_NO DESC
-	</select>
+	</select-->
 	
-	<select id="selectAllStudentList" resultMap="checkResultMap">
+	<!--  select id="selectAllClassList" resultMap="checkResultMap">
 		SELECT
 		  A.CHQ_NO
 		, B.MEMBER_ID
@@ -96,7 +129,24 @@
 		JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
 		WHERE B.MEMBER_ID = #{ memberId } 
 		ORDER BY A.CHQ_NO DESC
-	</select>
+	</select-->
+	
+	<!--  select id="selectAllStudentList" resultMap="checkResultMap">
+		SELECT
+		  A.CHQ_NO
+		, B.MEMBER_ID
+		, B.MEMBER_NAME
+		, C.CLS_ID
+		, C.CLS_NAME
+		, A.CHQ_DATE
+		, A.CHQ_START
+		, A.CHQ_FINISH
+		FROM TB_CHECK A
+		JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
+		JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
+		WHERE B.MEMBER_ID = #{ memberId } 
+		ORDER BY A.CHQ_NO DESC
+	</select-->
 
 	
 	<!-- 강의 목록 조회 -->

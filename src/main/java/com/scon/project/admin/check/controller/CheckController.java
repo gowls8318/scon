@@ -1,6 +1,9 @@
 package com.scon.project.admin.check.controller;
 
+import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,17 +30,39 @@ public class CheckController {
 	}
 	
 	/* 날짜별 반 출석 조회 */
-	@GetMapping("/chkViewClass")
-	public ModelAndView selectAllClassDayList(ModelAndView mv) throws Exception {
+//	@GetMapping("/chkViewClass")
+//	public ModelAndView selectAllClassList(ModelAndView mv) throws Exception {
+//		
+//		List<CheckDTO> checkClassList = checkService.selectAllClassList();
+//		
+//		mv.addObject("checkClassList", checkClassList);
+//		mv.setViewName("admin/check/chkViewClass");
+//		
+//		log.info("checkClassList : {}" , mv);
+//		
+//		return mv;
+//	}
+	
+	@RequestMapping(value = "/chkViewClass")
+	public ModelAndView selectAllClassList(HttpServletRequest request, ModelAndView mv) throws Exception {
+		
+		String searchCls = request.getParameter("searchCls");
+		String datePicker = request.getParameter("datePicker");
+		
+		HashMap<String,String> paraMap = new HashMap<String,String>();
+		paraMap.put("searchCls", searchCls);
+		paraMap.put("datePicker", datePicker);
 		
 		List<CheckDTO> checkClassList = checkService.selectAllClassList();
-		List<ClassDTO> classList = checkService.selectClassList();
 		
 		mv.addObject("checkClassList", checkClassList);
-		mv.addObject("classList", classList);
+		mv.addObject("searchCls", searchCls);
+		mv.addObject("datePicker", datePicker);
 		mv.setViewName("admin/check/chkViewClass");
 		
 		log.info("checkClassList : {}" , mv);
+		
+		
 		
 		return mv;
 	}

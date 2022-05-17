@@ -2,7 +2,8 @@ package com.scon.project.admin.check.model.dto;
 
 
 import com.scon.project.admin.Class.dto.ClassDTO;
-import com.scon.project.admin.Class.dto.MemberDTO;
+import com.scon.project.admin.lecture.model.dto.LectureDTO;
+import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.Data;
 
@@ -10,9 +11,9 @@ import lombok.Data;
 public class CheckDTO {
 	
 	private int no;
-	private String memberId;
+	private int lecNo;
+	private LectureDTO lec;
 	private MemberDTO member;
-	private int clsId;
 	private ClassDTO cls;
 	private String chkStart;
 	private String chkFinish;

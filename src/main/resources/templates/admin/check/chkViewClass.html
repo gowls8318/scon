@@ -82,26 +82,26 @@
                 <!-- Content Row -->
                 <div class="mx-auto stuformbox">
                 	<th:block class="mx-auto">
-                    <form id="searchForm"  th:action="@{/admin/check/chkViewClass}" method="get" role="form">
+                    <form name="searchForm" id="searchForm"  th:action="@{/admin/check/chkViewClass}" method="get" role="form">
                     <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-0 selectclasstext">강의 선택</div>
                         <div class="col-2">
                             <select name="searchCls" id="searchCls" class="browser-default custom-select selectclassbox">
                                 <th:block th:each="val : ${ classList }" >
-                                <option value="class" th:selected="${#strings.equals(params.searchType, 'class')}" th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
+                                <option value="class" th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
                          		</th:block>
                              </select>
                         </div>
                         <div class="col-2"></div>
                           
                         <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker" inline="true">
-                            <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-                            <input type="text" name="datePicker" th:value="${params.datePicker}" id="datePicker" class="dayselectbox form-control" value="출석 날짜">
+                            <!--시작시 기본 날짜 설정은 value를 이용-->
+                            <input type="text" name="datePicker" id="datePicker" class="dayselectbox form-control" value="출석 날짜">
                         </div>
                         <button class="stusearchbutton btn-primary btn-sm" type="button">검색</button>
                     
                         <div class="col-0">
-                            <button class="downloadbuttonbox btn-primary btn-sm" type="submit" onclick="window.print()">오프라인 출석부 다운로드</button>
+                            <button class="downloadbuttonbox btn-primary btn-sm" id="btnClassSearch" type="submit" onclick="window.print()">오프라인 출석부 다운로드</button>
                         </div>
                     </div>
                     </form>
@@ -116,7 +116,8 @@
                                 <tr>
                                     <th>번호</th>
                                     <th>학생이름</th>
-                                    <th>수강강의</th>
+                                    <th>강의이름</th>
+                                   	<th>출석일</th>
                                     <th>출석상태</th>
                                     <th>귀가상태</th>
                                 </tr>
@@ -127,6 +128,7 @@
                                     <td th:text="${ val.no }"></td>
                                     <td th:text="${ val.member.name }"></td>
                                     <td th:text="${ val.cls.clsName }"></td>
+                                    <td th:text="${ val.chkDate }"></td>
                                     <td th:text="${ val.chkStart }" class="attandancestatusbox"></td>
                                     <td th:text="${ val.chkFinish }" class="attandancestatusbox"></td>
                                 </tr>
@@ -156,6 +158,18 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+	<script>
+	$(document).ready(function(){
+		$("#btnClassSearch").click(function(){
+			var searchCls = $("#searchCls").val();
+			
+			if( "" == searchCls) {
+				alert("강의를 선택해주세요.");
+				return;
+			}
+			});
+		});
+	</script>
     <!-- date picker -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
