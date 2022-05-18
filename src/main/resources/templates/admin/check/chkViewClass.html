@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>강의/날짜 별 출석 기록 조회</title>
+    <title>출석부 조회</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
@@ -75,7 +75,7 @@
 
                     <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">강의/날짜 별 출석 기록 조회</h1>
+                    <h1 class="h3 mb-0 text-gray-800">출석부 조회</h1>
                 </div>
                 <hr class="border-bottom-primary">
 
@@ -85,23 +85,27 @@
                     <form name="searchForm" id="searchForm"  th:action="@{/admin/check/chkViewClass}" method="get" role="form">
                     <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-0 selectclasstext">강의 선택</div>
-                        <div class="col-2">
-                            <select name="searchCls" id="searchCls" class="browser-default custom-select selectclassbox">
-                                <th:block th:each="val : ${ classList }" >
-                                <option value="class" th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
-                         		</th:block>
-                             </select>
-                        </div>
-                        <div class="col-2"></div>
-                          
-                        <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker" inline="true">
+	                        <div class="col-2">
+	                            <select name="clsId" id="clsId" class="browser-default custom-select selectclassbox">
+	                            	<option disabled selected>강의 선택</option>
+	                                <th:block th:each="val : ${ classList }" >
+	                                <option th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
+	                         		</th:block>
+	                             </select>
+	                        </div>
+                        <div class="col-0 selectstudenttext">학생</div>
+                            <div class="col-2">
+                                <input class="form-control mr-sm-2 stusearchbox" type="text" name="name" placeholder="학생 이름을 입력해주세요">
+                            </div>
+                        <div class="col-0 selectclasstext">출석일</div>
+                        <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker">
                             <!--시작시 기본 날짜 설정은 value를 이용-->
-                            <input type="text" name="datePicker" id="datePicker" class="dayselectbox form-control" value="출석 날짜">
+                            <input type="date" name="chkDate" id="datePicker" class="dayselectbox form-control">
                         </div>
-                        <button class="stusearchbutton btn-primary btn-sm" type="button">검색</button>
+                        <button class="stusearchbutton btn-primary btn-sm" type="submit">검색</button>
                     
                         <div class="col-0">
-                            <button class="downloadbuttonbox btn-primary btn-sm" id="btnClassSearch" type="submit" onclick="window.print()">오프라인 출석부 다운로드</button>
+                            <button class="downloadbuttonbox btn-primary btn-sm" id="btnClassSearch" type="button" onclick="window.print()">오프라인 출석부 다운로드</button>
                         </div>
                     </div>
                     </form>
@@ -158,18 +162,18 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-	<script>
+	<!-- <script>
 	$(document).ready(function(){
 		$("#btnClassSearch").click(function(){
 			var searchCls = $("#searchCls").val();
 			
-			if( "" == searchCls) {
-				alert("강의를 선택해주세요.");
+			if( "" == clsId || "" == chkDate) {
+				alert("조건을 선택해주세요.");
 				return;
-			}
+			} 
 			});
 		});
-	</script>
+	</script> -->
     <!-- date picker -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>

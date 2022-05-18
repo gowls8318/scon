@@ -84,7 +84,7 @@
                     <!-- Content Row -->
                     <div class="mx-auto stuformbox">
                     <th:block class="mx-auto">
-                    <form name="insertForm" id="insertForm"  th:action="@{/admin/check/chkRegist}" method="get" role="form">
+                    <form name="insertForm" id="insertForm"  th:action="@{/admin/check/chkInsertForm}" method="get" role="form">
                     <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-0 selectclasstext">강의 선택</div>
 	                        <div class="col-2">
@@ -114,12 +114,19 @@
                     </th:block>
 
                         <br><br>
-                        <form>
+                        <form >
                         <div class="stulistrow">
                             <div class="table-responsive" style="overflow: scroll; height: 35em;">
                                 <table class="studenttable table">
                                     <thead>
                                     <tr>
+                                    	<!-- 체크박스 -->
+                                        <th rowspan="2" class="stuCheck">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault"></label>
+                                            </div>
+                                        </th>
                                         <th rowspan="2">번호</th>
                                         <th rowspan="2">학생 이름</th>
                                         <th rowspan="2">수강 강의</th>
@@ -139,11 +146,15 @@
 
                                     <tbody>
                                     <tr th:each="val:${ checkClassList }">
-                                    
+	                                    <!-- 체크박스 -->
+	                                    <th class="stuCheck">
+	                                        <div class="form-check">
+	                                            <input class="form-check-input" type="checkbox" th:value="${ val.no }" id="flexCheckDefault" name="flexCheckDefaultRow">
+	                                        </div>
+	                                    </th>
                                         <td th:text="${ val.no }"></td>
                                         <td th:text="${ val.member.name }"></td>
                                         <td th:text="${ val.cls.clsName }"></td>
-                                        <td th:text="${#chkDate}"></td>
                                         <td colspan="3"><input type="text" class="attformbox form-control" placeholder="출석" aria-label="Username" aria-describedby="basic-addon1" name="chkStart" th:value="${ val.chkStart }"></td>
                                         <td colspan="3"><input type="text" class="attformbox form-control" placeholder="귀가" aria-label="Username" aria-describedby="basic-addon1" name="chkFinish" th:value="${ val.chkFinish }"></td>
                                     </tr>
@@ -195,6 +206,46 @@
 			});
 		});
  	</script> -->
+ 
+<!--  	<script type='text/javascript'>
+	// 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
+	function notiDeleteClick(){
+	  var no = []; 
+	  $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
+	  no.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	  console.log(no);
+	});
+		
+	  if(no == ""){
+			alert("삭제할 항목을 선택해주세요.");
+			return false;
+	  } else {
+			  $.ajax({
+			      type  : "POST",
+			      url    : "/admin/notiDelete",
+			      data: {
+			      no : no       // folder seq 값을 가지고 있음.
+			      },
+			      success: function(result){
+			    	  alert("해당글이 정상적으로 삭제되었습니다.");
+			    	  console.log(result);
+			    	  location.href="/admin/notiTables"
+			      },
+			      error: function(request, status, error) {
+			      	alert("삭제에 실패하였습니다.");
+			      }  
+			   });
+	  }
+	} 
+	
+	// 확인 누르면 글 삭제
+      window.onload = function() {
+        document.getElementById('submitBtn').onclick = function() {
+            document.getElementById('notiSubmitForm').submit();
+            return false;
+        };
+    };
+	</script> -->
 		
     <!-- date picker -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

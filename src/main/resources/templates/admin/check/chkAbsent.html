@@ -65,31 +65,35 @@
 
                     <!-- Content Row -->
                     <div class="mx-auto stuformbox">
-                        <form>
-                        <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
-                            <div class="col-0 selectclasstext">강의 선택</div>
+                        <th:block class="mx-auto">
+                    <form name="searchForm" id="searchForm"  th:action="@{/admin/check/chkViewClass}" method="get" role="form">
+                    <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
+                        <div class="col-0 selectclasstext">강의 선택</div>
+	                        <div class="col-2">
+	                            <select name="clsId" id="clsId" class="browser-default custom-select selectclassbox">
+	                            	<option disabled selected>강의 선택</option>
+	                                <th:block th:each="val : ${ classList }" >
+	                                <option th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
+	                         		</th:block>
+	                             </select>
+	                        </div>
+                        <div class="col-0 selectstudenttext">학생</div>
                             <div class="col-2">
-                                <select class="browser-default custom-select selectclassbox">
-                                    <option selected>------ 강의 선택 ------</option>
-                                    <option value="1">자바뿌시기</option>
-                                    <option value="2">스프링으깨기</option>
-                                    <option value="3">자스뽀개기</option>
-                                </select>
+                                <input class="form-control mr-sm-2 stusearchbox" type="text" name="name" placeholder="학생 이름을 입력해주세요">
                             </div>
-                            <div class="col-0 selectstudenttext">학생</div>
-                            <div class="col-2">
-                                <input class="form-control mr-sm-2 stusearchbox" type="text" placeholder="학생 이름을 입력해주세요" aria-label="Search">
-                            </div>
-                            <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker" inline="true">
-                                <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-                                <input type="text" id="datePicker" class="dayselectbox form-control" value="출석 날짜">
-                            </div>
-                            <button class="stusearchbutton btn-primary btn-sm" type="submit">검색</button>
-                            <div class="col-0">
-                                <button class="downloadbuttonbox btn-primary btn-sm" type="submit" onclick="window.print()">오프라인 출석부 다운로드</button>
-                            </div>
+                        <div class="col-0 selectclasstext">출석일</div>
+                        <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker" inline="true">
+                            <!--시작시 기본 날짜 설정은 value를 이용-->
+                            <input type="date" name="chkDate" id="datePicker" class="dayselectbox form-control">
                         </div>
-                        </form>
+                        <button class="stusearchbutton btn-primary btn-sm" type="submit">검색</button>
+                    
+                        <div class="col-0">
+                            <button class="downloadbuttonbox btn-primary btn-sm" id="btnClassSearch" type="button" onclick="window.print()">오프라인 출석부 다운로드</button>
+                        </div>
+                    </div>
+                    </form>
+                    </th:block>
 
                         <br><br>
                         <div class="stulistrow">
@@ -103,33 +107,13 @@
                                     </tr>
                                     </thead>
 
-                                    <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>김바리</td>
-                                        <td>자바뿌시기</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>김프리</td>
-                                        <td>스프링으깨기</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>김스리</td>
-                                        <td>자스뽀개기</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>김자리</td>
-                                        <td>자스뽀개기</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>김링리</td>
-                                        <td>스프링으깨기</td>
-                                    </tr>
-                                    </tbody>
+                                     <tbody>
+                                <tr th:each="val:${ checkClassList }">
+                                    <td th:text="${ val.no }"></td>
+                                    <td th:text="${ val.member.name }"></td>
+                                    <td th:text="${ val.cls.clsName }"></td>
+                                </tr>
+                                </tbody>
                                 </table>
                             </div>
                         </div>
