@@ -10,7 +10,7 @@ import lombok.Data;
 public class NoticeCmtDTO {
 	
 	private int cNo;
-	private int bNo;
+	private int no;
 	private NoticeDTO notiNo;
 	private String cmtPNo;
 	private String memberId;

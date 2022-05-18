@@ -14,11 +14,19 @@ public interface NoticeService {
 //	글 전체 갯수
 	int total(Criteria cri);
 	
+	
 //	공지 게시글 등록
 	int registNotice(NoticeDTO notice) throws Exception;
 
 //	게시글 상세 조회
 	NoticeDTO selectNoticeDetail(int no) throws Exception;
+	
+//  게시글 수정 하고 등록	
+	int modifyNotice(NoticeDTO notice) throws Exception;
+	
+//	게시글 삭제
+	int deleteNotice(int no) throws Exception;
+	
 	
 //	댓글조회
 	List<NoticeCmtDTO> readCmt(int no) throws Exception;
@@ -26,11 +34,10 @@ public interface NoticeService {
 //	댓글 등록
 	int registCmt(NoticeCmtDTO notiCmt) throws Exception;
 	
-//  게시글 수정 하고 등록	
-	int modifyNotice(NoticeDTO notice) throws Exception;
-	
-//	게시글 삭제
-	int deleteNotice(int no) throws Exception;
+//	댓글 삭제
+	int deleteCmt(int cNo) throws Exception;
+
+
 
 	
 
