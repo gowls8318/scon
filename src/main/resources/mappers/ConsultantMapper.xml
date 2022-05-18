@@ -65,7 +65,12 @@
 		                  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		                 WHERE A.CON_HDELETE = 'N'
 						<if test="keyword != null">
-				  		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+							<if test="type == 'stdName'">
+								AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+							</if>
+							<if test="type == 'handle'">
+								AND A.CON_HANDLE LIKE '%' || #{ keyword } || '%'	
+							</if>
 						</if>
 		                 ORDER BY A.CON_NO DESC
 		               ) C
@@ -85,9 +90,14 @@
 		  FROM TB_CONSULTANT A
 		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		 WHERE A.CON_HDELETE = 'N'
-		 <if test="keyword != null">
-		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
-		 </if>
+		<if test="keyword != null">
+			<if test="type == 'stdName'">
+				AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+			</if>
+			<if test="type == 'handle'">
+				AND A.CON_HANDLE LIKE '%' || #{ keyword } || '%'	
+			</if>
+		</if>
 	</select>
 	
 	<!-- 상담 신청 상세 조회용 -->

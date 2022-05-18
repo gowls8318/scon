@@ -124,7 +124,7 @@
                                         class="btn btn-primary btn-margin submitbuttonbox"
                                         th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.conNo})} + '\';'">수정하기</button> -->
                                     <button type="button"
-                                        class="btn btn-primary btn-margin submitbuttonbox"
+                                        class="btn btn-primary btn-margin submitbuttonbox" id="btn-list"
                                         th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.no})} + '\';'">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="deleteConsultant([[${consultantDetail.no}]])">삭제하기</button>

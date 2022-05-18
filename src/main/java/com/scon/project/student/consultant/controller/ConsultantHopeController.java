@@ -42,16 +42,18 @@ public class ConsultantHopeController {
 	@GetMapping("/consultant/list")
 	public ModelAndView selectAllConsultantList(@ModelAttribute Criteria cri, ModelAndView mv, @AuthenticationPrincipal UserImpl user) throws Exception {
 		
-//		String userId = user.getId();
-//		log.info("userId : {}", userId);
+		cri.setMemberId(user.getId());
+		log.info("접속한 userId : {}", cri.getMemberId());
 		
 		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList(cri);
 //		log.info("consultantList : {}", consultantList);
 		mv.addObject("consultantList", consultantList);
 		
 		int total = consultantHopeService.total(cri);
+		log.info("cri : {}", cri);
 		Pagination page = new Pagination(cri, total);
 		mv.addObject("page", page);
+		log.info("page : {}", page);
 		
 		mv.setViewName("student/consultant/list");
 		

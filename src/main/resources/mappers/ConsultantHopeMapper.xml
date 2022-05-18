@@ -39,49 +39,38 @@
 		<result property="status" column="MEMBER_ST"/>
 	</resultMap>
 	
-	<!-- 검색 조건 -->
-	<sql id="criteria">
-        <trim prefix="AND (" suffix=")" prefixOverrides="OR">
-            <foreach collection="typeArr" item="type">
-                <trim prefix="OR">
-                    <choose>
-                        <when test="type == 't'.toString()">
-                            CON_HTITLE LIKE '%' || #{ keyword } || '%' 
-                        </when>
-                        <when test="type == 'c'.toString()">
-                            CON_HCONTENT LIKE '%' || #{ keyword } || '%' 
-                        </when>
-                    </choose>
-                </trim>
-            </foreach>
-        </trim>
-    </sql>
-	
 	<!-- 상담 신청 내역 조회용 -->
 	<select id="selectAllConsultantList" resultMap="consultantResultMap">
 		SELECT
 		       CON_NO
 		     , CON_WRITE_DATE
 		     , CON_HTITLE
+		     , CON_HCONTENT
 		 FROM (SELECT /*+INDEX_DESC(C PK_TB_CONSULTANT)*/
 		              ROWNUM AS RNUM
 		            , CON_NO
 		            , CON_WRITE_DATE
 		            , CON_HTITLE
+		            , CON_HCONTENT
 		         FROM TB_CONSULTANT C
 		        WHERE CON_HDELETE = 'N'
+				  AND MEMBER_ID = #{ memberId }
 				<![CDATA[
 		          AND ROWNUM <= #{ pageNo } * #{ limit }
 				]]>
-		  		<if test="keyword != null">
-		  		  AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
-		  		  <!-- <include refid="criteria"/> -->
-		  		</if>
+				<if test="keyword != null">
+					<if test="type == 'title'">
+						AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+					</if>
+					<if test="type == 'content'">
+						AND CON_HCONTENT LIKE '%' || #{ keyword } || '%'	
+					</if>
+					AND CON_HDELETE = 'N'
+				</if>
 		  	  )
 		<![CDATA[
 		WHERE RNUM > (#{ pageNo } - 1) * #{ limit }
 		]]>
-		  <!-- AND MEMBER_ID = #{ memberId } -->
 	</select>
 	
 	<!-- 게시물 총 갯수 -->
@@ -90,10 +79,16 @@
 			   COUNT(*)
 		  FROM TB_CONSULTANT
 		 WHERE CON_HDELETE = 'N'
-		 <if test="keyword != null">
-		   AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
-		   <!-- <include refid="criteria"/> -->
-		 </if>
+		  AND MEMBER_ID = #{ memberId }
+		<if test="keyword != null">
+			<if test="type == 'title'">
+				AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
+			</if>
+			<if test="type == 'content'">
+				AND CON_HCONTENT LIKE '%' || #{ keyword } || '%'	
+			</if>
+			AND CON_HDELETE = 'N'
+		</if>
 	</select>
 	
 	<!-- 상담 신청 등록용 -->
