@@ -6,6 +6,7 @@ public class Criteria {
 	private int limit;			// 한 페이지에 보여줄 게시물 수
 	private String keyword;		// 검색 키워드
 	private String type;		// 검색 타입
+	private int clsId;
 	
 	/* 1 페이지 당 게시물을 10개 씩 보여준다. */
 	public Criteria() {
@@ -20,6 +21,14 @@ public class Criteria {
 
 	public int getPageNo() {
 		return pageNo;
+	}
+
+	public int getClsId() {
+		return clsId;
+	}
+
+	public void setClsId(int clsId) {
+		this.clsId = clsId;
 	}
 
 	public void setPageNo(int pageNo) {
@@ -64,7 +73,9 @@ public class Criteria {
 
 	@Override
 	public String toString() {
-		return "Criteria [pageNo=" + pageNo + ", limit=" + limit + ", keyword=" + keyword + ", type=" + type + "]";
+		return "Criteria [pageNo=" + pageNo + ", limit=" + limit + ", keyword=" + keyword + ", type=" + type
+				+ ", clsId=" + clsId + "]";
 	}
 
+	
 }

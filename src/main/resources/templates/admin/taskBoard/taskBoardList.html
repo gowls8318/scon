@@ -99,7 +99,7 @@
                   </div>
                   <!---->
        <!--           <button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask(clsId=${task.clsId})} + '\';'"> --> <!--  onclick="location.href='/admin/insertTask'"  -->
-       				<button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask/(clsId=${taskList[0].clsId])} + '\';'">
+       				<button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask/} + '\';'">
                     <li style="list-style: none;" id="wrtie">글쓰기</li></button><br><br>
                 <table class="table">
                     <thead>
@@ -162,6 +162,7 @@
 							</nav>
 							
 							<form id="searchForm" method="get">	
+								<input type="hidden" name="clsId" th:value="${param.clsId}">
 								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
 								<!-- <input type="hidden" name="limit" th:value="${ page.cri.limit }"> -->
 								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
@@ -185,16 +186,7 @@
 
 
 	<script>
-   /*      $(document).ready(function(){
-	          $("#search-input").keyup(function(){
-	              var k = $(this).val();
-	              $("tr").hide();
-	              var temp = $("tr:contains('" + k + "')");
-	              $(temp).show();
-	          });
-	      }); */
-	      
-	      
+
 	      /* 페이징 & 검색 */
 			let searchForm = $("#searchForm");   	
 	        
@@ -209,16 +201,10 @@
 	    	$(".search-area button").on("click", function(e){
 	    		e.preventDefault();
 	    		
-	    		//let type = $(".search-area select").val();
 		    	let keyword = $(".search-area input[name='keyword']").val();
 		    	
-		    	/* if(!type){
-					alert("검색 유형을 선택하세요.");
-					return false;
-				} */
 		    	
 	    		if(!keyword){
-	    			//alert("원생 이름을 입력하세요.");
 	    			swal({
 	    				text: "검색어를 입력하세요",
 	    				icon: "warning",

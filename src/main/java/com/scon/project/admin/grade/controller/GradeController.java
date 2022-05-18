@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.grade.model.dto.GradeDTO;
 import com.scon.project.admin.grade.model.dto.GradeDTOList;
@@ -33,9 +33,9 @@ public class GradeController {
 		this.gradeService = gradeSerivce;
 	}
 
-	/* 성적 조회 complete (gradeList) */
+	// 성적 조회 (O)(gradeList)
 	@GetMapping("/gradeList")
-	public ModelAndView findGradeList(@RequestParam int clsId, ModelAndView mv) {
+	public ModelAndView findAllGrade(@RequestParam int clsId, ModelAndView mv) {
 		
 		List<GradeDTO> gradeList = gradeService.findAllGrade(clsId);
 		
@@ -44,12 +44,10 @@ public class GradeController {
 		mv.addObject("gradeList", gradeList);
 		mv.setViewName("admin/grade/gradeList");
 		
-//		log.info("gradeList toString : {} ", gradeList.toString());
-		
 		return mv;
 	}
 	
-	/* 성적 수정 complete (gradeList) */
+	// 성적 수정 (O) (gradeList)
 	@PostMapping("/grade")
 	public String updateGrade(GradeDTO gradeDTO, HttpServletRequest request) throws Exception {
 		
@@ -58,11 +56,13 @@ public class GradeController {
 		return "redirect:"+ referer;
 	}
 	
-	/* 성적 등록 학생 조회 complete (insertGrade) */
+	// 성적 등록 학생 조회 (O) (insertGrade)
 	@GetMapping("/insertGrade")
 	public ModelAndView findAllStudent(@RequestParam int clsId, ModelAndView mv){
 		
 		List<GradeDTO> memberList = gradeService.findAllStudent(clsId);
+		
+		log.info("memberList : {} ", memberList );
 		
 		mv.addObject("memberList", memberList);
 		mv.setViewName("admin/grade/insertGrade");
@@ -70,39 +70,25 @@ public class GradeController {
 		return mv;
 	}
 	
-	/* 성적 입력 complete (insertGrade) */
+	// 성적 입력 (O) (insertGrade)
 	@PostMapping("/insertGrade") //@RequestParam int clsId
 	public String insertGrade(GradeDTOList gradeList, HttpServletRequest request) throws Exception {
-	//	log.info(gradeList.getGradeList().toString());
+		log.info(gradeList.getGradeList().toString());
 		boolean result = gradeService.insertGradeList(gradeList.getGradeList());
 		String referer = request.getHeader("Referer");
 		return "redirect:"+ referer;
 	}
-
 	
-	/* 성적 삭제 */
-//	@PostMapping("/gradeList")
-//	public String deleteGrade(@RequestParam(value="gradeId[]") int[] gradeId, HttpServletRequest request) throws Exception {
-//		
-//		int result = gradeService.deleteGrade(gradeId);
-//		
-//		for(int i=0; i<gradeId.length; i++) {
-//			
-//		}
-//		
-//		String referer = request.getHeader("Referer");
-//		return "redirect:" + referer;
-//	}
+	
+	//성적 삭제 (O)
+	@PostMapping("/gradeList")
+	@ResponseBody
+	public void deleteGrade(@RequestParam(value="gradeId[]") List<String> gradeIdArr, @RequestParam int clsId) throws Exception {
+		
+		int	result = gradeService.deleteGrade(gradeIdArr);
+		log.info("gradeIdArr : {}", gradeIdArr);
 
-	//성적 삭제 테스트 중~~~~~
-//	@PostMapping("/gradeList")
-//	public String deleteGrade(@RequestParam(value="gradeId[]") List<String> deleteList, HttpServletRequest request) {
-//		
-//		int result = gradeService.deleteGrade(deleteList);
-//		String referer = request.getHeader("Referer");
-//		return "redirect:" + referer;
-//		
-//	}
+	}
 	
 
 
@@ -112,10 +98,7 @@ public class GradeController {
 		return "admin/grade/gradeRank";
 	}
 	
-	@GetMapping("/modifyBoard")
-	public String modifyBoard() {
-		return "admin/grade/modifyTask";
-	}
+
 	
 	
 }

@@ -93,11 +93,10 @@ public class TaskBoardController {
 		taskBoard.setKeyword(keyword);
 		taskBoard.setClsId(clsId);		
 	
-		
-			log.info("clsId : {} ", clsId);
-//			log.info("keyword : {} ", keyword);
+	
+		log.info("clsId : {} ", clsId);
+		log.info("keyword : {} ", keyword);
 			
-	//	List<TaskBoardDTO> taskList = taskBoardService.findAllTask();
 		
 		int total = taskBoardService.total(taskBoard);
 		Pagination page = new Pagination(cri, total);
@@ -112,7 +111,7 @@ public class TaskBoardController {
 		return mv;
 	}
 	
-	//게시판 게시글 상세 조회
+	//게시판 게시글 상세 조회 (O)
 	@GetMapping("/taskDetail")
 	public ModelAndView findDetail(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv, @AuthenticationPrincipal UserImpl user ) {
 		
@@ -122,14 +121,6 @@ public class TaskBoardController {
 		log.info("taskDetail : {} ",  detailList);
 		log.info("fileList : {} " , fileList);
 		log.info("로그인한 유저 : {} ", user);
-		
-/*		if(fileList == null) {
-			mv.setViewName("admin/taskBoard/taskDetail");
-		} else {
-		//	mv.addObject("file", taskBoardService.findFiles(taskId));
-		 * mv.addObject("file", fileList);
-			mv.setViewName("admin/taskBoard/taskDetail");
-		}  */
 		
 		mv.addObject("detailList", detailList);
 		mv.addObject("fileList", fileList);
@@ -145,8 +136,8 @@ public class TaskBoardController {
 		return "/admin/taskBoard/insertTask";
 	}
 	
-	/* 과제 게시판 글 입력 */
-	@PostMapping("/insertTask")   //@RequestParam int clsId
+	// 과제 게시판 글 입력 (O)
+	@PostMapping("/insertTask")
 	public String multiFileUpload(@RequestParam(value="taskFile") List<MultipartFile> multiFiles, @ModelAttribute TaskBoardDTO task,
 			@AuthenticationPrincipal UserImpl user) throws Exception {
 		
@@ -188,12 +179,9 @@ public class TaskBoardController {
 		/* TaskDTO에 담기 */
 		task.setFileList(fileList);
 
-	//	log.info("files : {}", files);
 		log.info("fileList : {} ", fileList);
-	//	log.info("클래스 아이디 : {}" , clsId);
 
-		//task 객체 안에 파일 정보까지 담아서 1.테스크 테이블 insert 2.파일 테이블 insert 3.테스트 파일 테이블 insert 3개가 잘 됐을 때 로직 성공
-		// 3개 DAO에 선언 된 메소드를 호출 
+		
 		int result = taskBoardService.insertTask(task);
 
 		if(result > 0) {
@@ -224,18 +212,39 @@ public class TaskBoardController {
 	} 
 
 	
-	//게시글 삭제
+	//게시글 삭제 (O)
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(@RequestParam int clsId, @RequestParam String taskId, RedirectAttributes redirectAttr) throws Exception {
 		
 		
 		log.info("삭제 게시글 아이디 : {} ", taskId);
+		log.info("클래스 아이디 : {} ", clsId);
 		taskBoardService.deleteBoard(taskId);
 		
-		redirectAttr.addFlashAttribute("clsId", clsId);
-		return "redirect:/admin/taskBoardList";
+		redirectAttr.addAttribute("clsId", clsId);
+		return "redirect:/admin/taskBoardList";	
 	}
 	
+	
+	//게시글 수정
+	@GetMapping("/modifyBoard")
+	public ModelAndView modifyBoard(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+		
+		List<TaskBoardDTO> detailList = taskBoardService.findModifyTask(taskId);
+		List<FileDTO> fileList = taskBoardService.findModifyfiles(taskId);
+		
+		log.info("taskDetail : {} ",  detailList);
+		log.info("fileList : {} " , fileList);
+		log.info("로그인한 유저 : {} ", user);
+		
+		mv.addObject("detailList", detailList);
+		mv.addObject("fileList", fileList);
+		mv.addObject("loginUser", user);
+		mv.setViewName("admin/taskBoard/modifyTask");
+		
+		return mv;
+	}
+
 	
 	
 	
