@@ -2,16 +2,21 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
+const all =document.querySelector("#all").value;
+const month =document.querySelector("#month").value;
+const del =document.querySelector("#del").value;
+
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
+
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: ["전체 원생 수", "신규 원생 수", "퇴원생 수"],
     datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+      data: [all, (month-del), del],
+      backgroundColor: ['#FB7488', '#AA4DB9', '#F2F1F5'],
+      hoverBackgroundColor: [ '#F05165', '#4E3064','#5f73b3'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],
   },

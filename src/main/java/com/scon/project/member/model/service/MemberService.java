@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.scon.project.member.model.dto.ProfileDTO;
+import com.scon.project.admin.main.model.dto.StudentCount;
 import com.scon.project.member.model.dto.MemberDTO;
 
 public interface MemberService extends UserDetailsService {
@@ -34,6 +35,9 @@ public interface MemberService extends UserDetailsService {
 	int updatePassword(MemberDTO member);
 
 	String findPwdById(String id);
+	
+	//원생 수 추이
+	StudentCount findStudentCount();
 
 
 }
