@@ -43,6 +43,12 @@
 		<result property="fileThumnailPathName" column="FILE_THUM_PATH"/>
 		<result property="fileThumnailName" column="FILE_THUM.NAME"/>
 	</resultMap>
+	
+	<resultMap id="studentCountResultMap" type="com.scon.project.admin.main.model.dto.StudentCount">
+		<id property="allCount" column="ALL_COUNT"/>
+		<result property="monthCount" column="MONTH_COUNT"/>
+		<result property="delCount" column="DEL_COUNT"/>
+	</resultMap>
 
 <sql id="memberColumn">
 	 A.MEMBER_ID
@@ -254,5 +260,24 @@
 		 WHERE MEMBER_ID = #{ id }	
 	</update>
 	
+         
+        <select id="findStudentCount" resultMap="studentCountResultMap">
+       		SELECT (SELECT COUNT(*)
+                      FROM TB_MEMBER A
+                      JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+                     WHERE AUTHORITY_CODE = 1) AS ALL_COUNT
+                    , (SELECT COUNT(*)
+                      FROM TB_MEMBER A
+                      JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+                      WHERE AUTHORITY_CODE = 1
+                       AND ENROLL_DATE >= TO_CHAR(SYSDATE-30,'YYYYMMDD'))AS MONTH_COUNT
+                   , (SELECT COUNT(*) 
+                      FROM TB_MEMBER A
+                      JOIN TB_MEMBER_ROLE B ON (A.MEMBER_ID = B.MEMBER_ID)
+                     WHERE AUTHORITY_CODE = 1
+                      AND MEMBER_ST = '퇴원생') AS DEL_COUNT
+              FROM TB_MEMBER
+              WHERE ROWNUM = 1
+		</select>
 
 </mapper>

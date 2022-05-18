@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.scon.project.admin.main.model.dto.StudentCount;
 import com.scon.project.member.model.dao.MemberMapper;
 import com.scon.project.member.model.dto.AuthorityDTO;
 import com.scon.project.member.model.dto.MemberDTO;
@@ -191,6 +192,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public String findPwdById(String id) {
 		return memberMapper.findPwdById(id);
+	}
+
+	/* 원생 수 추이 */
+	@Override
+	public StudentCount findStudentCount() {
+		return memberMapper.findStudentCount();
 	}
 	
 	

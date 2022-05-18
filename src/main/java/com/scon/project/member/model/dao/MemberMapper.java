@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.scon.project.member.model.dto.ProfileDTO;
+import com.scon.project.admin.main.model.dto.StudentCount;
 import com.scon.project.member.model.dto.MemberDTO;
 
 @Mapper
@@ -55,6 +56,9 @@ public interface MemberMapper {
 
 	// 현재 비밀번호 확인
 	String findPwdById(String id);
+
+	//원생 추 추이
+	StudentCount findStudentCount();
 
 	
 
