@@ -148,7 +148,7 @@
 			(
 				SEQ_TASK_NO.NEXTVAL
 			  , #{ memberId }
-			  , 1               <!-- , #{ clsId } -->
+			  , 1              
 			  , #{ taskTitle }
 			  , #{ taskContent }
 			  , SYSDATE
@@ -230,28 +230,6 @@
 		    WHERE T.TASK_ID = #{ taskId }
 	</select> 
 
-<!--  
-<select id="findDetail" resultMap="taskBoardResultMap" resultType="list">
-		SELECT
-	    	T.TASK_ID,
-	    	T.MEMBER_ID,
-	    	T.CLS_ID,
-	    	T.TASK_TITLE,
-	    	T.TASK_CONTENT,
-	    	T.TASK_DATE,
-	    	T.TASK_VIEW,
-	    	M.MEMBER_NAME,
-            L.FILE_ID,
-            F.FILE_ORGNAME,
-            F.FILE_PATH
-    FROM TB_TASK T
-   	JOIN TB_MEMBER M ON (T.MEMBER_ID = M.MEMBER_ID)
-    LEFT JOIN TB_TASK_FILE L ON (T.TASK_ID = L.TASK_ID)
-    LEFT JOIN TB_FILE F ON (L.FILE_ID = F.FILE_ID)
-  	WHERE T.TASK_DELETE = 'N'
-  	AND T.TASK_ID = #{ taskId }
-	</select> -->
-
 	<!-- 과제 게시판 게시글 삭제 -->
 	<update id="deleteBoard">
 		UPDATE 
@@ -259,5 +237,30 @@
 		SET TASK_DELETE = 'Y' 
 		WHERE TASK_ID = #{ taskId }
 	</update>
+	
+	<!-- 게시글 수정 전 상세 조회 -->
+	<select id="findModifyTask" resultMap="taskBoardResultMap" resultType="list">
+  	SELECT *
+  	 FROM TB_TASK T
+   	JOIN TB_MEMBER M ON (T.MEMBER_ID = M.MEMBER_ID)
+    JOIN TB_TASK_FILE TF ON(T.TASK_ID = TF.TASK_ID)
+    JOIN TB_FILE F ON(TF.FILE_ID = F.FILE_ID)
+  	WHERE T.TASK_DELETE = 'N'
+  	AND T.TASK_ID = #{ taskId }
+	</select> 
+	
+	<!--  게시글 수정 전 상세 조회 (파일) -->
+	<select id="findModifyfiles" resultMap="fileResultMap" resultType="list">
+		SELECT
+		    T.TASK_ID,
+		    T.FILE_ID,
+		    F.FILE_ORGNAME,
+		    F.FILE_SAVENAME,
+		    F.FILE_PATH,
+		    F.FILE_TYPE
+		    FROM TB_TASK_FILE T
+		    JOIN TB_FILE F ON(T.FILE_ID = F.FILE_ID)
+		    WHERE T.TASK_ID = #{ taskId }
+	</select> 
 
 </mapper>

@@ -140,46 +140,7 @@
                                             <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3" th:text="${ detail.taskContent }" name="taskContent" readonly></textarea>
                                         </td>
                                     </tr>
-             <!--                   <tr>
-                                        <th>댓글 <span id="replytext"></span>
-                                        <td>
-                    <!-- Comments section
-                    <section class="mb-4">
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <!-- Comment form
-                                <form class="mb-4"><textarea class="form-control col-md-12" rows="1" placeholder="댓글을 작성해주세요"></textarea><button id="apply-btn">등록</button></form>
-                                <!-- Comment with nested comments-->
-                   <!--  			<div class="d-flex mb-4">
-                                    <!-- Parent comment
-                                    <div class="flex-shrink-0"></div>
-                                    <div class="ms-5">
-                                        <div class="fw-bold"><span style="color:black; font-weight: bold;">김민아</span>
-                                             <a href="#">수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
-                                        엄청 잘했다
-                                        <!-- Child comment 1
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold"><span style="color:black; font-weight: bold;">한지우</span>
-                                                    <a href="#">수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
-                                                100점 맞을듯
-                                            </div>
-                                        </div>
-                                        <!-- Child comment 2
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold"><span style="color:black; font-weight: bold;">유지수</span><a href="#">
-                                                    수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
-                                               퍼가요~
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                          </section> -->
+    
                                         </td>
                                     </tr>
                                     </tbody>
@@ -187,7 +148,8 @@
                             </div>
                             <!-- 수정 / 삭제 버튼 -->
                             <div class="row buttonbox">
-                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit">수정</button>
+                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="button" 
+                                th:onclick="'location.href=\'' + @{/admin/taskDetail(clsId=${task.clsId},taskId=${task.taskId})} + '\';'">수정</button>
                                 <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="button" onclick="modal1();">삭제</button>
                             </div>
                         </div>
@@ -224,7 +186,7 @@
                                  </div>
                                  <div class="modal-footer" th:each="detail : ${ detailList }">
                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal();">취소</button>
-                                 <button type="button" class="btn btn-primary delete-btn" th:onclick="'location.href=\'' + @{/admin/deleteBoard(clsId=${detail.clsId},taskId=${detail.taskId})} + '\';'">삭제</button>
+                                 <button type="button" class="btn btn-primary delete-btn" th:onclick="'location.href=\'' + @{/admin/deleteBoard(clsId=${param.clsId},taskId=${detail.taskId})} + '\';'">삭제</button>
                              </div>
                          </div>
                      </div>

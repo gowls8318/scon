@@ -24,8 +24,6 @@
 		<result property="cmtUpdate" column="CMT_UPDATE"/>
 		<result property="cmtDelete" column="CMT_DELETE"/>
 		
-		<association property="member" resultMap="memberResultMap"/>
-		<association property="notiNo" resultMap="noticeResultMap"/>
 	</resultMap>
 	
 		<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
@@ -128,8 +126,7 @@
 		, '0'
 		, 'N'
 		)
-	</insert>
-	
+	</insert>	
 	
 	<!-- 공지 상세 조회 -->
 	<select id="sellectNoticeDetail" resultMap="noticeResultMap">
@@ -142,70 +139,17 @@
 	  FROM TB_NOTICE
 	 WHERE NOTI_DELETE = 'N'
 	   AND NOTI_NO = #{ no }	
-	</select>
+	</select>	
 	
-	<!-- 댓글 조회 -->
-	<select id="readCmt" resultMap="noticeCmtResultMap">
-		SELECT
-			   CMT_NO
-			 , CMT_CONTENT
-			 , MEMBER_ID
-			 , CMT_DATE
-		  FROM TB_COMMENT	 
-	 	 WHERE NOTI_NO = #{ no }
-	</select>
-	
-	<!-- 댓글 작성 -->
-	<insert id="registCmt" >
-		INSERT
-		  INTO TB_COMMENT
-		(
-  	      CMT_NO
-        , BRD_NO
-        , MEMBER_ID
-        , CMT_CONTENT
-        , CMT_DATE
-        , CMT_DELETE
-        )
-   VALUES 
-   		( 
-          SEQ_CMT_NO.NEXTVAL
-		, #{ bNo }
-		, #{ memberId }
-		, #{ notiContent }
-		, SYSDATE
-		, 'N'
-		)
-	</insert>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	<!-- 게시글 조회수 증가 -->
 	<update id="updateHitCount" parameterType="int" >		
 			UPDATE
 				   TB_NOTICE
 			   SET NOTI_VIEW = NOTI_VIEW + 1
 			 WHERE NOTI_NO = #{ no }  		
-	</update>
-	
+	</update>	
 
-  	<!-- 수정등록 -->
+  	<!-- 게시글 수정등록 -->
 	<update id="modifyNotice">
 		UPDATE 
 			   TB_NOTICE
@@ -213,10 +157,9 @@
 			 , NOTI_CONTENT	= #{ notiContent }
 			 , NOTI_UPDATE = SYSDATE
 		 WHERE NOTI_NO = #{ no }
-	</update>
+	</update>		
 		
-		
-	<!-- 삭제 -->
+	<!-- 게시글 삭제 -->
  	<update id="deleteNotice">
 		UPDATE
 		  	   TB_NOTICE
@@ -227,11 +170,66 @@
 	
 	
 	
+<!--                 댓글                             -->	
+		<!-- 댓글 조회 -->
+	<select id="readCmt" resultMap="noticeCmtResultMap">
+		SELECT
+			   CMT_NO
+			 , CMT_CONTENT
+			 , MEMBER_ID
+			 , CMT_DATE
+		  FROM TB_COMMENT	 
+	 	 WHERE CMT_DELETE = 'N'
+	 	   AND NOTI_NO = #{ no }
+	 	 ORDER BY CMT_NO ASC
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="registCmt" >
+		INSERT
+		  INTO TB_COMMENT
+		(
+  	      CMT_NO
+        , NOTI_NO
+        , MEMBER_ID
+        , CMT_CONTENT
+        , CMT_DATE
+        , CMT_DELETE
+        )
+   VALUES 
+   		( 
+          SEQ_CMT_NO.NEXTVAL
+		, #{ no }
+		, #{ memberId }
+		, #{ cmtContent }
+		, SYSDATE
+		, 'N'
+		)
+	</insert>
+	
+	<!-- 댓글 수정등록 -->
+<!-- 	<update id="modifyCmt">
+		UPDATE 
+			   TB_COMMENT
+		   SET CMT_CONTENT = #{ cmtContent }
+			 , CMT_UPDATE = SYSDATE
+		 WHERE NOTI_NO = #{ no }
+		   AND CMT_NO = #{cNo}
+	</update> -->
+	
+	<!-- 댓글 삭제 -->
+ 	<update id="deleteCmt">
+       UPDATE
+		  	   TB_COMMENT
+		   SET CMT_DELETE = 'Y'
+		   	 , CMT_UPDATE = SYSDATE
+		 WHERE NOTI_NO = #{ no }
+		   AND CMT_NO = #{cNo}
+	</update> 
 	
 	
 	
-	
-	
+
 	
 	
 <!-- 	

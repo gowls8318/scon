@@ -128,12 +128,12 @@ public class ScheduleController {
 	@PostMapping("/deleteSchedule") 
 	public int deleteSchedule(@ModelAttribute ScheduleDTO sche, @AuthenticationPrincipal UserImpl user)  { 
 		
+		sche.setMemberId(user.getId());
+		
 		int result = scheduleService.deleteSchedule(sche);
 		
 		return result; 
 	}
-
-
 
 	
 //	@ResponseBody

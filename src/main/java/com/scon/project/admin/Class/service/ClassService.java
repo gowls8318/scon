@@ -29,7 +29,7 @@ public interface ClassService {
 	int deleteClass(int clsId);
 
 	//강의수정
-	boolean classUpdate(ClassDTO classDTO) throws Exception;
+	int classUpdate(ClassDTO classDTO) throws Exception;
 	
 	
 	 //요일수정 int updateDay(DayDTO dayList);

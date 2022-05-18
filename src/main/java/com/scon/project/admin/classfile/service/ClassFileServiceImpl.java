@@ -37,25 +37,22 @@ public class ClassFileServiceImpl implements ClassFileService {
 
 		int result = 0;
 		
-		int result1 = classFileMapper.registClassFile(classFileList);
-		
-		int result2 = 0;
-		
-		int result3 = 0;
-		
-		for(TaskFileDTO classFile : classFileList.getFileList() ) {
-			result2 += classFileMapper.registClassFile(classFileList);
+		for(TaskFileDTO files : classFileList.getFileList() ) {
+			result += classFileMapper.registFile(files);
 		}
 		
-		if(result1 > 0 && result2 == classFileList.getFileList().size()) {
-			result3 = classFileMapper.registClassFile(classFileList);
-			result = (result3 > 0 ) ? 1 : 0;
+		int result2 = classFileMapper.registClassFile(classFileList); //파일등록
+		
+		if(result2 > 0 && result == classFileList.getFileList().size()) {
+			/* result2 = classFileMapper.registFile(files); */
+			result = (result2 > 0 ) ? 1 : 0;
 		} else {
 			throw new Exception("강의첨부파일 등록 실패");
 		}
 		
 		return result;
 	}
+	
 
 	// 강사등록
 	@Override

@@ -25,14 +25,14 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		this.taskBoardMapper = taskBoardMapper;
 	}
 	
-	//게시판 전체 목록 조회 + 페이징
+	//게시판 전체 목록 조회 + 페이징 (O)
 	@Override
 	public List<TaskBoardDTO> findAllTask(TaskBoardDTO taskBoard, Criteria cri) {
 		return taskBoardMapper.findAllTask(taskBoard, cri); 
 		
 	}
 	
-	//글 전체 갯수
+	//글 전체 갯수 (O)
 	@Override
 	public int total(TaskBoardDTO taskBoard) {
 		
@@ -41,16 +41,7 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		return result;
 	}
 
-	
-	
-	//게시판 전체 목록 조회
-//	@Override
-//	public List<TaskBoardDTO> findAllTask() {
-//		return taskBoardMapper.findAllTask();
-//	}
-	
-
-	//게시판 글 입력
+	//게시판 글 입력 (O)
 	@Override
 	public int insertTask(TaskBoardDTO task) throws Exception {
 		
@@ -76,19 +67,19 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		return result;
 	}
 
-	//게시판 게시글 상세 조회 
+	//게시판 게시글 상세 조회 (O)
 	@Override
 	public List<TaskBoardDTO> findDetail(String taskId) {
 		return taskBoardMapper.findDetail(taskId);
 	}
 
-	//게시판 게시글 상세 조회 (파일)
+	//게시판 게시글 파일 상세 조회 (O) 
 	@Override
 	public List<FileDTO> findFiles(String taskId) {
 		return taskBoardMapper.findFiles(taskId);
 	}
 
-	//게시판 게시글 삭제
+	//게시판 게시글 삭제 (O)
 	@Override
 	public boolean deleteBoard(String taskId) throws Exception {
 		
@@ -101,6 +92,19 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		return result > 0 ? true : false;
 	}
 
+	//게시글 수정 전 게시글 상세 조회
+	@Override
+	public List<TaskBoardDTO> findModifyTask(String taskId) {
+		return taskBoardMapper.findModifyTask(taskId);
+	}
+
+	//게시글 수정 전 파일 상세 조회
+	@Override
+	public List<FileDTO> findModifyfiles(String taskId) {
+		return taskBoardMapper.findModifyfiles(taskId);
+	}
+
+	
 
 
 

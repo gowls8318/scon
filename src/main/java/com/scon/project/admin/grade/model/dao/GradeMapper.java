@@ -26,7 +26,7 @@ public interface GradeMapper {
 //	int deleteGrade(int[] gradeId) throws Exception;
 
 	//성적 삭제 (테스트 중! 이 메소드 쓰기!!!!)
-	int deleteGrade(List<String> deleteList);
+	int deleteGrade(int gradeId) throws Exception;
 
 
 

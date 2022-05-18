@@ -75,7 +75,7 @@
             </div>
                 <hr class="border-bottom-primary">
                 <button type="button" class="btn btn-primary"
-                th:onclick="'location.href=\'' + @{/admin/insertGrade(clsId=1)} + '\';'">성적 추가 하기</button>
+                th:onclick="'location.href=\'' + @{/admin/insertGrade(clsId=${param.clsId})} + '\';'">성적 추가 하기</button>
 
 
                     <br><br>
@@ -114,6 +114,7 @@
                                                 </label>
                                             </td>
                                             <input type="hidden" th:value="${grade.gradeId}" class="gradeId"/>
+                                            <input type="hidden" th:value="${grade.clsId}" id="clsId" />
                                             <td th:text="${ grade.memberName}" class="memberName"></td>
                                             <td th:text="${ grade.clsName }" class="clsName"></td>
                                             <td th:text="${ grade.grade }" class="grade"></td>
@@ -346,79 +347,47 @@
 	        $("#accModal1").modal("hide");
 	    }
         
-        // -------------------------------------------- //
+       //성적 삭제 (O)
         
-   /*   function deleteGrade(){
-        	let checked = $(".btn-check:checked").length;
-        	gradeIdArr = new Array();
+  	   function deleteGrade(){
+        	let checked = $(".btn-check:checked").length; //체크된 체크박스 길이 담기
+        	gradeIdArr = [];              
+        	let clsId = $("#clsId").val();                //성적 정보와 함께 넘길 clsId 담기
+
+        	for(let i = 0; i < checked; i++){
+        		let gradeId = $(".btn-check:checked")[i].value;   //체크된 체크박스의 value(=gradeId) 담기
+        		gradeIdArr.push(gradeId);                        //배열에 push 하기
+        	}   
         	
-        /*	for(let i=0; i<checked.length; i++){
-        		let gradeId = $(".btn-check:checked").val();
-        		gradeIdArr.push(gradeId);
-        	}  */
-        	
-       /* 	$(".btn-check:checked").each(function (){
-        		let gradeId = $(".btn-check:checked").val(); 	
-        		gradeIdArr.push(gradeId);
-        	})
-        	
-        	let data = {
-        			'gradeId' : gradeIdArr
-        	}
+        	console.log(gradeIdArr);
         	
         	$.ajax({
         		
         		url : '/admin/gradeList',
         		type : 'POST',
-        		data : data,
+        		
+        		data : {
+        			'gradeId' : gradeIdArr,
+        			'clsId' : clsId
+        		},
         		
         		success: function(data){
-        			console.log("성적 삭제 완료");
+        			console.log(data);
         			alert("성적 삭제 완료")
         			location.reload();
         		},
         		error : function(xhr, textStatus, errorThrown, data){
         			console.log("성적 삭제 실패.");
-        			console.log(xhr);
-        			console.log(data);
+        			console.log("xhr : " + xhr);
+        			console.log("data : " + data);
         			alert("성적 삭제 실패");
         			location.reload();
         			
         		}
         	});
-       
-        }  */
-     /*   	
-        	let data = {
-        			'gradeId' : gradeIdArr
-        	}
-        	
-        	$.ajax({
-        		
-        		url : '/admin/gradeList',
-        		type : 'POST',
-        		data : data,
-        		
-        		success: function(data){
-        			console.log("성적 삭제 완료");
-        			alert("성적 삭제 완료")
-        			location.reload();
-        		},
-        		error : function(xhr, textStatus, errorThrown, data){
-        			console.log("성적 삭제 실패.");
-        			console.log(xhr);
-        			console.log(data);
-        			alert("성적 삭제 실패");
-        			location.reload();
-        			
-        		}
-        	}); */
-        	
         
-      
-
-
-
+        }  
+ 
  </script>
 
 </body>

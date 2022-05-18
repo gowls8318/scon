@@ -19,6 +19,9 @@
 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
+	
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
 <!-- bootstrap-icons -->
@@ -48,6 +51,16 @@ input[type="checkbox"]::before {
 	transform: scale(0) translate(-50%, -50%);
 	line-height: 1;
 }
+
+
+    /* 파일첨부 */
+    form input { 
+        border-radius: 5px; 
+        padding: 5px 10px; 
+    } 
+    form input::file-selector-button { 
+        display: none; 
+    }
 </style>
 
 
@@ -65,7 +78,8 @@ input[type="checkbox"]::before {
 
 			<!-- Main Content -->
 			<form th:action="@{/admin/registClassFile}" method="post" enctype="multipart/form-data" name="dataForm" id="dataForm">
-				 <input type="hidden" th:value="${classFile?.clsId}" /> 
+				 <input type="hidden" name="clsId"/> 
+				 <!-- th:value="${classNameList.clsId}" -->
 				<div id="content">
 					<!--  Begin Page Content -->
 					<div class="container-fluid">
@@ -97,9 +111,9 @@ input[type="checkbox"]::before {
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
 														<select class="form-control form-select-lg"
-															aria-label=".form-select-lg example" name="className" id="clsName">
+															aria-label=".form-select-lg example" name="className">
 															<th:block th:each="class : ${ classNameList }">
-															<option th:text="${class.clsName}"></option>
+															<option th:value="${class.clsId}" th:text="${class.clsName}" id="clsId"></option>
 															</th:block>
 														</select>
 													</div>
@@ -130,13 +144,22 @@ input[type="checkbox"]::before {
 											</th>
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
-														<input type="text" class="form-control" name="clfName">
+														<input type="text" class="form-control" name="clfName" id="clfName">
 													</div>
 												</td>
 											</tr>
 											
 											<!-- 파일업로드 -->
-											<tr>
+											  <tr>                 
+		                                        <th>강의첨부자료 <span id="pointtext">*</span></th>
+		                                        <td>
+		                                                <label for="file-input"></label> 
+		                                                <input id="classFile" name="classFile" type="file" multiple/> 
+		                                        </td>
+		                                    </tr>       
+		                                               
+		                                    
+											<!-- <tr>
 											<th class="col-lg-1">
 											<label for="customFile" class="col-form-label">강의첨부자료 <span id="pointtext">*</span></label>
 											</th>             
@@ -145,7 +168,7 @@ input[type="checkbox"]::before {
 									            <label class="custom-file-label" for="customFile">강의첨부파일</label>
 									            <input type="file" class="custom-file-input" id="customFile" multiple>
 									        	</div>
-		                                    </td>
+		                                    </td> -->
 		                                   </tr>
 										</tbody>
 									</table>
@@ -157,7 +180,7 @@ input[type="checkbox"]::before {
 				
 							<div class="row buttonbox">
 							<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" 
-							data-toggle="modal" data-target="#classupdateModal">등록</button>
+							type="button" id="registclf">등록</button>
 							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset"
 							onclick="location.href='/admin/ClassFileList'">취소</button>
 						   </div>
@@ -171,8 +194,6 @@ input[type="checkbox"]::before {
 
 	</div>
 	<!-- End of Content Wrapper -->
-
-
 </div>
 	
 
@@ -180,8 +201,54 @@ input[type="checkbox"]::before {
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+	
+	<script>
+	$("#registclf").click(function() {
+		
+		const clsId = document.getElementById("clsId").value;
+		const clfName = document.getElementById("clfName").value;
+		let file = document.querySelector('#classFile');
 
 
+		
+		console.log(clsId);
+		console.log(clfName);
+		
+		const classFile = {
+				clsId : clsId,
+				clfName : clfName
+		};
+		
+		let formData = new FormData()
+		formData.append("clsfile", file.files[0]);
+		formData.append("clsId", clsId);
+		formData.append("clfName", clfName);
+
+		
+		console.log(formData);
+		
+		$.ajax({
+			type : 'POST',
+			url : '/admin/registClassFile',
+			data: formData,
+			processData: false,
+			contentType: false,
+			enctype: 'multipart/form-data',
+			success : function(data) {
+				console.log(data);
+				location.href=data;
+				
+			},
+			error : function(xhr) {
+				
+				console.log("강의파일 실패")
+			}
+			});
+		
+	});
+	
+	</script>
+		
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>

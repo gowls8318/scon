@@ -3,6 +3,7 @@ package com.scon.project.admin.grade.model.service;
 import java.util.List;
 
 import com.scon.project.admin.grade.model.dto.GradeDTO;
+import com.scon.project.admin.grade.model.dto.GradeDTOList;
 import com.scon.project.member.model.dto.MemberDTO;
 
 public interface GradeService {
@@ -23,7 +24,9 @@ public interface GradeService {
 //	int deleteGrade(int[] gradeId) throws Exception;
 
 	//성적 삭제 (테스트 중 이 메소드 쓰기!!!!)
-	int deleteGrade(List<String> deleteList);
+	int deleteGrade(List<String> gradeIdArr) throws Exception;
+
+
 
 
 
