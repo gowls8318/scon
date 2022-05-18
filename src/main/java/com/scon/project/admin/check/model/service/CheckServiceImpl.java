@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.check.model.dao.CheckMapper;
 import com.scon.project.admin.check.model.dto.CheckDTO;
+import com.scon.project.member.model.dto.MemberDTO;
 
 @Service("checkService")
 @Transactional
@@ -23,15 +24,10 @@ public class CheckServiceImpl implements CheckService {
 	
 	/* 날짜별 반 출석 조회 */
 	@Override
-	public List<CheckDTO> selectAllClassList() throws Exception {
+	public List<CheckDTO> selectAllClassList(ClassDTO cls, CheckDTO chk, MemberDTO member) throws Exception {
 		
-		List<CheckDTO> checkClassList = checkMapper.selectAllClassList();
+		return checkMapper.selectAllClassList(cls, chk, member);
 		
-		if(checkClassList == null) {
-			throw new Exception("강의 조회에 실패하였습니다.");
-		}
-		
-		return checkClassList;
 	}
 	
 	/* 학생별 출석 조회 */
@@ -45,15 +41,10 @@ public class CheckServiceImpl implements CheckService {
 	
 	/* 강의 목록 조회*/
 	@Override
-	public List<ClassDTO> selectClassList() throws Exception {
+	public List<ClassDTO> selectClassList(ClassDTO cls) throws Exception {
 		
-		List<ClassDTO> classList = checkMapper.selectClassList();
+		return checkMapper.selectClassList(cls);
 		
-		if(classList == null) {
-			throw new Exception("강의 조회에 실패하였습니다.");
-		}
-		
-		return classList;
 	}
 
 
