@@ -29,6 +29,11 @@ public interface TaskBoardService {
 	//게시판 게시글 삭제
 	boolean deleteBoard(String taskId) throws Exception;
 
+	//게시판 수정 전 내용 조회
+	List<TaskBoardDTO> findModifyTask(String taskId);
+	//게시판 수정 전 파일 조회
+	List<FileDTO> findModifyfiles(String taskId);
+
 	
 
 

@@ -38,10 +38,12 @@ public interface TaskBoardMapper {
 	//게시판 게시글 삭제
 	int deleteBoard(String taskId);
 
-
-
-
+	//게시글 수정 전 상세 조회
+	List<TaskBoardDTO> findModifyTask(String taskId);
 	
-	//TaskBoardDTO findMemberName(int clsId);
+	//게시글 수정 전 파일 상세 조회
+	List<FileDTO> findModifyfiles(String taskId);
+
+
 
 }

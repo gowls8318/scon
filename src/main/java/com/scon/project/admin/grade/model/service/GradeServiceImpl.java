@@ -66,8 +66,21 @@ public class GradeServiceImpl implements GradeService{
 
 	//성적 삭제 (테스트 중 이 메소드 쓰기!!!!!)
 	@Override
-	public int deleteGrade(List<String> deleteList) {
-		return gradeMapper.deleteGrade(deleteList);
+	public int deleteGrade(List<String> gradeIdArr) throws Exception {
+		
+		int result = 0;
+		
+		for(String gradeId : gradeIdArr) { //gradeId 는 number 타입
+			result += gradeMapper.deleteGrade(Integer.parseInt(gradeId));
+		}
+		
+		if(result == gradeIdArr.size()) {
+			result = 1;
+		} else {
+			throw new Exception("성적 삭제 실패");
+		}
+		
+		return result;
 	}
 
 
