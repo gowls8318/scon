@@ -22,6 +22,8 @@
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script> -->
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -31,6 +33,15 @@
     	const successMessage = '[[${successMessage}]]'
     	if(successMessage) {
     		alert(successMessage);
+    		/* Swal.fire({
+				text: successMessage,
+				icon: "success",
+			  	confirmButtonText: '확인',
+			}).then((result) => {
+				if(result.isConfirmed) {
+					location.reload();
+				}
+			}); */
     	}
     </script>
 
@@ -71,13 +82,23 @@
                                 	<!-- th:onclick="location.href='/admin/lecture/insertForm'" -->
                                 	<!-- id="insertForm" -->
                         	</div>
-	                        <form class="form-inline" action="" method="get">
+	                        <form id="searchForm" class="form-inline" action="/admin/lecture/list" method="get">
+	                        	<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
 	                            <div class="search-area col-lg-12">
+	                            	<select class="form-control form-select-lg" name="type">
+									    <optgroup label="검색 유형">
+									    	<option value="stdName" th:selected="${ #strings.equals( page.cri.type, 'stdName' ) }">원생 이름</option>
+									    	<option value="lecStatus" th:selected="${ #strings.equals( page.cri.type, 'lecStatus' ) }">수강 상태</option>
+									    	<option value="accOption" th:selected="${ #strings.equals( page.cri.type, 'accOption' ) }">결제 방법</option>
+									    	<option value="accStatus" th:selected="${ #strings.equals( page.cri.type, 'accStatus' ) }">수납 여부</option>
+									     	<!-- <option value="handle" th:selected="${ #strings.equals( page.cri.type, 'handle' ) }">환불 처리</option> -->
+									    </optgroup>
+									</select>
 	                                <div class="form-group mx-sm-3">
-	                                    <input type="text" name="keyword" th:value="${ page.cri.keyword }" class="form-control"
-	                                    	id="keyword" placeholder="원생 이름을 입력하세요">
-	                                </div>
-	                                <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
+                                    <input type="text" name="keyword" class="form-control" th:value="${ page.cri.keyword }" id="keyword"
+                                        placeholder="검색어를 입력하세요">
+                                </div>
+	                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
 	                            </div>
 	                        </form>
                         </div>
@@ -118,7 +139,7 @@
                                             </td>
                                             <td th:text="${ lec.accDate }">수납일</td>
                                             <td th:text="${ lec.accOption }">결제 방법</td>
-                                            <td th:text="${ lec.accStatus }">수납 여부</td>
+                                            <td th:text="${ lec.accStatus }" class="accStatus">수납 여부</td>
                                             <td>
                                             	<span th:if="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${'환불'}" class="refund"></span>
                                             	<span th:unless="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${''}" class="refund"></span>
@@ -180,12 +201,12 @@
 								</div>
 							</nav>
 							
-							<form id="searchForm" method="get">	
+							<!-- <form id="searchForm" method="get">	
 								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<!-- <input type="hidden" name="limit" th:value="${ page.cri.limit }"> -->
+								<input type="hidden" name="limit" th:value="${ page.cri.limit }">
 								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
-								<!-- <input type="hidden" name="type" th:value="${ page.cri.type }"> -->	
-							</form>
+								<input type="hidden" name="type" th:value="${ page.cri.type }">	
+							</form> -->
 
                         </div>
                     </div>
@@ -236,11 +257,11 @@
                                     </div>
                                     <div class="col-lg-1"></div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-3 refPay">
                                     <div class="col-lg-1"></div>
                                     <label for="refPay" class="col-sm-2 col-form-label col-lg-3">환불 금액 <span id="pointtext">*</span></label>
                                     <div class="col-sm-10 col-lg-7">
-                                        <input type="number" class="form-control" id="refPay" required>
+                                        <input type="number" class="form-control" id="refPay" name="refPay" required>
                                     </div>
                                     <div class="col-lg-1"></div>
                                 </div>
@@ -312,29 +333,21 @@
 	        searchForm.submit();
         });
     	
-    	
     	$(".search-area button").on("click", function(e){
     		e.preventDefault();
     		
-    		//let type = $(".search-area select").val();
 	    	let keyword = $(".search-area input[name='keyword']").val();
-	    	
-	    	/* if(!type){
-				alert("검색 유형을 선택하세요.");
-				return false;
-			} */
 	    	
     		if(!keyword){
     			//alert("원생 이름을 입력하세요.");
     			swal({
-    				text: "원생 이름을 입력하세요",
+    				text: "검색어를 입력하세요",
     				icon: "warning",
     				button: "확인"
     			});
     			return false;
     		}		
     		
-    		searchForm.find("input[name='keyword']").val(keyword);
     		searchForm.find("input[name='pageNo']").val(1);
     		searchForm.submit();
     	});
@@ -353,16 +366,22 @@
 			document.getElementsByClassName('refund').value = elem.closest('.lecTr').querySelector('.refund').innerHTML;
 			console.log(document.getElementsByClassName('refund').value);
 			
+			document.getElementsByClassName('accStatus').value = elem.closest('.lecTr').querySelector('.accStatus').innerHTML;
+			console.log(document.getElementsByClassName('accStatus').value);
+			
 			$("#lecNo").val(document.getElementsByClassName('no').value);
 			$("#memberId").val(document.getElementsByClassName('memberId').value);
 			$("#clsId").val(document.getElementsByClassName('clsId').value);
-			$("#refund").val(document.getElementsByClassName('refund').value);
-			
-			//$("#refundModal").modal("show");
 			
 			if(document.getElementsByClassName('refund').value == "환불") {
     			swal({
     				text: "환불 처리가 완료된 수강 내역입니다",
+    				icon: "warning",
+    				button: "확인"
+    			});
+    		} else if(document.getElementsByClassName('accStatus').value == "미납") {
+    			swal({
+    				text: "미납인 수강 내역입니다",
     				icon: "warning",
     				button: "확인"
     			});
@@ -420,12 +439,16 @@
 				success : function(data) {
 					console.log(data);
 					alert(data);
-					/* swal({
-	    				text: "data",
-	    				icon: "success",
-	    				button: "확인"
-	    			}); */
-					location.href="/admin/lecture/list";
+					/* Swal.fire({
+						text: data,
+						icon: "success",
+					  	confirmButtonText: '확인',
+					}).then((result) => {
+						if(result.isConfirmed) {
+							location.reload();
+						}
+					}); */
+					//location.href="/admin/lecture/list";
 				},
 				error : function(xhr) {
 					console.log(xhr);

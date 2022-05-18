@@ -64,13 +64,20 @@
                             <h6 class="m-0 font-weight-bold text-primary">상담 신청 내역</h6>
                         </div>
                         <br>
-                        <form class="form-inline" action="/admin/consultant/hopeList" method="get">
+                        <form id="searchForm" class="form-inline" action="/admin/consultant/hopeList" method="get">
+                        	<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
                             <div class="search-area col-lg-12">
+								<select class="form-control form-select-lg" name="type">
+								    <optgroup label="검색 유형">
+								    	<option value="stdName" th:selected="${ #strings.equals( page.cri.type, 'stdName' ) }">원생 이름</option>
+								     	<option value="handle" th:selected="${ #strings.equals( page.cri.type, 'handle' ) }">처리 현황</option>
+								    </optgroup>
+								</select>
                                 <div class="form-group mx-sm-3">
-                                    <input type="text" name="keyword" class="form-control" th:value="${ page.cri.keyword }" id="keyword" onkeyup='searchTable()'
-                                        placeholder="원생 이름을 입력하세요">
+                                    <input type="text" name="keyword" class="form-control" th:value="${ page.cri.keyword }" id="keyword"
+                                        placeholder="검색어를 입력하세요">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
+                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
                             </div>
                         </form>
                         <div class="card-body">
@@ -144,12 +151,12 @@
 								</div>
 							</nav>
 							
-							<form id="searchForm" method="get">	
+							<!-- <form id="searchForm" method="get">	
 								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<!-- <input type="hidden" name="limit" th:value="${ page.cri.limit }"> -->
+								<input type="hidden" name="limit" th:value="${ page.cri.limit }">
 								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
-								<!-- <input type="hidden" name="type" th:value="${ page.cri.type }"> -->	
-							</form>
+								<input type="hidden" name="type" th:value="${ page.cri.type }">	
+							</form> -->
 
                         </div>
                     </div>
@@ -230,25 +237,18 @@
     	$(".search-area button").on("click", function(e){
     		e.preventDefault();
     		
-    		//let type = $(".search-area select").val();
 	    	let keyword = $(".search-area input[name='keyword']").val();
-	    	
-	    	/* if(!type){
-				alert("검색 유형을 선택하세요.");
-				return false;
-			} */
 	    	
     		if(!keyword){
     			//alert("원생 이름을 입력하세요.");
     			swal({
-    				text: "원생 이름을 입력하세요",
+    				text: "검색어를 입력하세요",
     				icon: "warning",
     				button: "확인"
     			});
     			return false;
     		}		
     		
-    		searchForm.find("input[name='keyword']").val(keyword);
     		searchForm.find("input[name='pageNo']").val(1);
     		searchForm.submit();
     	});

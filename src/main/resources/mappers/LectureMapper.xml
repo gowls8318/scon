@@ -119,10 +119,27 @@
 		                  FROM TB_LECTURE A
 		                  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		                  JOIN TB_CLASS C ON(A.CLS_ID = C.CLS_ID)
-		                  FULL OUTER JOIN TB_REFUND F ON(A.LEC_NO = F.LEC_NO)
+		                  LEFT JOIN TB_REFUND F ON(A.LEC_NO = F.LEC_NO)
 		                 WHERE A.LEC_DELETE = 'N'
-						<if test="keyword != null">
+						<!-- <if test="keyword != null">
 				  		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+						</if> -->
+						<if test="keyword != null">
+							<if test="type == 'stdName'">
+								AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+							</if>
+							<if test="type == 'lecStatus'">
+								AND A.LEC_STATUS LIKE '%' || #{ keyword } || '%'	
+							</if>
+							<if test="type == 'accOption'">
+								AND A.ACC_OPTION LIKE '%' || #{ keyword } || '%'	
+							</if>
+							<if test="type == 'accStatus'">
+								AND A.ACC_STATUS LIKE '%' || #{ keyword } || '%'	
+							</if>
+							<!-- <if test="type == 'handle'">
+								AND F.LEC_NO LIKE '%' || #{ keyword } || '%'
+							</if> -->
 						</if>
 		                 ORDER BY A.LEC_NO DESC
 		               ) D
@@ -142,9 +159,26 @@
 		  FROM TB_LECTURE A
 		  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		 WHERE LEC_DELETE = 'N'
-		 <if test="keyword != null">
+		 <!-- <if test="keyword != null">
 		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
-		 </if>
+		 </if> -->
+		 <if test="keyword != null">
+			<if test="type == 'stdName'">
+				AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+			</if>
+			<if test="type == 'lecStatus'">
+				AND A.LEC_STATUS LIKE '%' || #{ keyword } || '%'	
+			</if>
+			<if test="type == 'accOption'">
+				AND A.ACC_OPTION LIKE '%' || #{ keyword } || '%'	
+			</if>
+			<if test="type == 'accStatus'">
+				AND A.ACC_STATUS LIKE '%' || #{ keyword } || '%'	
+			</if>
+			<!-- <if test="type == 'handle'">
+				AND A.CON_HANDLE LIKE '%' || #{ keyword } || '%'	
+			</if> -->
+		</if>
 	</select>
 		
 	<!-- 강의 조회용 -->
