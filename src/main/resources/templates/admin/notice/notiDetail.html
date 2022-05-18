@@ -53,11 +53,74 @@
     }
 
     /* 내용 */
-    #notiContents {
+    #notiContent {
         height: 20rem;
         vertical-align : top;
         padding-top: 1.2rem;
         
+    }
+    
+            /* ----------------------댓글---------------------- */
+    /* -------폼--------- */
+    .card-header {
+        font-family: "GmarketSansMedium" !important;
+        font-weight: bold;
+    }
+    /* 댓글카드 헤더, 작성 폼 폰트색상 */
+    .card-header, .form-control {
+        color: #858796;        
+    }
+
+    /* (댓글 내용+등록버튼) 그룹 설정 */
+    .list-group-item {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 1fr;        
+    }
+
+    /* 댓글 등록 버튼 */
+    .mt-3 {
+        justify-content: flex-end;
+        float: right;
+        margin-top: 0 !important;
+        margin-left: 20px;
+        border: #858796;
+        background-color: #858796 !important;
+}
+    .mt-3:hover {
+        border: none;
+        background-color: #adadad !important;
+}
+    .mt-3:focus {
+        box-shadow: none !important;
+}
+
+    /* -------등록된 댓글--------- */
+    /* 댓글 작성자 이름 */
+    #cmtName {
+        color :#8B169E;
+        font-family: "GmarketSansMedium" !important;
+        font-weight: bold;
+        width: 80px;
+    }
+
+    /* 등록된 댓글 내용 */
+    .mr-1 {
+        margin-left: 5rem;
+        vertical-align: middle; 
+    }    
+    .text-monospace {
+        font-family: "GmarketSansMedium" !important;
+    }
+    
+    /* 등록된 댓글 수정/삭제 버튼 */
+    .cmtReple, .cmtModify, .cmtDelete {
+        color: #858796;
+        background-color: #fff;
+        border: none;
+        font-family: "GmarketSansMedium" !important;
+        font-weight: bold;
+        padding: 2px !important;
     }
 
     /* 모달창 버튼 */
@@ -163,7 +226,7 @@
                                     </tr>
                                     <tr>
                                         <th>내용</th>
-                                        <td id="notiContents" th:text="${ noticeDetail.notiContent }" class="col-sm-10"></td>
+                                        <td id="notiContent" th:text="${ noticeDetail.notiContent }" class="col-sm-10"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -178,44 +241,49 @@
                             <!-- 
                                 댓글                                
                             -->
+                            	<form action="/admin/cmtRegi" method="post" id="cmtSubmitForm" name="cmtSubmitForm">
                             <div class="card mb-2 mt-5">
                                 <div class="card-header bg-light">
                                     <i class="fa fa-comment fa"></i> 댓글
                                 </div>
-                                <form action="/admin/cmtRegi" method="post" id="cmtSubmitForm">
-                                   	 <div class="card-body">                                       
-                                          <input type="hidden" id="bNo" th:value="${ noticeDetail.no }"> 
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                	<textarea class="form-control" id="reply-content" rows="1"
-                                                				name="cmtContent"></textarea>                                                
-                                                <button id="reply-btn-save" type="button" class="btn btn-dark mt-3">등록</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </form>
+		                                <div class="card-body">                                       
+		                                    <input type="hidden" th:value="${ noticeDetail.no }" name="no" id="no"/>
+			                                       <ul class="list-group list-group-flush">
+			                                            <li class="list-group-item">
+			                                                	<input type="text" class="form-control" id="reply-content" rows="1"
+			                                                			  name="cmtContent" placeholder="댓글을 입력하세요." required></input>                                                
+			                                                <button id="reply-btn-save" type="submit" class="btn btn-dark mt-3">등록</button>
+			                                            </li>
+			                                         </ul>
+			                                
+		    	                        </div>
                             </div>
+                            </form>
                             <br/>
+ <!--  등록된 댓글 -->                           
+                            <form action="/admin/cmtDelete" method="post" id="cmtDeleteForm" name="cmtDeleteForm">
+                            <input type="hidden" th:value="${ noticeDetail.no }" name="cNo" id="cNo"/>
                             <div class="card">
-<!--  등록된 댓글 -->
                                 <div class="card-header">댓글</div>
-                                <ul id="reply--box" class="list-group" th:each="comment : ${ cmtList }">
-                                    <li class="list-group-item d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div id="cmtName" th:text="${comment.memberId}"></div>
-                                            <div class="text-monospace mr-1" th:text="${ comment.cmtContent }"></div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <button class="cmtReple">답글</button>&nbsp
-                                            <button class="cmtModify">수정</button>&nbsp
-                                            <button class="cmtDelete">삭제</button>
-                                        </div>
-                                    </li>
-                                </ul>
+			                        	<ul id="reply--box" class="list-group" th:each="comment : ${ cmtList }">
+			                            	<li class="list-group-item d-flex justify-content-between">
+			                                	<div class="d-flex">
+			                                        <div id="cmtName" th:text="${comment.memberId}"></div>
+			                                        <div class="text-monospace mr-1" th:text="${ comment.cmtContent }"></div>
+			                                        <div class="text-monospace mr-1" th:text="${ comment.cmtDate }"></div>
+			                                    </div>
+			                                    <div class="d-flex">
+			                                        <button class="cmtReple">답글</button>&nbsp
+			                                        <button class="cmtModify" data-toggle="modal" data-target="#cmtModifyModal" 
+			                                        		type="button" th:value="${ comment.cNo }">수정</button>&nbsp
+			                                        <button class="cmtDelete" data-toggle="modal" data-target="#cmtDeleteModal" type="button">삭제</button>
+			                                    </div>
+			                                </li>
+			                            </ul>
+                            </div>
+                            </form>
                                 <!--  등록된 댓글 끝-->
                                 
-                            </div>
-
                         </div>
                     </div>
 					<!-- 공지사항 내용 테이블 끝 -->
@@ -232,15 +300,12 @@
         
     </div>
     <!-- End of Page Wrapper -->
+	
 
-    <script>
-    window.onload = function() {
-        document.getElementById('cmtSubmitBtn').onclick = function() {
-            document.getElementById('cmtSubmitForm').submit();
-            return false;
-        };
-    };
-	</script>
+
+
+
+
 
 
     <!-- Scroll to Top Button-->
@@ -248,9 +313,9 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-        <!-- 확인 Modal-->
+        <!-- 글 삭제 확인 Modal-->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        		aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -268,17 +333,91 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 댓글 삭제 확인 Modal-->
+         <div class="modal fade" id="cmtDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        		aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">삭제하시겠습니까?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">삭제하시려면 확인버튼을 눌러주세요.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                        <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal" 
+                        		th:onclick="|location.href='/admin/cmtDelete?no=${noticeDetail.no}'|">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+          <!-- 댓글 수정 Modal-->
+         <div class="modal fade" id="cmtModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        		aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">작성한 댓글 수정</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    	<input type="text" class="form-control" id="reply-content" rows="1"
+			                   name="cmtContent" ></input>          
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                        <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal" >확인</button>
+                        	<!-- 	th:onclick="|location.href='/admin/cmtDelete?no=${noticeDetail.no}'|" -->
+                        		
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <script>
+        	$("")
+        
+        </script>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
+
+	<!-- 글삭제 -->
 	<script type='text/javascript'>
     window.onload = function() {
         document.getElementById('submitBtn').onclick = function() {
             document.getElementById('notiSubmitForm').submit();
             return false;
         };
+        
+        document.getElementById('cmtDeleteBtn').onclick = function() {
+            document.getElementById('cmtDeleteForm').submit();
+            return false;
+        };
     };
-	</script>
 
-
+    </script> 
 
 
     <!-- Bootstrap core JavaScript-->

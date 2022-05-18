@@ -34,6 +34,7 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeMapper.total(cri);
 	}
 	
+	
 		
 // 게시글 등록
 	@Override
@@ -52,21 +53,6 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return noticeDetail;
 	}
-//	댓글 조회
-	@Override
-	public List<NoticeCmtDTO> readCmt(int no) throws Exception {
-		return noticeMapper.readCmt(no);
-	}
-
-
-	
-//	댓글 등록
-	@Override
-	public int registCmt(NoticeCmtDTO notiCmt) throws Exception {
-		
-		return noticeMapper.registCmt(notiCmt);
-	}
-	
 
 //  게시글 수정하고 등록		
 	@Override
@@ -86,6 +72,26 @@ public class NoticeServiceImpl implements NoticeService {
 
 
 
+//	댓글 조회
+	@Override
+	public List<NoticeCmtDTO> readCmt(int no) throws Exception {
+		return noticeMapper.readCmt(no);
+	}
+
+	
+//	댓글 등록
+	@Override
+	public int registCmt(NoticeCmtDTO notiCmt) throws Exception {
+		
+		return noticeMapper.registCmt(notiCmt);
+	}
+	
+//	댓글 삭제
+	@Override
+	public int deleteCmt(int cNo) throws Exception {
+		
+		return noticeMapper.deleteCmt(cNo);
+	}
 
 
 
