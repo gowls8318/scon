@@ -89,33 +89,32 @@ public class ClassServiceImpl implements ClassService {
 
 	//강의수정
 	@Override
-	public boolean classUpdate(ClassDTO classDTO) throws Exception {
+	public int classUpdate(ClassDTO classDTO) throws Exception {
 		
 		
 		log.info("dayList {}:" , classDTO.getDayList());
 		log.info("time {} : ", classDTO.getTime());
 		int result = classMapper.classUpdate(classDTO);
+		
+		
+		 /*int result2 = classMapper.classUpdate(classDTO.getDayList()); 
+		 int result3 = classMapper.classUpdate(classDTO.getTime());*/
+		
+		
 		/*
-		 * int result2 = classMapper.updateDay(classDTO.getDayList()); int result3 =
-		 * classMapper.updateTime(classDTO.getTime());
+		 * int result2 = 0; for (DayDTO day : classDTO.getDayList()) { if
+		 * (day.getClsDayId() != 0) result2 += classMapper.updateDay(day,
+		 * classDTO.getClsId()); //dto에 id }
+		 * 
+		 * int result3 = 0; for (TimeDTO time : classDTO.getTime()) { if
+		 * (time.getClsTimeId() != 0) result3 += classMapper.updateTime(time,
+		 * classDTO.getClsId()); }
+		 * 
+		 * if (result <= 0 || result2 <= 0 || result3 <= 0) { throw new
+		 * Exception("강의 등록에 실패했습니다."); }
 		 */
-		int result2 = 0;
-		for (DayDTO day : classDTO.getDayList()) {
-			if (day.getClsDayId() != 0)
-				result2 += classMapper.updateDay(day, classDTO.getClsId()); //dto에 id
-		}
 
-		int result3 = 0;
-		for (TimeDTO time : classDTO.getTime()) {
-			if (time.getClsTimeId() != 0)
-				result3 += classMapper.updateTime(time, classDTO.getClsId());
-		}
-
-		if (result <= 0 || result2 <= 0 || result3 <= 0) {
-			throw new Exception("강의 등록에 실패했습니다.");
-		}
-
-		return result > 0 ? true : false;
+		return result;
 	}
 
 	/*

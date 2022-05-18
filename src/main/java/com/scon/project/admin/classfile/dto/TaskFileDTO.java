@@ -1,5 +1,7 @@
 package com.scon.project.admin.classfile.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,8 @@ public class TaskFileDTO {
 	private String fileOrginName;				
 	private String fileSaveName;				
 	private String filePath;				
-	private String fileType;				
+	private String fileType;	
+	private List<TaskFileDTO> fileList; //여러파일
+	
 
 }

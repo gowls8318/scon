@@ -38,6 +38,7 @@ public class ClassDTO {
 	private String clsStatus;
 	private List<DayDTO> dayList;
 	private List<TimeDTO> time;
+	private String clfName;
 	
 		
 	

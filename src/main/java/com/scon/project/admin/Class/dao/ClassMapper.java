@@ -42,16 +42,17 @@ public interface ClassMapper {
 	int deleteClass(int clsId);
 
 	//강의상세보기수정
-	int classUpdate(ClassDTO clsId);
+	int classUpdate(ClassDTO classDTO);
 
 	//요일수정
-	int updateDay(DayDTO day, int clsId);
+	/* int updateDay(DayDTO day); */
 
 	//교시수정
-	int updateTime(TimeDTO time, int clsId);
+	/* int updateTime(TimeDTO time); */
 
 	//강의게시글 총 갯수
 	int total(Criteria cri);
+
 
 
 
