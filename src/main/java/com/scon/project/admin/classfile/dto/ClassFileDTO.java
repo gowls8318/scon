@@ -19,13 +19,15 @@ public class ClassFileDTO {
 	 */
 	
 	private int fileId;  
-	private int clsId;
+	private Integer clsId;
 	private String clfName;
 	private String clfStatus;
-	private MemberDTO member;
 	private String memberName; //강사명
+	private String memberId;
+	private MemberDTO member;
 	private ClassDTO classDTO;
 	private String clsName;
+	private List<TaskFileDTO> fileList;
 	
 	/*
     FILE_ID	NUMBER	No		1	첨부파일아이디
@@ -34,12 +36,11 @@ public class ClassFileDTO {
 	FILE_PATH	VARCHAR2(1000 BYTE)	No		4	파일저장경로
 	FILE_TYPE	VARCHAR2(10 BYTE)	No		5	파일타입
  */
-
-		private String fileOrginName;				
-		private String fileSaveName;				
-		private String filePath;				
-		private String fileType;
-		private List<TaskFileDTO> fileList;     //하나의 게시글에 여러개의 파일
+	/*
+	 * private String fileOrginName; private String fileSaveName; private String
+	 * filePath; private String fileType; private List<TaskFileDTO> fileList;
+	 */
+	      //하나의 게시글에 여러개의 파일
 	
 
 

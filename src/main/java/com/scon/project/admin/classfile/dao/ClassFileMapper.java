@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.classfile.dto.ClassFileDTO;
+import com.scon.project.admin.classfile.dto.TaskFileDTO;
 import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.dto.MemberDTO;
 
@@ -21,6 +22,10 @@ public interface ClassFileMapper {
 	
 	//강의첨부자료 등록
 	int registClassFile(ClassFileDTO classFileList);
+	
+	//첨부파일등록
+	int registFile(TaskFileDTO files);
+	//1. 먼저 중간 첨부파일 테이블을 먼저 등록 -> 2. 본인 강의첨부파일테이블 등록해야한다.
 
 	//강사등록
 	List<MemberDTO> selectMember();
