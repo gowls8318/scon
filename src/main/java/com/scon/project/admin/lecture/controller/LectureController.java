@@ -45,11 +45,11 @@ public class LectureController {
 	public ModelAndView selectAllLectureList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
 		
 		List<LectureDTO> lectureList = lectureService.selectAllLectureList(cri);
-		log.info("lectureList : {}", lectureList);
+		log.info("수강 내역 : {}", lectureList);
 		List<ClassDTO> classList = lectureService.selectAllClassList();
 		
 		int total = lectureService.total(cri);
-		log.info("cri : {}", cri);
+		log.info("criteria : {}", cri);
 		Pagination page = new Pagination(cri, total);
 		mv.addObject("page", page);
 		log.info("page : {}", page);

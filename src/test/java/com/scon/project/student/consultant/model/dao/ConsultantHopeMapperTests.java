@@ -52,7 +52,7 @@ public class ConsultantHopeMapperTests {
     @Test
     @Disabled
     @DisplayName("상담 신청 내역 조회용(페이징) 매퍼 테스트")
-    public void testGetListPaging() {
+    public void testSelectConsultant() {
         
         Criteria cri = new Criteria();
         

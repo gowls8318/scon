@@ -51,8 +51,8 @@ public class ConsultantHopeServiceTests {
 	// success
     @Test
     @Disabled
-    @DisplayName("상담 신청 내역 조회용(페이징) 매퍼 테스트")
-    public void testGetListPaging() throws Exception {
+    @DisplayName("상담 신청 내역 조회용(페이징) 서비스 메소드 테스트")
+    public void testSelectConsultant() throws Exception {
         
         Criteria cri = new Criteria();
         

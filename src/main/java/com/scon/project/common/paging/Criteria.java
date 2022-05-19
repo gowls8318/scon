@@ -6,11 +6,8 @@ public class Criteria {
 	private int limit;			// 한 페이지에 보여줄 게시물 수
 	private String keyword;		// 검색 키워드
 	private String type;		// 검색 타입
-
 	private String memberId;	// 원생 페이지 본인 확인용
-
-	private int clsId;
-
+	private int clsId;			// 강의 번호
 	
 	/* 1 페이지 당 게시물을 10개 씩 보여준다. */
 	public Criteria() {
@@ -86,12 +83,7 @@ public class Criteria {
 	@Override
 	public String toString() {
 		return "Criteria [pageNo=" + pageNo + ", limit=" + limit + ", keyword=" + keyword + ", type=" + type
-
-				+ ", memberId=" + memberId + "]";
-
-				+ ", clsId=" + clsId + "]";
-
+				+ ", memberId=" + memberId + ", clsId=" + clsId + "]";
 	}
-
 	
 }

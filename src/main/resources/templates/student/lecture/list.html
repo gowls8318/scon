@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -10,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>상담 신청</title>
+    <title>수납 내역 조회</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -29,13 +28,6 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        
-    <script>
-    	const successMessage = '[[${successMessage}]]'
-    	if(successMessage) {
-    		alert(successMessage);
-    	}
-    </script>
 
 </head>
 
@@ -58,56 +50,74 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">상담</h1>
+                        <h1 class="h3 mb-0 text-gray-800">수납 내역</h1>
                     </div>
                     <hr class="border-bottom-primary">
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">상담 신청 내역</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">수납 내역 조회</h6>
                         </div>
                         <br>
-						<div class="lec-flex col-lg-12">
-							<div class="row ml-2">
-								<button type="button" class="btn btn-primary btn-conh"
-									th:onclick="location.href='/student/consultant/insertForm'">상담 등록</button>
-							</div>
-							<form id="searchForm" method="get" action="/student/consultant/list" class="form-inline">
-								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<div class="search-area col-lg-12">
-									<select class="form-control form-select-lg" name="type">
-										<option value="" th:selected="${ #strings.isEmpty( page.cri.type ) }">-- 검색 유형 --</option>
-										<option value="title" th:selected="${ #strings.equals( page.cri.type, 'title' ) }">제목</option>
-										<option value="content" th:selected="${ #strings.equals( page.cri.type, 'content' ) }">내용</option>
-                                    </select>
-									<div class="form-group mx-sm-3">
-										<input type="text" name="keyword" th:value="${ page.cri.keyword }" class="form-control"
-											id="keyword" placeholder="검색어를 입력하세요"></div>
-									<button type="button" class="btn btn-primary btn-search">검색</button>
-								</div>
-							</form>
-						</div>
-						<div class="card-body">
+                        <div>
+	                        <form id="searchForm" class="form-inline" action="/student/lecture/list" method="get">
+	                        	<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
+	                            <div class="search-area col-lg-12">
+	                            	<select class="form-control form-select-lg" name="type">
+								    	<option value="" th:selected="${ #strings.isEmpty( page.cri.type ) }">-- 검색 유형 --</option>
+								    	<option value="lecStatus" th:selected="${ #strings.equals( page.cri.type, 'lecStatus' ) }">수강 상태</option>
+								    	<option value="accOption" th:selected="${ #strings.equals( page.cri.type, 'accOption' ) }">결제 방법</option>
+								    	<option value="accStatus" th:selected="${ #strings.equals( page.cri.type, 'accStatus' ) }">수납 여부</option>
+									</select>
+	                                <div class="form-group mx-sm-3">
+                                    <input type="text" name="keyword" class="form-control" th:value="${ page.cri.keyword }" id="keyword"
+                                        placeholder="검색어를 입력하세요">
+                                </div>
+	                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
+	                            </div>
+	                        </form>
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered-yj dataTable-yj" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered-yj dataTable-yj" id="accDataTable"
+                                    width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
-                                            <th>상담 신청일</th>
-                                            <th>상담 제목</th>
+                                            <th>원생</th>
+                                            <th>강의명</th>
+                                            <th>수강 기간</th>
+                                            <th>수강 상태</th>
+                                            <th>수강료</th>
+                                            <th>수납일</th>
+                                            <th>결제 방법</th>
+                                            <th>수납 여부</th>
+                                            <th>환불 처리</th>
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="conH : ${ consultantList }">
-                                            <td th:text="${ conH.no }">번호</td>
-                                            <td th:text="${ conH.conWriteDate }">상담 신청일</td>
-                                            <!-- <td th:text="${ conH.conHTitle }" class="conHTitle"
-                                            th:onclick="'location.href=\'' + @{/student/consultant/detail/{no} (conNo=${conH.no})} + '\';'">상담 제목</td> -->
-                                            <!-- <td class="conHTitle">
-                                            	<a th:href="@{/student/consultant/detail(no=${conH.no})}">[[${conH.conHTitle}]]</a>
-                                            </td> -->
-                                            <td th:text="${ conH.conHTitle }" class="conHTitle"
-                                            	th:onclick="'location.href=\'' + @{/student/consultant/detail(no=${conH.no})} + '\';'">상담 제목</td>
+                                        <tr th:each="lec : ${ lectureList }" class="lecTr">
+                                            <td th:text="${ lec.no }" class="lecNo">번호</td>
+                                            <td th:text="${ lec.member.name }" class="memberId">원생</td>
+                                            <td th:text="${ lec.cls.clsName }" class="clsId">강의명</td>
+                                            <td>
+                                            	<div class="clsDate3">
+													<div th:text="${ lec.cls.clsStart }" id="clsSrt">수강 시작일</div>
+													<span>&nbsp;~&nbsp;</span>
+													<div th:text="${ lec.cls.clsEnd }" id="clsEnd">수강 종료일</div>
+												</div>
+                                            </td>
+                                            <td th:text="${ lec.lecStatus }">수강 상태</td>
+                                            <td >
+                                            	<span th:text="${#numbers.formatInteger(lec.lecPay, 0, 'COMMA')}" class="lecPay"></span><span> 원</span>
+                                            </td>
+                                            <td th:text="${ lec.accDate }">수납일</td>
+                                            <td th:text="${ lec.accOption }">결제 방법</td>
+                                            <td th:text="${ lec.accStatus }" class="accStatus">수납 여부</td>
+                                            <td>
+                                            	<span th:if="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${'환불'}" class="refund"></span>
+                                            	<span th:unless="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${''}" class="refund"></span>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -132,9 +142,7 @@
 										<!-- 각 번호 페이지 버튼 -->
 										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
 											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
-												<!-- <a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a> -->
 												<a th:href="${ num }" th:text="${ num }" class="page-link"></a>
-												<!-- <a th:if="${ page.cri.pageNo != num }" th:href="@{/student/consultant/list(pageNo=${num})}" th:text="${ num }" class="page-link"></a> -->
 											</li>
 										</th:block>
 										
@@ -152,14 +160,7 @@
 									</ul>
 								</div>
 							</nav>
-							
-							<!-- <form id="searchForm" method="get" action="/student/consultant/list">	
-								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<input type="hidden" name="limit" th:value="${ page.cri.limit }">
-								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
-								<input type="hidden" name="type" th:value="${ page.cri.type }">
-							</form> -->
-							
+
                         </div>
                     </div>
                 </div>
@@ -182,33 +183,21 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <script type="text/javascript" th:inline="javascript">
-    	/* 입력 검색 - tr 전체 */
-        /* $(document).ready(function() {
-            $("#accSearch").keyup(function() {
-                var value = $(this).val().toLowerCase();
-                $(".accTbody tr").filter(function() {
-                    // 찾는 문자 없을 시 -1 반환
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        }); */
-        
-        let searchForm = $("#searchForm");   	
-        
-        $(".pageInfo a").on("click", function(e){
-        	e.preventDefault();
-            searchForm.find("input[name='pageNo']").val($(this).attr("href"));
-            searchForm.attr("action", "/student/consultant/list");
+	<script>
+		/* 페이징 & 검색 */
+		let searchForm = $("#searchForm");   	
+	    
+	    $(".pageInfo a").on("click", function(e){
+	    	e.preventDefault();
+	        searchForm.find("input[name='pageNo']").val($(this).attr("href"));
+	        searchForm.attr("action", "/student/lecture/list");
 	        searchForm.submit();
-        });
-    	
-    	
-    	$(".search-area button").on("click", function(e){
-    		e.preventDefault();
-    		
-    		let type = $(".search-area select").val();
-    		console.log(type);
+	    });
+		
+		$(".search-area button").on("click", function(e){
+			e.preventDefault();
+			
+			let type = $(".search-area select").val();
 	    	let keyword = $(".search-area input[name='keyword']").val();
 	    	
 	    	if(!type){
@@ -220,22 +209,21 @@
     			return false;
     		}
 	    	
-    		if(!keyword){
-    			swal({
-    				text: "검색어를 입력하세요",
-    				icon: "warning",
-    				button: "확인"
-    			});
-    			return false;
-    		}		
-    		
-    		/* 현재 페이지가 1이 아닌 경우에 검색했을 때 검색 startPage를 1로 해주기 위한 용도 */
-    		searchForm.find("input[name='pageNo']").val(1);
-    		searchForm.submit();
-    	});
-    </script>
+			if(!keyword){
+				swal({
+					text: "검색어를 입력하세요",
+					icon: "warning",
+					button: "확인"
+				});
+				return false;
+			}
+			
+			searchForm.find("input[name='pageNo']").val(1);
+			searchForm.submit();
+		});
+	</script>
 
-    <!-- Bootstrap core JavaScript-->
+	<!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -252,7 +240,7 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
-    <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/emo/datatables-demo.js"></script>
 
 </body>
 

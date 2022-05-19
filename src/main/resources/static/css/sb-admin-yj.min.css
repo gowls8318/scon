@@ -317,3 +317,7 @@
 .ref-table h5{
   color: #8B169E;
 }
+.ref-table tbody th,
+.ref-table tbody td{
+  border-top: none;
+}

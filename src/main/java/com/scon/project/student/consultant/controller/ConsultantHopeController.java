@@ -107,9 +107,12 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 수정용 */
 	@GetMapping("/consultant/updateForm")
-	public String updateConsultantPage(@RequestParam int no, Model model) throws Exception {
+	public String updateConsultantPage(@RequestParam int no, Model model, Criteria cri) throws Exception {
 		
 		model.addAttribute("consultant", consultantHopeService.selectConsultantDetail(no));
+		
+		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
+		model.addAttribute("cri", cri);
 		
 		return "student/consultant/updateForm";
 	}

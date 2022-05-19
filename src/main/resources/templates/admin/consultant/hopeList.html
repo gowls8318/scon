@@ -21,6 +21,8 @@
     <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- jQuery -->
@@ -68,10 +70,9 @@
                         	<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
                             <div class="search-area col-lg-12">
 								<select class="form-control form-select-lg" name="type">
-								    <optgroup label="검색 유형">
-								    	<option value="stdName" th:selected="${ #strings.equals( page.cri.type, 'stdName' ) }">원생 이름</option>
-								     	<option value="handle" th:selected="${ #strings.equals( page.cri.type, 'handle' ) }">처리 현황</option>
-								    </optgroup>
+									<option value="" th:selected="${ #strings.isEmpty( page.cri.type ) }">-- 검색 유형 --</option>
+									<option value="stdName" th:selected="${ #strings.equals( page.cri.type, 'stdName' ) }">원생 이름</option>
+									<option value="handle" th:selected="${ #strings.equals( page.cri.type, 'handle' ) }">처리 현황</option>
 								</select>
                                 <div class="form-group mx-sm-3">
                                     <input type="text" name="keyword" class="form-control" th:value="${ page.cri.keyword }" id="keyword"
@@ -123,9 +124,9 @@
 										</li>
 
 										<!-- 이전 페이지 버튼 -->
-										<l1 th:if="${ page.prev }" class="page-item">
+										<li th:if="${ page.prev }" class="page-item">
 											<a th:href="${ page.startPage - 1 }" th:text="'<'" class="page-link"></a>
-										</l1>
+										</li>
 										
 										<!-- 각 번호 페이지 버튼 -->
 										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
@@ -137,9 +138,9 @@
 										</th:block>
 										
 										<!-- 다음 페이지 버튼 -->
-										<l1 th:if="${ page.next }" class="page-item">
+										<li th:if="${ page.next }" class="page-item">
 											<a th:href="${ page.endPage + 1 }" th:text="'>'" class="page-link"></a>
-										</l1>
+										</li>
 										
 										<!-- 마지막 페이지 이동 -->
 										<li class="page-item">
@@ -213,9 +214,8 @@
     		console.log(document.getElementsByClassName('handle').value);
     		
     		if(document.getElementsByClassName('handle').value == "완료") {
-    			//alert("이미 처리가 완료된 상담입니다.");
     			swal({
-    				text: "이미 처리가 완료된 상담입니다",
+    				text: "처리가 완료된 상담입니다",
     				icon: "warning",
     				button: "확인"
     			});
@@ -237,10 +237,19 @@
     	$(".search-area button").on("click", function(e){
     		e.preventDefault();
     		
+    		let type = $(".search-area select").val();
 	    	let keyword = $(".search-area input[name='keyword']").val();
 	    	
+	    	if(!type){
+    			swal({
+    				text: "검색 유형을 선택하세요",
+    				icon: "warning",
+    				button: "확인"
+    			});
+    			return false;
+    		}
+	    	
     		if(!keyword){
-    			//alert("원생 이름을 입력하세요.");
     			swal({
     				text: "검색어를 입력하세요",
     				icon: "warning",
