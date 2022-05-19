@@ -69,10 +69,10 @@ public class CheckController {
 	@GetMapping("/chkRegist")
 	public ModelAndView checkRegist(@ModelAttribute ClassDTO cls, @ModelAttribute CheckDTO chk, @ModelAttribute MemberDTO member, ModelAndView mv) throws Exception {
 		
-		List<CheckDTO> checkClassList = checkService.selectAllClassList(cls, chk, member);
+		List<CheckDTO> checkClassList2 = checkService.selectAllClassList(cls, chk, member);
 		List<ClassDTO> classList = checkService.selectClassList(cls);
 		
-		mv.addObject("checkClassList", checkClassList);
+		mv.addObject("checkClassList", checkClassList2);
 		mv.addObject("clsId", cls.getClsId());
 		mv.addObject("chkDate", chk.getChkDate());
 		mv.addObject("name", member.getName());
@@ -82,6 +82,7 @@ public class CheckController {
 		return mv;
 	}
 	
+	/* 출석 입력 폼 */
 	@GetMapping("/chkInsertForm")
 	public ModelAndView enterInsertForm(@ModelAttribute ClassDTO cls, ModelAndView mv) throws Exception {
 		
