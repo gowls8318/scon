@@ -132,7 +132,8 @@ public class NoticeController {
 	
 //	댓글 삭제
 	@PostMapping("cmtDelete")
-	public String deleteCmt(@RequestParam int cNo, @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+	public String deleteCmt(@RequestParam("cNo") int cNo, 
+			@ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
 		
 		log.info("삭제될 댓글 번호 : {}", cNo);
 		noticeService.deleteCmt(cNo);		
@@ -141,6 +142,24 @@ public class NoticeController {
 		return "redirect:notiDetail?no="+notiCmt.getNo();
 	}
 
+//	댓글 수정(조회)
+	@GetMapping("cmtModify") 
+	public String modifyCmt(@RequestParam("cNo") int cNo, Model model, @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+		
+		model.addAttribute("modifyCmt", noticeService.readCmt(cNo));
+
+		return "redirect:notiDetail?no="+notiCmt.getNo();
+    }
+
+//	댓글 수정(등록)
+	@PostMapping("cmtModify")
+	public String modifyCmt(@ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+
+		noticeService.modifyCmt(notiCmt);
+		log.info("notiCmt{}", notiCmt);
+		
+		return "redirect:notiDetail?no="+notiCmt.getNo();
+	}
 
 	
 }

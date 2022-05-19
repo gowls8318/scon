@@ -29,13 +29,18 @@ public interface NoticeService {
 	
 	
 //	댓글조회
-	List<NoticeCmtDTO> readCmt(int no) throws Exception;
+	List<NoticeCmtDTO> readCmt(int cNo) throws Exception;
 	
 //	댓글 등록
 	int registCmt(NoticeCmtDTO notiCmt) throws Exception;
 	
 //	댓글 삭제
 	int deleteCmt(int cNo) throws Exception;
+
+//	댓글 수정+등록
+	int modifyCmt(NoticeCmtDTO notiCmt) throws Exception;
+
+	Object selectCmtDetail(int cNo);
 
 
 

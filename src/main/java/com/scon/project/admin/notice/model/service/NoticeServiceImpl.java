@@ -74,10 +74,9 @@ public class NoticeServiceImpl implements NoticeService {
 
 //	댓글 조회
 	@Override
-	public List<NoticeCmtDTO> readCmt(int no) throws Exception {
-		return noticeMapper.readCmt(no);
+	public List<NoticeCmtDTO> readCmt(int cNo) throws Exception {
+		return noticeMapper.readCmt(cNo);
 	}
-
 	
 //	댓글 등록
 	@Override
@@ -91,6 +90,19 @@ public class NoticeServiceImpl implements NoticeService {
 	public int deleteCmt(int cNo) throws Exception {
 		
 		return noticeMapper.deleteCmt(cNo);
+	}
+
+//  댓글 수정하고 등록		
+	@Override
+	public int modifyCmt(NoticeCmtDTO notiCmt) throws Exception {
+				
+		return noticeMapper.modifyCmt(notiCmt);
+	}
+
+	@Override
+	public Object selectCmtDetail(int cNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
