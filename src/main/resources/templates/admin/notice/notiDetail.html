@@ -241,6 +241,10 @@
                             <!-- 
                                 댓글                                
                             -->
+                            <form action="/admin/cmtDelete" method="post" id="cmtDeleteForm" name="cmtDeleteForm">
+                                  <input type="hidden" name="cNo" id="cNo"/>
+                                  <input type="hidden" th:value="${ noticeDetail.no }" name="no" id="no"/>
+                            </form>
                             	<form action="/admin/cmtRegi" method="post" id="cmtSubmitForm" name="cmtSubmitForm">
                             <div class="card mb-2 mt-5">
                                 <div class="card-header bg-light">
@@ -261,11 +265,11 @@
                             </form>
                             <br/>
  <!--  등록된 댓글 -->                           
-                            <form action="/admin/cmtDelete" method="post" id="cmtDeleteForm" name="cmtDeleteForm">
-                            <input type="hidden" th:value="${ noticeDetail.no }" name="cNo" id="cNo"/>
                             <div class="card">
                                 <div class="card-header">댓글</div>
 			                        	<ul id="reply--box" class="list-group" th:each="comment : ${ cmtList }">
+                           
+                           
 			                            	<li class="list-group-item d-flex justify-content-between">
 			                                	<div class="d-flex">
 			                                        <div id="cmtName" th:text="${comment.memberId}"></div>
@@ -275,15 +279,15 @@
 			                                    <div class="d-flex">
 			                                        <button class="cmtReple">답글</button>&nbsp
 			                                        <button class="cmtModify" data-toggle="modal" data-target="#cmtModifyModal" 
-			                                        		type="button" th:value="${ comment.cNo }">수정</button>&nbsp
-			                                        <button class="cmtDelete" data-toggle="modal" data-target="#cmtDeleteModal" type="button">삭제</button>
+			                                        		type="button" th:data-cno="${comment.cNo }">수정</button>&nbsp
+			                                        <button class="cmtDelete" data-toggle="modal" data-target="#cmtDeleteModal" type="button" th:data-cno="${comment.cNo }">삭제</button>
 			                                    </div>
 			                                </li>
+                          
 			                            </ul>
                             </div>
-                            </form>
                                 <!--  등록된 댓글 끝-->
-                                
+                                 
                         </div>
                     </div>
 					<!-- 공지사항 내용 테이블 끝 -->
@@ -327,12 +331,13 @@
                     <div class="modal-body">삭제하시려면 확인버튼을 눌러주세요.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                        <button class="btn btn-primary" id="submitBtn" type="submit" data-dismiss="modal" 
-                        		th:onclick="|location.href='/admin/notiDelete?no=${noticeDetail.no}'|">확인</button>
+                        <button class="btn btn-primary" id="submitBtn" type="submit" data-dismiss="modal" >확인</button>
+                        		
                     </div>
                 </div>
             </div>
         </div>
+        
         
         <!-- 댓글 삭제 확인 Modal-->
          <div class="modal fade" id="cmtDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -348,8 +353,7 @@
                     <div class="modal-body">삭제하시려면 확인버튼을 눌러주세요.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                        <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal" 
-                        		th:onclick="|location.href='/admin/cmtDelete?no=${noticeDetail.no}'|">확인</button>
+                        <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal">확인</button>
                     </div>
                 </div>
             </div>
@@ -369,27 +373,17 @@
                     </div>
                     <div class="modal-body">
                     	<input type="text" class="form-control" id="reply-content" rows="1"
-			                   name="cmtContent" ></input>          
+			                   name="modal_cmtContent"></input>          
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
                         <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal" >확인</button>
-                        	<!-- 	th:onclick="|location.href='/admin/cmtDelete?no=${noticeDetail.no}'|" -->
+ 
                         		
                     </div>
                 </div>
             </div>
         </div>
-        
-        
-        
-        <script>
-        	$("")
-        
-        </script>
-        
-        
-        
         
         
         
@@ -406,6 +400,14 @@
 	<!-- 글삭제 -->
 	<script type='text/javascript'>
     window.onload = function() {
+    	
+    	 $(document).on("click", ".cmtDelete", function(){
+         	
+         	var cNo = $(this).attr("data-cno");
+         	$("#cNo").val(cNo);
+         	
+         });
+    	
         document.getElementById('submitBtn').onclick = function() {
             document.getElementById('notiSubmitForm').submit();
             return false;
@@ -417,6 +419,7 @@
         };
     };
 
+   
     </script> 
 
 

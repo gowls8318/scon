@@ -12,11 +12,14 @@
 		<result property="notiUpdate" column="NOTI_UPDATE"/>
 		<result property="notiView" column="NOTI_VIEW"/>
 		<result property="notiDelete" column="NOTI_DELETE"/>
+		
+		<association property="member" resultMap="memberResultMap"></association>
+		<collection property="comment" resultMap="noticeCmtResultMap"></collection>
 	</resultMap>
 	
 	<resultMap id="noticeCmtResultMap" type="com.scon.project.admin.notice.model.dto.NoticeCmtDTO">
 		<id property="cNo" column="CMT_NO"/>
-		<result property="bNo" column="NOTI_NO"/>
+		<result property="no" column="NOTI_NO"/>
 		<result property="cmtPNo" column="CMT_P_NO"/>
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="cmtContent" column="CMT_CONTENT"/>
@@ -172,7 +175,7 @@
 	
 <!--                 댓글                             -->	
 		<!-- 댓글 조회 -->
-	<select id="readCmt" resultMap="noticeCmtResultMap">
+<!-- 	<select id="readCmt" resultMap="noticeCmtResultMap">
 		SELECT
 			   CMT_NO
 			 , CMT_CONTENT
@@ -182,7 +185,29 @@
 	 	 WHERE CMT_DELETE = 'N'
 	 	   AND NOTI_NO = #{ no }
 	 	 ORDER BY CMT_NO ASC
-	</select>
+	</select> -->
+	
+	<select id="readCmt" resultMap="noticeCmtResultMap">
+	SELECT 
+			A.CMT_NO
+		  , B.NOTI_NO
+		  , A.CMT_CONTENT
+		  , C.MEMBER_ID
+	 	  , A.CMT_DATE
+	 	  , A.CMT_DELETE
+	   FROM TB_COMMENT A 
+	   JOIN TB_NOTICE B ON(A.NOTI_NO = B.NOTI_NO)
+	   JOIN TB_MEMBER C ON (A.MEMBER_ID = C.MEMBER_ID)
+	  WHERE A.CMT_DELETE = 'N'
+	 	AND B.NOTI_NO = #{ no }
+	  ORDER BY A.CMT_NO ASC
+	 </select>
+		
+		
+	
+	
+	
+	
 	
 	<!-- 댓글 작성 -->
 	<insert id="registCmt" >
@@ -208,14 +233,14 @@
 	</insert>
 	
 	<!-- 댓글 수정등록 -->
-<!-- 	<update id="modifyCmt">
+ 	<update id="modifyCmt">
 		UPDATE 
 			   TB_COMMENT
 		   SET CMT_CONTENT = #{ cmtContent }
 			 , CMT_UPDATE = SYSDATE
 		 WHERE NOTI_NO = #{ no }
 		   AND CMT_NO = #{cNo}
-	</update> -->
+	</update>
 	
 	<!-- 댓글 삭제 -->
  	<update id="deleteCmt">
@@ -223,12 +248,9 @@
 		  	   TB_COMMENT
 		   SET CMT_DELETE = 'Y'
 		   	 , CMT_UPDATE = SYSDATE
-		 WHERE NOTI_NO = #{ no }
-		   AND CMT_NO = #{cNo}
+		 WHERE CMT_NO = #{cNo}
 	</update> 
-	
-	
-	
+
 
 	
 	
