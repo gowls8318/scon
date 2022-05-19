@@ -55,7 +55,7 @@ public class LectureMapperTests {
 	@Test
 	@Disabled
 	@DisplayName("수강 내역 조회용(페이징) 매퍼 테스트")
-	public void testSelectConsultantHope() {
+	public void testSelectLecture() {
 		
 		Criteria cri = new Criteria();
         

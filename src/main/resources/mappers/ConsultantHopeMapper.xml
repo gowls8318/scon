@@ -79,7 +79,7 @@
 			   COUNT(*)
 		  FROM TB_CONSULTANT
 		 WHERE CON_HDELETE = 'N'
-		  AND MEMBER_ID = #{ memberId }
+		   AND MEMBER_ID = #{ memberId }
 		<if test="keyword != null">
 			<if test="type == 'title'">
 				AND CON_HTITLE LIKE '%' || #{ keyword } || '%'
