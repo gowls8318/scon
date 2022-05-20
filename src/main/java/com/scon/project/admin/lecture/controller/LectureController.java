@@ -100,10 +100,13 @@ public class LectureController {
 	
 	/* 수강 수정용 - 정보 조회 */
 	@GetMapping("/lecture/updateForm")
-	public String updateLecturePage(@RequestParam int no, Model model) throws Exception {
+	public String updateLecturePage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
 		model.addAttribute("classList", lectureService.selectAllClassList());
 		model.addAttribute("lecture", lectureService.selectLectureDetail(no));
+		
+		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
+		model.addAttribute("cri", cri);
 		
 		return "admin/lecture/updateForm";
 	}

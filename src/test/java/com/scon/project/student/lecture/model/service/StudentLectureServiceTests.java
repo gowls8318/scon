@@ -67,4 +67,20 @@ public class StudentLectureServiceTests {
 		assertNotNull(lectureList);
 	}
 	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 정보 조회용 서비스 메소드 테스트")
+	public void testSelectLectureDetail() throws Exception {
+		
+		// given
+		int no = 3;
+		
+		// when
+		LectureDTO lectureDetail = studentLectureService.selectLectureDetail(no);
+		
+		// then
+		assertNotNull(lectureDetail);
+	}
+	
 }

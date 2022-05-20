@@ -138,11 +138,11 @@
                                 </div>
 
                                 <div class="buttonbox">
-                                    <button type="button" class="btn btn-light resetbuttonbox"
-                                    	th:onclick="location.href='/admin/consultant/list'">돌아가기</button>
+                                    <button type="button" class="btn btn-light resetbuttonbox" id="btn-list">돌아가기</button>
+                                    	<!-- th:onclick="location.href='/admin/consultant/list'" -->
                                     <button type="button"
                                         class="btn btn-primary btn-margin submitbuttonbox"
-                                        th:onclick="'location.href=\'' + @{/admin/consultant/updateForm(no=${consultantDetail.no})} + '\';'">수정하기</button>
+                                        th:onclick="'location.href=\'' + @{/admin/consultant/updateForm(no=${consultantDetail.no}, pageNo=${cri.pageNo}, keyword=${cri.keyword})} + '\';'">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="deleteConsultant([[${consultantDetail.no}]])">삭제하기</button>
                                 </div>
@@ -150,6 +150,13 @@
                             <form method="post" name="consultantForm" action="/admin/consultant/updateForm">
                         		<input type="hidden" name="no" th:value="${ consultantDetail.no }">
                             </form>
+                            
+                            <form id="infoForm" action="/admin/consultant/list" method="get">
+								<input type="hidden" id="no" name="no" th:value="${ consultantDetail.no }">
+								<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+								<input type="hidden" name="type" th:value="${ cri.type }">
+								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
+							</form>
                             
                         </div>
                     </div>
@@ -175,6 +182,14 @@
     </a>
 
     <script type="text/javascript">
+	    /* 돌아가기 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
+		let form = $("#infoForm");
+		$("#btn-list").on("click", function(e){
+			form.find("#no").remove();
+			form.attr("action", "/admin/consultant/list");
+			form.submit();
+		});
+	
     	function deleteConsultant(no) {
     		/* if(confirm('상담 일지 내역을 삭제하시겠습니까?')) {
     			document.forms.consultantForm.action = "delete?no=" + no;

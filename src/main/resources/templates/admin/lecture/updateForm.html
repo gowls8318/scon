@@ -78,7 +78,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-lg-3">
-                                                    <label for="clsId" class="col-form-label">강의명</span></label>
+                                                    <label for="clsId" class="col-form-label">강의명</label>
                                                 </th>
                                                 <td class="col-lg-9 pl-2">
                                                     <div th:text="*{ cls.clsName }" class="col-sm-10 col-lg-4"></div>
@@ -151,8 +151,8 @@
                                     </table>
                                 </div>
                                 <div class="buttonbox">
-                               		<button type="button" class="btn btn-light resetbuttonbox"
-                                    	onclick = "location.href = '/admin/lecture/list'">돌아가기</button>
+                               		<button type="button" class="btn btn-light resetbuttonbox" id="btn-list">돌아가기</button>
+                                    	<!-- onclick = "location.href = '/admin/lecture/list'" -->
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="updateLecture([[${lecture.no}]])">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
@@ -195,6 +195,13 @@
                                 </table>
                             </div>
                             
+                            <form id="infoForm" action="/admin/lecture/updateForm" method="get">
+								<input type="hidden" id="no" name="no" th:value="${ lecture.no }">
+								<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+								<input type="hidden" name="type" th:value="${ cri.type }">
+								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
+							</form>
+                            
                         </div>
                     </div>
 
@@ -219,6 +226,14 @@
     </a>
     
     <script type="text/javascript">
+	    /* 돌아가기 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
+		let form = $("#infoForm");
+		$("#btn-list").on("click", function(e){
+			form.find("#no").remove();
+			form.attr("action", "/admin/lecture/list");
+			form.submit();
+		});
+	
     	function updateLecture(no) {
     		/* if(confirm('수강 내용을 수정하시겠습니까?')) {
     			document.forms.lectureForm.action = "updateForm?no=" + no;

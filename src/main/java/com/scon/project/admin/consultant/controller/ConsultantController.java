@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,9 +60,12 @@ public class ConsultantController {
 	
 	/* 상담 신청 상세 조회용 */
 	@GetMapping("/consultant/hopeDetail")
-	public String selectHopeDetailPage(@RequestParam int no, Model model) throws Exception {
+	public String selectHopeDetailPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
 		model.addAttribute("consultantHopeDetail", consultantService.selectConsultantHopeDetail(no));
+		
+		/* 돌아가기 누를 시 현재 페이지로 이동하기 위함 */
+		model.addAttribute("cri", cri);
 		
 		return "admin/consultant/hopeDetail";
 	}
@@ -109,20 +113,26 @@ public class ConsultantController {
 	
 	/* 상담 일지 상세 조회용 */
 	@GetMapping("/consultant/detail")
-	public String selectDetailPage(@RequestParam int no, Model model) throws Exception {
+	public String selectDetailPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
 		log.info("게시글 번호 : {}", no);
 		
 		model.addAttribute("consultantDetail", consultantService.selectConsultantDetail(no));
+		
+		/* 돌아가기 누를 시 현재 페이지로 이동하기 위함 */
+		model.addAttribute("cri", cri);
 		
 		return "admin/consultant/detail";
 	}
 	
 	/* 상담 일지 수정용 */
 	@GetMapping("/consultant/updateForm")
-	public String modifyConsultantPage(@RequestParam int no, Model model) throws Exception {
+	public String modifyConsultantPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
 		model.addAttribute("consultant", consultantService.selectConsultantDetail(no));
+		
+		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
+		model.addAttribute("cri", cri);
 		
 		return "admin/consultant/updateForm";
 	}
@@ -146,6 +156,15 @@ public class ConsultantController {
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteConsultant", null, locale));
 		
 		return "redirect:/admin/consultant/list";
+	}
+	
+	/* 예외 처리 */
+	@ExceptionHandler(value = Exception.class)
+	public String exception(Exception e, Model model) {
+		
+		model.addAttribute("errorMessage", e.getMessage());
+		
+		return "common/error";
 	}
 	
 }

@@ -88,13 +88,16 @@
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="con : ${ consultantList }">
+                                        <tr th:if="${not #lists.isEmpty( consultantList )}" th:each="con : ${ consultantList }">
                                             <td th:text="${ con.no }">번호</td>
                                             <td th:text="${ con.conDate }">상담일</td>
                                             <td th:text="${ con.member.name }">원생</td>
                                             <td th:text="${ con.conImp }">중요도</td>
                                             <td th:text="${ con.conContent }" class="conTitle" id="conTitle"
-                                            	th:onclick="'location.href=\'' + @{/admin/consultant/detail(no=${con.no})} + '\';'">상담 일지 내용</td>
+                                            	th:onclick="'location.href=\'' + @{/admin/consultant/detail(no=${con.no}, pageNo=${page.cri.pageNo}, keyword=${page.cri.keyword})} + '\';'">상담 일지 내용</td>
+                                        </tr>
+                                        <tr th:unless="${not #lists.isEmpty( consultantList )}">
+                                        	<td colspan="5">조회된 결과가 없습니다</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -206,13 +209,7 @@
     	$(".search-area button").on("click", function(e){
     		e.preventDefault();
     		
-    		//let type = $(".search-area select").val();
 	    	let keyword = $(".search-area input[name='keyword']").val();
-	    	
-	    	/* if(!type){
-				alert("검색 유형을 선택하세요.");
-				return false;
-			} */
 	    	
     		if(!keyword){
     			//alert("원생 이름을 입력하세요.");

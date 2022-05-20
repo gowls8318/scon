@@ -84,7 +84,6 @@
                                     <thead>
                                         <tr>
                                             <th>번호</th>
-                                            <th>원생</th>
                                             <th>강의명</th>
                                             <th>수강 기간</th>
                                             <th>수강 상태</th>
@@ -96,9 +95,8 @@
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="lec : ${ lectureList }" class="lecTr">
+                                        <tr th:if="${not #lists.isEmpty( lectureList )}" th:each="lec : ${ lectureList }" class="lecTr">
                                             <td th:text="${ lec.no }" class="lecNo">번호</td>
-                                            <td th:text="${ lec.member.name }" class="memberId">원생</td>
                                             <td th:text="${ lec.cls.clsName }" class="clsId">강의명</td>
                                             <td>
                                             	<div class="clsDate3">
@@ -115,9 +113,13 @@
                                             <td th:text="${ lec.accOption }">결제 방법</td>
                                             <td th:text="${ lec.accStatus }" class="accStatus">수납 여부</td>
                                             <td>
-                                            	<span th:if="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${'환불'}" class="refund"></span>
+                                            	<button th:if="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${'환불'}" class="refund btn btn-light btn-acc2"
+                                            		data-toggle="modal" th:onclick="refundDetail(this, [[${lec.no}]])"></button>
                                             	<span th:unless="${not #strings.isEmpty(lec.ref.refDate)}" th:text="${''}" class="refund"></span>
                                             </td>
+                                        </tr>
+                                        <tr th:unless="${not #lists.isEmpty( lectureList )}">
+                                        	<td colspan="9">조회된 결과가 없습니다</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -172,6 +174,65 @@
             <!-- footer include -->
             <div th:replace="/common/footer.html"></div>
 
+		<!-- refundModal-->
+            <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content ref-modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">환불 내역</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" name="">
+                            	<input type="hidden" name="no" id="lecNo" th:value="${no}"/>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="clsId" class="col-sm-2 col-form-label col-lg-3">강의명</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="text" class="form-control" id="clsId" readonly>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refDate" class="col-sm-2 col-form-label col-lg-3">환불일</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="date" class="form-control" id="refDate" name="refDate" readonly>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3 refPay">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refPay" class="col-sm-2 col-form-label col-lg-3">환불 금액</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <input type="number" class="form-control" id="refPay" name="refPay" readonly>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-lg-1"></div>
+                                    <label for="refContent" class="col-sm-2 col-form-label col-lg-3">환불 사유</label>
+                                    <div class="col-sm-10 col-lg-7">
+                                        <div class="input-group refContent">
+                                            <textarea class="form-control" aria-label="With textarea"
+                                                id="refContent" readonly></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <div class="modal-footer pb-0">
+                                    <button type="button" class="btn btn-primary submitbuttonbox" data-dismiss="modal">확인</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /refundModal -->
+
         </div>
         <!-- End of Content Wrapper -->
 
@@ -183,7 +244,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-	<script>
+	<script type="text/javascript">
 		/* 페이징 & 검색 */
 		let searchForm = $("#searchForm");   	
 	    
@@ -221,6 +282,32 @@
 			searchForm.find("input[name='pageNo']").val(1);
 			searchForm.submit();
 		});
+		
+		/* 환불 내역 모달에 값 넣기 */
+		function refundDetail(elem, no) {
+			
+			console.log(no);
+			
+			$.ajax({
+				url : "/student/lecture/refund",
+				type : "get",
+				data : { no : no },
+				success : function(data) {
+					console.log(data);
+					$("#lecNo").val(no);
+					$("#memberId").val(data.member.name);
+					$("#clsId").val(data.cls.clsName);
+					$("#refDate").val(data.ref.refDate);
+					$("#refPay").val(data.ref.refPay);
+					$("#refContent").val(data.ref.refContent);
+					
+					$("#refundModal").modal("show");
+				},
+				error : function(xhr) {
+					console.log(xhr);
+				}
+			});
+		}
 	</script>
 
 	<!-- Bootstrap core JavaScript-->
