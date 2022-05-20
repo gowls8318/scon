@@ -268,19 +268,18 @@
                             <div class="card">
                                 <div class="card-header">댓글</div>
 			                        	<ul id="reply--box" class="list-group" th:each="comment : ${ cmtList }">
-                           
-                           
-			                            	<li class="list-group-item d-flex justify-content-between">
+                           			    	<li class="list-group-item d-flex justify-content-between">
 			                                	<div class="d-flex">
 			                                        <div id="cmtName" th:text="${comment.memberId}"></div>
-			                                        <div class="text-monospace mr-1" th:text="${ comment.cmtContent }"></div>
+			                                        <div class="text-monospace mr-1" th:text="${ comment.cmtContent }" id="cmtContent"></div>
 			                                        <div class="text-monospace mr-1" th:text="${ comment.cmtDate }"></div>
 			                                    </div>
 			                                    <div class="d-flex">
 			                                        <button class="cmtReple">답글</button>&nbsp
 			                                        <button class="cmtModify" data-toggle="modal" data-target="#cmtModifyModal" 
-			                                        		type="button" th:data-cno="${comment.cNo }">수정</button>&nbsp
-			                                        <button class="cmtDelete" data-toggle="modal" data-target="#cmtDeleteModal" type="button" th:data-cno="${comment.cNo }">삭제</button>
+			                                        		type="button" th:data-text="${ comment.cmtContent }" th:data-cno="${ comment.cNo }">수정</button>&nbsp
+			                                        <button class="cmtDelete" data-toggle="modal" data-target="#cmtDeleteModal" 
+			                                        		type="button" th:data-cno="${ comment.cNo }">삭제</button>
 			                                    </div>
 			                                </li>
                           
@@ -371,16 +370,16 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                    	<input type="text" class="form-control" id="reply-content" rows="1"
-			                   name="modal_cmtContent"></input>          
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                        <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal" >확인</button>
- 
-                        		
-                    </div>
+		            <div class="modal-body">
+	                    <form action="/admin/cmtModify" method="post" id="cmtModifyForm" name="cmtModifyForm">
+			                    	<input type="text" class="form-control" id="modal-content" rows="1"
+						                   name="cmtContent" th:text="${ cmtContent }"></input>          
+	                    </form>
+		            </div>
+		                    <div class="modal-footer">
+		                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+		                        <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal">확인</button>	                        		
+		                    </div>
                 </div>
             </div>
         </div>
@@ -397,26 +396,38 @@
         
 
 
-	<!-- 글삭제 -->
+	<!-- 글삭제/수정 모달 -->
 	<script type='text/javascript'>
     window.onload = function() {
-    	
-    	 $(document).on("click", ".cmtDelete", function(){
-         	
-         	var cNo = $(this).attr("data-cno");
-         	$("#cNo").val(cNo);
-         	
-         });
-    	
+/* 글 삭제 */
         document.getElementById('submitBtn').onclick = function() {
             document.getElementById('notiSubmitForm').submit();
             return false;
         };
         
+/* 댓글 수정 */
+     	 $(document).on("click", ".cmtModify", function(){
+          	
+          	var cNo = $(this).attr("data-cno");
+          	$("#cNo").val(cNo);
+          	
+          	var text = $(this).attr("data-text");
+          	$("#modal-content").val(text);
+          	console.log(text)
+          	
+          });
+    	 
+/* 댓글 삭제 */
+    	 $(document).on("click", ".cmtDelete", function(){          	
+          	var cNo = $(this).attr("data-cno");
+          	$("#cNo").val(cNo);          	
+          });
+    	
         document.getElementById('cmtDeleteBtn').onclick = function() {
             document.getElementById('cmtDeleteForm').submit();
             return false;
         };
+        
     };
 
    

@@ -146,11 +146,13 @@ public class NoticeController {
 	@GetMapping("cmtModify") 
 	public String modifyCmt(@RequestParam("cNo") int cNo, Model model, @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
 		
+		log.info("수정할 댓글 번호 : {}", cNo);
 		model.addAttribute("modifyCmt", noticeService.readCmt(cNo));
 
 		return "redirect:notiDetail?no="+notiCmt.getNo();
     }
 
+	
 //	댓글 수정(등록)
 	@PostMapping("cmtModify")
 	public String modifyCmt(@ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
