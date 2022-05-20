@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -63,6 +63,10 @@
         border: none;
        
     }
+    
+     #file-delete {
+    	color: blue;
+    }
     </style>
 
 
@@ -90,8 +94,10 @@
              </div>
              <hr class="border-bottom-primary">
 
-                    <!-- 공지사항 작성 테이블 -->
-                    
+					<!-- 테이블 시작 -->
+					<div th:each="files : ${ fileList }">
+					<input type="hidden" th:value="${files.fileId}"/>
+                    <form method="post" name="dataForm" id="dataForm" enctype="multipart/form-data" th:action="@{/admin/modifyTask(fileId=${files.fileId})}">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">과제 제출</h6>
@@ -111,6 +117,7 @@
                                             <input class="form-control" type="text" th:value="${ detail.memberName }" name="memberName"
                                             aria-label="Disabled input example" disabled>
                                             <input type="hidden" th:value="${detail.taskId}" class="taskId" id="taskId" name="taskId"/>
+                                            <input type="hidden" th:value="${param.clsId}" class="clsId" id="clsId" name="clsId"/>
                                             <input type="hidden" th:value="${detail.memberId}" class="memberId" id="memberId" name="memberId"/>
                                         </td>
                                     </tr>
@@ -127,10 +134,13 @@
                                     <tr>
                                         <th>파일첨부</th>
                                         <td th:each="files : ${ fileList }">
-                                           <span></span>
-                          		 			<a th:if="fileList" th:href="@{/uploadFiles/taskFiles/{fileSaveName}(fileSaveName=${files.fileSaveName})}" th:text="${files.fileOrginName}" th:download="${files.fileOrginName}"></a> 
-                           		 			<input type="hidden" th:value="${files.fileOrginName}">
-                           		 			<input type="hidden" th:value="${files.fileId}">
+                                           <div class="file-input" id="file-div">
+                          		 	  			<a th:if="fileList" th:href="@{/uploadFiles/taskFiles/{fileSaveName}(fileSaveName=${files.fileSaveName})}" th:text="${files.fileOrginName}" th:download="${files.fileOrginName}"></a> 
+                           		 				<a href="#this" name="file-delete" id="file-delete" onclick="removeFiles();">삭제</a>
+                           		 				<input type="hidden"name="${files.fileId}" value="true"> 
+                           		 			</div>
+                           		 			<input type="hidden" th:value="${files.fileOrginName}"> 
+                           		 			<input type="hidden" th:value="${files.fileId}"> 
                                         </td>
                                     </tr>
                                     <!--               -->
@@ -140,58 +150,19 @@
                                             <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3" th:text="${ detail.taskContent }" name="taskContent"></textarea>
                                         </td>
                                     </tr>
-             <!--                   <tr>
-                                        <th>댓글 <span id="replytext"></span>
-                                        <td>
-                    <!-- Comments section
-                    <section class="mb-4">
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <!-- Comment form
-                                <form class="mb-4"><textarea class="form-control col-md-12" rows="1" placeholder="댓글을 작성해주세요"></textarea><button id="apply-btn">등록</button></form>
-                                <!-- Comment with nested comments-->
-                   <!--  			<div class="d-flex mb-4">
-                                    <!-- Parent comment
-                                    <div class="flex-shrink-0"></div>
-                                    <div class="ms-5">
-                                        <div class="fw-bold"><span style="color:black; font-weight: bold;">김민아</span>
-                                             <a href="#">수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
-                                        엄청 잘했다
-                                        <!-- Child comment 1
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold"><span style="color:black; font-weight: bold;">한지우</span>
-                                                    <a href="#">수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
-                                                100점 맞을듯
-                                            </div>
-                                        </div>
-                                        <!-- Child comment 2
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold"><span style="color:black; font-weight: bold;">유지수</span><a href="#">
-                                                    수정</a>&nbsp;<a href="#" onclick="">삭제</a></div>
-                                               퍼가요~
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                          </section> -->
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- 수정 / 삭제 버튼 -->
+                            <!-- 수정 버튼 -->
                             <div class="row buttonbox">
-                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit" th:onclick="'location.href=\'' + @{/admin/modifyTask(clsId=${detail.clsId},taskId=${detail.taskId})} + '\';'">수정</button>
-                                <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="button" onclick="modal1();">삭제</button>
+                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="submit">수정 하기</button>
                             </div>
                         </div>
                     </div>
+                 </form>
+                </div>
 
                </div>
                <!-- /.container-fluid -->
@@ -208,61 +179,22 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    
-
-      <!-- Modal (삭제) -->
-             <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                 <div class="modal-dialog">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">게시글 삭제</h5>
-                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                             <span aria-hidden="true">×</span>
-                             </div>
-                                 <div class="modal-body">
-                                     삭제 하시겠습니까?
-                                 </div>
-                                 <div class="modal-footer" th:each="detail : ${ detailList }">
-                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal();">취소</button>
-                                 <button type="button" class="btn btn-primary delete-btn" th:onclick="'location.href=\'' + @{/admin/deleteBoard(clsId=${detail.clsId},taskId=${detail.taskId})} + '\';'">삭제</button>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-    	
-
-    
-
-    <!--  Ajax -->
-	<script>
 	
-	let memberId = $("#memberId").val();
+	<script type="text/javascript">
 		
-	/*	// 삭제 모달 
-		function modal1() {
-			if(window.sessionStorage.getItem("loginUser")==null) {
-				alert("로그인 해주세요.");
-			} else if(window.sessionStorage.getItem("loginUser") != memberId) {
-				alert("작성자만 삭제할 수 있습니다.");
-			} else if(window.sessionStorage.getItem("loginUser") == memberId) {
-				
-				$("#delete-modal").modal("show");
-				
-			}
-		} */
-		
-		function modal1() {
-			$("#delete-modal").modal("show");
+		//파일 삭제 및 새로운 업로드
+		function removeFiles() {
+			const div = document.getElementById('uploaded-file');
+			const apply = $("<label for='file-input'></label> <input id='file-input' name='taskFile' type='file'  multiple/>").addClass('new-file');
+			
+			$("#file-div *").remove();
+			$("#file-div").append(apply);
 			
 		}
+
 		
-		// 삭제 모달 닫기
-	    function closeModal() {
-	        $("#delete-modal").modal("hide");
-	    }
-		
-		
-      </script>
+	</script>
+   
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

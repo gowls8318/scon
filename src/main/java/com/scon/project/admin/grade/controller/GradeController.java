@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.grade.model.dto.GradeDTO;
 import com.scon.project.admin.grade.model.dto.GradeDTOList;
@@ -73,7 +73,7 @@ public class GradeController {
 	// 성적 입력 (O) (insertGrade)
 	@PostMapping("/insertGrade") //@RequestParam int clsId
 	public String insertGrade(GradeDTOList gradeList, HttpServletRequest request) throws Exception {
-		log.info(gradeList.getGradeList().toString());
+		log.info("gradeList : {}",gradeList.getGradeList());
 		boolean result = gradeService.insertGradeList(gradeList.getGradeList());
 		String referer = request.getHeader("Referer");
 		return "redirect:"+ referer;

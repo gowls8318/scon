@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -149,7 +149,7 @@
                             <!-- 수정 / 삭제 버튼 -->
                             <div class="row buttonbox">
                                 <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="button" 
-                                th:onclick="'location.href=\'' + @{/admin/taskDetail(clsId=${task.clsId},taskId=${task.taskId})} + '\';'">수정</button>
+                                th:onclick="'location.href=\'' + @{/admin/modifyTask(clsId=${param.clsId},taskId=${param.taskId})} + '\';'">수정</button>
                                 <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="button" onclick="modal1();">삭제</button>
                             </div>
                         </div>

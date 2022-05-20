@@ -118,6 +118,7 @@ public class TaskBoardController {
 		List<TaskBoardDTO> detailList = taskBoardService.findDetail(taskId);
 		List<FileDTO> fileList = taskBoardService.findFiles(taskId);
 		
+		
 		log.info("taskDetail : {} ",  detailList);
 		log.info("fileList : {} " , fileList);
 		log.info("로그인한 유저 : {} ", user);
@@ -225,25 +226,104 @@ public class TaskBoardController {
 		return "redirect:/admin/taskBoardList";	
 	}
 	
-	
-	//게시글 수정
-	@GetMapping("/modifyBoard")
-	public ModelAndView modifyBoard(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+	//게시글 수정 전 조회
+		@GetMapping("/modifyTask")
+		public ModelAndView findModifyTask(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+			
+			List<TaskBoardDTO> detailList = taskBoardService.findModifyTask(taskId);
+			List<FileDTO> fileList = taskBoardService.findModifyfiles(taskId);
+			
+			
+			log.info("수정 전 taskDetail : {} ",  detailList);
+			log.info("수정 전 fileList : {} " , fileList);
+			log.info("로그인한 유저 : {} ", user);
+			
+			mv.addObject("detailList", detailList);
+			mv.addObject("fileList", fileList);
+			mv.addObject("loginUser", user);
+			mv.setViewName("/admin/taskBoard/modifyTask");
+			
+			return mv;
+		}
+
+		//게시글 수정
+		@PostMapping("/modifyTask")
+		public String modifyTask(@RequestParam(value="taskFile", required=false) List<MultipartFile> multiFiles, @ModelAttribute TaskBoardDTO task, RedirectAttributes attr, HttpServletRequest request ) throws Exception {
 		
-		List<TaskBoardDTO> detailList = taskBoardService.findModifyTask(taskId);
-		List<FileDTO> fileList = taskBoardService.findModifyfiles(taskId);
+			String page = "";
+			List<FileDTO> fileList = new ArrayList<>();
+			int clsId = Integer.parseInt(request.getParameter("clsId"));
+			int fileId = Integer.parseInt(request.getParameter("fileId"));
+			
+			log.info("수정 요청 clsId : {} ", clsId);
+			log.info("수정 요청 multiFiles : {}", multiFiles);
+			log.info("수정 요청 fileId : {}", fileId);
+			
+			
+			File mkdir = new File(uploadFilesPath + "\\taskFiles");
+			FileDTO fileInfo = new FileDTO();
+			
+			//새로운 업로드 파일 존재 여부 확인하기
+			if(!(multiFiles == null)) {   
+				for(int i = 0; i < multiFiles.size(); i++) {
+					
+					
+					//파일명 변경 처리
+					String originFileName = multiFiles.get(i).getOriginalFilename();
+					String ext = originFileName.substring(originFileName.lastIndexOf("."));
+					String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+					
+					
+					// 파일 정보 FileDTO의 setter에 담기
+					fileInfo.setFileOrginName(originFileName);
+					fileInfo.setFileSaveName(savedName);
+					fileInfo.setFilePath("/uploadFiles/taskFiles/");
+					fileInfo.setFileType(ext);
+					fileInfo.setFileId(fileId);
+
+					/* List 타입에 담기 */
+					fileList.add(fileInfo);
+					
+				}
+				/* TaskDTO에 담기 */
+				task.setFileList(fileList);
 		
-		log.info("taskDetail : {} ",  detailList);
-		log.info("fileList : {} " , fileList);
-		log.info("로그인한 유저 : {} ", user);
+
+				log.info("fileList : {} ", fileList);
+
+				
+				int result1 = taskBoardService.modifyTaskAndFiles(task);
+
+				if(result1 > 0) {
+				//	page = "redirect:/admin/taskBoardList?clsId=1";
+				} else {
+					throw new Exception("게시글 등록 실패!");
+				}
+
+				try {
+					
+					// 파일을 저장한다. 
+					for(int i = 0; i < fileList.size(); i++) {
+						multiFiles.get(i).transferTo(new File(uploadFilesPath + "\\taskFiles\\" + fileList.get(i).getFileSaveName()));
+					}
+					
+					
+				} catch (IllegalStateException | IOException e) {
+					
+					// 업로드 실패 시 이전에 저장 된 파일도 삭제한다. 
+					for(int i = 0; i < fileList.size(); i++) {
+						new File(uploadFilesPath + "\\taskFiles\\" + fileList.get(i).getFileSaveName()).delete();
+					}
+					
+				} 	
+			} else if(multiFiles == null){
+				int result2 = taskBoardService.modifyOnlyContent(task);
+			//	page = "redirect:/admin/taskBoardList?clsId=1";
+			}
 		
-		mv.addObject("detailList", detailList);
-		mv.addObject("fileList", fileList);
-		mv.addObject("loginUser", user);
-		mv.setViewName("admin/taskBoard/modifyTask");
-		
-		return mv;
-	}
+			attr.addAttribute("clsId", clsId);
+			return "redirect:/admin/taskBoardList";	
+		}
 
 	
 	

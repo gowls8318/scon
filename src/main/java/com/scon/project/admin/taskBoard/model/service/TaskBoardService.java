@@ -34,8 +34,14 @@ public interface TaskBoardService {
 	//게시판 수정 전 파일 조회
 	List<FileDTO> findModifyfiles(String taskId);
 
-	
+	//게시판 수정 (+파일)
+	int modifyTaskAndFiles(TaskBoardDTO task) throws Exception;
 
+	//게시판 수정 (컨텐츠)
+	int modifyOnlyContent(TaskBoardDTO task);
+	
+	//조회수
+//	int updateView(int taskView);
 
 
 
