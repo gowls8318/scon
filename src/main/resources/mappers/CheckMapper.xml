@@ -9,6 +9,7 @@
 		<result property="chkStart" column="CHQ_START"/>
 		<result property="chkFinish" column="CHQ_FINISH"/>
 		
+		
 		<association property="lec" resultMap="lectureResultMap"/>
 		<association property="member" resultMap="memberResultMap"/>
 		<association property="cls" resultMap="classResultMap"/>
@@ -26,6 +27,8 @@
 		<result property="accDate" column="ACC_DATE"/>
 		<result property="accOption" column="ACC_OPTION"/>
 		
+		<association property="member" resultMap="memberResultMap"/>
+		<association property="cls" resultMap="classResultMap"/>
 	</resultMap>
 	
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
@@ -62,7 +65,7 @@
 	
 	
 	
-	
+	<!-- 출석부 목록 조회 -->
 	<select id="selectAllClassList" resultMap="checkResultMap">
 	SELECT 
 		 A.LEC_NO
@@ -91,6 +94,35 @@
 	ORDER BY B.MEMBER_NAME
 	</select>
 
+	<!-- 결석 학생 조회 -->
+	<select id="selectAllAbsentList" resultMap="checkResultMap">
+	SELECT 
+		 A.LEC_NO
+		,A.MEMBER_ID
+		,B.MEMBER_NAME
+		,D.CLS_ID
+		,D.CLS_NAME
+		,C.CHQ_NO
+		,TO_CHAR(C.CHQ_DATE, 'YYYY-MM-DD') AS CHQ_DATE
+		,C.CHQ_START
+		,C.CHQ_FINISH
+	FROM TB_LECTURE A
+	JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+	JOIN TB_CHECK C ON (C.LEC_NO = A.LEC_NO)
+	JOIN TB_CLASS D ON (A.CLS_ID = D.CLS_ID)
+	WHERE C.CHQ_START = '결석'
+	<if test="chk.chkDate != null and chk.chkDate != ''">
+	   AND TO_CHAR(C.CHQ_DATE, 'YYYY-MM-DD') = #{ chk.chkDate }
+	 </if>
+	<if test="cls.clsId != 0">
+	  AND D.CLS_ID = #{ cls.clsId }
+	</if> 	 
+	<if test="member.name != null and member.name != ''">
+	   AND B.MEMBER_NAME = #{ member.name }
+	 </if>
+	ORDER BY B.MEMBER_NAME
+	</select>
+	
 
 	
 	<!-- 강의 목록 조회 -->
@@ -102,20 +134,61 @@
 		WHERE CLS_STATUS = 'Y'
 	</select>
 	
+	
+	
 	<!-- 출결 등록 -->
-	<insert id="insertAttList">
+	<select id="selectChkList" resultMap="lectureResultMap">
+	SELECT 
+		 A.LEC_NO
+		,B.MEMBER_ID
+		,B.MEMBER_NAME
+		,C.CLS_ID
+		,C.CLS_NAME
+	FROM TB_LECTURE A
+	JOIN TB_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+	JOIN TB_CLASS C ON (A.CLS_ID = C.CLS_ID)
+	WHERE 1=1
+	<!--if test="chk.chkDate != null and chk.chkDate != ''">
+	   AND TO_CHAR(C.CHQ_DATE, 'YYYY-MM-DD') = #{ chk.chkDate }
+	 </if-->
+	<if test="cls.clsId != 0">
+	  AND C.CLS_ID = #{ cls.clsId }
+	</if> 	 
+	<if test="member.name != null and member.name != ''">
+	   AND B.MEMBER_NAME = #{ member.name }
+	 </if>
+	ORDER BY A.LEC_NO
+	</select>
+	
+	
+	<insert id="insertChkList">
 		INSERT
-			INTO TB_ATTENDANCE
-			
+			INTO TB_CHECK
+			(
+			   CHQ_NO
+			 , LEC_NO
+			 , CHQ_DATE
+			 , CHQ_START
+			 , CHQ_FINISH 
+			)
+			VALUES
+			(
+			   SEQ_CHQ_NO.NEXTVAL
+			 , #{ lecNo }
+			 , #{ chkDate }
+			 , #{ chkStart }
+			 , #{ chkFinish }
+			 )
+			 
 	</insert>
 	
+	<update id="updateChkList">
+		UPDATE TB_CHECK
+		   SET CHQ_DATE = #{ chkDate }
+			 , CHQ_START = #{ chkStart }
+			 , CHQ_FINISH = #{ chkFinish }
+		 WHERE CHQ_NO = #{ no }
+	</update>
 	
-	<!-- 강의 목록 불러오기 -->
-	<!-- <select id="getClassList" resultType="com.scon.project.admin.Class.dto.ClassDTO">
-			SELECT
-		       CLS_ID
-		     , CLS_NAME	     
-		  FROM TB_CLASS
-		WHERE CLS_STATUS = 'Y'
-	</select> -->
+	
 </mapper>

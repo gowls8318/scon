@@ -88,7 +88,7 @@
                     <div class="mx-auto stuformbox">
                     
                     <th:block class="mx-auto">
-                    <form name="insertForm" id="insertForm"  th:action="@{/admin/check/chkInsertForm}" method="get" role="form">
+                    <form name="updateForm" id="updateForm"  th:action="@{/admin/check/chkUpdateForm}" method="get" role="form">
                     <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-0 selectclasstext">강의 선택</div>
 	                        <div class="col-2">
@@ -118,7 +118,7 @@
                     </th:block>
                     
                         <br><br>
-                        <form method="post" name="insertChkForm" id="insertChkForm"  th:action="@{/admin/check/chkInsertForm}" role="form">
+                        <form method="post" name="updateChkForm" id="updateChkForm"  th:action="@{/admin/check/chkUpdateForm}" role="form">
                         <div class="stulistrow">
                             <div class="table-responsive" style="overflow: scroll; height: 35em;">
                                 <table class="studenttable table" id="studenttable">
@@ -132,8 +132,8 @@
                                             </div>
                                         </th>
                                         <th rowspan="2">번호</th>
-                                        <th rowspan="2">학생 이름</th>
-                                        <th rowspan="2">수강 강의</th>
+                                        <th rowspan="2">학생이름</th>
+                                        <th rowspan="2">수강강의</th>
                                         <th rowspan="2">출석일</th>
                                         <th colspan="3">출석상태</th>
                                         <th colspan="3" id="gohomebutton">귀가상태</th>
@@ -149,19 +149,19 @@
                                     </thead>
 
                                     <tbody>
-                                    <tr th:each="val:${ selectChkList }">
+                                    <tr th:each="val:${ checkClassList }">
 	                                    <!-- 체크박스 -->
 	                                    <th class="stuCheck">
 	                                        <div class="form-check">
 	                                            <input class="form-check-input checkedStudent" type="checkbox" id="flexCheckDefault" name="flexCheckDefaultRow">
 	                                        </div>
 	                                    </th>
-                                        <td><div class="lecNoBox"><input th:value="${ val.no }" id="lecNo" class="lecNoForm" name="lecNo" readonly></div></td>
+                                        <td><div class="lecNoBox"><input th:value="${ val.no }" id="no" class="lecNoForm" name="no" readonly></div></td>
                                         <td th:text="${ val.member.name }"></td>
                                         <td th:text="${ val.cls.clsName }"></td>
-                                        <td class="datepicker"><input type="date" name="chkDate" class="currentDate"></td>
-                                        <td colspan="3"><input type="text" class="attformbox form-control" aria-label="Username" aria-describedby="basic-addon1" id="chkStart" name="chkStart"></td>
-                                        <td colspan="3"><input type="text" class="attformbox form-control" aria-describedby="basic-addon1" id="chkFinish" name="chkFinish"></td>
+                                        <td class="datepicker"><input type="date" name="chkDate" class="currentDate" th:value="${ val.chkDate }"></td>
+                                        <td colspan="3"><input type="text" class="attformbox form-control" aria-label="Username" aria-describedby="basic-addon1" id="chkStart" name="chkStart" th:value="${ val.chkStart }"></td>
+                                        <td colspan="3"><input type="text" class="attformbox form-control" aria-describedby="basic-addon1" id="chkFinish" name="chkFinish" th:value="${ val.chkFinish }"></td>
                                     </tr>
                                     
                                     </tbody>

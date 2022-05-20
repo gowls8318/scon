@@ -32,10 +32,32 @@
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
     <style>
-    .stusearchbutton { border: 1px !important; border-color: gray !important;}
+        .stusearchbutton { border: 1px !important; border-color: gray !important;}
         .buttonbox {
             margin-top: 5em;
-    }
+        }
+        .table {
+        margin-bottom: 0rem !important;
+        border-spacing: 0 !important;
+        }
+
+        /* 정렬 */
+        .table thead th {
+            vertical-align: middle;
+            
+            background-color: #f6f6f6;
+        }
+
+        .table th{
+            vertical-align: middle;
+            text-align: center;
+        }
+        .table td{
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    
     </style>
 
 
@@ -66,7 +88,7 @@
                     <!-- Content Row -->
                     <div class="mx-auto stuformbox">
                         <th:block class="mx-auto">
-                    <form name="searchForm" id="searchForm"  th:action="@{/admin/check/chkViewClass}" method="get" role="form">
+                    <form name="searchForm" id="searchForm"  th:action="@{/admin/check/chkAbsent}" method="get" role="form">
                     <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-0 selectclasstext">강의 선택</div>
 	                        <div class="col-2">
@@ -82,7 +104,7 @@
                                 <input class="form-control mr-sm-2 stusearchbox" type="text" name="name" placeholder="학생 이름을 입력해주세요">
                             </div>
                         <div class="col-0 selectclasstext">출석일</div>
-                        <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker" inline="true">
+                        <div id="date-picker-example" class="col-2 datepicker-section input-with-post-icon datepicker">
                             <!--시작시 기본 날짜 설정은 value를 이용-->
                             <input type="date" name="chkDate" id="datePicker" class="dayselectbox form-control">
                         </div>
@@ -102,17 +124,21 @@
                                     <thead>
                                     <tr>
                                         <th>번호</th>
-                                        <th>학생 이름</th>
-                                        <th>수강 강의</th>
+	                                    <th>학생이름</th>
+	                                    <th>수강강의</th>
+	                                   	<th>출석일</th>
+	                                    <th>출석상태</th>
                                     </tr>
                                     </thead>
 
                                      <tbody>
-                                <tr th:each="val:${ checkClassList }">
-                                    <td th:text="${ val.no }"></td>
-                                    <td th:text="${ val.member.name }"></td>
-                                    <td th:text="${ val.cls.clsName }"></td>
-                                </tr>
+	                               	<tr th:each="val:${ checkClassList }">
+	                                    <td th:text="${ val.no }"></td>
+	                                    <td th:text="${ val.member.name }"></td>
+	                                    <td th:text="${ val.cls.clsName }"></td>
+	                                    <td th:text="${ val.chkDate }"></td>
+	                                    <td th:text="${ val.chkStart }" class="attandancestatusbox"></td>
+	                                </tr>
                                 </tbody>
                                 </table>
                             </div>
