@@ -44,6 +44,13 @@ public interface TaskBoardMapper {
 	//게시글 수정 전 파일 상세 조회
 	List<FileDTO> findModifyfiles(String taskId);
 
+	/* 게시글 수정 (파일도 함께 업데이트)*/
+	//1. 새로운 파일 업데이트
+	int modifyFiles(FileDTO files) throws Exception;
+	//2. 컨텐츠 업데이트
+	int modifyTask(TaskBoardDTO task);
 
+	//조회수
+//	int updateView(int taskView);
 
 }

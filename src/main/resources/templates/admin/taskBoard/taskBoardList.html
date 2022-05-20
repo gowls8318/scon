@@ -112,6 +112,7 @@
                     <tbody>
                  		<tr th:each=" task : ${ taskList }">
                         	<input type="hidden" th:value="${ task.memberId }" class="memberId" name="memberId"/>
+                        	<input type="hidden" th:value="${ task.taskView }" name="taskView"/>
                             <th scope="row" th:text="${ task.taskId }" class="taskId" name="taskId"></th>
                             <td class="pointer" th:text="${ task.taskTitle }" th:onclick="'location.href=\'' + @{/admin/taskDetail(clsId=${task.clsId},taskId=${task.taskId})} + '\';'"></td>
                             <td th:text="${ task.memberName }"></td>

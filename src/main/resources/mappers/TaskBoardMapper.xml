@@ -31,19 +31,7 @@
 	<result property="fileId" column="FILE_ID"/>
 </resultMap>
 
-<!-- class (소영님) 
-<resultMap id="classResultMap" type="com.scon.project.admin.Class.dto.ClassDTO">
-		<id property="clsId" column="CLS_ID"/>
-		<result property="clsName" column="CLS_NAME"/>
-		<result property="clsStuNum" column="CLS_STUNUM"/>
-		<result property="clsGrade" column="CLS_GRADE"/>
-		<result property="clsPay" column="CLS_PAY"/>
-		<result property="clsRoom" column="CLS_ROOM"/>
-		<result property="clsStart" column="CLS_START"/>
-		<result property="clsEnd" column="CLS_END"/>
-		<result property="clsNote" column="CLS_NOTE"/>
-		<result property="clsStatus" column="CLS_STATUS"/>
-</resultMap> -->
+
 
 <!-- 검색 조건 -->
 	<sql id="criteria">
@@ -94,7 +82,8 @@
 			  		<if test="taskBoard.keyword != null">
 			  		  AND TASK_TITLE LIKE '%' || #{ taskBoard.keyword } || '%'
 			  		</if>
-			  	  )
+		             ORDER BY T.TASK_ID DESC
+		             ) 
 		<![CDATA[
 			WHERE RNUM > (#{ cri.pageNo } - 1) * #{ cri.limit }
 		]]>
@@ -111,26 +100,6 @@
 				 </if>
 		</select>
 
-
-	 <!--  파일 업로드 전 -->
-	<!--  <insert id="insert">
-	 	INSERT 
-	 		INTO TB_TASK
-	 		(
-	 		 TASK_ID
-	       , MEMBER_ID
-	       , CLS_ID
-	       , TASK_TITLE
-	       , TASK_CONTENT
-	       , TASK_DATE
-	       , TASK_UPDATE
-	 		)
-	 		VALUES
-	 		(
-	 		 SEQ_TASK_NO.NEXTVAL
-	 	   , 
-	 		)
-	 </insert>-->
 
 	<!-- 과제 게시판 게시글 입력  -->
  	<insert id="insertTask">
@@ -201,20 +170,6 @@
   	WHERE T.TASK_DELETE = 'N'
   	AND T.TASK_ID = #{ taskId }
 	</select> 
-	<!-- 	SELECT
-	    	T.TASK_ID,
-	    	T.MEMBER_ID,
-	    	T.CLS_ID,
-	    	T.TASK_TITLE,
-	    	T.TASK_CONTENT,
-	    	T.TASK_DATE,
-	    	T.TASK_VIEW,
-	    	T.TASK_DELETE,
-	    	M.MEMBER_NAME
-  	 FROM TB_TASK T
-   	JOIN TB_MEMBER M ON (T.MEMBER_ID = M.MEMBER_ID)
-  	WHERE T.TASK_DELETE = 'N'
-  	AND T.TASK_ID = #{ taskId } -->
 	
 	<!--  과제 게시판 게시글 상세 조회 (파일) -->
 	<select id="findFiles" resultMap="fileResultMap" resultType="list">
@@ -262,5 +217,32 @@
 		    JOIN TB_FILE F ON(T.FILE_ID = F.FILE_ID)
 		    WHERE T.TASK_ID = #{ taskId }
 	</select> 
+
+	<!-- 게시글 수정  -->
+		<!-- 1. 파일 업데이트 -->
+		<insert id="modifyFiles">
+		 UPDATE TB_FILE
+		 	SET FILE_ORGNAME = #{ fileOrginName },
+		 		FILE_SAVENAME = #{ fileSaveName },
+		 		FILE_PATH = #{ filePath },
+		 		FILE_TYPE =#{ fileType }
+		 	WHERE FILE_ID = #{ fileId }
+		</insert>
+
+		<!-- 2. 컨텐츠 업데이트 -->
+		<update id="modifyTask">
+			UPDATE TB_TASK
+			 SET TASK_TITLE = #{ taskTitle },
+				 TASK_CONTENT = #{ taskContent }
+			WHERE TASK_ID = #{ taskId }
+		</update>
+	<!--  -->
+	
+	<!-- 조회수 올리기 
+	<update id="updateView">
+		UPDATE TB_TASK
+		SET TASK_VIEW = TASK_VIEW + 1
+			WHERE TASK_VIEW = #{ taskView }
+	</update> -->
 
 </mapper>

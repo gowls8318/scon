@@ -104,7 +104,35 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		return taskBoardMapper.findModifyfiles(taskId);
 	}
 
-	
+	//게시글 수정 (+파일)
+		@Override
+		public int modifyTaskAndFiles(TaskBoardDTO task) throws Exception {
+			
+			int result = 0, result1 = 0;
+						
+			for(FileDTO files : task.getFileList()) {
+				 result1 += taskBoardMapper.modifyFiles(files);
+			}
+			
+			if(result1 == task.getFileList().size()) {
+				int result2 = taskBoardMapper.modifyTask(task);
+				result = (result2 > 0 ) ? 1 : 0;
+			}
+			
+			return result;
+		}
+
+	//게시글 수정 (+text)
+	@Override
+	public int modifyOnlyContent(TaskBoardDTO task) {
+		return taskBoardMapper.modifyTask(task);
+	}
+
+	//조회수
+//	@Override
+//	public int updateView(int taskView) {
+//		return taskBoardMapper.updateView(taskView);
+//	}
 
 
 
