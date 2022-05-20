@@ -92,6 +92,7 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeMapper.deleteCmt(cNo);
 	}
 
+	
 //  댓글 수정하고 등록		
 	@Override
 	public int modifyCmt(NoticeCmtDTO notiCmt) throws Exception {
@@ -99,11 +100,6 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeMapper.modifyCmt(notiCmt);
 	}
 
-	@Override
-	public Object selectCmtDetail(int cNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

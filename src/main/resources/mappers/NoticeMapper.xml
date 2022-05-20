@@ -238,7 +238,6 @@
 			   TB_COMMENT
 		   SET CMT_CONTENT = #{ cmtContent }
 			 , CMT_UPDATE = SYSDATE
-		 WHERE NOTI_NO = #{ no }
 		   AND CMT_NO = #{cNo}
 	</update>
 	

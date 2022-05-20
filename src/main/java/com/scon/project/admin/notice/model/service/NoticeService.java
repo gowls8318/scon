@@ -36,11 +36,11 @@ public interface NoticeService {
 	
 //	댓글 삭제
 	int deleteCmt(int cNo) throws Exception;
-
+	
 //	댓글 수정+등록
 	int modifyCmt(NoticeCmtDTO notiCmt) throws Exception;
 
-	Object selectCmtDetail(int cNo);
+	
 
 
 
