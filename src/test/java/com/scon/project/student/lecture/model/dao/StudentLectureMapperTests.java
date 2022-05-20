@@ -67,4 +67,20 @@ public class StudentLectureMapperTests {
 		assertNotNull(lectureList);
 	}
 	
+	// success
+	@Test
+	@Disabled
+	@DisplayName("수강 정보 조회용 매퍼 테스트")
+	public void testSelectLectureDetail() {
+		
+		// given
+		int no = 3;
+		
+		// when
+		LectureDTO lectureDetail = studentLectureMapper.selectLectureDetail(no);
+		
+		// then
+		assertNotNull(lectureDetail);
+	}
+	
 }

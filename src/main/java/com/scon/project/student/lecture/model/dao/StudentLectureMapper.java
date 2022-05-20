@@ -18,5 +18,8 @@ public interface StudentLectureMapper {
 
 	/* 게시물 총 갯수(페이징) */
 	int total(Criteria cri);
+
+	/* 수강 정보 조회용 */
+	LectureDTO selectLectureDetail(int no);
 	
 }

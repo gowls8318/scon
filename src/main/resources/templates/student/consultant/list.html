@@ -98,7 +98,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="conH : ${ consultantList }">
+                                        <tr th:if="${not #lists.isEmpty( consultantList )}" th:each="conH : ${ consultantList }">
                                             <td th:text="${ conH.no }">번호</td>
                                             <td th:text="${ conH.conWriteDate }">상담 신청일</td>
                                             <!-- <td th:text="${ conH.conHTitle }" class="conHTitle"
@@ -107,7 +107,13 @@
                                             	<a th:href="@{/student/consultant/detail(no=${conH.no})}">[[${conH.conHTitle}]]</a>
                                             </td> -->
                                             <td th:text="${ conH.conHTitle }" class="conHTitle"
-                                            	th:onclick="'location.href=\'' + @{/student/consultant/detail(no=${conH.no})} + '\';'">상담 제목</td>
+                                            	th:onclick="'location.href=\'' + @{/student/consultant/detail(no=${conH.no}, pageNo=${page.cri.pageNo}, type=${page.cri.type}, keyword=${page.cri.keyword})} + '\';'">상담 제목</td>
+                                            <!-- <td class="conHTitle">
+                                            	<a th:href=" @{/student/consultant/detail(no=${conH.no}, pageNo=${page.cri.pageNo})}" class="movePage">[[${conH.conHTitle}]]</a>
+                                            </td> -->
+                                        </tr>
+                                        <tr th:unless="${not #lists.isEmpty( consultantList )}">
+                                        	<td colspan="3">조회된 결과가 없습니다</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -182,7 +188,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <script type="text/javascript" th:inline="javascript">
+    <script type="text/javascript">
     	/* 입력 검색 - tr 전체 */
         /* $(document).ready(function() {
             $("#accSearch").keyup(function() {

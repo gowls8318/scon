@@ -124,9 +124,16 @@
                                 </div>
 
                                 <div class="buttonbox">
-                                    <button type="button" class="btn btn-light resetbuttonbox"
-                                    	th:onclick="location.href='/admin/consultant/hopeList'">돌아가기</button>
+                                    <button type="button" class="btn btn-light resetbuttonbox" id="btn-list">돌아가기</button>
+                                    <!-- th:onclick="location.href='/admin/consultant/hopeList'" -->
                                 </div>
+                                
+                                <form id="infoForm" action="/admin/consultant/hopeList" method="get">
+									<input type="hidden" id="no" name="no" th:value="${ consultantHopeDetail.no }">
+									<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+									<input type="hidden" name="type" th:value="${ cri.type }">
+									<input type="hidden" name="keyword" th:value="${ cri.keyword }">
+								</form>
                         </div>
                     </div>
 
@@ -149,6 +156,16 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
+    <script type="text/javascript">
+	    /* 돌아가기 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
+		let form = $("#infoForm");
+		$("#btn-list").on("click", function(e){
+			form.find("#no").remove();
+			form.attr("action", "/admin/consultant/hopeList");
+			form.submit();
+		});
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>

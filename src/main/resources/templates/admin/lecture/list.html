@@ -91,7 +91,6 @@
 								    	<option value="lecStatus" th:selected="${ #strings.equals( page.cri.type, 'lecStatus' ) }">수강 상태</option>
 								    	<option value="accOption" th:selected="${ #strings.equals( page.cri.type, 'accOption' ) }">결제 방법</option>
 								    	<option value="accStatus" th:selected="${ #strings.equals( page.cri.type, 'accStatus' ) }">수납 여부</option>
-								     	<!-- <option value="handle" th:selected="${ #strings.equals( page.cri.type, 'handle' ) }">환불 처리</option> -->
 									</select>
 	                                <div class="form-group mx-sm-3">
                                     <input type="text" name="keyword" class="form-control" th:value="${ page.cri.keyword }" id="keyword"
@@ -121,7 +120,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
-                                        <tr th:each="lec : ${ lectureList }" class="lecTr">
+                                        <tr th:if="${not #lists.isEmpty( lectureList )}" th:each="lec : ${ lectureList }" class="lecTr">
                                             <td th:text="${ lec.no }" class="lecNo">번호</td>
                                             <td th:text="${ lec.member.name }" class="memberId">원생</td>
                                             <td th:text="${ lec.cls.clsName }" class="clsId">강의명</td>
@@ -146,15 +145,17 @@
                                             <td class="btn-no">
                                                 <div class="btn-acc">
                                                     <button type="button" class="btn btn-primary btn-acc1"
-                                                    	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no})} + '\';'">상세</button>
+                                                    	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no}, pageNo=${page.cri.pageNo}, type=${page.cri.type}, keyword=${page.cri.keyword})} + '\';'">상세</button>
                                                     <button type="button" class="btn btn-light btn-acc2 refBtn"
-                                                    	data-toggle="modal"
-                                                    	th:onclick="refund(this, [[${lec.no}]])">환불</button>
+                                                    	data-toggle="modal" th:onclick="refund(this, [[${lec.no}]])">환불</button>
                                                     	<!-- th:onclick="refund(this, [[${lec.no}]])" -->
                                                     	<!-- th:onclick="|refundDetail(${lec.no})|" -->
                                                     	<!--  data-target="#refundModal" -->
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr th:unless="${not #lists.isEmpty( lectureList )}">
+                                        	<td colspan="11">조회된 결과가 없습니다</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -242,7 +243,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-lg-1"></div>
-                                    <label for="clsId" class="col-sm-2 col-form-label col-lg-3">수강 강의 <span id="pointtext">*</span></label>
+                                    <label for="clsId" class="col-sm-2 col-form-label col-lg-3">강의명 <span id="pointtext">*</span></label>
                                     <div class="col-sm-10 col-lg-7">
                                         <input type="text" class="form-control" id="clsId" readonly>
                                     </div>
@@ -478,7 +479,7 @@
 							location.reload();
 						}
 					}); */
-					//location.href="/admin/lecture/list";
+					location.href="/admin/lecture/list";
 				},
 				error : function(xhr) {
 					console.log(xhr);

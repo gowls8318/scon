@@ -53,5 +53,18 @@ public class StudentLectureServiceImpl implements StudentLectureService {
 		
 		return result;
 	}
+
+	/* 수강 정보 조회용 */
+	@Override
+	public LectureDTO selectLectureDetail(int no) throws Exception {
+		
+		LectureDTO lecture = studentLectureMapper.selectLectureDetail(no);
+		
+		if(lecture == null) {
+			throw new Exception("수강 정보 조회에 실패하였습니다.");
+		}
+		
+		return lecture;
+	}
 	
 }

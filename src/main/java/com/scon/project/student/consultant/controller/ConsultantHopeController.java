@@ -95,11 +95,13 @@ public class ConsultantHopeController {
 //	}
 	
 	@GetMapping("/consultant/detail")
-	public String selectDetailPage(@RequestParam int no, Model model, Criteria cri) throws Exception {
+	public String selectDetailPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
+		
+		log.info("조회 번호 : {}", no);
 		
 		model.addAttribute("consultantDetail", consultantHopeService.selectConsultantDetail(no));
 		
-		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
+		/* 돌아가기 누를 시 현재 페이지로 이동하기 위함 */
 		model.addAttribute("cri", cri);
 		
 		return "student/consultant/detail";
@@ -107,7 +109,7 @@ public class ConsultantHopeController {
 	
 	/* 상담 신청 수정용 */
 	@GetMapping("/consultant/updateForm")
-	public String updateConsultantPage(@RequestParam int no, Model model, Criteria cri) throws Exception {
+	public String updateConsultantPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
 		model.addAttribute("consultant", consultantHopeService.selectConsultantDetail(no));
 		
@@ -124,7 +126,8 @@ public class ConsultantHopeController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateConsultantHope", null, locale));
 		
-		return "redirect:/student/consultant/list";
+		//return "redirect:/student/consultant/list";
+		return "redirect:/student/consultant/detail?no=" + con.getNo();
 	}
 	
 	/* 상담 신청 삭제용 */

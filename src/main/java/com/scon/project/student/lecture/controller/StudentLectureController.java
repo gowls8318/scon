@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
@@ -50,6 +52,20 @@ public class StudentLectureController {
 		mv.setViewName("student/lecture/list");
 		
 		return mv;
+	}
+	
+	/* 환불 모달에 값 넣기 */
+	@GetMapping("/lecture/refund")
+	@ResponseBody
+	public LectureDTO selectRefundDetail(@RequestParam int no) throws Exception {
+		
+		log.info("수강 번호 : {}", no);
+		
+		LectureDTO lectureDetail = studentLectureService.selectLectureDetail(no);
+		
+		log.info("수강 상세 조회 : {}", lectureDetail);
+		
+		return lectureDetail;
 	}
 	
 }
