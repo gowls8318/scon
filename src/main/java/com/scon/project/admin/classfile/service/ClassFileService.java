@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.classfile.dto.ClassFileDTO;
+import com.scon.project.admin.classfile.dto.TaskFileDTO;
 import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.MemberDTO;
 
 public interface ClassFileService {
@@ -23,6 +25,12 @@ public interface ClassFileService {
 
 	//강의명조회
 	List<ClassDTO> selectClassName();
+	
+	//파일조회
+	List<TaskFileDTO> selectFiles(Criteria cri);
+
+	boolean deleteClassFile(String fileId)throws Exception;
+
 
 
 

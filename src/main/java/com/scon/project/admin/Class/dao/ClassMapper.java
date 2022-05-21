@@ -15,7 +15,7 @@ public interface ClassMapper {
 	
 
 	//강의리스트조회
-	List<ClassDTO> selectClassList(Criteria cri);
+	List<ClassDTO> selectClassList(Criteria Criteria);
 	
 	//멤버조회(강사)
 	/* List<MemberDTO> findAllmemberList(int clsId); */
@@ -51,7 +51,7 @@ public interface ClassMapper {
 	/* int updateTime(TimeDTO time); */
 
 	//강의게시글 총 갯수
-	int total(Criteria cri);
+	int total(Criteria Criteria);
 
 
 

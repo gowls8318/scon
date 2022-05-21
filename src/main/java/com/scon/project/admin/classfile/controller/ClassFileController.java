@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.classfile.dto.ClassFileDTO;
@@ -63,15 +65,18 @@ public class ClassFileController {
 		List<MemberDTO> memberList = classFileService.selectMember();
 		List<ClassDTO> classNameList = classFileService.selectClassName();
 		List<ClassFileDTO> classFileList = classFileService.selectClassFileList(cri);
+		List<TaskFileDTO> fileList = classFileService.selectFiles(cri); 
 		
 		mv.addObject("memberList", memberList);
 		mv.addObject("classNameList", classNameList);
 		mv.addObject("classFileList", classFileList);
+		mv.addObject("fileList", fileList);
 
 		
 		  log.info("강의첨부파일리스트 : {}", classFileList); 
 		  log.info("강사리스트: {}",memberList); 
 		  log.info("강의명리스트: {}", classNameList);
+		  log.info("첨부파일정보: {}", fileList);
 		
 
 
@@ -110,8 +115,8 @@ public class ClassFileController {
 		//@RequestParam int clsId,
 		//HttpServletRequest request, 
 		
-		log.info("강의첨부자료리스트정보 : {} ", classFile); 
 		String page = "";
+		log.info("강의첨부자료리스트정보 : {} ", classFile); 
 		
 		
 		File mkdir = new File(uploadFilesPath + "\\classFiles");
@@ -119,7 +124,7 @@ public class ClassFileController {
 			mkdir.mkdirs();
 		}
 		
-		List<TaskFileDTO> fileList = new ArrayList<>();
+		List<TaskFileDTO> fileList2 = new ArrayList<>();
 		
 		for(int i = 0; i < multiFiles.size(); i++) {
 			TaskFileDTO fileInfo = new TaskFileDTO();
@@ -137,13 +142,13 @@ public class ClassFileController {
 			fileInfo.setFileType(ext);
 
 			/* List 타입에 담기 */
-			fileList.add(fileInfo);
+			fileList2.add(fileInfo);
 			
 		}
 		/* TaskFileDTO에 담기 */
-		classFile.setFileList(fileList);
+		classFile.setFileList2(fileList2);
 
-		log.info("첨부된파일정보 : {} ", fileList);
+		log.info("첨부된파일정보 : {} ", fileList2);
 
 		//task 객체 안에 파일 정보까지 담아서 1.테스크 테이블 insert 2.파일 테이블 insert 3.테스트 파일 테이블 insert 3개가 잘 됐을 때 로직 성공
 		// 3개 DAO에 선언 된 메소드를 호출 
@@ -158,21 +163,32 @@ public class ClassFileController {
 		try {
 		
 			// 파일을 저장한다. 
-			for(int i = 0; i < fileList.size(); i++) {
-				multiFiles.get(i).transferTo(new File(uploadFilesPath + "\\classFiles\\" + fileList.get(i).getFileSaveName()));
+			for(int i = 0; i < fileList2.size(); i++) {
+				multiFiles.get(i).transferTo(new File(uploadFilesPath + "\\classFiles\\" + fileList2.get(i).getFileSaveName()));
 			}
 			
 			
 		} catch (IllegalStateException | IOException e) {
 			
 			// 업로드 실패 시 이전에 저장 된 파일도 삭제한다. 
-			for(int i = 0; i < fileList.size(); i++) {
-				new File(uploadFilesPath + "\\classFiles\\" + fileList.get(i).getFileSaveName()).delete();
+			for(int i = 0; i < fileList2.size(); i++) {
+				new File(uploadFilesPath + "\\classFiles\\" + fileList2.get(i).getFileSaveName()).delete();
 			}
 			
 		}
 		return page;
 
 	}
-
+	
+	//강의삭제
+	@GetMapping("/deleteClassFile")
+	public String deleteClassFile(@RequestParam int clsId, @RequestParam String fileId, RedirectAttributes redirectAttr) throws Exception { 
+		 
+		log.debug("강의 삭제 요청 id : {}", clsId);
+		log.debug("게시글 삭제 요청 id : {}", fileId);
+		
+		classFileService.deleteClassFile(fileId);
+		redirectAttr.addAttribute("clsId", clsId);
+		return "redirect:/admin/ClassFileList"; // clsId
+	}
 }
