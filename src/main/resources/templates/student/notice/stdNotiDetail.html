@@ -25,10 +25,25 @@
     
 
     <style>
+    /* 공지사항 목록으로 버튼 */
+    .detailPageTitle { 
+        color: #5a5c69;
+    }
+    .detailPageTitle:link { 
+        text-decoration: none;
+    }
+    .detailPageTitle:visited { 
+        text-decoration: none;
+    }
+    .detailPageTitle:hover { 
+        text-decoration: underline;
+        color: #8B169E;
+    }
+    
     /* 정렬 */
     .table th{
         vertical-align: middle;
-        max-width: 3rem;
+        max-width: 1rem;
     }
 
     /* 컬럼높이 */
@@ -38,12 +53,105 @@
     }
 
     /* 내용 */
-    #notiContents {
+    #notiContent {
         height: 20rem;
         vertical-align : top;
         padding-top: 1.2rem;
+        
+    }
+    
+            /* ----------------------댓글---------------------- */
+    /* -------폼--------- */
+    .card-header {
+        font-family: "GmarketSansMedium" !important;
+        font-weight: bold;
+    }
+    /* 댓글카드 헤더, 작성 폼 폰트색상 */
+    .card-header, .form-control {
+        color: #858796;        
     }
 
+    /* (댓글 내용+등록버튼) 그룹 설정 */
+    .list-group-item {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 1fr;        
+    }
+
+    /* 댓글 등록 버튼 */
+    .mt-3 {
+        justify-content: flex-end;
+        float: right;
+        margin-top: 0 !important;
+        margin-left: 20px;
+        border: #858796;
+        background-color: #858796 !important;
+}
+    .mt-3:hover {
+        border: none;
+        background-color: #adadad !important;
+}
+    .mt-3:focus {
+        box-shadow: none !important;
+}
+
+    /* -------등록된 댓글--------- */
+    .justify-content-between {
+    	align-items: center;
+    }
+    
+    /* 댓글 작성자 이름 */
+    #cmtName {
+        color :#8B169E;
+        font-family: "GmarketSansMedium" !important;
+        font-weight: bold;
+        width: 80px;
+    }
+
+    /* 등록된 댓글 내용 */
+    .mr-1 {
+        margin-left: 5rem;
+        vertical-align: middle; 
+    }    
+    .text-monospace {
+        font-family: "GmarketSansMedium" !important;
+    }
+    
+    /* 댓글 날짜 */
+    .writeDate {
+    	font-size : small;
+    }
+    
+    /* 등록된 댓글 수정/삭제 버튼 */
+    .cmtReple, .cmtModify, .cmtDelete {
+        color: #858796;
+        background-color: #fff;
+        border: none;
+        font-family: "GmarketSansMedium" !important;
+        font-weight: bold;
+        padding: 2px !important;
+    }
+
+    /* 모달창 버튼 */
+    .btn-secondary:hover {
+        border-color: #D4D4D4;
+        background-color: #D4D4D4 !important;
+    }
+
+    .btn-secondary:focus {
+        box-shadow: none !important;
+        border-color: #D4D4D4 !important;
+        background-color: #D4D4D4 !important;
+    }
+    .btn-primary:hover {
+        border-color: #651c70;
+        background-color: #651c70 !important;
+    }
+
+    .btn-primary:focus {
+        box-shadow: none !important;
+        border-color: #651c70 !important;
+    }
     
     /* 첨부파일명 */
     .notiFile { 
@@ -75,8 +183,6 @@
             <!-- Main Content -->
             <div id="content">
                 <div th:replace="/common/adminTopbar.html"></div>
-                <!-- 채팅 -->
-                <!-- <div th:replace="/admin/chat/chatList.html"></div>  -->
 
 
                 <!-- Begin Page Content -->
@@ -84,46 +190,110 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">공지사항</h1>                        
+                        <h1 class="h3 mb-0 text-gray-800"><a class="detailPageTitle" th:href="@{/admin/notiTables}">공지사항</a></h1>                        
                     </div>
                     <hr class="border-bottom-primary">
 
-                    <!-- 공지사항 작성 테이블 -->
+<!-- 공지사항 내용 테이블 -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">공지사항 상세조회</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">공지사항 상세 조회</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                            <form action="/admin/notiDelete" method="post" id="notiSubmitForm" enctype="multipart/form-data">
+                            <input type="hidden" th:value="${ noticeDetail.no }" name="no"/>	
                                 <table class="table">
                                     <thead>
                                     <tr></tr>
                                     </thead>
                                     <tbody>
                                     <tr>
+                                        <th>글번호</th>
+                                        <td th:text="${ noticeDetail.no }" class="col-sm-10"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>조회수</th>
+                                        <td th:text="${ noticeDetail.notiView }" class="col-sm-10"></td>
+                                    </tr>
+                                    <tr>
                                         <th>작성자</th>
                                         <td>관리자</td>
                                     </tr>
                                     <tr>
+                                        <th>작성일</th>
+                                        <td th:text="${ noticeDetail.notiDate }" class="col-sm-10"></td>
+                                    </tr>
+                                    <tr>
                                         <th>제목</th>
-                                        <td>공지사항 제목입니다.</td>
+                                        <td th:text="${ noticeDetail.notiTitle }" class="col-sm-10"></td>
                                     </tr>
                                     <tr>
                                         <th>파일첨부</th>
-                                        <td><a class="notiFile" href="#" download="">첨부된파일.jpg</a></td>
+                                        <td class="col-sm-10"><a class="notiFile" href="#" download="" ></a></td>
                                     </tr>
                                     <tr>
                                         <th>내용</th>
-                                        <td id="notiContents">공지사항 내용입니다.</td>
+                                        <td id="notiContent" th:text="${ noticeDetail.notiContent }" class="col-sm-10"></td>
                                     </tr>
                                     </tbody>
                                 </table>
+                                </form>
                             </div>
+<!-- 게시글 본문끝 -->
+                            <!-- 
+                                댓글                                
+                            -->
+                            <form action="/admin/cmtDelete" method="post" id="cmtDeleteForm" name="cmtDeleteForm">
+                                  <input type="hidden" name="cNo" id="cNo"/>
+                                  <input type="hidden" th:value="${ noticeDetail.no }" name="no" id="no"/>
+                            </form>
+                            <form action="/admin/cmtRegi" method="post" id="cmtSubmitForm" name="cmtSubmitForm">
+	                            <div class="card mb-2 mt-5">
+	                                <div class="card-header bg-light">
+	                                    <i class="fa fa-comment fa"></i> 댓글
+	                                </div>
+			                                <div class="card-body">                                       
+			                                    <input type="hidden" th:value="${ noticeDetail.no }" name="no" id="no"/>
+				                                       <ul class="list-group list-group-flush">
+				                                            <li class="list-group-item">
+				                                                	<input type="text" class="form-control" id="reply-content" rows="1"
+				                                                			  name="cmtContent" placeholder="댓글을 입력하세요." required></input>                                                
+				                                                <button id="reply-btn-save" type="submit" class="btn btn-dark mt-3">등록</button>
+				                                            </li>
+				                                         </ul>
+				                                
+			    	                        </div>
+	                            </div>
+                            </form>
+                            <br/>
+ <!--  등록된 댓글 -->                           
+                            <div class="card">
+                                <div class="card-header">댓글</div>
+			                        	<ul id="reply--box" class="list-group" th:each="comment : ${ cmtList }">
+                           			    	<li class="list-group-item d-flex justify-content-between">
+			                                	<div class="d-flex">
+			                                        <div id="cmtName" th:text="${comment.memberId}"></div>
+			                                        <div class="text-monospace mr-1" th:text="${ comment.cmtContent }" id="cmtContent"></div>
+			                                        <div class="text-monospace mr-1" th:text="${ comment.cmtDate }" id="writeDate"></div>
+			                                    </div>
+			                                    <div class="d-flex">			                                        
+			                                        <button class="cmtModify" data-toggle="modal" data-target="#cmtModifyModal" 
+			                                        		type="button" th:data-text="${ comment.cmtContent }" th:data-cno="${ comment.cNo }">수정</button>&nbsp
+			                                        <button class="cmtDelete" data-toggle="modal" data-target="#cmtDeleteModal" 
+			                                        		type="button" th:data-cno="${ comment.cNo }">삭제</button>
+			                                    </div>
+			                                </li>
+                          
+			                            </ul>
+                            </div>
+                                <!--  등록된 댓글 끝-->
+                                 
                         </div>
                     </div>
-
+					<!-- 공지사항 내용 테이블 끝 -->
                 </div>
-                <!-- /.con  tainer-fluid -->
+                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
@@ -135,11 +305,142 @@
         
     </div>
     <!-- End of Page Wrapper -->
+	
+
+
+
+
+
+
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+        <!-- 글 삭제 확인 Modal-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        		aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">삭제하시겠습니까?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">삭제하시려면 확인버튼을 눌러주세요.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                        <button class="btn btn-primary" id="submitBtn" type="submit" data-dismiss="modal" >확인</button>
+                        		
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- 댓글 삭제 확인 Modal-->
+         <div class="modal fade" id="cmtDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        		aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">삭제하시겠습니까?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">삭제하시려면 확인버튼을 눌러주세요.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                        <button class="btn btn-primary" id="cmtDeleteBtn" type="submit" data-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+          <!-- 댓글 수정 Modal-->
+         <div class="modal fade" id="cmtModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        		aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">작성한 댓글 수정</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+		            <div class="modal-body">
+	                    <form action="/admin/cmtModify" method="post" id="cmtModifyForm">
+			                    	<input type="text" class="form-control" id="modalContent" rows="1"
+						                   name="cmtContent" th:text="${ cmtContent }"></input>          
+	                    </form>
+		            </div>
+		                    <div class="modal-footer">
+		                        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+		                        <button class="btn btn-primary" id="cmtModifyBtn" type="submit" data-dismiss="modal"
+		                        		 onclick='cmtModify("+cNo+")'>확인</button>	                        		
+		                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+	<!-- 글삭제/수정 모달 -->
+	<script type='text/javascript'>
+    window.onload = function() {
+/* 글 삭제 */
+        document.getElementById('submitBtn').onclick = function() {
+            document.getElementById('notiSubmitForm').submit();
+            return false;
+        };
+        
+/* 댓글 수정 */
+     	 $(document).on("click", ".cmtModify", function(){
+          	
+          	var cNo = $(this).attr("data-cno");
+          	$("#cNo").val(cNo);
+          	
+          	var modalContent = $(this).attr("data-text");
+          	$("#modalContent").val(modalContent);
+          	console.log(modalContent)          	
+          });
+          
+
+     	document.getElementById('cmtModifyBtn').onclick = function() {
+            document.getElementById('cmtModifyForm').submit();
+            return false;
+        };
+          
+       
+        
+/* 댓글 삭제 */
+    	 $(document).on("click", ".cmtDelete", function(){          	
+          	var cNo = $(this).attr("data-cno");
+          	$("#cNo").val(cNo);          	
+          });
+    	
+        document.getElementById('cmtDeleteBtn').onclick = function() {
+            document.getElementById('cmtDeleteForm').submit();
+            return false;
+        };        
+    };
+
+   
+    </script> 
 
 
     <!-- Bootstrap core JavaScript-->
@@ -152,14 +453,13 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins --><script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
     <script src="/js/demo/datatables-demo.js"></script>
+
 
 </body>
 

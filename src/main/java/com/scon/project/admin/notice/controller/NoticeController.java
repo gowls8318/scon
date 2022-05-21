@@ -63,7 +63,7 @@ public class NoticeController {
 	
 //	공지 글 등록
 	@PostMapping("notiForm")
-	public String registNotice(@ModelAttribute NoticeDTO notice, RedirectAttributes rttr) throws Exception {
+	public String registNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 
 		noticeService.registNotice(notice);
 		
@@ -94,7 +94,7 @@ public class NoticeController {
 
 //	게시글 수정(등록)
 	@PostMapping("notiModify")
-	public String modifyNotice(@ModelAttribute NoticeDTO notice, RedirectAttributes rttr) throws Exception {
+	public String modifyNotice(@ModelAttribute NoticeDTO notice) throws Exception {
 
 		noticeService.modifyNotice(notice);
 		log.info("notice{}", notice);
@@ -104,7 +104,7 @@ public class NoticeController {
 	
 // 	게시글 삭제
 	@PostMapping("notiDelete")
-	public String deleteNotice(@RequestParam int no, RedirectAttributes rttr) throws Exception {
+	public String deleteNotice(@RequestParam int no) throws Exception {
 		
 		noticeService.deleteNotice(no);		
 		
@@ -130,17 +130,6 @@ public class NoticeController {
 		return "redirect:notiDetail?no="+notiCmt.getNo();
 	}
 	
-//	댓글 삭제
-	@PostMapping("cmtDelete")
-	public String deleteCmt(@RequestParam("cNo") int cNo, 
-			@ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
-		
-		log.info("삭제될 댓글 번호 : {}", cNo);
-		noticeService.deleteCmt(cNo);		
-		
-		
-		return "redirect:notiDetail?no="+notiCmt.getNo();
-	}
 
 //	댓글 수정(조회)
 	@GetMapping("cmtModify") 
@@ -158,10 +147,20 @@ public class NoticeController {
 	public String modifyCmt(@ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
 
 		noticeService.modifyCmt(notiCmt);
-		log.info("notiCmt{}", notiCmt);
+		log.info("수정할 댓글 번호{}", notiCmt);
 		
 		return "redirect:notiDetail?no="+notiCmt.getNo();
 	}
 
+//	댓글 삭제
+	@PostMapping("cmtDelete")
+	public String deleteCmt(@RequestParam("cNo") int cNo, 
+			@ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+		
+		log.info("삭제될 댓글 번호 : {}", cNo);
+		noticeService.deleteCmt(cNo);		
+				
+		return "redirect:notiDetail?no="+notiCmt.getNo();
+	}	
 	
 }
