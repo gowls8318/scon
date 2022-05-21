@@ -26,5 +26,5 @@ public interface CheckService {
 	
 	/* 출석 수정하기 */
 	int updateChkList(CheckDTO chk) throws Exception;
-	
+
 }

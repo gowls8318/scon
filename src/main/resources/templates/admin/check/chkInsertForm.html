@@ -159,7 +159,7 @@
                                         <td><div class="lecNoBox"><input th:value="${ val.no }" id="lecNo" class="lecNoForm" name="lecNo" readonly></div></td>
                                         <td th:text="${ val.member.name }"></td>
                                         <td th:text="${ val.cls.clsName }"></td>
-                                        <td class="datepicker"><input type="date" name="chkDate" class="currentDate"></td>
+                                        <td class="datepicker"><input type="date" name="chkDate" class="currentDate" th:value="${ chkDate }"></td>
                                         <td colspan="3"><input type="text" class="attformbox form-control" aria-label="Username" aria-describedby="basic-addon1" id="chkStart" name="chkStart"></td>
                                         <td colspan="3"><input type="text" class="attformbox form-control" aria-describedby="basic-addon1" id="chkFinish" name="chkFinish"></td>
                                     </tr>
@@ -196,7 +196,7 @@
     </a>
     
     <script>
-	  document.getElementByClassName("currentDate").value = new Date().toISOString().substring(0, 10);;
+    
 	</script>
 
     

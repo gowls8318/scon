@@ -67,6 +67,8 @@ public class CheckServiceImpl implements CheckService {
 		return result;
 	}
 	
+	
+	
 	/* 출석 수정 */
 	@Override
 	public int updateChkList(CheckDTO chk) throws Exception {
