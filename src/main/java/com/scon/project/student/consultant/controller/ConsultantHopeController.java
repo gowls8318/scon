@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,11 +47,11 @@ public class ConsultantHopeController {
 		log.info("접속한 userId : {}", cri.getMemberId());
 		
 		List<ConsultantDTO> consultantList = consultantHopeService.selectAllConsultantList(cri);
-//		log.info("consultantList : {}", consultantList);
+		log.info("상담 신청 내역 : {}", consultantList);
 		mv.addObject("consultantList", consultantList);
 		
 		int total = consultantHopeService.total(cri);
-		log.info("cri : {}", cri);
+		log.info("criteria : {}", cri);
 		Pagination page = new Pagination(cri, total);
 		mv.addObject("page", page);
 		log.info("page : {}", page);
@@ -75,7 +76,6 @@ public class ConsultantHopeController {
 		
 		consultantHopeService.insertConsultant(con);
 		
-//		rttr.addFlashAttribute("successMessage", "상담 신청 등록이 완료되었습니다.");
 		/* MessageSource bean을 사용하려면 의존성 주입을 받아야 한다. */
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertConsultantHope", null, locale));
 		
@@ -97,7 +97,7 @@ public class ConsultantHopeController {
 	@GetMapping("/consultant/detail")
 	public String selectDetailPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
-		log.info("조회 번호 : {}", no);
+		log.info("상담 신청 조회 번호 : {}", no);
 		
 		model.addAttribute("consultantDetail", consultantHopeService.selectConsultantDetail(no));
 		
@@ -111,6 +111,8 @@ public class ConsultantHopeController {
 	@GetMapping("/consultant/updateForm")
 	public String updateConsultantPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
+		log.info("수정할 상담 신청 번호 : {}", no);
+		
 		model.addAttribute("consultant", consultantHopeService.selectConsultantDetail(no));
 		
 		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
@@ -120,19 +122,19 @@ public class ConsultantHopeController {
 	}
 	
 	@PostMapping("/consultant/updateForm")
-	public String updateConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String updateConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale, @ModelAttribute Criteria cri) throws Exception {
 		
 		consultantHopeService.modifyConsultant(con);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateConsultantHope", null, locale));
 		
 		//return "redirect:/student/consultant/list";
-		return "redirect:/student/consultant/detail?no=" + con.getNo();
+		return "redirect:/student/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
 	}
 	
 	/* 상담 신청 삭제용 */
 	@PostMapping("/consultant/delete")
-	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale, @ModelAttribute Criteria cri) throws Exception {
 		
 		log.info("상담 신청 삭제 번호 : {}", no);
 		
@@ -140,7 +142,16 @@ public class ConsultantHopeController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteConsultantHope", null, locale));
 		
-		return "redirect:/student/consultant/list";
+		return "redirect:/student/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
+	}
+	
+	/* 예외 처리 */
+	@ExceptionHandler(value = Exception.class)
+	public String exception(Exception e, Model model) {
+		
+		model.addAttribute("errorMessage", e.getMessage());
+		
+		return "common/studentError";
 	}
 	
 }

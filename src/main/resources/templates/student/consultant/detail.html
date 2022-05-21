@@ -121,20 +121,21 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox" id="btn-list">돌아가기</button>
-                                    <!-- <button type="button"
-                                        class="btn btn-primary btn-margin submitbuttonbox"
-                                        th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.conNo})} + '\';'">수정하기</button> -->
                                     <button type="button"
                                         class="btn btn-primary btn-margin submitbuttonbox"
                                         th:onclick="'location.href=\'' + @{/student/consultant/updateForm(no=${consultantDetail.no}, pageNo=${cri.pageNo}, type=${cri.type}, keyword=${cri.keyword})} + '\';'">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="deleteConsultant([[${consultantDetail.no}]])">삭제하기</button>
                                 </div>
-			                    <form id="consultantForm" action="/student/consultant/updateForm" method="post">
+                                
+			                    <form id="consultantForm" action="/student/consultant/list" method="post">
 			                    	<input type="hidden" name="no" th:value="${ consultantDetail.no }">
+			                    	<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+									<input type="hidden" name="type" th:value="${ cri.type }">
+									<input type="hidden" name="keyword" th:value="${ cri.keyword }">
 			                    </form>
 			                    
-			                    <form id="infoForm" action="/student/consultant/list" method="get">
+			                    <form id="moveForm" action="/student/consultant/list" method="get">
 									<input type="hidden" id="no" name="no" th:value="${ consultantDetail.no }">
 									<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
 									<input type="hidden" name="type" th:value="${ cri.type }">
@@ -166,7 +167,7 @@
 
     <script type="text/javascript">
     	/* 돌아가기 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
-		let form = $("#infoForm");
+		let form = $("#moveForm");
 		$("#btn-list").on("click", function(e){
 			form.find("#no").remove();
 			form.attr("action", "/student/consultant/list");
@@ -205,16 +206,16 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
+	
+	<!-- Page level plugins -->
     <script src="/vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+    
     <!-- Page level custom scripts -->
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
     <script src="/js/demo/datatables-demo.js"></script>
-
+    
 </body>
 
 </html>

@@ -65,6 +65,9 @@
                         <div class="card-body card-body-acc pr-5">
                             <form action="/admin/lecture/updateForm" method="post" name="lectureForm">
                             	<input type="hidden" name="no" value="${ lecture.no }">
+                            	<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+								<input type="hidden" name="type" th:value="${ cri.type }">
+								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody th:object="${ lecture }">
@@ -152,7 +155,6 @@
                                 </div>
                                 <div class="buttonbox">
                                		<button type="button" class="btn btn-light resetbuttonbox" id="btn-list">돌아가기</button>
-                                    	<!-- onclick = "location.href = '/admin/lecture/list'" -->
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="updateLecture([[${lecture.no}]])">수정하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
@@ -195,7 +197,7 @@
                                 </table>
                             </div>
                             
-                            <form id="infoForm" action="/admin/lecture/updateForm" method="get">
+                            <form id="moveForm" action="/admin/lecture/updateForm" method="get">
 								<input type="hidden" id="no" name="no" th:value="${ lecture.no }">
 								<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
 								<input type="hidden" name="type" th:value="${ cri.type }">
@@ -227,7 +229,7 @@
     
     <script type="text/javascript">
 	    /* 돌아가기 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
-		let form = $("#infoForm");
+		let form = $("#moveForm");
 		$("#btn-list").on("click", function(e){
 			form.find("#no").remove();
 			form.attr("action", "/admin/lecture/list");

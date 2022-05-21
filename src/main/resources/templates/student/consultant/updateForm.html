@@ -65,6 +65,9 @@
                         <div class="card-body">
                             <form action="/student/consultant/updateForm" method="post" name="consultantForm">
                             	<input type="hidden" name="no" value="${ consultant.no }">
+                            	<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+								<input type="hidden" name="type" th:value="${ cri.type }">
+								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody th:object="${ consultant }">
@@ -157,12 +160,13 @@
                                 </div>
                             </form>
                             
-                            <form id="infoForm" action="/student/consultant/updateForm" method="get">
+                            <form id="moveForm" action="/student/consultant/updateForm" method="get">
 								<input type="hidden" id="no" name="no" th:value="${ consultant.no }">
 								<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
 								<input type="hidden" name="type" th:value="${ cri.type }">
 								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
 							</form>
+							
                         </div>
                     </div>
 
@@ -213,24 +217,11 @@
     		if(confirm('변경 사항이 저장되지 않습니다. \n상담 내용 수정을 취소하시겠습니까?')) {
     			location.href = "/student/consultant/list";
     		}
-    		
-    		Swal.fire({
-    			html: "변경 사항이 저장되지 않습니다. <br>상담 내용 수정을 취소하시겠습니까?",
-				icon: "warning",
-				showCancelButton: true,
-			  	confirmButtonColor: '#8B169E',
-			  	cancelButtonColor: '#D4D4D4',
-			  	confirmButtonText: '확인',
-			  	cancelButtonText: '취소'
-    		}).then((result) => {
-    			if(result.isConfirmed) {
-    				location.href = "/student/consultant/list";
-    			}
-    		});
     	} */
     	
     	/* 취소하기 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
-    	let form = $("#infoForm");
+    	let form = $("#moveForm");
+    	
 		$("#btn-list").on("click", function(e){
 			Swal.fire({
     			html: "변경 사항이 저장되지 않습니다. <br>상담 내용 수정을 취소하시겠습니까?",

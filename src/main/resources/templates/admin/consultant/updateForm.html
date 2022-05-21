@@ -65,6 +65,9 @@
                         <div class="card-body">
                             <form action="/admin/consultant/updateForm" method="post" name="consultantForm">
                             	<input type="hidden" name="no" value="${ consultant.no }">
+                            	<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+                            	<input type="hidden" name="type" th:value="${ cri.type }">
+								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody th:object="${ consultant }">
@@ -191,18 +194,19 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox" id="btn-list">취소하기</button>
-                                    <!-- onclick="cancelUpdate()" -->
                                     <button type="button"
                                         class="btn btn-primary btn-margin submitbuttonbox"
                                         th:onclick="updateConsultant([[${consultant.no}]])">수정하기</button>
                                 </div>
                             </form>
                             
-                            <form id="infoForm" action="/admin/consultant/updateForm" method="get">
+                            <form id="moveForm" action="/admin/consultant/updateForm" method="get">
 								<input type="hidden" id="no" name="no" th:value="${ consultant.no }">
 								<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+								<input type="hidden" name="type" th:value="${ cri.type }">
 								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
 							</form>
+							
                         </div>
                     </div>
 
@@ -282,7 +286,7 @@
     	} */
     	
     	/* 취소하기 버튼 클릭 시 pageNo, keyword 그대로 유지 */
-    	let form = $("#infoForm");
+    	let form = $("#moveForm");
 		$("#btn-list").on("click", function(e){
 			Swal.fire({
     			html: "변경 사항이 저장되지 않습니다. <br>상담 일지 수정을 취소하시겠습니까?",

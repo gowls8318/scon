@@ -39,7 +39,7 @@ public class StudentLectureServiceImpl implements StudentLectureService {
 		List<LectureDTO> lectureList = studentLectureMapper.selectAllLectureList(cri);
 		
 		if(lectureList == null) {
-			throw new Exception("수강 내역 조회에 실패하였습니다.");
+			throw new Exception("수강 내역 조회에 실패하였습니다");
 		}
 		
 		return lectureList;
@@ -61,7 +61,7 @@ public class StudentLectureServiceImpl implements StudentLectureService {
 		LectureDTO lecture = studentLectureMapper.selectLectureDetail(no);
 		
 		if(lecture == null) {
-			throw new Exception("수강 정보 조회에 실패하였습니다.");
+			throw new Exception("수강 정보 조회에 실패하였습니다");
 		}
 		
 		return lecture;

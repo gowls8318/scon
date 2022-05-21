@@ -78,11 +78,12 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label for="conDate" class="col-form-label">상담일</label>
+                                                    <label for="conDate" class="col-form-label">상담일 <span
+                                                            id="pointtext">*</span></label>
                                                 </th>
                                                 <td>
                                                     <div class="col-sm-10 col-lg-4">
-                                                        <input type="date" class="form-control" id="conDate" name="conDate">
+                                                        <input type="date" class="form-control" id="conDate" name="conDate" required>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -212,8 +213,17 @@
     	function registConsultant(no) {
     		var form = document.forms.consultantForm;
     		
+    		if(form.conDate.value == "") {
+    			swal({
+    				text: "상담일을 입력해주시기 바랍니다",
+    				icon: "warning",
+    				button: "확인"
+    			});
+    			form.conDate.focus();
+    			return;
+    		}
+    		
     		if(form.conContent.value.length < 20) {
-    			//alert('상담 일지 내용은 최소 20글자 이상 입력해주시기 바랍니다.');
     			swal({
     				text: "상담 일지 내용은 최소 20글자 이상 입력해주시기 바랍니다",
     				icon: "warning",
