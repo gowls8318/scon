@@ -1,3 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mappers.StudentTaskBoardMapper"></mapper>
+<mapper namespace="com.scon.project.student.taskBoard.model.dao.StudentTaskBoardMapper">
+
+<resultMap id="taskBoardResultMap" type="com.scon.project.admin.taskBoard.model.dto.TaskBoardDTO">
+	<id property="taskId" column="TASK_ID"/>
+	<result property="taskTitle" column="TASK_TITLE"/>
+	<result property="taskContent" column="TASK_CONTENT"/>
+	<result property="taskDate" column="TASK_DATE"/>
+	<result property="taskUpdate" column="TASK_UPDATE"/>
+	<result property="taskDelete" column="TASK_DELETE"/>
+	<result property="taskView" column="TASK_VIEW"/>
+	<result property="memberId" column="MEMBER_ID"/>
+	<result property="clsId" column="CLS_ID"/>
+	<result property="memberName" column="MEMBER_NAME"/>
+	
+	<collection property="fileList" resultMap="taskFileResultMap"/>
+</resultMap>
+
+<resultMap id="fileResultMap" type="com.scon.project.admin.taskBoard.model.dto.FileDTO">
+		<id property="fileId" column="FILE_ID"/>
+		<result property="fileOrginName" column="FILE_ORGNAME"/>
+		<result property="fileSaveName" column="FILE_SAVENAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileType" column="FILE_TYPE"/>
+</resultMap>
+
+<resultMap id="taskFileResultMap" type="com.scon.project.admin.taskBoard.model.dto.TaskFileDTO">
+	<result property="taskId" column="TASK_ID" />
+	<result property="fileId" column="FILE_ID"/>
+</resultMap>
+
+
+<!-- 검색 조건 -->
+	<sql id="criteria">
+        <trim prefix="AND (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            CON_HTITLE LIKE '%' || #{ keyword } || '%' 
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            CON_HCONTENT LIKE '%' || #{ keyword } || '%' 
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+    
+    
+    <!-- 학생용 과제 게시판 전체 조회 
+    
+    <select id="findAllStudentTask" resultMap="taskBoardResultMap">
+    	SELECT
+				TASK_ID
+			  , MEMBER_ID
+			  , CLS_ID
+			  , TASK_TITLE
+			  , TASK_CONTENT
+			  , TASK_DATE
+			  , TASK_VIEW
+			  , MEMBER_NAME
+			FROM ( SELECT /*+INDEX_DESC(N PK_TB_TASK)*/
+						ROWNUM AS RNUM
+			      , T.TASK_ID
+				  , T.MEMBER_ID
+				  , T.CLS_ID
+				  , T.TASK_TITLE
+				  , T.TASK_CONTENT
+				  , T.TASK_DATE
+				  , T.TASK_VIEW
+				  , M.MEMBER_NAME
+			FROM TB_TASK T
+			JOIN TB_MEMBER M ON(T.MEMBER_ID = M.MEMBER_ID)
+			WHERE T.CLS_ID = #{ taskBoard.clsId }
+			AND T.TASK_DELETE = 'N' 
+			<![CDATA[
+			          AND ROWNUM <= #{ cri.pageNo } * #{ cri.limit }
+					]]>
+			  		<if test="taskBoard.keyword != null">
+			  		  AND TASK_TITLE LIKE '%' || #{ taskBoard.keyword } || '%'
+			  		</if>
+		             ORDER BY T.TASK_ID DESC
+		             ) 
+		<![CDATA[
+			WHERE RNUM > (#{ cri.pageNo } - 1) * #{ cri.limit }
+		]]>
+    </select>
+    
+     게시물 총 갯수 
+    <select id="total" resultType="_int">
+				SELECT
+					   COUNT(*)
+				  FROM TB_TASK
+				 WHERE TASK_DELETE = 'N'
+				 <if test="keyword != null">
+				   AND TASK_TITLE LIKE '%' || #{ keyword } || '%'
+				 </if>
+	</select>  
+	
+	-->
+
+
+
+
+
+
+
+
+
+</mapper>
