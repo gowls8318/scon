@@ -1,7 +1,6 @@
 package com.scon.project.admin.check.controller;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.check.model.dto.CheckDTO;
+import com.scon.project.admin.check.model.dto.CheckListDTO;
 import com.scon.project.admin.check.model.service.CheckService;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.member.model.dto.MemberDTO;
@@ -82,7 +81,9 @@ public class CheckController {
 	
 	/* 출석 등록 명단 조회 */
 	@GetMapping("/chkInsertForm")
-	public ModelAndView selectChkList(@ModelAttribute ClassDTO cls, @ModelAttribute LectureDTO lec, @ModelAttribute MemberDTO member, ModelAndView mv) throws Exception {
+	public ModelAndView selectChkList(@ModelAttribute ClassDTO cls, @ModelAttribute LectureDTO lec, @ModelAttribute MemberDTO member, @ModelAttribute CheckDTO chkDate, ModelAndView mv) throws Exception {
+		
+		//log.info("checkDate : {}", chkDate);
 		
 		List<LectureDTO> selectChkList = checkService.selectChkList(cls, lec, member);
 		List<ClassDTO> classList = checkService.selectClassList(cls);
@@ -91,20 +92,21 @@ public class CheckController {
 		mv.addObject("clsId", cls.getClsId());
 		mv.addObject("name", member.getName());
 		mv.addObject("classList", classList);
-		
+		mv.addObject("chkDate", chkDate.getChkDate());
 		mv.setViewName("admin/check/chkInsertForm");
 		
-		log.info("checkClassList : {}" , selectChkList);
+		//log.info("checkClassList : {}" , selectChkList);
 		
 		return mv;
 	}
 	
 	@PostMapping("/chkInsertForm")
-	public String chkInsertForm(@ModelAttribute CheckDTO chk) throws Exception {
+	public String chkInsertForm(@ModelAttribute CheckListDTO chk) throws Exception {
 
 		log.info("넘기는 값 : {}", chk);
 		
-		checkService.insertChkList(chk);
+		
+		//checkService.insertChkList(chk);
 		
 		return "redirect:/admin/check/chkInsertForm";
 	}
@@ -181,7 +183,7 @@ public class CheckController {
 //	public ModelAndView selectAllClassList(ModelAndView mv) throws Exception {
 //		
 //		List<CheckDTO> checkClassList = checkService.selectAllClassList();
-//		
+//	)	
 //		mv.addObject("checkClassList", checkClassList);
 //		mv.setViewName("admin/check/chkViewClass");
 //		
