@@ -43,7 +43,7 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 		List<ConsultantDTO> consultantList = consultantHopeMapper.selectAllConsultantList(cri);
 		
 		if(consultantList == null) {
-			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
+			throw new Exception("상담 신청 내역 조회에 실패하였습니다");
 		}
 		
 		return consultantList;
@@ -65,7 +65,7 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 		int result = consultantHopeMapper.insertConsultant(con);
 		
 		if(result <= 0) {
-			throw new Exception("상담 신청 등록에 실패하였습니다.");
+			throw new Exception("상담 신청 등록에 실패하였습니다");
 		}
 		
 		return result > 0 ? true : false;
@@ -78,7 +78,7 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 		ConsultantDTO consultant = consultantHopeMapper.selectConsultantDetail(no);
 		
 		if(consultant == null) {
-			throw new Exception("상담 신청 상세 조회에 실패하였습니다.");
+			throw new Exception("상담 신청 상세 조회에 실패하였습니다");
 		}
 		
 		return consultant;
@@ -91,7 +91,7 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 		int result = consultantHopeMapper.modifyConsultant(con);
 		
 		if(result <= 0) {
-			throw new Exception("상담 내용 수정 실패하였습니다.");
+			throw new Exception("상담 내용 수정 실패하였습니다");
 		}
 		
 		return result;
@@ -104,7 +104,7 @@ public class ConsultantHopeServiceImpl implements ConsultantHopeService {
 		int result = consultantHopeMapper.deleteConsultant(no);
 		
 		if(result <= 0) {
-			throw new Exception("상담 삭제에 실패하였습니다.");
+			throw new Exception("상담 삭제에 실패하였습니다");
 		}
 		
 		return result;

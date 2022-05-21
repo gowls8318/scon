@@ -43,5 +43,4 @@ public interface ConsultantMapper {
 	/* 상담 일지 삭제용 */
 	int deleteConsultant(int no);
 
-
 }

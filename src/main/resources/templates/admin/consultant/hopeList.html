@@ -73,6 +73,7 @@
 									<option value="" th:selected="${ #strings.isEmpty( page.cri.type ) }">-- 검색 유형 --</option>
 									<option value="stdName" th:selected="${ #strings.equals( page.cri.type, 'stdName' ) }">원생 이름</option>
 									<option value="handle" th:selected="${ #strings.equals( page.cri.type, 'handle' ) }">처리 현황</option>
+									<option value="no" th:selected="${ #strings.equals( page.cri.type, 'no' ) }">글 번호</option>
 								</select>
                                 <div class="form-group mx-sm-3">
                                     <input type="text" name="keyword" class="form-control" th:value="${ page.cri.keyword }" id="keyword"
@@ -154,13 +155,6 @@
 									</ul>
 								</div>
 							</nav>
-							
-							<!-- <form id="searchForm" method="get">	
-								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<input type="hidden" name="limit" th:value="${ page.cri.limit }">
-								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
-								<input type="hidden" name="type" th:value="${ page.cri.type }">	
-							</form> -->
 
                         </div>
                     </div>

@@ -69,7 +69,10 @@
 								AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
 							</if>
 							<if test="type == 'handle'">
-								AND A.CON_HANDLE LIKE '%' || #{ keyword } || '%'	
+								AND A.CON_HANDLE LIKE #{ keyword }
+							</if>
+							<if test="type == 'no'">
+								AND A.CON_NO LIKE #{ keyword }
 							</if>
 						</if>
 		                 ORDER BY A.CON_NO DESC
@@ -95,7 +98,10 @@
 				AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
 			</if>
 			<if test="type == 'handle'">
-				AND A.CON_HANDLE LIKE '%' || #{ keyword } || '%'	
+				AND A.CON_HANDLE LIKE #{ keyword }
+			</if>
+			<if test="type == 'no'">
+				AND A.CON_NO LIKE #{ keyword }
 			</if>
 		</if>
 	</select>
@@ -148,7 +154,12 @@
 		                   AND A.CON_HANDLE = '완료'
 		   			       AND A.CON_DELETE = 'N'
 					 	<if test="keyword != null">
-						   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+							<if test="type == 'stdName'">
+								AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+							</if>
+							<if test="type == 'no'">
+								AND A.CON_NO LIKE #{ keyword }
+							</if>
 						</if>
 		                 ORDER BY A.CON_NO DESC
 		               ) C
@@ -170,9 +181,14 @@
 		 WHERE CON_HDELETE = 'N'
 		   AND CON_DELETE = 'N'
 		   AND CON_HANDLE = '완료'
-		 <if test="keyword != null">
-		   AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
-		 </if>
+		<if test="keyword != null">
+			<if test="type == 'stdName'">
+				AND B.MEMBER_NAME LIKE '%' || #{ keyword } || '%'
+			</if>
+			<if test="type == 'no'">
+				AND A.CON_NO LIKE #{ keyword }
+			</if>
+		</if>
 	</select>
 	
 	<!-- 상담 일지 등록용 -->

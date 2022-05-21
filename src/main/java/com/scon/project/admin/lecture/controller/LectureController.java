@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,7 +67,9 @@ public class LectureController {
 	public ModelAndView selectAllClassList(ModelAndView mv) throws Exception {
 		
 		List<ClassDTO> classList = lectureService.selectAllClassList();
+		log.info("강의 조회 : {}", classList);
 		List<MemberDTO> memberList = lectureService.selectAllMemberList();
+		log.info("원생 조회 : {}", memberList);
 		
 		mv.addObject("classList", classList);
 		mv.addObject("memberList", memberList);
@@ -102,6 +105,8 @@ public class LectureController {
 	@GetMapping("/lecture/updateForm")
 	public String updateLecturePage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
+		log.info("수정할 수강 번호 : {}", no);
+		
 		model.addAttribute("classList", lectureService.selectAllClassList());
 		model.addAttribute("lecture", lectureService.selectLectureDetail(no));
 		
@@ -113,24 +118,26 @@ public class LectureController {
 	
 	/* 수강 수정용 */
 	@PostMapping("/lecture/updateForm")
-	public String updateLecture(@ModelAttribute LectureDTO lec, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String updateLecture(@ModelAttribute LectureDTO lec, RedirectAttributes rttr, Locale locale, @ModelAttribute Criteria cri) throws Exception {
 		
 		lectureService.modifyLecture(lec);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateLecture", null, locale));
 		
-		return "redirect:/admin/lecture/list";
+		return "redirect:/admin/lecture/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
 	}
 	
 	/* 수강 삭제용 */
 	@PostMapping("/lecture/delete")
-	public String deleteLecture(@RequestParam int no, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String deleteLecture(@RequestParam int no, RedirectAttributes rttr, Locale locale, @ModelAttribute Criteria cri) throws Exception {
+		
+		log.info("삭제 번호 : {}", no);
 		
 		lectureService.deleteLecture(no);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteLecture", null, locale));
 		
-		return "redirect:/admin/lecture/list";
+		return "redirect:/admin/lecture/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
 	}
 
 	/* 환불 모달에 값 넣기 */
@@ -153,6 +160,15 @@ public class LectureController {
 		lectureService.insertRefund(ref);
 		
 		return messageSource.getMessage("insertRefund", null, locale);
+	}
+	
+	/* 예외 처리 */
+	@ExceptionHandler(value = Exception.class)
+	public String exception(Exception e, Model model) {
+		
+		model.addAttribute("errorMessage", e.getMessage());
+		
+		return "common/adminError";
 	}
 	
 }

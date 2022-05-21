@@ -44,14 +44,14 @@ public class ConsultantController {
 	public ModelAndView selectAllConsultantHopeList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
 		
 		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList(cri);
-//		log.info("consultantHopeList : {}", consultantHopeList);
+		log.info("상담 신청 내역 : {}", consultantHopeList);
 		mv.addObject("consultantHopeList", consultantHopeList);
 		
 		int totalHope = consultantService.totalHope(cri);
-//		log.info("cri : {}", cri);
+		log.info("criteria : {}", cri);
 		Pagination page = new Pagination(cri, totalHope);
 		mv.addObject("page", page);
-//		log.info("page : {}", page);
+		log.info("page : {}", page);
 		
 		mv.setViewName("admin/consultant/hopeList");
 		
@@ -61,6 +61,8 @@ public class ConsultantController {
 	/* 상담 신청 상세 조회용 */
 	@GetMapping("/consultant/hopeDetail")
 	public String selectHopeDetailPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
+		
+		log.info("신청 상세 조회 번호 : {}", no);
 		
 		model.addAttribute("consultantHopeDetail", consultantService.selectConsultantHopeDetail(no));
 		
@@ -75,11 +77,11 @@ public class ConsultantController {
 	public ModelAndView selectAllConsultantList(@ModelAttribute Criteria cri, ModelAndView mv) throws Exception {
 		
 		List<ConsultantDTO> consultantList = consultantService.selectAllConsultantList(cri);
-//		log.info("consultantList : {}", consultantList);
+		log.info("상담 일지 내역 : {}", consultantList);
 		mv.addObject("consultantList", consultantList);
 		
 		int total = consultantService.total(cri);
-		log.info("cri : {}", cri);
+		log.info("criteria : {}", cri);
 		Pagination page = new Pagination(cri, total);
 		mv.addObject("page", page);
 		log.info("page : {}", page);
@@ -93,6 +95,8 @@ public class ConsultantController {
 	@GetMapping("/consultant/insertForm")
 	public String insertConsultantPage(@RequestParam int no, Model model) throws Exception {
 		
+		log.info("상담 신청 번호 : {}", no);
+		
 		model.addAttribute("consultant", consultantService.selectConsultantHopeDetail(no));
 		
 		return "admin/consultant/insertForm";
@@ -100,9 +104,6 @@ public class ConsultantController {
 	
 	@PostMapping("/consultant/insertForm")
 	public String insertConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale, @AuthenticationPrincipal UserImpl user) throws Exception {
-		
-//		log.info("로그인 유저 : {} ", user);
-//		con.setMemberId(user.getId());
 		
 		consultantService.insertConsultant(con);
 		
@@ -115,7 +116,7 @@ public class ConsultantController {
 	@GetMapping("/consultant/detail")
 	public String selectDetailPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
-		log.info("게시글 번호 : {}", no);
+		log.info("일지 상세 조회 번호 : {}", no);
 		
 		model.addAttribute("consultantDetail", consultantService.selectConsultantDetail(no));
 		
@@ -129,6 +130,8 @@ public class ConsultantController {
 	@GetMapping("/consultant/updateForm")
 	public String modifyConsultantPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
+		log.info("수정할 상담 일지 번호 : {}", no);
+		
 		model.addAttribute("consultant", consultantService.selectConsultantDetail(no));
 		
 		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
@@ -138,24 +141,26 @@ public class ConsultantController {
 	}
 	
 	@PostMapping("/consultant/updateForm")
-	public String modifyConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String modifyConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale, @ModelAttribute Criteria cri) throws Exception {
 		
 		consultantService.modifyConsultant(con);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateConsultant", null, locale));
 		
-		return "redirect:/admin/consultant/list";
+		return "redirect:/admin/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
 	}
 	
 	/* 상담 일지 삭제용 */
 	@PostMapping("/consultant/delete")
-	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String deleteConsultant(@RequestParam int no, RedirectAttributes rttr, Locale locale, @ModelAttribute Criteria cri) throws Exception {
+		
+		log.info("상담 일지 삭제 번호 : {}", no);
 		
 		consultantService.deleteConsultant(no);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteConsultant", null, locale));
 		
-		return "redirect:/admin/consultant/list";
+		return "redirect:/admin/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
 	}
 	
 	/* 예외 처리 */
@@ -164,7 +169,7 @@ public class ConsultantController {
 		
 		model.addAttribute("errorMessage", e.getMessage());
 		
-		return "common/error";
+		return "common/adminError";
 	}
 	
 }

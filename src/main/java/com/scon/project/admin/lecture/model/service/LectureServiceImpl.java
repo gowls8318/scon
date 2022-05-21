@@ -44,7 +44,7 @@ public class LectureServiceImpl implements LectureService {
 		List<LectureDTO> lectureList = lectureMapper.selectAllLectureList(cri);
 		
 		if(lectureList == null) {
-			throw new Exception("강의 내역 조회에 실패하였습니다.");
+			throw new Exception("수강 내역 조회에 실패하였습니다");
 		}
 		
 		return lectureList;
@@ -66,7 +66,7 @@ public class LectureServiceImpl implements LectureService {
 		List<ClassDTO> classList = lectureMapper.selectAllClassList();
 		
 		if(classList == null) {
-			throw new Exception("강의 조회에 실패하였습니다.");
+			throw new Exception("강의 조회에 실패하였습니다");
 		}
 		
 		return classList;
@@ -79,7 +79,7 @@ public class LectureServiceImpl implements LectureService {
 		List<MemberDTO> memberList = lectureMapper.selectAllMemberList();
 		
 		if(memberList == null) {
-			throw new Exception("원생 조회에 실패하였습니다.");
+			throw new Exception("원생 조회에 실패하였습니다");
 		}
 		
 		return memberList;
@@ -92,7 +92,7 @@ public class LectureServiceImpl implements LectureService {
 		int result = lectureMapper.insertLecture(lec);
 		
 		if(result <= 0) {
-			throw new Exception("수강 등록에 실패하였습니다.");
+			throw new Exception("수강 등록에 실패하였습니다");
 		}
 		
 		return result;
@@ -105,7 +105,7 @@ public class LectureServiceImpl implements LectureService {
 		LectureDTO lecture = lectureMapper.selectLectureDetail(no);
 		
 		if(lecture == null) {
-			throw new Exception("수강 상세 조회에 실패하였습니다.");
+			throw new Exception("수강 상세 조회에 실패하였습니다");
 		}
 		
 		return lecture;
@@ -118,7 +118,7 @@ public class LectureServiceImpl implements LectureService {
 		int result = lectureMapper.modifyLecture(lec);
 		
 		if(result <= 0) {
-			throw new Exception("수강 수정에 실패하였습니다.");
+			throw new Exception("수강 수정에 실패하였습니다");
 		}
 		
 		return result;
@@ -131,7 +131,7 @@ public class LectureServiceImpl implements LectureService {
 		int result = lectureMapper.deleteLecture(no);
 		
 		if(result <= 0) {
-			throw new Exception("수강 삭제에 실패하였습니다.");
+			throw new Exception("수강 삭제에 실패하였습니다");
 		}
 		
 		return result;
@@ -144,7 +144,7 @@ public class LectureServiceImpl implements LectureService {
 		int result = lectureMapper.insertRefund(ref);
 		
 		if(result <= 0) {
-			throw new Exception("환불 등록에 실패하였습니다.");
+			throw new Exception("환불 등록에 실패하였습니다");
 		}
 		
 		return result;
@@ -157,7 +157,7 @@ public class LectureServiceImpl implements LectureService {
 		RefundDTO refund = lectureMapper.selectRefundDetail(no);
 		
 		if(refund == null) {
-			throw new Exception("환불 조회에 실패하였습니다.");
+			throw new Exception("환불 조회에 실패하였습니다");
 		}
 		
 		return refund;

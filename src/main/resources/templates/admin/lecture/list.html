@@ -79,8 +79,6 @@
                         	<div class="col-lg-3 ml-2">
                         		<button type="button" class="btn btn-primary btn-search"
                                 	th:onclick="location.href='/admin/lecture/insertForm'">수강 등록</button>
-                                	<!-- th:onclick="location.href='/admin/lecture/insertForm'" -->
-                                	<!-- id="insertForm" -->
                         	</div>
 	                        <form id="searchForm" class="form-inline" action="/admin/lecture/list" method="get">
 	                        	<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
@@ -148,9 +146,7 @@
                                                     	th:onclick="'location.href=\'' + @{/admin/lecture/updateForm(no=${lec.no}, pageNo=${page.cri.pageNo}, type=${page.cri.type}, keyword=${page.cri.keyword})} + '\';'">상세</button>
                                                     <button type="button" class="btn btn-light btn-acc2 refBtn"
                                                     	data-toggle="modal" th:onclick="refund(this, [[${lec.no}]])">환불</button>
-                                                    	<!-- th:onclick="refund(this, [[${lec.no}]])" -->
                                                     	<!-- th:onclick="|refundDetail(${lec.no})|" -->
-                                                    	<!--  data-target="#refundModal" -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -200,13 +196,6 @@
 									</ul>
 								</div>
 							</nav>
-							
-							<!-- <form id="searchForm" method="get">	
-								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<input type="hidden" name="limit" th:value="${ page.cri.limit }">
-								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
-								<input type="hidden" name="type" th:value="${ page.cri.type }">	
-							</form> -->
 
                         </div>
                     </div>
@@ -442,7 +431,6 @@
 			};
 			
 			if($("#refDate").val() == "") {
-				//alert("환불일을 입력하세요")
 				swal({
     				text: "환불일을 입력하세요",
     				icon: "warning",
@@ -453,7 +441,6 @@
 			}
 			
 			if($("#refPay").val() == "") {
-				//alert("환불 금액을 입력하세요")
 				swal({
     				text: "환불 금액을 입력하세요",
     				icon: "warning",

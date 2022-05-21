@@ -125,10 +125,9 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox" id="btn-list">돌아가기</button>
-                                    <!-- th:onclick="location.href='/admin/consultant/hopeList'" -->
                                 </div>
                                 
-                                <form id="infoForm" action="/admin/consultant/hopeList" method="get">
+                                <form id="moveForm" action="/admin/consultant/hopeList" method="get">
 									<input type="hidden" id="no" name="no" th:value="${ consultantHopeDetail.no }">
 									<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
 									<input type="hidden" name="type" th:value="${ cri.type }">
@@ -159,7 +158,7 @@
     
     <script type="text/javascript">
 	    /* 돌아가기 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
-		let form = $("#infoForm");
+		let form = $("#moveForm");
 		$("#btn-list").on("click", function(e){
 			form.find("#no").remove();
 			form.attr("action", "/admin/consultant/hopeList");

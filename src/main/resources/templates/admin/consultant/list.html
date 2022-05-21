@@ -66,13 +66,19 @@
                             <h6 class="m-0 font-weight-bold text-primary">상담 일지 내역</h6>
                         </div>
                         <br>
-                        <form class="form-inline" action="/admin/consultant/list" method="get">
+                        <form id="searchForm" class="form-inline" action="/admin/consultant/list" method="get">
+                        	<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
                             <div class="search-area col-lg-12">
+                            	<select class="form-control form-select-lg" name="type">
+									<option value="" th:selected="${ #strings.isEmpty( page.cri.type ) }">-- 검색 유형 --</option>
+									<option value="stdName" th:selected="${ #strings.equals( page.cri.type, 'stdName' ) }">원생 이름</option>
+									<option value="no" th:selected="${ #strings.equals( page.cri.type, 'no' ) }">글 번호</option>
+								</select>
                                 <div class="form-group mx-sm-3">
                                     <input type="text" name="keyword" class="form-control" id="keyword" th:value="${ page.cri.keyword }"
-                                    	onkeyup='searchTable()' placeholder="원생 이름을 입력하세요">
+                                    	placeholder="검색어를 입력하세요">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-search mr-2">검색</button>
+                                <button type="button" class="btn btn-primary btn-search mr-2">검색</button>
                             </div>
                         </form>
                         <div class="card-body">
@@ -94,7 +100,7 @@
                                             <td th:text="${ con.member.name }">원생</td>
                                             <td th:text="${ con.conImp }">중요도</td>
                                             <td th:text="${ con.conContent }" class="conTitle" id="conTitle"
-                                            	th:onclick="'location.href=\'' + @{/admin/consultant/detail(no=${con.no}, pageNo=${page.cri.pageNo}, keyword=${page.cri.keyword})} + '\';'">상담 일지 내용</td>
+                                            	th:onclick="'location.href=\'' + @{/admin/consultant/detail(no=${con.no}, pageNo=${page.cri.pageNo}, type=${page.cri.type}, keyword=${page.cri.keyword})} + '\';'">상담 일지 내용</td>
                                         </tr>
                                         <tr th:unless="${not #lists.isEmpty( consultantList )}">
                                         	<td colspan="5">조회된 결과가 없습니다</td>
@@ -143,13 +149,6 @@
 								</div>
 							</nav>
 							
-							<form id="searchForm" method="get">	
-								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<!-- <input type="hidden" name="limit" th:value="${ page.cri.limit }"> -->
-								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
-								<!-- <input type="hidden" name="type" th:value="${ page.cri.type }"> -->	
-							</form>
-
                         </div>
                     </div>
                 </div>
@@ -193,9 +192,7 @@
             }
         } */
         
-        var title = document.getElementById("conTitle").innerHTML;
-    	console.log(title.substring(0, 19));
-    	
+        /* 페이징 & 검색 */
 		let searchForm = $("#searchForm");   	
         
         $(".pageInfo a").on("click", function(e){
@@ -205,23 +202,30 @@
 	        searchForm.submit();
         });
     	
-    	
     	$(".search-area button").on("click", function(e){
     		e.preventDefault();
     		
+    		let type = $(".search-area select").val();
 	    	let keyword = $(".search-area input[name='keyword']").val();
 	    	
-    		if(!keyword){
-    			//alert("원생 이름을 입력하세요.");
+	    	if(!type){
     			swal({
-    				text: "원생 이름을 입력하세요",
+    				text: "검색 유형을 선택하세요",
+    				icon: "warning",
+    				button: "확인"
+    			});
+    			return false;
+    		}
+	    	
+    		if(!keyword){
+    			swal({
+    				text: "검색어를 입력하세요",
     				icon: "warning",
     				button: "확인"
     			});
     			return false;
     		}		
     		
-    		searchForm.find("input[name='keyword']").val(keyword);
     		searchForm.find("input[name='pageNo']").val(1);
     		searchForm.submit();
     	});

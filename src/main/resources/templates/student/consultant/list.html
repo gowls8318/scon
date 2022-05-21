@@ -108,9 +108,6 @@
                                             </td> -->
                                             <td th:text="${ conH.conHTitle }" class="conHTitle"
                                             	th:onclick="'location.href=\'' + @{/student/consultant/detail(no=${conH.no}, pageNo=${page.cri.pageNo}, type=${page.cri.type}, keyword=${page.cri.keyword})} + '\';'">상담 제목</td>
-                                            <!-- <td class="conHTitle">
-                                            	<a th:href=" @{/student/consultant/detail(no=${conH.no}, pageNo=${page.cri.pageNo})}" class="movePage">[[${conH.conHTitle}]]</a>
-                                            </td> -->
                                         </tr>
                                         <tr th:unless="${not #lists.isEmpty( consultantList )}">
                                         	<td colspan="3">조회된 결과가 없습니다</td>
@@ -159,13 +156,6 @@
 								</div>
 							</nav>
 							
-							<!-- <form id="searchForm" method="get" action="/student/consultant/list">	
-								<input type="hidden" name="pageNo" th:value="${ page.cri.pageNo }">
-								<input type="hidden" name="limit" th:value="${ page.cri.limit }">
-								<input type="hidden" name="keyword" th:value="${ page.cri.keyword }">	
-								<input type="hidden" name="type" th:value="${ page.cri.type }">
-							</form> -->
-							
                         </div>
                     </div>
                 </div>
@@ -200,6 +190,7 @@
             });
         }); */
         
+        /* 페이징 & 검색 */
         let searchForm = $("#searchForm");   	
         
         $(".pageInfo a").on("click", function(e){
@@ -208,7 +199,6 @@
             searchForm.attr("action", "/student/consultant/list");
 	        searchForm.submit();
         });
-    	
     	
     	$(".search-area button").on("click", function(e){
     		e.preventDefault();

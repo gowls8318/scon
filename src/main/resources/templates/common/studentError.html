@@ -24,8 +24,19 @@
     
     <style type="text/css">
     	h3 {
-    	  text-align: center;
+    		text-align: center;
     	}
+    	
+    	.error {
+			max-width: 1300px;
+			display: flex;
+			justify-content: center;
+			margin: 200px auto 30px;
+		}
+		
+		img {
+			width: 200px;
+		}
     </style>
     
 </head>
@@ -34,7 +45,7 @@
     <div id="wrapper">
 
         <!-- sidebar include -->
-        <div th:replace="/common/adminSidebar.html"></div>
+        <div th:replace="/common/studentSidebar.html"></div>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -47,6 +58,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+					<div class="error">
+						<img src="/img/error.png" alt="ERROR">
+					</div>
 					<h3>[[${errorMessage}]]</h3>
                     
                 </div>

@@ -41,7 +41,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		List<ConsultantDTO> consultantHopeList = consultantMapper.selectAllConsultantHopeList(cri);
 		
 		if(consultantHopeList == null) {
-			throw new Exception("상담 신청 내역 조회에 실패하였습니다.");
+			throw new Exception("상담 신청 내역 조회에 실패하였습니다");
 		}
 		
 		return consultantHopeList;
@@ -63,7 +63,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		ConsultantDTO consultantHopeDetail = consultantMapper.selectConsultantHopeDetail(no);
 		
 		if(consultantHopeDetail == null) {
-			throw new Exception("상담 신청 상세 조회에 실패하였습니다.");
+			throw new Exception("상담 신청 상세 조회에 실패하였습니다");
 		}
 		
 		return consultantHopeDetail;
@@ -89,7 +89,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		List<ConsultantDTO> consultantList = consultantMapper.selectAllConsultantList(cri);
 		
 		if(consultantList == null) {
-			throw new Exception("상담 일지 내역 조회에 실패하였습니다.");
+			throw new Exception("상담 일지 내역 조회에 실패하였습니다");
 		}
 		
 		return consultantList;
@@ -102,7 +102,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		int result = consultantMapper.insertConsultant(con);
 		
 		if(result <= 0) {
-			throw new Exception("상담 일지 등록에 실패하였습니다.");
+			throw new Exception("상담 일지 등록에 실패하였습니다");
 		}
 		
 		return result;
@@ -124,7 +124,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		ConsultantDTO consultantDetail = consultantMapper.selectConsultantDetail(no);
 		
 		if(consultantDetail == null) {
-			throw new Exception("상담 일지 상세 조회에 실패하였습니다.");
+			throw new Exception("상담 일지 상세 조회에 실패하였습니다");
 		}
 		
 		return consultantDetail;
@@ -137,7 +137,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		int result = consultantMapper.modifyConsultant(con);
 		
 		if(result <= 0) {
-			throw new Exception("상담 일지 수정에 실패하였습니다.");
+			throw new Exception("상담 일지 수정에 실패하였습니다");
 		}
 		
 		return result;
@@ -150,7 +150,7 @@ public class ConsultantServiceImpl implements ConsultantService {
 		int result = consultantMapper.deleteConsultant(no);
 		
 		if(result <= 0) {
-			throw new Exception("상담 일지 삭제에 실패하였습니다.");
+			throw new Exception("상담 일지 삭제에 실패하였습니다");
 		}
 		
 		return result;
