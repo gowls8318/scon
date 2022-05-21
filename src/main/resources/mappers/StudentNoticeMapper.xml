@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.scon.project.admin.notice.model.dao.NoticeMapper">
+<mapper namespace="com.scon.project.student.notice.model.dao.StudentNoticeMapper">
 
 	<resultMap id="noticeResultMap" type="com.scon.project.admin.notice.model.dto.NoticeDTO">
 		<id property="no" column="NOTI_NO"/>
@@ -107,30 +107,6 @@
 	</select>
 
 	
-
-	<!-- 공지등록 폼 -->
-	<insert id="registNotice">
-		INSERT
-		  INTO TB_NOTICE
-		(
-		  NOTI_NO
-		, NOTI_TITLE
-		, NOTI_CONTENT
-		, NOTI_DATE
-		, NOTI_VIEW
-		, NOTI_DELETE		
-		)
-		VALUES
-		(
-		  SEQ_NOTI_NO.NEXTVAL
-		, #{ notiTitle }
-		, #{ notiContent }
-		, SYSDATE
-		, '0'
-		, 'N'
-		)
-	</insert>	
-	
 	<!-- 공지 상세 조회 -->
 	<select id="sellectNoticeDetail" resultMap="noticeResultMap">
 	SELECT
@@ -152,27 +128,7 @@
 			 WHERE NOTI_NO = #{ no }  		
 	</update>	
 
-  	<!-- 게시글 수정등록 -->
-	<update id="modifyNotice">
-		UPDATE 
-			   TB_NOTICE
-		   SET NOTI_TITLE = #{ notiTitle }
-			 , NOTI_CONTENT	= #{ notiContent }
-			 , NOTI_UPDATE = SYSDATE
-		 WHERE NOTI_NO = #{ no }
-	</update>		
-		
-	<!-- 게시글 삭제 -->
- 	<update id="deleteNotice">
-		UPDATE
-		  	   TB_NOTICE
-		   SET NOTI_DELETE = 'Y'
-		   	 , NOTI_UPDATE = SYSDATE
-		 WHERE NOTI_NO = #{ no }
-	</update> 
-	
-	
-	
+
 <!--                 댓글                             -->	
 		<!-- 댓글 조회 -->
 <!-- 	<select id="readCmt" resultMap="noticeCmtResultMap">
