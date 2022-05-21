@@ -8,6 +8,7 @@ import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.classfile.dto.ClassFileDTO;
 import com.scon.project.admin.classfile.dto.TaskFileDTO;
 import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.MemberDTO;
 
 
@@ -32,6 +33,12 @@ public interface ClassFileMapper {
 
 	//강의명등록
 	List<ClassDTO> selectClassName();
+
+	//파일조회
+	List<TaskFileDTO> selectFiles(Criteria cri);
+
+	//강의첨부 삭제
+	int deleteClassFile(String fileId);
 
 
 	

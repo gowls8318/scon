@@ -10,8 +10,8 @@ import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.classfile.dao.ClassFileMapper;
 import com.scon.project.admin.classfile.dto.ClassFileDTO;
 import com.scon.project.admin.classfile.dto.TaskFileDTO;
-import com.scon.project.admin.taskBoard.model.dto.FileDTO;
 import com.scon.project.common.paging.Criteria;
+import com.scon.project.common.paging.Pagination;
 import com.scon.project.member.model.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,13 +37,13 @@ public class ClassFileServiceImpl implements ClassFileService {
 
 		int result = 0;
 		
-		for(TaskFileDTO files : classFileList.getFileList() ) {
+		for(TaskFileDTO files : classFileList.getFileList2() ) {
 			result += classFileMapper.registFile(files);
 		}
 		
 		int result2 = classFileMapper.registClassFile(classFileList); //파일등록
 		
-		if(result2 > 0 && result == classFileList.getFileList().size()) {
+		if(result2 > 0 && result == classFileList.getFileList2().size()) {
 			/* result2 = classFileMapper.registFile(files); */
 			result = (result2 > 0 ) ? 1 : 0;
 		} else {
@@ -79,6 +79,25 @@ public class ClassFileServiceImpl implements ClassFileService {
 	@Override
 	public int total(Criteria cri) {
 		return classFileMapper.total(cri);
+	}
+
+	//파일조회
+	@Override
+	public List<TaskFileDTO> selectFiles(Criteria cri) {
+	return classFileMapper.selectFiles(cri);
+		}
+
+	//강의첨부게시글 삭제
+	@Override
+	public boolean deleteClassFile(String fileId) throws Exception {
+
+		int result = classFileMapper.deleteClassFile(fileId);
+		
+		if(result <= 0) {
+			throw new Exception("강의첨부 삭제 실패");
+		}
+		
+		return result > 0 ? true : false;
 	}
 
 }

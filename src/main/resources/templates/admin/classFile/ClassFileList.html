@@ -111,30 +111,27 @@ input[type="checkbox"]::before {
 											<td ><class th:text="${classfile.clfName}" /></td> 
 											<td ><class th:text="${classfile.member.name}" /></td> 
 
-											<td>
-												<!-- 파일다운로드 -->
-												<text onclick="location.href='/admin/ClassFileList'">
-												<td th:each="files : ${ fileList }">
-												<a class="bi bi-arrow-right-square-fill" name="fileList"
-												th:if="fileList" th:href="@{/uploadFiles/classFiles/{fileSaveName}(fileSaveName=${files.fileSaveName})}" th:text="${files.fileOrginName}" th:download="${files.fileOrginName}">
-                           		 			<input type="hidden" th:value="${files.fileOrginName}">
-                           		 			<input type="hidden" th:value="${files.fileId}">
 												
-												</a>&nbsp;</text> 
-                                        		</td>
+												<!-- 파일다운로드 -->
+												<td>
+												<a name="fileList" th:href="@{/uploadFiles/classFiles/fileList/{fileSaveName}(fileSaveName=${classfile.fileList.fileSaveName})}" th:download="${classfile.fileList.fileOrginName}">
+												<i class="bi bi-arrow-up-circle-fill" >
+	                           		 			<input type="hidden" th:value="${classfile.fileList.fileOrginName}">
+	                           		 			<input type="hidden" th:value="${classfile.fileList.fileId}">
+												</i>&nbsp;</a>
+												
 												<!-- 강의첨부자료 수정-->
 												<!-- <text th:onclick="'location.href=\'' + @{/admin/ClassFileUpdate(FileId=${classFile.FileId})} + '\';'"> -->
-												<i class="bi bi-pencil-square"></i>&nbsp;</text> 
+												<i class="bi bi-pencil-square"></i>&nbsp;</text>
 												<!-- 강의첨부자료 삭제 --> 
-												<text class="" data-toggle="modal" data-target="#classdelModal"
-												>  <!-- th:onclick="|deleteClassFile(${classFile.clsId})|" -->
+												<text class="" data-toggle="modal" data-target="#classFiledelModal"  th:onclick="|deleteClassFile(${classfile.fileId})|">
 												<i class="bi bi-trash"></i>&nbsp;</text>
-											</td>
+											   </td>
 											
 										</tr>
 									</tbody>
 								</table>
-
+								
 
 								<!-- 페이징 -->
 								<nav aria-label="Page navigation example"
@@ -209,3 +206,34 @@ input[type="checkbox"]::before {
 	<a class="scroll-to-top rounded" href="#page-top"> 
 	<i class="fas fa-angle-up"></i>
 	</a>
+	
+	<!-- 강의 삭제 Modal-->
+	<div class="modal fade" id="classFiledelModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<form method="get" name="deleteClassForm"
+			th:action="@{/admin/deleteClassFile}">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">강의삭제</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">정말로 삭제하시겠습니까?</div>
+					<div class="modal-footer">
+						<a class="btn btn-secondary"
+							onclick="location.href='/admin/classFileList'">취소</a>
+						<button type="submit" class="btn btn-primary submitbuttonbox">삭제</button>
+					</div>
+					<input type="hidden" name="clsId" id="delcls" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 강의 삭제 Modal 끝 -->
+	
+	
+	</body>
+	</html>

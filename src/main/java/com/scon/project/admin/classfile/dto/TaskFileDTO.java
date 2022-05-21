@@ -25,7 +25,8 @@ public class TaskFileDTO {
 	private String fileSaveName;				
 	private String filePath;				
 	private String fileType;	
-	private List<TaskFileDTO> fileList; //여러파일
 	
+	private List<TaskFileDTO> fileList2; //여러파일
+	 
 
 }

@@ -85,6 +85,10 @@
 		  , CLF_NAME
 		  , MEMBER_NAME
 		  , CLF_STATUS
+	 	  , FILE_ORGNAME
+		  , FILE_SAVENAME
+		  , FILE_PATH
+		  , FILE_TYPE
 	   FROM (SELECT   /*+INDEX_DESC(A PK_TB_CLASS)*/ 
 		 		 ROWNUM AS RNUM 
 		 	   , B.FILE_ID
@@ -93,9 +97,14 @@
 		       , B.CLF_NAME
 		       , C.MEMBER_NAME
 		       , B.CLF_STATUS
+		 	   , D.FILE_ORGNAME
+			   , D.FILE_SAVENAME
+			   , D.FILE_PATH
+			   , D.FILE_TYPE
 			 FROM TB_CLASS A
 			 JOIN TB_REFRENCE B ON (A.CLS_ID = B.CLS_ID)
 			 JOIN TB_MEMBER C ON (A.MEMBER_ID = C.MEMBER_ID)
+			 JOIN TB_FILE D ON (B.FILE_ID = D.FILE_ID)
 		    WHERE B.CLF_STATUS = 'Y'
 		    <![CDATA[
 			          AND ROWNUM <= #{ pageNo } * #{ limit }
@@ -106,20 +115,21 @@
 		]]> 
 	</select> 
 	
-	<!-- 
-	SELECT
-		    A.FILE_ID
-		  , B.CLS_ID
-		  , A.CLF_NAME
-		  , A.CLF_STATUS
-		  , C.MEMBER_NAME
-	   FROM TB_REFRENCE A
-	   JOIN TB_CLASS B ON (A.CLS_ID = B.CLS_ID)
-	   JOIN TB_MEMBER C ON (B.MEMBER_ID = C.MEMBER_ID)
-	  WHERE CLF_STATUS = 'Y'
-	  ORDER BY FILE_ID DESC
-	
-	 -->
+	<!-- 파일 -->
+	<select id="selectFiles" resultMap="TaskFileResultMap" resultType="list">
+		SELECT
+		    A.FILE_ID,
+		    B.FILE_ID,
+		    B.FILE_ORGNAME,
+		    B.FILE_SAVENAME,
+		    B.FILE_PATH,
+		    B.FILE_TYPE
+		    FROM TB_REFRENCE A
+		    JOIN TB_FILE B ON(A.FILE_ID = B.FILE_ID)
+		    WHERE A.CLF_STATUS = 'Y'
+	</select> 
+
+
 	 
 	 <!-- 게시물 총 갯수 -->
 	<select id="total" resultType="_int">
@@ -150,6 +160,7 @@
 		  JOIN TB_REFRENCE C ON (A.CLS_ID = C.CLS_ID)
 		 WHERE A.CLS_STATUS = 'N'
 	</select>
+	
 
 
 	<!-- 클래스첨부파일 -->
@@ -193,7 +204,13 @@
 	</insert> 
 	
 	
-	
+	<!-- 강의 첨부자료 삭제 -->
+	<update id="deleteClassFile">
+		UPDATE
+			  TB_REFRENCE
+		  SET CLF_STATUS = 'N'
+		 WHERE FILE_ID = #{fileId}
+	</update>
 
 
 </mapper>
