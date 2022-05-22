@@ -140,7 +140,7 @@ public class TaskBoardController {
 	
 	// 과제 게시판 글 입력 (O)
 	@PostMapping("/insertTask")
-	public String multiFileUpload(@RequestParam(value="taskFile") List<MultipartFile> multiFiles, @ModelAttribute TaskBoardDTO task,
+	public String multiFileUpload(@RequestParam(value="taskFile") List<MultipartFile> multiFiles, @RequestParam int clsId, @ModelAttribute TaskBoardDTO task,
 			@AuthenticationPrincipal UserImpl user) throws Exception {
 		
 		String page = "";
@@ -149,6 +149,7 @@ public class TaskBoardController {
 		task.setMemberId(user.getId());
 		
 		log.info("task : {} ", task);
+		log.info("입력 clsId : {}", clsId);
 		
 	
 		
@@ -180,14 +181,15 @@ public class TaskBoardController {
 		}
 		/* TaskDTO에 담기 */
 		task.setFileList(fileList);
-
+		task.setClsId(clsId);
+		
 		log.info("fileList : {} ", fileList);
-
+		
 		
 		int result = taskBoardService.insertTask(task);
 
 		if(result > 0) {
-			page = "redirect:/admin/taskBoardList?clsId=1";
+			 page = "redirect:/admin/taskBoardList?clsId=" + clsId;
 		} else {
 			throw new Exception("게시글 등록 실패!");
 		}

@@ -31,6 +31,8 @@
     <!-- Awesome Font -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
+	<!--  파비콘 -->
+	<link rel="icon" type="image/x-icon" href="/img/favicon.png">
 
 </head>
 
@@ -100,7 +102,7 @@
                   </div>
                   <!---->
        <!--           <button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask(clsId=${task.clsId})} + '\';'"> --> <!--  onclick="location.href='/admin/insertTask'"  -->
-       				<button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask/} + '\';'">
+       				<button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask(clsId=${param.clsId})} + '\';'">
                     <li style="list-style: none;" id="wrtie">글쓰기</li></button><br><br>
                 <table class="table">
                     <thead>
@@ -195,7 +197,7 @@
 	        $(".pageInfo a").on("click", function(e){
 	        	e.preventDefault();
 	            searchForm.find("input[name='pageNo']").val($(this).attr("href"));
-	            searchForm.attr("action", "/admin/taskBoardList?clsId=1");
+	            searchForm.attr("action", "/admin/taskBoardList");
 		        searchForm.submit();
 	        });
 	    	
