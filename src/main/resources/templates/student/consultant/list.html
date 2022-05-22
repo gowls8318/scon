@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -29,6 +28,9 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <!-- 파비콘 -->
+	<link rel="icon" type="image/x-icon" href="/img/favicon.png">
         
     <script>
     	const successMessage = '[[${successMessage}]]'
@@ -93,14 +95,13 @@
                                     <thead>
                                         <tr>
                                             <th>번호</th>
-                                            <th>상담 신청일</th>
                                             <th>상담 제목</th>
+                                            <th>상담 신청일</th>
                                         </tr>
                                     </thead>
                                     <tbody class="accTbody">
                                         <tr th:if="${not #lists.isEmpty( consultantList )}" th:each="conH : ${ consultantList }">
                                             <td th:text="${ conH.no }">번호</td>
-                                            <td th:text="${ conH.conWriteDate }">상담 신청일</td>
                                             <!-- <td th:text="${ conH.conHTitle }" class="conHTitle"
                                             th:onclick="'location.href=\'' + @{/student/consultant/detail/{no} (conNo=${conH.no})} + '\';'">상담 제목</td> -->
                                             <!-- <td class="conHTitle">
@@ -108,6 +109,7 @@
                                             </td> -->
                                             <td th:text="${ conH.conHTitle }" class="conHTitle"
                                             	th:onclick="'location.href=\'' + @{/student/consultant/detail(no=${conH.no}, pageNo=${page.cri.pageNo}, type=${page.cri.type}, keyword=${page.cri.keyword})} + '\';'">상담 제목</td>
+                                           	<td th:text="${ conH.conWriteDate }">상담 신청일</td>
                                         </tr>
                                         <tr th:unless="${not #lists.isEmpty( consultantList )}">
                                         	<td colspan="3">조회된 결과가 없습니다</td>
@@ -116,45 +118,8 @@
                                 </table>
                             </div>
 
-                            <!-- 페이징 -->
-                            <nav aria-label="Page navigation">
-								<div class="pageInfo_area">
-									<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
-									
-										<!-- 첫 페이지 이동 -->
-										<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
-										<li class="page-item">
-											<a th:if="${ page.startPage > 1 }" th:href="${ 1 }" th:text="'<<'" class="page-link"></a>
-										</li>
-
-										<!-- 이전 페이지 버튼 -->
-										<li th:if="${ page.prev }" class="page-item">
-											<a th:href="${ page.startPage - 1 }" th:text="'<'" class="page-link"></a>
-										</li>
-										
-										<!-- 각 번호 페이지 버튼 -->
-										<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
-											<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
-												<!-- <a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link" disabled></a> -->
-												<a th:href="${ num }" th:text="${ num }" class="page-link"></a>
-												<!-- <a th:if="${ page.cri.pageNo != num }" th:href="@{/student/consultant/list(pageNo=${num})}" th:text="${ num }" class="page-link"></a> -->
-											</li>
-										</th:block>
-										
-										<!-- 다음 페이지 버튼 -->
-										<li th:if="${ page.next }" class="page-item">
-											<a th:href="${ page.endPage + 1 }" th:text="'>'" class="page-link"></a>
-										</li>
-										
-										<!-- 마지막 페이지 이동 -->
-										<li class="page-item">
-									    	<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link d-none" disabled></a>
-									    	<a th:if="${ page.cri.pageNo != page.maxPage }" th:href="${ page.maxPage }" th:text="'>>'" class="page-link"></a>
-									    </li>
-							    
-									</ul>
-								</div>
-							</nav>
+                            <!-- paging include -->
+            				<div th:replace="/common/paging.html"></div>
 							
                         </div>
                     </div>

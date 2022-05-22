@@ -147,7 +147,7 @@ public class ConsultantController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateConsultant", null, locale));
 		
-		return "redirect:/admin/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
+		return "redirect:/admin/consultant/list?pageNo=" + cri.getPageNo();
 	}
 	
 	/* 상담 일지 삭제용 */
@@ -160,7 +160,7 @@ public class ConsultantController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteConsultant", null, locale));
 		
-		return "redirect:/admin/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
+		return "redirect:/admin/consultant/list?pageNo=" + cri.getPageNo();
 	}
 	
 	/* 예외 처리 */

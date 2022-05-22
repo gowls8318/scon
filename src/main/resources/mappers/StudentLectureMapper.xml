@@ -123,6 +123,9 @@
 		                 WHERE A.LEC_DELETE = 'N'
 		                   AND A.MEMBER_ID = #{ memberId }
 						<if test="keyword != null">
+							<if test="type == 'clsName'">
+								AND UPPER(C.CLS_NAME) LIKE UPPER('%' || #{ keyword } || '%')
+							</if>
 							<if test="type == 'lecStatus'">
 								AND A.LEC_STATUS LIKE '%' || #{ keyword } || '%'	
 							</if>
@@ -149,9 +152,13 @@
 		SELECT
 			   COUNT(*)
 		  FROM TB_LECTURE A
-		 WHERE LEC_DELETE = 'N'
-		   AND MEMBER_ID = #{ memberId }
+		  JOIN TB_CLASS B ON(A.CLS_ID = B.CLS_ID)
+		 WHERE A.LEC_DELETE = 'N'
+		   AND A.MEMBER_ID = #{ memberId }
 		 <if test="keyword != null">
+		 	<if test="type == 'clsName'">
+				AND UPPER(B.CLS_NAME) LIKE UPPER('%' || #{ keyword } || '%')
+			</if>
 			<if test="type == 'lecStatus'">
 				AND A.LEC_STATUS LIKE '%' || #{ keyword } || '%'	
 			</if>
