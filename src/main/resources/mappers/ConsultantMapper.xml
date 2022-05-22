@@ -147,7 +147,7 @@
 		                     , A.CON_HTITLE
 		                     , A.CON_DATE
 		                     , A.CON_IMP
-		                     , A.CON_CONTENT
+		                     , SUBSTR(A.CON_CONTENT, 1, 40) AS CON_CONTENT
 		                  FROM TB_CONSULTANT A
 		                  JOIN TB_MEMBER B ON(A.MEMBER_ID = B.MEMBER_ID)
 		                 WHERE A.CON_HDELETE = 'N'

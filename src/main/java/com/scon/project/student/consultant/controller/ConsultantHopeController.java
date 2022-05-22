@@ -128,8 +128,7 @@ public class ConsultantHopeController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateConsultantHope", null, locale));
 		
-		//return "redirect:/student/consultant/list";
-		return "redirect:/student/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
+		return "redirect:/student/consultant/list?pageNo=" + cri.getPageNo();
 	}
 	
 	/* 상담 신청 삭제용 */
@@ -142,7 +141,7 @@ public class ConsultantHopeController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteConsultantHope", null, locale));
 		
-		return "redirect:/student/consultant/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
+		return "redirect:/student/consultant/list?pageNo=" + cri.getPageNo();
 	}
 	
 	/* 예외 처리 */

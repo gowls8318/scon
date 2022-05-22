@@ -321,3 +321,8 @@
 .ref-table tbody td{
   border-top: none;
 }
+
+/* 페이징 버튼 같을 시 */
+.pageDisabled{
+  border-radius: 0px!important;
+}

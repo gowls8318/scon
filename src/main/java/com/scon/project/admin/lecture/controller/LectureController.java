@@ -124,7 +124,7 @@ public class LectureController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("updateLecture", null, locale));
 		
-		return "redirect:/admin/lecture/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
+		return "redirect:/admin/lecture/list?pageNo=" + cri.getPageNo();
 	}
 	
 	/* 수강 삭제용 */
@@ -137,7 +137,7 @@ public class LectureController {
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteLecture", null, locale));
 		
-		return "redirect:/admin/lecture/list?pageNo=" + cri.getPageNo() + "&type=" + cri.getType() + "&keyword=" + cri.getKeyword();
+		return "redirect:/admin/lecture/list?pageNo=" + cri.getPageNo();
 	}
 
 	/* 환불 모달에 값 넣기 */

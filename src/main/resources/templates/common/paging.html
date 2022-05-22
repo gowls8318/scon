@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>pagination</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-yj.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+</head>
+
+<body id="page-top">
+
+	<!-- 페이징 -->
+	<nav aria-label="Page navigation">
+		<div class="pageInfo_area">
+			<ul id="pageInfo" class="pageInfo pagination mt-1 mb-0">
+
+				<!-- 첫 페이지 이동 -->
+				<!-- 첫 번째 블럭이면 안 보이게 조건 걸기 -->
+				<li class="page-item">
+					<a th:if="${ page.startPage > 1 }" th:href="${ 1 }" th:text="'<<'" class="page-link"></a>
+				</li>
+
+				<!-- 이전 페이지 버튼 -->
+				<li th:if="${ page.prev }" class="page-item">
+					<a th:href="${ page.startPage - 1 }" th:text="'<'" class="page-link"></a>
+				</li>
+
+				<!-- 각 번호 페이지 버튼 -->
+				<th:block th:with="start = ${ page.startPage }, end = ${ page.endPage }">
+					<li th:each="num : ${ #numbers.sequence(start, end) }" class="pageInfo_btn page-item">
+						<span class="page-item disabled">
+							<a th:if="${ page.cri.pageNo == num }" th:text="${ num }" class="page-link pageDisabled"></a>
+						</span>
+						<a th:unless="${ page.cri.pageNo == num }" th:text="${ num }" th:href="${ num }" class="page-link"></a>
+					</li>
+				</th:block>
+
+				<!-- 다음 페이지 버튼 -->
+				<li th:if="${ page.next }" class="page-item">
+					<a th:href="${ page.endPage + 1 }" th:text="'>'" class="page-link"></a>
+				</li>
+
+				<!-- 마지막 페이지 이동 -->
+				<li class="page-item">
+					<a th:if="${ page.cri.pageNo == page.maxPage }" th:text="'>>'" class="page-link d-none"></a>
+					<a th:if="${ page.cri.pageNo != page.maxPage }"	th:href="${ page.maxPage }" th:text="'>>'" class="page-link"></a>
+				</li>
+
+			</ul>
+		</div>
+	</nav>
+
+</body>
+
+</html>
