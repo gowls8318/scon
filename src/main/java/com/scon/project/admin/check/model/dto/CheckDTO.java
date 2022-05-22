@@ -19,7 +19,7 @@ public class CheckDTO {
 	private ClassDTO cls;
 	private String chkStart;
 	private String chkFinish;
-	@DateTimeFormat(pattern="yyyy-MM-dd") 
+//	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
 	private String chkDate;
 	
