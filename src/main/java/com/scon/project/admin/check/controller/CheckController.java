@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.check.model.dto.CheckDTO;
-import com.scon.project.admin.check.model.dto.CheckListDTO;
 import com.scon.project.admin.check.model.service.CheckService;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.member.model.dto.MemberDTO;
@@ -101,7 +100,7 @@ public class CheckController {
 	}
 	
 	@PostMapping("/chkInsertForm")
-	public String chkInsertForm(@ModelAttribute CheckListDTO chk) throws Exception {
+	public String chkInsertForm(@ModelAttribute CheckDTO chk) throws Exception {
 
 		log.info("넘기는 값 : {}", chk);
 		
