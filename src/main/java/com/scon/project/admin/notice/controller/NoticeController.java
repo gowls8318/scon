@@ -53,7 +53,7 @@ public class NoticeController {
 	}
 	
 //	공지 작성 페이지 이동
-	@GetMapping("notiForm")
+	@GetMapping("notiTables")
 	public String registPage() {
 		return "admin/notice/notiForm";
 	}
@@ -133,7 +133,7 @@ public class NoticeController {
 
 //	댓글 수정(조회)
 	@GetMapping("cmtModify") 
-	public String modifyCmt(@RequestParam("cNo") int cNo, Model model, @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+	public String modifyCmtDetail(@RequestParam("cNo") int cNo, Model model, @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
 		
 		log.info("수정할 댓글 번호 : {}", cNo);
 		model.addAttribute("modifyCmt", noticeService.readCmt(cNo));
