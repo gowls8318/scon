@@ -63,7 +63,7 @@
 		<result property="address" column="GENDER"/>
 		<result property="gender" column="ADDRESS"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 		
 		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>		

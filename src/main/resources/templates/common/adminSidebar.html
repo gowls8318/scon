@@ -52,7 +52,7 @@
 
             <!-- Nav Item - 교육원 관리 Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapseAcademy"
+                <a class="nav-link collapsed" href="/admin/business/businessInfo" data-target="#collapseAcademy"
                     aria-expanded="true" aria-controls="collapseAcademy">
                     <span>정보 관리</span>
                     <i class="bi bi-box-arrow-in-right"></i>
@@ -63,7 +63,6 @@
                     <i class="bi bi-box-arrow-in-right"></i>
                 </a>                
             </li>
-
             <!-- Nav Item - 강사 관리 Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTeacher"
@@ -126,8 +125,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">강의 관리:</h6>
-                        <a class="collapse-item" href="#">강의 등록</a>
-                        <a class="collapse-item" href="#">강의 조회</a>
+                        <a class="collapse-item" href="/admin/classRegist">강의 등록</a>
+                        <a class="collapse-item" href="/admin/classList">강의 조회</a>
+                        <a class="collapse-item" href="/admin/registClassFile">강의첨부파일 등록</a>
+                        <a class="collapse-item" href="/admin/ClassFileList">강의첨부파일 조회</a>
                     </div>
                 </div>
             </li>
@@ -144,10 +145,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">출결 관리:</h6>
-                        <a class="collapse-item" href="#">출결 등록</a>
-                        <a class="collapse-item" href="#">원생 별 출석 조회</a>
-                        <a class="collapse-item" href="#">강의/날짜 별 출석 조회</a>
-                        <a class="collapse-item" href="#">결석 조회</a>
+                        <a class="collapse-item" href="/admin/check/chkInsertForm">출결 등록</a>
+                        <a class="collapse-item" href="/admin/check/chkViewClass">출결 조회</a>
+                        <a class="collapse-item" href="/admin/check/chkUpdateForm">출결 수정</a>
+                        <a class="collapse-item" href="/admin/check/chkAbsent">결석 조회</a>
                     </div>
                 </div>
             </li>
@@ -209,10 +210,10 @@
             <hr class="sidebar-divider">
             <!-- Heading  -->
             <div class="sidebar-heading">
-                회계/경영 관리
+                회계 관리
             </div> 
 
-            <!-- Nav Item - 회계 관리 Collapse Menu -->
+            <!-- Nav Item - 수납 관리 Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/admin/lecture/list" data-target="#collapsePayment"
                     aria-expanded="true" aria-controls="collapsePayment">
@@ -220,23 +221,7 @@
                     <i class="bi bi-box-arrow-in-right"></i>
                 </a>
             </li>
-
-            <!-- Nav Item - 경영 관리 Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagement"
-                    aria-expanded="true" aria-controls="collapseManagement">
-                    <span>경영 관리</span>
-                    <i class="bi bi-chevron-down"></i>
-                </a>
-                <div id="collapseManagement" class="collapse" aria-labelledby="headingManagement"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">경영 관리:</h6>
-                        <a class="collapse-item" href="#">원생 현황</a>
-                        <a class="collapse-item" href="#">수납 현황</a>
-                    </div>
-                </div>
-            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

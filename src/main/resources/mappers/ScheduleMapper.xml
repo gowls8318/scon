@@ -19,7 +19,6 @@
 	(
 	  SCHE_NO
 	, MEMBER_ID
-	, CLS_ID
 	, START_DAY
 	, END_DAY
 	, SCHE_CONTENT
@@ -30,7 +29,6 @@
 	(
 	SEQ_SCHE_NO.NEXTVAL
 	, #{ memberId }
-	, #{ clsId }
 	, TO_DATE(#{ startDay }, 'YYYY-MM-DD')
 	, TO_DATE(#{ endDay }, 'YYYY-MM-DD')
 	, #{ content }
