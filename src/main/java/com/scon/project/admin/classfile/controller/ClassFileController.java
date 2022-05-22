@@ -182,13 +182,13 @@ public class ClassFileController {
 	
 	//강의삭제
 	@GetMapping("/deleteClassFile")
-	public String deleteClassFile(@RequestParam int clsId, @RequestParam String fileId, RedirectAttributes redirectAttr) throws Exception { 
+	public String deleteClassFile(@RequestParam String fileId, RedirectAttributes redirectAttr) throws Exception { 
 		 
-		log.debug("강의 삭제 요청 id : {}", clsId);
+		/* log.debug("강의 삭제 요청 id : {}", clsId); */
 		log.debug("게시글 삭제 요청 id : {}", fileId);
 		
 		classFileService.deleteClassFile(fileId);
-		redirectAttr.addAttribute("clsId", clsId);
+		/* redirectAttr.addAttribute("clsId", clsId); */
 		return "redirect:/admin/ClassFileList"; // clsId
 	}
 }

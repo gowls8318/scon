@@ -12,6 +12,9 @@
 
 <title>강의첨부자료 조회</title>
 
+<!-- 파비콘 -->
+<link rel="icon" type="image/x-icon" href="/img/favicon.png">
+
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
@@ -92,8 +95,7 @@ input[type="checkbox"]::before {
 
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th style="text-align: center">강의명</th>
@@ -106,32 +108,32 @@ input[type="checkbox"]::before {
 
 									<tbody class="classBody" style="text-align: center">
 										<tr th:each="classfile : ${ classFileList }">
-											
-											<td ><class th:text="${classfile.classDTO.clsName}" /></td> 
-											<td ><class th:text="${classfile.clfName}" /></td> 
-											<td ><class th:text="${classfile.member.name}" /></td> 
 
-												
-												<!-- 파일다운로드 -->
-												<td>
-												<a name="fileList" th:href="@{/uploadFiles/classFiles/fileList/{fileSaveName}(fileSaveName=${classfile.fileList.fileSaveName})}" th:download="${classfile.fileList.fileOrginName}">
-												<i class="bi bi-arrow-up-circle-fill" >
-	                           		 			<input type="hidden" th:value="${classfile.fileList.fileOrginName}">
-	                           		 			<input type="hidden" th:value="${classfile.fileList.fileId}">
-												</i>&nbsp;</a>
-												
-												<!-- 강의첨부자료 수정-->
-												<!-- <text th:onclick="'location.href=\'' + @{/admin/ClassFileUpdate(FileId=${classFile.FileId})} + '\';'"> -->
-												<i class="bi bi-pencil-square"></i>&nbsp;</text>
-												<!-- 강의첨부자료 삭제 --> 
-												<text class="" data-toggle="modal" data-target="#classFiledelModal"  th:onclick="|deleteClassFile(${classfile.fileId})|">
-												<i class="bi bi-trash"></i>&nbsp;</text>
-											   </td>
-											
+											<td><class th:text="${classfile.classDTO.clsName}"/></td>
+											<td><class th:text="${classfile.clfName}"/></td>
+											<td><class th:text="${classfile.member.name}"/></td>
+
+
+											<!-- 파일다운로드 -->
+											<td><a name="fileList"
+												th:href="@{/uploadFiles/classFiles/fileList/{fileSaveName}(fileSaveName=${classfile.fileList.fileSaveName})}"
+												th:download="${classfile.fileList.fileOrginName}"> <i
+													class="bi bi-arrow-up-circle-fill"> <input
+														type="hidden"
+														th:value="${classfile.fileList.fileOrginName}"> <input
+														type="hidden" th:value="${classfile.fileList.fileId}">
+												</i>&nbsp;
+											</a> <!-- 강의첨부자료 수정--> <!-- <text th:onclick="'location.href=\'' + @{/admin/ClassFileUpdate(FileId=${classFile.FileId})} + '\';'"> -->
+												<i class="bi bi-pencil-square"></i>&nbsp;</text> <!-- 강의첨부자료 삭제 -->
+												<a class="" data-toggle="modal"
+												data-target="#classFiledelModal"
+												th:onclick="|deleteClassFile(${classfile.fileId})|"> <i
+													class="bi bi-trash"></i>&nbsp;
+											</a></td>
 										</tr>
 									</tbody>
 								</table>
-								
+
 
 								<!-- 페이징 -->
 								<nav aria-label="Page navigation example"
@@ -203,14 +205,14 @@ input[type="checkbox"]::before {
 	<!-- End of Content Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> 
-	<i class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
 	</a>
-	
+
 	<!-- 강의 삭제 Modal-->
-	<div class="modal fade" id="classFiledelModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<form method="get" name="deleteClassForm"
+	<div class="modal fade" id="classFiledelModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<form method="get" name="deleteClassForm" id="deleteClassForm"
 			th:action="@{/admin/deleteClassFile}">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -227,13 +229,22 @@ input[type="checkbox"]::before {
 							onclick="location.href='/admin/classFileList'">취소</a>
 						<button type="submit" class="btn btn-primary submitbuttonbox">삭제</button>
 					</div>
-					<input type="hidden" name="clsId" id="delcls" />
+					<input type="hidden" name="fileId" id="delcls" />
 				</div>
 			</div>
 		</form>
 	</div>
 	<!-- 강의 삭제 Modal 끝 -->
-	
-	
-	</body>
-	</html>
+
+	<script>
+	    function deleteClassFile(fileId) {
+		  document.getElementById("delcls").value = fileId; 
+	   } 
+	</script>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
