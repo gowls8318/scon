@@ -53,7 +53,7 @@ public class NoticeController {
 	}
 	
 //	공지 작성 페이지 이동
-	@GetMapping("notiTables")
+	@GetMapping("notiForm")
 	public String registPage() {
 		return "admin/notice/notiForm";
 	}
