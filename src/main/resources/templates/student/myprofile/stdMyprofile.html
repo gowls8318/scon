@@ -254,7 +254,10 @@
 									</fieldset>
 								</div>
 									<div class="registbtn p-2">
-									<button type="button" class="btn btn-primary submitbuttonbox float-right">수정 하기</button>
+										<input type="hidden" name="delDate">
+										<input type="hidden" name="status">
+										<input type="hidden" name="path" value="/studnet/modifyMyprofile">
+									<button type="button" class="btn btn-primary submitbuttonbox float-right" onclick="checkAll();">수정 하기</button>
 								</div>
 							</div>
 						</div>

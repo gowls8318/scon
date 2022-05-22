@@ -52,11 +52,11 @@ public class AdmStudentController {
 	
 	@ResponseBody
 	@PostMapping(value="/studentRegist")
-	public Map<String, Object> insertStudent(@RequestParam Map<String, Object> param, MultipartFile file, ModelAndView mv) throws IOException {
+	public Map<String, Object> insertStudent(@RequestParam Map<String, Object> param, MultipartFile file) throws IOException {
 
-		log.info("회원 확인 : {}" , param.get("member"));		
-		log.info("학생 확인 : {}" , param.get("student"));
-		log.info("학부모 확인 : {}" , param.get("parents"));
+		log.info("회원 필수정보 확인 : {}" , param.get("member"));		
+		log.info("학생 추가정보 확인 : {}" , param.get("student"));
+		log.info("학부모 추가 정보 확인 : {}" , param.get("parents"));
 
 		String mem = (String) param.get("member");
 		String stu = (String) param.get("student");
@@ -149,15 +149,6 @@ public class AdmStudentController {
 		StudentDTO student = objMapper.readValue(stu, StudentDTO.class); 
 		ParentsDTO parents = objMapper.readValue(par, ParentsDTO.class);
 		
-		/*
-		 * MemberDTO member1 = memberService.selectMember(member.getId());
-		 * 
-		 * // 비밀번호 암호화 처리 if(!passwordEncoder.matches(member.getPassword(),
-		 * member1.getPassword())) { String encodePwd =
-		 * passwordEncoder.encode(member.getPassword()); member.setPassword(encodePwd);
-		 * System.out.println("패스워드 암호화 처리 성공!"); };
-		 */
-
 		// 1. 회원 정보 수정
 		int result = memberService.updateMember(member);
 

@@ -101,7 +101,7 @@ public class MemberController {
 		return "/member/newPwd";
 	}
 	
-	//비밀번호 변경
+	//비밀번호 찾기 => 비밀번호 변경
 	@ResponseBody
 	@PostMapping("/newPwd")
 	public int newPwd(MemberDTO member) {
@@ -246,15 +246,15 @@ public class MemberController {
 	public int sendMail(String memberEmail, int num) throws UnsupportedEncodingException, MessagingException {
 		int result = 0 ;
 				
-		String from ="dmsb14@gmail.com";
+		String from ="scon.email.test@gmail.com";
 		String fromName = "Scon";
 		String to = memberEmail;
 		
 		String host = "smtp.gmail.com";
 		int port = 587;
 		
-		String smtp_username = "dmsb14@gmail.com";
-		String smtp_password = "Xoal0270!@";
+		String smtp_username = "scon.email.test@gmail.com";
+		String smtp_password = "scontest1234";
 		 
 		String title = "[SCON] 비밀번호변경 인증 이메일 입니다";
 		String body = String.join(
