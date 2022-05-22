@@ -126,7 +126,7 @@
 			(
 				SEQ_TASK_NO.NEXTVAL
 			  , #{ memberId }
-			  , 1              
+			  , 21           
 			  , #{ taskTitle }
 			  , #{ taskContent }
 			  , SYSDATE
