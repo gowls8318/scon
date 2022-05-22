@@ -117,7 +117,8 @@ public class TaskBoardController {
 		
 		List<TaskBoardDTO> detailList = taskBoardService.findDetail(taskId);
 		List<FileDTO> fileList = taskBoardService.findFiles(taskId);
-		
+		//조회수 증가
+		taskBoardService.updateView(taskId);
 		
 		log.info("taskDetail : {} ",  detailList);
 		log.info("fileList : {} " , fileList);

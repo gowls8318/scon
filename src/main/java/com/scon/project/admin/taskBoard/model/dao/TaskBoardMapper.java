@@ -52,5 +52,6 @@ public interface TaskBoardMapper {
 
 	//조회수
 //	int updateView(int taskView);
+	boolean updateView(String taskId);
 
 }

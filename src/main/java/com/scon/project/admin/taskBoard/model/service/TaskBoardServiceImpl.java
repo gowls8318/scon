@@ -128,11 +128,14 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 		return taskBoardMapper.modifyTask(task);
 	}
 
-	//조회수
-//	@Override
-//	public int updateView(int taskView) {
-//		return taskBoardMapper.updateView(taskView);
-//	}
+	//조회수 증가
+	@Override
+	public boolean updateView(String taskId) {
+		return taskBoardMapper.updateView(taskId);
+	}
+
+	
+
 
 
 
