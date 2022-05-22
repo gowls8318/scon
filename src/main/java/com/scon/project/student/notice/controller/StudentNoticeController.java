@@ -53,67 +53,67 @@ public class StudentNoticeController {
 
 	  
 	  
-	 // 게시글 상세 조회
-	  
-	  @GetMapping("notiDetail") 
-	  public String selectNotice(@RequestParam int no, Model model) throws Exception {
+	 // 게시글 상세 조회	  
+	 @GetMapping("notiDetail") 
+	 public String selectNotice(@RequestParam int no, Model model) throws Exception {
 	  
 		  model.addAttribute("noticeDetail", studentNoticeService.selectNoticeDetail(no));
 		  //댓글 조회 
 		  List<NoticeCmtDTO> cmtList = studentNoticeService.readCmt(no);
 		  model.addAttribute("cmtList", cmtList); log.info("댓글목록 : {}", cmtList);
 	  
-	  return "student/notice/stdNotiDetail"; }
+		  return "student/notice/stdNotiDetail"; 
+	 }
  
 	
-	/* 
-	 * 
-	 * 댓글
-	 * 
-	 * // 댓글 등록
-	 * 
-	 * @PostMapping("cmtRegi") public String registCmt(@ModelAttribute NoticeCmtDTO
-	 * notiCmt,
-	 * 
-	 * @AuthenticationPrincipal UserImpl user) throws Exception {
-	 * 
-	 * log.info("로그인user : {}", user); notiCmt.setMemberId(user.getId());
-	 * 
-	 * noticeService.registCmt(notiCmt);
-	 * 
-	 * return "redirect:notiDetail?no="+notiCmt.getNo(); }
-	 * 
-	 * 
-	 * // 댓글 수정(조회)
-	 * 
-	 * @GetMapping("cmtModify") public String modifyCmt(@RequestParam("cNo") int
-	 * cNo, Model model, @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
-	 * 
-	 * log.info("수정할 댓글 번호 : {}", cNo); model.addAttribute("modifyCmt",
-	 * noticeService.readCmt(cNo));
-	 * 
-	 * return "redirect:notiDetail?no="+notiCmt.getNo(); }
-	 * 
-	 * 
-	 * // 댓글 수정(등록)
-	 * 
-	 * @PostMapping("cmtModify") public String modifyCmt(@ModelAttribute
-	 * NoticeCmtDTO notiCmt) throws Exception {
-	 * 
-	 * noticeService.modifyCmt(notiCmt); log.info("수정할 댓글 번호{}", notiCmt);
-	 * 
-	 * return "redirect:notiDetail?no="+notiCmt.getNo(); }
-	 * 
-	 * // 댓글 삭제
-	 * 
-	 * @PostMapping("cmtDelete") public String deleteCmt(@RequestParam("cNo") int
-	 * cNo,
-	 * 
-	 * @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
-	 * 
-	 * log.info("삭제될 댓글 번호 : {}", cNo); noticeService.deleteCmt(cNo);
-	 * 
-	 * return "redirect:notiDetail?no="+notiCmt.getNo(); }
-	 */
+	/* 댓글 */ 
+	  // 댓글 등록	  
+	  @PostMapping("cmtRegi") 
+	  public String registCmt(@ModelAttribute NoticeCmtDTO notiCmt, 
+			  @AuthenticationPrincipal UserImpl user) throws Exception {
+	  
+		  log.info("로그인user : {}", user); notiCmt.setMemberId(user.getId());
+		  
+		  studentNoticeService.registCmt(notiCmt);
+		  
+		  return "redirect:notiDetail?no="+notiCmt.getNo(); 
+	  }
+	  
+	  
+	 // 댓글 수정(조회)
+	 
+	  @GetMapping("cmtModify") 
+	  public String modifyCmt(@RequestParam("cNo") int cNo, Model model, 
+			  @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+	  
+	  log.info("수정할 댓글 번호 : {}", cNo); 
+	  model.addAttribute("modifyCmt", studentNoticeService.readCmt(cNo));
+	  
+	  return "redirect:notiDetail?no="+notiCmt.getNo(); }
+	  
+	  
+	  // 댓글 수정(등록)
+	  
+	 @PostMapping("cmtModify") 
+	 public String modifyCmt(@ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+		  
+		 studentNoticeService.modifyCmt(notiCmt); 
+		 log.info("수정할 댓글 번호{}", notiCmt);
+		  
+		 return "redirect:notiDetail?no="+notiCmt.getNo(); 
+	 }
+	  
+	 
+	  
+	  // 댓글 삭제
+	  @PostMapping("cmtDelete") 
+	  public String deleteCmt(@RequestParam("cNo") int cNo, 
+			  @ModelAttribute NoticeCmtDTO notiCmt) throws Exception {
+	  
+		  log.info("삭제될 댓글 번호 : {}", cNo); studentNoticeService.deleteCmt(cNo);
+		  
+		  return "redirect:notiDetail?no="+notiCmt.getNo(); 
+	  }
+	 
 
 }
