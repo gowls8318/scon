@@ -3,6 +3,8 @@ package com.scon.project.admin.main.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,6 +45,15 @@ public class AdminMainController {
 	@GetMapping("/denied")
 	public String denied() {
 		return "/common/denied";
+	}
+	
+	/* 예외 처리 */
+	@ExceptionHandler(value = Exception.class)
+	public String exception(Exception e, Model model) {
+		
+		model.addAttribute("errorMessage", e.getMessage());
+		
+		return "common/adminError";
 	}
 	
 }

@@ -40,7 +40,6 @@
 	<select id="findSchedule" resultMap="scheduleResultMap">
 		SELECT SCHE_NO
 			 , MEMBER_ID
-			 , CLS_ID
 			 , TO_CHAR(START_DAY, 'YYYY-MM-DD') START_DAY
 			 , TO_CHAR(END_DAY, 'YYYY-MM-DD') END_DAY
 			 , SCHE_CONTENT

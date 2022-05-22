@@ -60,288 +60,27 @@
 <link href="/css/schedule.css" rel="stylesheet">
 
 
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		let calendarEl = document.getElementById('calendar');
-		let calendar = new FullCalendar.Calendar(calendarEl, {
-			// timeZone : 'UTC',
-			defaultDate : new Date(),
-			// locale: 'ko',
-			initialView : 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할 수 있다.
-			events :
-			// 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
-
-			// ajax 처리로 데이터를 로딩 시킨다. 
-			$.ajax({
-				type : "get",
-				url : "/admin/allschedule",
-				dataType : "json",
-				success : function(data) {
-					console.log(data);
-					let result = data.schedule;
-					for (i = 0; i < result.length; i++) {
-
-						calendar.addEvent({
-							id : result[i]['scheNo'],
-							title : result[i]['content'],
-							start : result[i]['startDay'],
-							end : result[i]['endDay'],
-							color : result[i]['color'],
-							allDay : false
-						})
-					}
-				}
-			})
-			,
-			headerToolbar : {
-				center : 'addEventButton' // headerToolbar에 버튼을 추가
-			},
-			customButtons : {
-				addEventButton : { // 추가한 버튼 설정
-					text : "일정 추가", // 버튼 내용
-					click : function() { // 버튼 클릭 시 이벤트 추가
-
-						// 일정 등록 모달 함수 호출
-						insertModal();
-					}
-				}
-			},
-			eventClick : function(info) {
-
-				//일정 클릭 시 일정 수정 모달 함수 호출
-				updateModal(info);
-
-			},
-			editable : true, // false로 변경 시 draggable 작동 x 
-			displayEventTime : false
-		// 시간 표시 x
-		});
-
-		calendar.render();
-
-	});
-
-	function insertModal() {
-
-		$("#calendarModal").modal("show"); // modal 나타내기
-		
-		$("#addCalendar").removeClass("d-none");  // 등록버튼 보이기
-		$("#upadteCalendar").addClass("d-none");  // 수정버튼 숨기기
-		$("#deleteCalendar").addClass("d-none");  // 삭제버튼 숨기기
-
-		$("#addCalendar").on("click", function() { // modal의 추가 버튼 클릭 시
-			
-			
-			// 사용자가 입력한 일정
-			let content = $("#calendar_content").val();
-			let start_date = $("#calendar_start_date").val();
-			let end_date = $("#calendar_end_date").val();
-			let color = $("#calendar_color").val();
-			let clsId = $("#calendar_clsId").val();
-
-			//내용 입력 여부 확인
-			if (content == null || content == "") {
-				toast('warning', '내용을 입력하세요!');
-			} else if (start_date == "" || end_date == "") {
-				toast('warning', '날짜를 입력하세요!');
-			} else if (new Date(end_date) - new Date(start_date) < 0) { // date 타입으로 변경 후 확인
-				toast('warning', '종료일이 시작일보다 먼저 입니다!');
-			} else { // 정상적인 입력 시
-
-				$.ajax({
-					type : 'post',
-					url : '/admin/schedule',
-					data : {
-						"content" : content,
-						"startDay" : start_date,
-						"endDay" : end_date,
-						"color" : color,
-						"clsId" : clsId
-					},
-					dataType : "json",
-					success : function(data) {
-						let result = data;
-						Swal.fire({
-							text : '일정이 등록되었습니다!',
-							icon : 'success'
-						});
-
-						location.reload();
-
-					},
-					error : function() {
-						toast('error', 'error! 다시 시도해주세요!');
-					}
-				}); //<-- ajax
-
-			}
-		}); //모달 종료 시점
-	}
-
-	function updateModal(info) {
-
-		$("#calendarModal").modal("show"); // modal 나타내기
-
-		$("#addCalendar").addClass("d-none");	// 등록버튼 숨기기
-		$("#upadteCalendar").removeClass("d-none");
-		$("#deleteCalendar").removeClass("d-none");
-
-		console.log(info); // 클릭한 이벤트 값 console에 확인하기 
-
-		let startDate = info.event._instance.range.start;	//시작인
-		let endDate = info.event._instance.range.end;		//종료일
-
-		let scheNo = info.event.id;		// scheNom => DB 시퀀스값
-
-		
-		// DB에 저장할 날짜형 포맷으로 데이터로 가공하기
-		let start = startDate.toISOString().substring(0, 10);	
-		let end = endDate.toISOString().substring(0, 10);
-
-		$("#calendar_start_date").val(start);
-		$("#calendar_content").val(info.event._def.title);
-		$("#calendar_color").val(info.event._def.ui.backgroundColor);
-
-		console.log("확인1 : " + end);
-		
-		// 시작일과 종료일이 다른 경우 - 1하여 값 저장해야함. (종료일이 하루전으로 표시되는 에러 해결하기 위해)
-		if (start != end) {
-			let yy = endDate.getFullYear();	//2022
-			let mm;
-			let dd;
-			
-			// 만약 일정이 6월 1일인 경우 6월 00일이 아닌 5월 31일이 되도록 하기
-			if(endDate.getDate() == '01'){
-				mm = endDate.getMonth();		// 6월 이기 때문에 getMonth() 하면 5월로 나옴
-				let month = [ 1, 3, 5, 7, 8, 10, 12];	// 말일이 31일인 달 
-				dd = (month.includes(mm))?  '31' : (mm == '2')? 28 : 30;  
-			} else{
-				mm = endDate.getMonth() + 1;	// 00일 오류가 아닌경우 5월이 나오려면 +1 해야함
-				dd = endDate.getDate() - 1;		
-			}
-
-			end = yy + "-" + (("00" + mm.toString()).slice(-2)) + "-"
-					+ (("00" + dd.toString()).slice(-2));
-
-			console.log("확인2 : " + end);
-
-		}
-
-		$("#calendar_end_date").val(end);
-
-		$("#upadteCalendar").on("click", function() { // modal의 수정 버튼 클릭 시
-
-			let content = $("#calendar_content").val();
-			let start_date = $("#calendar_start_date").val();
-			let end_date = $("#calendar_end_date").val();
-			let color = $("#calendar_color").val();
-			let clsId = $("#calendar_clsId").val();
-
-			//내용 입력 여부 확인
-			if (content == null || content == "") {
-				toast('warning', '내용을 입력하세요!');
-			} else if (start_date == "" || end_date == "") {
-				toast('warning', '날짜를 입력하세요!');
-			} else if (new Date(end_date) - new Date(start_date) < 0) { // date 타입으로 변경 후 확인
-				toast('warning', '종료일이 시작일보다 먼저 입니다!');
-			} else { // 정상적인 입력 시
-
-				$.ajax({
-					type : 'post',
-					url : '/admin/updateSchedule',
-					data : {
-						"scheNo" : scheNo,
-						"content" : content,
-						"startDay" : start_date,
-						"endDay" : end_date,
-						"color" : color,
-						"clsId" : clsId
-					},
-					dataType : "json",
-					success : function(data) {
-						let result = data;
-						Swal.fire({
-							text : '일정이 수정되었습니다!',
-							icon : 'success'
-						});
-
-						location.href="/admin";
-
-					},
-					error : function() {
-						toast('error', 'error! 다시 시도해주세요!');
-					}
-				}); //<-- ajax
-				
-			}
-			
-		});
-			
-				// 삭제 버튼 클릭시 
-				$("#deleteCalendar").on("click", function() {
-
-					$.ajax({
-						type : 'post',
-						url : '/admin/deleteSchedule',
-						data : {
-							"scheNo" : scheNo,
-						},
-						dataType : "json",
-						success : function(data) {
-							let result = data;
-							Swal.fire({
-								text : '일정이 삭제되었습니다!',
-								icon : 'success'
-							});
-
-							location.href = "/admin/schedule";
-
-						},
-						error : function() {
-							toast('error', 'error! 다시 시도해주세요!');
-						}
-					}); //<-- ajax
-				});
-
-
-	}
-
-	//alert창
-	function toast(icon, title) {
-		const Toast = Swal.mixin({
-			toast : true,
-			position : 'top',
-			showConfirmButton : false,
-			timer : 2000
-		})
-
-		Toast.fire({
-			icon : icon,
-			title : title
-		})
-	}
-</script>
-
-
 </head>
 
 <body id="page-top">
 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
+		<th:block sec:authorize="hasAnyRole('ADMIN','DIRECTOR')">
 		<div th:replace="/common/adminSidebar.html"></div>
-
+		</th:block>
+		
+		<th:block sec:authorize="hasAnyRole('STUDENT')">
+		<div th:replace="/common/studentSidebar.html"></div>
+		</th:block>
+		
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Main Content -->
 			<div id="content">
-				<th:block sec:authorize="hasAnyRole('ADMIN','DIRECTOR')">
+				
 					<div th:replace="/common/adminTopbar.html"></div>
-				</th:block>
-				<th:block sec:authorize="hasAnyRole('STUDENT')">
-					<div th:replace="/common/studentTopbar.html"></div>
-				</th:block>
+				
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
@@ -397,9 +136,6 @@
 														<input type="color" class="form-control col-5 left"
 															id="calendar_color" name="calendar_color" value="#bc7fcd">
 													</div>
-													<!-- input hidden -->
-													<input type="hidden" id="calendar_clsId"
-														name="calendar_clsId" value="1234">
 												</div>
 											</div>
 											<div class="modal-footer">

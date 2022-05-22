@@ -1,13 +1,8 @@
- 
-  const calendarElement = document.getElementById('calendar');
-  const calendarInstance = Calendar.getInstance(calendarElement);
-  calendarInstance.addEvents(events);
-  
 
 	document.addEventListener('DOMContentLoaded', function() {
-		var calendarEl = document.getElementById('calendar');
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			timeZone : 'UTC',
+		let calendarEl = document.getElementById('calendar');
+		let calendar = new FullCalendar.Calendar(calendarEl, {
+			
 			defaultDate : new Date(),
 			// locale: 'ko',
 			initialView : 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할 수 있다.
@@ -17,7 +12,7 @@
 			// ajax 처리로 데이터를 로딩 시킨다. 
 			$.ajax({
 				type : "get",
-				url : "/admin/allschedule",
+				url : "/schedule/allschedule",
 				dataType : "json",
 				success : function(data) {
 					console.log(data);
@@ -74,11 +69,10 @@
 		$("#deleteCalendar").addClass("d-none");
 
 		$("#addCalendar").on("click", function() { // modal의 추가 버튼 클릭 시
-			var content = $("#calendar_content").val();
-			var start_date = $("#calendar_start_date").val();
-			var end_date = $("#calendar_end_date").val();
-			var color = $("#calendar_color").val();
-			var clsId = $("#calendar_clsId").val();
+			let content = $("#calendar_content").val();
+			let start_date = $("#calendar_start_date").val();
+			let end_date = $("#calendar_end_date").val();
+			let color = $("#calendar_color").val();
 
 			//내용 입력 여부 확인
 			if (content == null || content == "") {
@@ -91,13 +85,12 @@
 
 				$.ajax({
 					type : 'post',
-					url : '/admin/schedule',
+					url : '/schedule/schedule',
 					data : {
 						"content" : content,
 						"startDay" : start_date,
 						"endDay" : end_date,
-						"color" : color,
-						"clsId" : clsId
+						"color" : color
 					},
 					dataType : "json",
 					success : function(data) {
@@ -106,8 +99,8 @@
 							text : '일정이 등록되었습니다!',
 							icon : 'success'
 						});
-
-						location.href = "/admin/schedule";
+						
+						location.reload();
 
 					},
 					error : function() {
@@ -142,23 +135,22 @@
 		$("#calendar_color").val(info.event._def.ui.backgroundColor);
 
 		console.log("확인1 : " + end);
-
+		
 		if (start != end) {
-			var yy = endDate.getFullYear();
-			var mm;
-			var dd;
+			let yy = endDate.getFullYear();
+			let mm;
+			let dd;
+			
 			// 만약 일정이 6월 1일인 경우 6월 00일이 아닌 5월 31일이 되도록 하기
 			if(endDate.getDate() == '01'){
 				mm = endDate.getMonth();
-				var month = [ 1, 3, 5, 7, 8, 10, 12];
+				let month = [ 1, 3, 5, 7, 8, 10, 12];
 				dd = (month.includes(mm))?  '31' : (mm == '2')? 28 : 30;
 			} else{
 				mm = endDate.getMonth() + 1;
 				dd = endDate.getDate() - 1;
 			}
-
-			var day = parseInt(dd) - 1;
-
+			
 			end = yy + "-" + (("00" + mm.toString()).slice(-2)) + "-"
 					+ (("00" + dd.toString()).slice(-2));
 
@@ -170,11 +162,10 @@
 
 		$("#upadteCalendar").on("click", function() { // modal의 수정 버튼 클릭 시
 
-			var content = $("#calendar_content").val();
-			var start_date = $("#calendar_start_date").val();
-			var end_date = $("#calendar_end_date").val();
-			var color = $("#calendar_color").val();
-			var clsId = $("#calendar_clsId").val();
+			let content = $("#calendar_content").val();
+			let start_date = $("#calendar_start_date").val();
+			let end_date = $("#calendar_end_date").val();
+			let color = $("#calendar_color").val();
 
 			//내용 입력 여부 확인
 			if (content == null || content == "") {
@@ -187,14 +178,13 @@
 
 				$.ajax({
 					type : 'post',
-					url : '/admin/updateSchedule',
+					url : '/schedule/updateSchedule',
 					data : {
 						"scheNo" : scheNo,
 						"content" : content,
 						"startDay" : start_date,
 						"endDay" : end_date,
-						"color" : color,
-						"clsId" : clsId
+						"color" : color
 					},
 					dataType : "json",
 					success : function(data) {
@@ -204,7 +194,7 @@
 							icon : 'success'
 						});
 
-						location.href = "/admin/schedule";
+						location.reload();
 
 					},
 					error : function() {
@@ -221,7 +211,7 @@
 
 					$.ajax({
 						type : 'post',
-						url : '/admin/deleteSchedule',
+						url : '/schedule/deleteSchedule',
 						data : {
 							"scheNo" : scheNo,
 						},
@@ -233,7 +223,7 @@
 								icon : 'success'
 							});
 
-							location.href = "/admin/schedule";
+							location.reload();
 
 						},
 						error : function() {
@@ -259,3 +249,4 @@
 			title : title
 		})
 	}
+
