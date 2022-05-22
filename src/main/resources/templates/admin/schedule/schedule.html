@@ -13,6 +13,9 @@
 
 <title>학사일정</title>
 
+<!-- 파비콘 -->
+<link rel="icon" type="image/x-icon" href="/img/favicon.png">
+
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
@@ -163,7 +166,7 @@
 							icon : 'success'
 						});
 
-						location.href = "/admin/schedule";
+						location.reload();
 
 					},
 					error : function() {
@@ -333,9 +336,12 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Main Content -->
 			<div id="content">
-
-				<div th:replace="/common/adminTopbar.html"></div>
-
+				<th:block sec:authorize="hasAnyRole('ADMIN','DIRECTOR')">
+					<div th:replace="/common/adminTopbar.html"></div>
+				</th:block>
+				<th:block sec:authorize="hasAnyRole('STUDENT')">
+					<div th:replace="/common/studentTopbar.html"></div>
+				</th:block>
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
