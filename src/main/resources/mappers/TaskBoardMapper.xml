@@ -54,38 +54,47 @@
 	<!--  과제 게시판 목록 조회 -->
 		<select id="findAllTask" resultMap="taskBoardResultMap">
 			SELECT
-				TASK_ID
-			  , MEMBER_ID
-			  , CLS_ID
-			  , TASK_TITLE
-			  , TASK_CONTENT
-			  , TASK_DATE
-			  , TASK_VIEW
-			  , MEMBER_NAME
-			FROM ( SELECT /*+INDEX_DESC(N PK_TB_TASK)*/
-						ROWNUM AS RNUM
-			      , T.TASK_ID
-				  , T.MEMBER_ID
-				  , T.CLS_ID
-				  , T.TASK_TITLE
-				  , T.TASK_CONTENT
-				  , T.TASK_DATE
-				  , T.TASK_VIEW
-				  , M.MEMBER_NAME
-			FROM TB_TASK T
-			JOIN TB_MEMBER M ON(T.MEMBER_ID = M.MEMBER_ID)
-			WHERE T.CLS_ID = #{ taskBoard.clsId }
-			AND T.TASK_DELETE = 'N' 
-			<![CDATA[
-			          AND ROWNUM <= #{ cri.pageNo } * #{ cri.limit }
-					]]>
-			  		<if test="taskBoard.keyword != null">
-			  		  AND TASK_TITLE LIKE '%' || #{ taskBoard.keyword } || '%'
-			  		</if>
-		             ORDER BY T.TASK_ID DESC
-		             ) 
+				D.TASK_ID
+			  , D.MEMBER_ID
+			  , D.CLS_ID
+			  , D.TASK_TITLE
+			  , D.TASK_CONTENT
+			  , D.TASK_DATE
+			  , D.TASK_VIEW
+			  , D.MEMBER_NAME
+			FROM ( SELECT 
+						ROWNUM AS TASK_ID
+				  	  , C.MEMBER_ID
+				  	  , C.CLS_ID
+					  , C.TASK_TITLE
+					  , C.TASK_CONTENT
+					  , C.TASK_DATE
+					  , C.TASK_VIEW
+				  	  , C.MEMBER_NAME
+				FROM (SELECT
+							T.TASK_ID
+				  		  , T.MEMBER_ID
+				  		  , T.CLS_ID
+				  		  , T.TASK_TITLE
+				  		  , T.TASK_CONTENT
+				  		  , T.TASK_DATE
+				  		  , T.TASK_VIEW
+				  		  , M.MEMBER_NAME
+						FROM TB_TASK T
+						JOIN TB_MEMBER M ON(T.MEMBER_ID = M.MEMBER_ID)
+						WHERE T.CLS_ID = #{ taskBoard.clsId }
+						AND T.TASK_DELETE = 'N' 	
+			  	<if test="taskBoard.keyword != null">
+			  		AND T.TASK_TITLE LIKE '%' || #{ taskBoard.keyword } || '%'
+			  	</if>
+		          ORDER BY T.TASK_ID DESC
+		         ) C
 		<![CDATA[
-			WHERE RNUM > (#{ cri.pageNo } - 1) * #{ cri.limit }
+				 WHERE ROWNUM <= #{ cri.pageNo } * #{ cri.limit }
+			 ]]>
+			 ) D
+		<![CDATA[
+			WHERE TASK_ID > (#{ cri.pageNo } - 1) * #{ cri.limit }
 		]]>
 		</select>
 		
@@ -238,11 +247,11 @@
 		</update>
 	<!--  -->
 	
-	<!-- 조회수 올리기 
+	<!-- 조회수 올리기 -->
 	<update id="updateView">
 		UPDATE TB_TASK
 		SET TASK_VIEW = TASK_VIEW + 1
-			WHERE TASK_VIEW = #{ taskView }
-	</update> -->
+			WHERE TASK_ID = #{ taskId }
+	</update>  
 
 </mapper>

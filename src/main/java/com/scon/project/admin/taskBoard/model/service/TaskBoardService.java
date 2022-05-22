@@ -12,7 +12,6 @@ public interface TaskBoardService {
 
 	//게시판 전체 목록 조회
 	List<TaskBoardDTO> findAllTask(TaskBoardDTO taskBoard, Criteria cri);
-//	List<TaskBoardDTO> findAllTask();
 	
 	//게시판 전체 글 갯수
 	int total(TaskBoardDTO taskBoard);
@@ -42,6 +41,7 @@ public interface TaskBoardService {
 	
 	//조회수
 //	int updateView(int taskView);
+	boolean updateView(String taskId);
 
 
 

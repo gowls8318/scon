@@ -85,7 +85,6 @@
                     <h1 class="h3 mb-0 text-gray-800">과제 게시판</h1>
                 </div>
                 <hr class="border-bottom-primary">
-                
                
                 <!-- 검색창 -->
                 <div class="mx-auto search-area">
@@ -98,10 +97,7 @@
                       </div>
                     </form>
                   </div>
-                  <!---->
-       <!--           <button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask(clsId=${task.clsId})} + '\';'"> --> <!--  onclick="location.href='/admin/insertTask'"  -->
-       				<button type="button" class="btn btn-primary float-right" id="btn-write" th:onclick="'location.href=\'' + @{/admin/insertTask/} + '\';'">
-                    <li style="list-style: none;" id="wrtie">글쓰기</li></button><br><br>
+
                 <table class="table">
                     <thead>
                       <th scope="col">글번호</th>
@@ -115,7 +111,7 @@
                         	<input type="hidden" th:value="${ task.memberId }" class="memberId" name="memberId"/>
                         	<input type="hidden" th:value="${ task.taskView }" name="taskView"/>
                             <th scope="row" th:text="${ task.taskId }" class="taskId" name="taskId"></th>
-                            <td class="pointer" th:text="${ task.taskTitle }" th:onclick="'location.href=\'' + @{/admin/taskDetail(clsId=${task.clsId},taskId=${task.taskId})} + '\';'"></td>
+                            <td class="pointer" th:text="${ task.taskTitle }" th:onclick="'location.href=\'' + @{/student/taskDetail(clsId=${task.clsId},taskId=${task.taskId})} + '\';'"></td>
                             <td th:text="${ task.memberName }"></td>
                             <td th:text="${ task.taskDate }"></td>
                             <td th:text="${ task.taskView }"></td>

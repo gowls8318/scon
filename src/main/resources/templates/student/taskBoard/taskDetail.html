@@ -89,7 +89,7 @@
                 <h1 class="h3 mb-0 text-gray-800">과제 게시판</h1>                        
              </div>
              <hr class="border-bottom-primary">
-             <a style="color:grey" href="javascript:window.history.back();">← 목록으로</a>    
+             <a style="color:grey" href="javascript:window.history.back();">← 목록으로</a> 
 
                     <!-- 공지사항 작성 테이블 -->
                     
@@ -147,12 +147,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- 수정 / 삭제 버튼 -->
-                            <div class="row buttonbox">
-                                <button class="col-1 w-10 btn btn-primary btn-sm" id="correct-btn" type="button" 
-                                th:onclick="'location.href=\'' + @{/admin/modifyTask(clsId=${param.clsId},taskId=${param.taskId})} + '\';'">수정</button>
-                                <button class="col-1 w-10 btn btn-primary btn-sm" id="delete-btn" type="button" onclick="modal1();">삭제</button>
-                            </div>
                         </div>
                     </div>
 
@@ -173,59 +167,6 @@
     </a>
     
 
-      <!-- Modal (삭제) -->
-             <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                 <div class="modal-dialog">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">게시글 삭제</h5>
-                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                             <span aria-hidden="true">×</span>
-                             </div>
-                                 <div class="modal-body">
-                                     삭제 하시겠습니까?
-                                 </div>
-                                 <div class="modal-footer" th:each="detail : ${ detailList }">
-                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal();">취소</button>
-                                 <button type="button" class="btn btn-primary delete-btn" th:onclick="'location.href=\'' + @{/admin/deleteBoard(clsId=${param.clsId},taskId=${detail.taskId})} + '\';'">삭제</button>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-    	
-
-    
-
-    <!--  Ajax -->
-	<script>
-	
-	let memberId = $("#memberId").val();
-		
-	/*	// 삭제 모달 
-		function modal1() {
-			if(window.sessionStorage.getItem("loginUser")==null) {
-				alert("로그인 해주세요.");
-			} else if(window.sessionStorage.getItem("loginUser") != memberId) {
-				alert("작성자만 삭제할 수 있습니다.");
-			} else if(window.sessionStorage.getItem("loginUser") == memberId) {
-				
-				$("#delete-modal").modal("show");
-				
-			}
-		} */
-		
-		function modal1() {
-			$("#delete-modal").modal("show");
-			
-		}
-		
-		// 삭제 모달 닫기
-	    function closeModal() {
-	        $("#delete-modal").modal("hide");
-	    }
-		
-		
-      </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
