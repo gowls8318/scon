@@ -72,9 +72,10 @@ function send_injeung_num() {
 		},
 		success: function(data) {
 			if (data > 0) {
-				auth_check = 1;
 				num = data;
 				frm.injeung_num.focus();
+				
+				auth_check = 1;
 				
 				Swal.fire({
 					title: "인증번호 발송 완료",
@@ -125,14 +126,16 @@ function check_injeung_num() {
 			text: "새로운 비밀번호 변경 페이지로 이동합니다!",
 			icon: 'success'
 		}).then(() => {
-			location.href="/member/newPwd?id=" + id;		
+			auth_check = 1;
+			localStorage.setItem("auth_check", auth_check);
+			localStorage.setItem("id_check", id);
+			location.href="/member/newPwd";		
 		})
 		
 	} else {
 		toast('warning', '인증번호가 불일치합니다!');
 	}
 }
-	
 	
 // 비밀번호 경고창
 var msg1 = document.getElementById('pwd');
@@ -152,13 +155,13 @@ function newPassword(){
 	let pwd = frm.pwd.value;
 	let pwd2 = frm.pwd2.value;
 	
-	//input hidden에 담긴 아이디 값
-	let id = frm.id.value; 
-
-	if(auth_check > 0 || id == ''){
+	if(!localStorage.getItem("auth_check")){
 		toast('warning', '비밀번호 찾기를 처음부터 진행해주세요!');
 		return false;
 	}
+	
+	// 앞에서 비밀번호 찾기한 id가 맞는지 확인
+	const id = localStorage.getItem("id_check");
 	
 	//비밀번호가 입력되었는지 확인하기
 	if (pwd == '' || pwd2 == ''){
@@ -169,7 +172,7 @@ function newPassword(){
 	//비밀번호 유효성 검사
 	var passwordRegExp = /^[a-zA-z0-9]{8,20}$/; //비밀번호 유효성 검사
 	if (!passwordRegExp.test(pwd)) {
-
+		
 		document.getElementById('passwordHelp').innerHTML =
 			"비밀번호는 영문 대소문자와 숫자 8~20자리로 입력해야합니다!";
 		frm.pwd.value = "";
@@ -183,6 +186,8 @@ function newPassword(){
 		frm.pwd2.value = "";
 		frm.pwd2.focus();
 	}
+	
+	localStorage.clear();
 	
 	Swal.fire({
       title: '비밀번호를 변경하시겠습니까?',
@@ -205,7 +210,6 @@ function newPassword(){
 		dataType: 'json',	
 		success: function(data) {
 			if(data > 0){
-				
 				Swal.fire({
 					title : '비밀번호 변경완료!',
 					text: '로그인 해주세요!',
@@ -221,9 +225,7 @@ function newPassword(){
 	}); //<-- ajax
 	
       }
-    })
-	
-	
+   })
 }
 
 function toast(icon, title) {

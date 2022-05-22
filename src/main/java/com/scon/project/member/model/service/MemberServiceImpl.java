@@ -199,7 +199,7 @@ public class MemberServiceImpl implements MemberService{
 	public StudentCount findStudentCount() {
 		return memberMapper.findStudentCount();
 	}
-	
+
 	
 
 

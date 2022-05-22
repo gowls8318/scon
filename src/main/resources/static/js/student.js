@@ -113,13 +113,15 @@ function checkAll() {
 			toast('warning', '원생을 선택해주세요!');
 			return false;
 		}
-	} else {
+	} else if(path == '/admin/updateTeacher') {
 		alertName = "수정";
 
 		if (form.id.value == '') {
 			toast('warning', '강사를 선택해주세요!');
 			return false;
 		}
+	} else {
+		alertName = "수정";
 	}
 
 	//필수정보 9개
@@ -211,7 +213,6 @@ function checkAll() {
 		console.log(pair[0] + ', ' + pair[1]);
 	}
 
-
 	//유효성 검사
 	if (!checkName(name)) {
 		return false;
@@ -250,7 +251,6 @@ function checkAll() {
 				contentType: false,
 				enctype: 'multipart/form-data',
 				success: function(data) {
-
 					Swal.fire({
 						title: alertName + '완료',
 						text: data.message,
@@ -656,4 +656,98 @@ $('#updatePwd').click(function() {
 	});
 });
 
+
+function sendMessage(){
+	
+
+  let phoneArr = []
+	let checkArr = $('input[name=selectMember]:checked');
+	
+	//console.log(checkArr);
+	
+	
+	if(!checkArr[0]){
+		toast('warning', '원생을 먼저 선택해주세요!');
+		return false;
+	}
+	
+	checkArr.each(function(i) {
+
+				// checkbox.parent() : checkbox의 부모는 <td>이다.
+				// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
+				var tr = checkArr.parent().parent().parent().eq(i);
+				var td = tr.children();
+				
+				// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
+				var phone = td.eq(2).text();
+				//console.log("phone : " + phone);
+				
+				// 가져온 값을 배열에 담는다.
+				phoneArr.push(phone);
+			});
+				
+	//console.log("phone : " + phoneArr);
+	
+		Swal.fire({
+		title : '문자 발송',
+		customClass: 'swal-wide',
+	  	html:
+		    '<input type="tel" id="from" class="form-control infoformbox" placeholder="발신번호">' +'<br>'+
+		    '<textarea id="text" rows="3" class="form-control" style="resize=none;" maxlength="50" placeholder="문자 내용"/>',
+		showCancelButton: true,
+		confirmButtonColor: '#6610f2',
+		cancelButtonColor: '#858796',
+		confirmButtonText: '발송',
+		cancelButtonText: '취소'
+
+	}).then((result) => {
+		if (result.isConfirmed) {
+		     let from = document.getElementById('from').value;
+		     let text = document.getElementById('text').value;
+		     
+		     console.log(text);
+		    
+		    if(from == ''){
+				toast('warning', '발신번호를 입력하세요!');
+				 return false;
+			}
+		    
+		    if(content  == '' ){
+				toast('warning', '문자 내용을 입력하세요!');
+				 return false;
+			}
+			
+
+			//유효성 검사 만족 후 비동기식 처리
+			$.ajax({
+				type: "POST",
+				url: '/admin/sendMessage',
+				data:{
+					"phoneArr" : phoneArr,
+					"from" : from,
+					"text" : text
+				},
+				success: function(data) {
+					if (data > 0) {
+						Swal.fire({
+						title: '발송 완료!',
+						text: '문자를 성공적으로 발송했습니다.',
+						icon: 'success'
+					})
+					
+						
+					} else {
+						toast('warning', '문자 발송에 실패했습니다.');
+					}
+				}, error: function() {
+					toast('error', 'error! 다시 시도해주세요!');
+				}
+			});
+
+		  }
+	});
+	
+	
+	
+}
 

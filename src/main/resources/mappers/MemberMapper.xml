@@ -143,8 +143,6 @@
 		WHERE MEMBER_ID = #{ id }
 	</select>
 	
-
-		
 	<insert id="insertFile">
 		INSERT
 		  INTO TB_FILE
@@ -232,7 +230,7 @@
 			 , ENROLL_DATE = #{ enrollDate }
 			 , MEMBER_ST = #{ status }
 			 , DEL_DATE = #{ delDate }
-		WHERE MEMBER_ID = #{ id }	 
+		 WHERE MEMBER_ID = #{ id }	 
 	</update>
 	
 	<update id="updateProfile">
