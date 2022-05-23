@@ -44,7 +44,7 @@
 		<result property="status" column="MEMBER_ST"/>		
 </resultMap>
 
-		<!--  성적 조회 (gradeList) Complete -->
+		<!--  성적 조회 (gradeList)  -->
 		<select id="findAllGrade" resultMap="gradeResultMap">
 			SELECT 
 			    G.GRADE_ID
@@ -59,29 +59,17 @@
 			WHERE G.CLS_ID = #{	clsId }
 			ORDER BY G.GRADE_DATE DESC
 		</select>
-			<!-- 	SELECT
-			    C.MEMBER_ID
-			  , C.CLS_NAME
-              , C.CLS_ID
-			  , M.MEMBER_NAME
-              , G.GRADE_ID
-              , G.GRADE
-              , G.GRADE_DATE
-			  FROM TB_CLASS C
-			  JOIN TB_MEMBER M ON (C.MEMBER_ID = M.MEMBER_ID)
-              JOIN TB_GRADE G ON (M.MEMBER_ID = G.MEMBER_ID)
-			  WHERE C.CLS_ID = #{ clsId } -->
-			  
+
 			  
 		
-		<!--  성적 수정 Complete -->
+		<!--  성적 수정 -->
 		<update id="updateGrade">
 			UPDATE TB_GRADE
 			   SET grade = #{grade}
 			 WHERE grade_id = #{gradeId}  
 		</update>
 		
-		<!--  성적 입력 학생 조회(insertGrade) Complete -->
+		<!--  성적 입력 학생 조회(insertGrade)  -->
 		<select id="findAllStudent" resultMap="gradeResultMap">
 			SELECT DISTINCT 
     			G.MEMBER_ID
@@ -91,28 +79,8 @@
  			WHERE G.CLS_ID = #{ clsId }
 		</select>	 
 		
-		<!--  성적 입력 (insertGrade) -->
-	<!--   <insert id="insertGradeList" parameterType="com.scon.project.admin.grade.model.dto.GradeDTO">
-			INSERT
-				INTO TB_GRADE
-				(
-				 GRADE_ID 
-			   , MEMBER_ID 
-			   , CLS_ID 
-			   , GRADE 
-			   , GRADE_DATE
-				)
-			VALUES			
-				(
-				 SEQ_GRADE.NEXTVAL
-			   , #{ memberId }
-		  	   , #{ clsId }
-			   , #{ grade }
-			   , #{ gradeDate }
-				)				
-		</insert> -->
 		
-		<!--  성적 입력 (테스트 중 이 쿼리문 쓰기!!!!!!) -->
+		<!--  성적 입력 -->
 		<insert id="insertGradeList">
 			INSERT
 				INTO TB_GRADE

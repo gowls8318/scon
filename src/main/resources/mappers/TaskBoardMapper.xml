@@ -63,7 +63,8 @@
 			  , D.TASK_VIEW
 			  , D.MEMBER_NAME
 			FROM ( SELECT 
-						ROWNUM AS TASK_ID
+					  ROWNUM AS NUM,
+					  C.TASK_ID
 				  	  , C.MEMBER_ID
 				  	  , C.CLS_ID
 					  , C.TASK_TITLE
@@ -94,7 +95,7 @@
 			 ]]>
 			 ) D
 		<![CDATA[
-			WHERE TASK_ID > (#{ cri.pageNo } - 1) * #{ cri.limit }
+			WHERE NUM > (#{ cri.pageNo } - 1) * #{ cri.limit }
 		]]>
 		</select>
 		
@@ -170,7 +171,7 @@
 	<!--               -->
 	
 	<!-- 과제 게시판 게시글 상세 조회 -->
-	<select id="findDetail" resultMap="taskBoardResultMap" resultType="list">
+	<select id="findDetail" resultMap="taskBoardResultMap">
   	SELECT *
   	 FROM TB_TASK T
    	JOIN TB_MEMBER M ON (T.MEMBER_ID = M.MEMBER_ID)
