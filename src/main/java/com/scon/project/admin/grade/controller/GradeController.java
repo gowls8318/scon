@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,6 +65,7 @@ public class GradeController {
 		List<GradeDTO> memberList = gradeService.findAllStudent(clsId);
 		
 		log.info("memberList : {} ", memberList );
+		log.info("clsId : {}", clsId);
 		
 		mv.addObject("memberList", memberList);
 		mv.setViewName("admin/grade/insertGrade");
@@ -98,7 +101,14 @@ public class GradeController {
 		return "admin/grade/gradeRank";
 	}
 	
-
+	/* 예외 처리 */
+	@ExceptionHandler(value = Exception.class)
+	public String exception(Exception e, Model model) {
+		
+		model.addAttribute("errorMessage", e.getMessage());
+		
+		return "common/adminError";
+	}
 	
 	
 }

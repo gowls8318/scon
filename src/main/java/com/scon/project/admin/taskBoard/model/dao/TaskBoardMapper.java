@@ -30,7 +30,7 @@ public interface TaskBoardMapper {
 	int insertTaskFileTB(TaskBoardDTO task);
 
 	//과제 게시판 게시글 상세 조회
-	List<TaskBoardDTO> findDetail(String taskId);
+	TaskBoardDTO findDetail(String taskId);
 
 	//과제 게시판 게시글 상세 조회 (파일)
 	List<FileDTO> findFiles(String taskId);

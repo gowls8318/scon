@@ -40,6 +40,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -113,20 +114,18 @@ public class TaskBoardController {
 	
 	//게시판 게시글 상세 조회 (O)
 	@GetMapping("/taskDetail")
-	public ModelAndView findDetail(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv, @AuthenticationPrincipal UserImpl user ) {
+	public ModelAndView findDetail(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv) {
 		
-		List<TaskBoardDTO> detailList = taskBoardService.findDetail(taskId);
+		TaskBoardDTO taskDetail = taskBoardService.findDetail(taskId);
 		List<FileDTO> fileList = taskBoardService.findFiles(taskId);
 		//조회수 증가
 		taskBoardService.updateView(taskId);
 		
-		log.info("taskDetail : {} ",  detailList);
+		log.info("taskDetail : {} ",  taskDetail);
 		log.info("fileList : {} " , fileList);
-		log.info("로그인한 유저 : {} ", user);
 		
-		mv.addObject("detailList", detailList);
+		mv.addObject("taskDetail", taskDetail);
 		mv.addObject("fileList", fileList);
-		mv.addObject("loginUser", user);
 		mv.setViewName("admin/taskBoard/taskDetail");
 		
 		return mv;
@@ -229,7 +228,7 @@ public class TaskBoardController {
 		return "redirect:/admin/taskBoardList";	
 	}
 	
-	//게시글 수정 전 조회
+		//게시글 수정 전 조회
 		@GetMapping("/modifyTask")
 		public ModelAndView findModifyTask(@RequestParam String taskId, @RequestParam int clsId, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 			
@@ -328,7 +327,14 @@ public class TaskBoardController {
 			return "redirect:/admin/taskBoardList";	
 		}
 
-	
+		/* 예외 처리 */
+		@ExceptionHandler(value = Exception.class)
+		public String exception(Exception e, Model model) {
+			
+			model.addAttribute("errorMessage", e.getMessage());
+			
+			return "common/adminError";
+		}
 	
 	
 }

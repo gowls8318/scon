@@ -20,7 +20,7 @@ public interface TaskBoardService {
 	int insertTask(TaskBoardDTO task) throws Exception;
 
 	//게시판 게시글 상세 조회
-	List<TaskBoardDTO> findDetail(String taskId);
+	TaskBoardDTO findDetail(String taskId);
 
 	//게시판 게시글 상세 조회 (파일)
 	List<FileDTO> findFiles(String taskId);

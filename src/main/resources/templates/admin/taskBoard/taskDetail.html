@@ -104,16 +104,17 @@
                                     <thead>
                                     <tr></tr>
                                     </thead>
-                                    <tbody th:each="detail : ${ detailList }">
+                                    <tbody>
                                     <tr>
                                         <th>
                                             작성자 <span id="pointtext"></span>
                                         </th>
                                         <td>
-                                            <input class="form-control" type="text" th:value="${ detail.memberName }" name="memberName"
+                                            <input class="form-control" type="text" th:value="${ taskDetail.memberName }" name="memberName"
                                             aria-label="Disabled input example" disabled>
-                                            <input type="hidden" th:value="${detail.taskId}" class="taskId" id="taskId" name="taskId"/>
-                                            <input type="hidden" th:value="${detail.memberId}" class="memberId" id="memberId" name="memberId"/>
+                                            <input type="hidden" th:value="${taskDetail.taskId}" class="taskId" id="taskId" name="taskId"/>
+                                            <input type="hidden" th:value="${taskDetail.memberId}" class="memberId" id="memberId" name="memberId"/>
+                                            <input type="hidden" th:value="${taskDetail.clsId}" class="clsId" id="clsId" name="clsId"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -121,7 +122,7 @@
                                             제목 <span id="pointtext"></span>
                                         </th>
                                         <td>
-                                            <input class="form-control" type="text" th:value="${ detail.taskTitle }" name="taskTitle"
+                                            <input class="form-control" type="text" th:value="${ taskDetail.taskTitle }" name="taskTitle"
                                             aria-label="default input example" readonly>
                                         </td>
                                     </tr>
@@ -139,7 +140,7 @@
                                     <tr>
                                         <th>내용 <span id="pointtext"></span></th>
                                         <td>
-                                            <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3" th:text="${ detail.taskContent }" name="taskContent" readonly></textarea>
+                                            <textarea class="form-control notiContents" id="exampleFormControlTextarea1" rows="3" th:text="${ taskDetail.taskContent }" name="taskContent" readonly></textarea>
                                         </td>
                                     </tr>
     

@@ -69,7 +69,7 @@ public class TaskBoardServiceImpl implements TaskBoardService {
 
 	//게시판 게시글 상세 조회 (O)
 	@Override
-	public List<TaskBoardDTO> findDetail(String taskId) {
+	public TaskBoardDTO findDetail(String taskId) {
 		return taskBoardMapper.findDetail(taskId);
 	}
 
