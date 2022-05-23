@@ -50,6 +50,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
  	table-layout:fixed;
  }
  
+ .mainNotice, .mainNotiTitle {
+ 	cursor: pointer;
+ }
+ 
 </style>
 </head>
 
@@ -179,8 +183,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 									<div class="card shadow mb-4">
 										<div class="card-header py-3">
-											<h6 class="m-0 font-weight-bold text-primary"
-											onclick="location.href='/admin/'">공지사항</h6>
+											<h6 class="m-0 font-weight-bold text-primary mainNotice" 
+											onclick="location.href='/admin/notiTables'">공지사항</h6>
 										</div>
 										<div class="card-body side-table">
 
@@ -193,26 +197,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>22-05-16</td>
-														<td>공지사항입니다.</td>
-													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>공지사항입니다.</td>
-													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>공지사항입니다.공지사항입니다.공지사항입니다.</td>
-													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>공지사항입니다.</td>
-													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>공지사항입니다.</td>
-													</tr>
+													<tr th:each="notice : ${ noticeList }">
+														<td th:text="${ notice.notiDate }"></td>
+														<td class="mainNotiTitle" th:text="${ notice.notiTitle }" 
+															th:onclick="'location.href=\'' + @{/admin/notiDetail(no=${notice.no})} + '\';'"></td>
+													</tr>													
 												</tbody>
 											</table>
 

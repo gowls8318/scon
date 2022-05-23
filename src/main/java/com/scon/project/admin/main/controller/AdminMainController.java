@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.scon.project.admin.consultant.model.dto.ConsultantDTO;
 import com.scon.project.admin.consultant.model.service.ConsultantService;
 import com.scon.project.admin.main.model.dto.StudentCount;
+import com.scon.project.admin.notice.model.dto.NoticeDTO;
+import com.scon.project.admin.notice.model.service.NoticeService;
 import com.scon.project.common.paging.Criteria;
 import com.scon.project.member.model.service.MemberService;
 
@@ -25,11 +27,13 @@ public class AdminMainController {
 	
 	private MemberService memberService;
 	private ConsultantService consultantService;
+	private NoticeService noticeService;
 	
 	@Autowired
-	public AdminMainController(MemberService memberService, ConsultantService consultantService) {
+	public AdminMainController(MemberService memberService, ConsultantService consultantService, NoticeService noticeService) {
 		this.memberService = memberService;
 		this.consultantService = consultantService;
+		this.noticeService = noticeService;
 	}
 	
 	@GetMapping("/")
@@ -47,6 +51,12 @@ public class AdminMainController {
 		List<ConsultantDTO> consultantHopeList = consultantService.selectAllConsultantHopeList(cri);
 		log.info("상담 신청 내역 : {}", consultantHopeList);
 		mv.addObject("consultantHopeList", consultantHopeList);
+		
+		
+		List<NoticeDTO> noticeList = noticeService.findAllNoticeList(cri);	
+		mv.addObject("noticeList", noticeList);
+		log.info("공지사항 : {}", noticeList);
+		
 		
 		mv.addObject("count", count);
 		mv.setViewName("/admin/main/admMain");
