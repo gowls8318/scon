@@ -22,7 +22,7 @@
 	<resultMap id="memberResultMap" type="com.scon.project.member.model.dto.MemberDTO">
 		<id property="id" column="MEMBER_ID"/>
 		<result property="name" column="MEMBER_NAME"/>
-		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="password" column="MEMBER_PWD"/>
 		<result property="tempPwdYN" column="TEMP_PWD_YN"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
@@ -30,7 +30,7 @@
 		<result property="address" column="GENDER"/>
 		<result property="gender" column="ADDRESS"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="deleteDate" column="DEL_DATE"/>
+		<result property="delDate" column="DEL_DATE"/>
 		<result property="status" column="MEMBER_ST"/>
 	</resultMap>
 	

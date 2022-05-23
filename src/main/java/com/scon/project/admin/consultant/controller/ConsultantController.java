@@ -93,23 +93,26 @@ public class ConsultantController {
 	
 	/* 상담 일지 등록용 */
 	@GetMapping("/consultant/insertForm")
-	public String insertConsultantPage(@RequestParam int no, Model model) throws Exception {
+	public String insertConsultantPage(@RequestParam int no, Model model, @ModelAttribute Criteria cri) throws Exception {
 		
 		log.info("상담 신청 번호 : {}", no);
 		
 		model.addAttribute("consultant", consultantService.selectConsultantHopeDetail(no));
 		
+		/* 취소하기 누를 시 현재 페이지로 이동하기 위함 */
+		model.addAttribute("cri", cri);
+		
 		return "admin/consultant/insertForm";
 	}
 	
 	@PostMapping("/consultant/insertForm")
-	public String insertConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale, @AuthenticationPrincipal UserImpl user) throws Exception {
+	public String insertConsultant(@ModelAttribute ConsultantDTO con, RedirectAttributes rttr, Locale locale, @ModelAttribute Criteria cri) throws Exception {
 		
 		consultantService.insertConsultant(con);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("insertConsultant", null, locale));
 		
-		return "redirect:/admin/consultant/hopeList";
+		return "redirect:/admin/consultant/hopeList?pageNo=" + cri.getPageNo();
 	}
 	
 	/* 상담 일지 상세 조회용 */

@@ -185,7 +185,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 										<div class="card-body side-table">
 
 											<table class="table table-hover table-sm">
-												<caption class="small">최근 5개 게시글</caption>
+												<caption class="small">최근 10개 게시글</caption>
 												<thead>
 													<tr>
 														<th>작성일</th>
@@ -227,11 +227,12 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary"
-												onclick="location.href='/admin/'">상담</h6>
+												onclick="location.href='/admin/consultant/hopeList'"
+												style="cursor: pointer;">상담 신청 내역</h6>
 										</div>
 										<div class="card-body side-table">
 											<table class="table table-hover table-sm">
-												<caption class="small">최근 5개 게시글</caption>
+												<caption class="small">최근 10개 게시글</caption>
 												<thead>
 													<tr>
 														<th>작성일</th>
@@ -239,26 +240,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>22-05-16</td>
-														<td>상담 게시글입니다.</td>
+													<tr th:if="${not #lists.isEmpty( consultantHopeList )}" th:each="conH : ${ consultantHopeList }">
+														<td th:text="${ conH.conWriteDate }">상담 신청일</td>
+														<td th:text="${ conH.conHTitle }"
+															th:onclick="'location.href=\'' + @{/admin/consultant/hopeDetail(no=${conH.no})} + '\';'"
+															style="cursor: pointer;">상담 제목</td>
 													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>상담 게시글입니다.</td>
-													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>상담 게시글입니다.</td>
-													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>상담 게시글입니다.상담 게시글입니다.</td>
-													</tr>
-													<tr>
-														<td>22-05-16</td>
-														<td>상담 게시글입니다.</td>
-													</tr>
+													<tr th:unless="${not #lists.isEmpty( consultantHopeList )}">
+			                                        	<td colspan="2">조회된 결과가 없습니다</td>
+			                                        </tr>
 												</tbody>
 											</table>
 										</div>
