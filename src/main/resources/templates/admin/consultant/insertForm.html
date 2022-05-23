@@ -68,6 +68,9 @@
                         <div class="card-body">
                             <form action="/admin/consultant/insertForm" method="post" name="consultantForm">
                             	<input type="hidden" name="no" th:value="${ consultant.no }">
+                            	<input type="hidden" name="pageNo" th:value="${ cri.pageNo }">
+								<input type="hidden" name="type" th:value="${ cri.type }">
+								<input type="hidden" name="keyword" th:value="${ cri.keyword }">
                                 <div class="col-lg-9 con-table-center">
                                     <table class="table table-bordered-yj">
                                         <tbody>
@@ -184,11 +187,12 @@
 
                                 <div class="buttonbox">
                                     <button type="button" class="btn btn-light resetbuttonbox"
-                                    	onclick="cancelRegist()">취소하기</button>
+                                    	th:onclick="cancelRegist([[${cri.pageNo}]], [[${cri.type}]], [[${cri.keyword}]])">취소하기</button>
                                     <button type="button" class="btn btn-primary submitbuttonbox"
                                     	th:onclick="registConsultant([[${consultant.no}]])">등록하기</button>
                                 </div>
                             </form>
+							
                         </div>
                     </div>
 
@@ -257,7 +261,7 @@
 			});
     	}
     	
-    	function cancelRegist() {
+    	function cancelRegist(pageNo, type, keyword) {
     		/* if(confirm('작성 중인 내용은 저장되지 않습니다. \n상담 일지 등록을 취소하시겠습니까?')) {
     			location.href = "/admin/consultant/hopeList";
     		} */
@@ -272,7 +276,8 @@
 			  	cancelButtonText: '취소'
     		}).then((result) => {
     			if(result.isConfirmed) {
-    				location.href = "/admin/consultant/hopeList";
+   					/* 확인 버튼 클릭 시 pageNo, type, keyword 그대로 유지 */
+   					location.href = "/admin/consultant/hopeList?pageNo=" + pageNo + "&type=" + type + "&keyword=" + keyword;
     			}
     		});
     	}
