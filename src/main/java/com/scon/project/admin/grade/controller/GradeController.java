@@ -92,14 +92,7 @@ public class GradeController {
 		log.info("gradeIdArr : {}", gradeIdArr);
 
 	}
-	
 
-
-	/* 석차별 성적 조회 */
-	@GetMapping("/gradeRank")
-	public String gradeRankTest() {
-		return "admin/grade/gradeRank";
-	}
 	
 	/* 예외 처리 */
 	@ExceptionHandler(value = Exception.class)
