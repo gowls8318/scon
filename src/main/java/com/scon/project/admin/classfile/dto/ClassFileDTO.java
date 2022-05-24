@@ -26,18 +26,16 @@ public class ClassFileDTO {
 	private MemberDTO member;
 	private ClassDTO classDTO;
 	private String clsName;
+	private List<ClassDTO> classNameList;
 	private List<TaskFileDTO> fileList2;
-	
-	
-	
-	  private String fileOrginName; 
-	  private String fileSaveName; 
-	  private String filePath; 
-	  private String fileType; 
-	  private TaskFileDTO fileList;
-		/* private List<TaskFileDTO> fileList; */
-	 
-	      //하나의 게시글에 여러개의 파일
+	private String fileOrginName;
+	private String fileSaveName;
+	private String filePath;
+	private String fileType;
+	private TaskFileDTO fileList;
+	/* private List<TaskFileDTO> fileList; */
+
+	// 하나의 게시글에 여러개의 파일
 	
 
 

@@ -8,7 +8,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
-<meta name="author" content="">
+<meta name="author" content="김소영">
 
 <title>강의조회</title>
 
@@ -127,15 +127,15 @@ input[type="checkbox"]::before {
 											<td th:text="${ class.clsRoom }"></td>
 
 											<td>
-												<!-- 강의실 입장 --> 
-												<text onclick="location.href='/admin/classList'"> 
-												<i class="bi bi-arrow-right-square-fill"></i>&nbsp;</text> 
-												<!-- 강의 수정-->
-												<text th:onclick="'location.href=\'' + @{/admin/classUpdate(clsId=${class.clsId})} + '\';'">
-												<i class="bi bi-pencil-square"></i>&nbsp;</text> 
-												<!-- 강의 삭제 --> 
-												<text class="" data-toggle="modal" data-target="#classdelModal" th:onclick="|deleteClass(${class.clsId})|">
-												<i class="bi bi-trash"></i>&nbsp;</text>
+												<!-- 강의실 입장 --> <text
+													onclick="location.href='/admin/classList'"> <i
+													class="bi bi-arrow-right-square-fill"></i>&nbsp;</text> <!-- 강의 수정-->
+												<text
+													th:onclick="'location.href=\'' + @{/admin/classUpdate(clsId=${class.clsId})} + '\';'">
+												<i class="bi bi-pencil-square"></i>&nbsp;</text> <!-- 강의 삭제 --> <text
+													class="" data-toggle="modal" data-target="#classdelModal"
+													th:onclick="|deleteClass(${class.clsId})|"> <i
+													class="bi bi-trash"></i>&nbsp;</text>
 											</td>
 										</tr>
 									</tbody>
@@ -211,8 +211,8 @@ input[type="checkbox"]::before {
 	<!-- End of Content Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> 
-	<i class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
 	</a>
 
 
@@ -318,7 +318,7 @@ input[type="checkbox"]::before {
 
 
 
-								<div class="mx-auto row">
+								<div class="col-auto">
 									<h5
 										style="margin-top: 1em; margin-left: 1em; font-weight: bold; color: #8B169E;">수업정보</h5>
 									<div class=" mx-auto row align-items-center">
@@ -340,7 +340,7 @@ input[type="checkbox"]::before {
 												style="width: 8em">강의실 <span id="pointtext">*</span></span>
 										</div>
 										<div class="col-8" style="margin-top: 1em;">
-											<text type="text" class="infoformbox form-control"
+											<text type="terxt" class="infoformbox form-control"
 												id="clsRoom" th:text="${ clsRoom }">
 										</div>
 									</div>
@@ -367,8 +367,8 @@ input[type="checkbox"]::before {
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
-													id="dayList" value="2"> <label class="form-check-label"
-													for="inlineCheckbox2">화</label>
+													id="dayList" value="2"> <label
+													class="form-check-label" for="inlineCheckbox2">화</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input daycheck" type="checkbox"
@@ -406,17 +406,16 @@ input[type="checkbox"]::before {
 								</div>
 								<th:block>
 									<div class="col-auto" style="margin-top: 1em;">
-										<input type="hidden" th:value="${clsId}" class="clsId" />
-										 <input type="hidden" value="1" class="class-check" />
+										<input type="hidden" th:value="${clsId}" class="clsId" /> <input
+											type="hidden" value="1" class="class-check" />
 										<div class="col-12" style="margin-top: 1em;">
 											<div class="form-check form-check-inline class-check">
 												<input class="form-check-input timecheck" type="checkbox">
 												<label class="form-check-label" for="inlineCheckbox1">1교시</label>
 											</div>
 											<div class="form-check form-check-inline">
-												<input class="form-check-input timecheck" type="checkbox"
-													> <label class="form-check-label"
-													for="inlineCheckbox2">2교시</label>
+												<input class="form-check-input timecheck" type="checkbox">
+												<label class="form-check-label" for="inlineCheckbox2">2교시</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input timecheck" type="checkbox"
@@ -559,6 +558,7 @@ input[type="checkbox"]::before {
 			document.getElementById("delcls").value = clsId;
 
 		}
+		
 	</script>
 
 
@@ -569,6 +569,7 @@ input[type="checkbox"]::before {
 				$("tr").hide();
 				var temp = $("tr:contains('" + k + "')");
 				$(temp).show();
+			})
 		});
 	</script>
 

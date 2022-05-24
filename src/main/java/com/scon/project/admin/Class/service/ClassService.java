@@ -32,9 +32,9 @@ public interface ClassService {
 	int classUpdate(ClassDTO classDTO) throws Exception;
 	
 	
-	 //요일수정 int updateDay(DayDTO dayList);
+	//요일수정 int updateDay(DayDTO dayList);
 	 
-	 //교시수정 int updateTime(TimeDTO time);
+	//교시수정 int updateTime(TimeDTO time);
 	 
 	
 

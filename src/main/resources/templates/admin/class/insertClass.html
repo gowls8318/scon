@@ -72,10 +72,12 @@ input[type="checkbox"]::before {
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
 						<!-- Page Heading -->
-						<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<div
+							class="d-sm-flex align-items-center justify-content-between mb-4">
 							<h1 class="h3 mb-2 text-gray-800">강의등록</h1>
-							<text type="reset" id="resetbtn" onclick="location.href='/admin/classRegist'">
-							<i class="bi bi-arrow-repeat"></i></text>
+							<text type="reset" id="resetbtn"
+								onclick="location.href='/admin/classRegist'"> <i
+								class="bi bi-arrow-repeat"></i></text>
 						</div>
 
 						<hr class="border-bottom-primary">
@@ -108,10 +110,11 @@ input[type="checkbox"]::before {
 												<td class="col-lg-3">
 													<div class="col-sm-10 col-lg-10">
 														<select class="form-control form-select-lg"
-															aria-label=".form-select-lg example" name="memberId" id="memberId">
-                                                            	<option th:each=" member : ${ memberList }"
-                                                            		th:value="${ member?.id }" th:utext="${ member?.name }">
-                                                            	</option>
+															aria-label=".form-select-lg example" name="memberId"
+															id="memberId">
+															<option th:each=" member : ${ memberList }"
+																th:value="${ member?.id }" th:utext="${ member?.name }">
+															</option>
 														</select>
 													</div>
 												</td>
@@ -213,8 +216,8 @@ input[type="checkbox"]::before {
 												<td class="col-lg-5">
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="checkbox" id="days1"
-															name="dayList[0].clsDayId" value="1">
-														<label class="form-check-label" for="days1">월</label>
+															name="dayList[0].clsDayId" value="1"> <label
+															class="form-check-label" for="days1">월</label>
 													</div>
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="checkbox" id="days2"
@@ -294,7 +297,8 @@ input[type="checkbox"]::before {
 							<div class="card-body">
 								<div class="input-group input-group-lg">
 									<span class="input-group-text">비고</span>
-									<textarea class="form-control" aria-label="With textarea" name="clsNote"></textarea>
+									<textarea class="form-control" aria-label="With textarea"
+										name="clsNote"></textarea>
 								</div>
 
 
@@ -303,10 +307,10 @@ input[type="checkbox"]::before {
 						<!-- 비고란 -->
 
 						<div class="row buttonbox">
-							<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" 
-							data-toggle="modal" data-target="#classupdateModal">등록</button>
-							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset"
-							onclick="location.href='/admin/classList'">취소</button>
+							<button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm"
+								data-toggle="modal" data-target="#classupdateModal">등록</button>
+							<button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm"
+								type="reset" onclick="location.href='/admin/classList'">취소</button>
 						</div>
 					</div>
 				</div>
@@ -317,9 +321,7 @@ input[type="checkbox"]::before {
 	</div>
 	<!-- End of Main Content -->
 	<!-- footer include -->
-	<div th:replace="/common/footer.html">
-
-	</div>
+	<div th:replace="/common/footer.html"></div>
 	<!-- End of Main Content -->
 
 	</div>
