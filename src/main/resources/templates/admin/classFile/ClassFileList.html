@@ -95,7 +95,8 @@ input[type="checkbox"]::before {
 
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
 									<thead>
 										<tr>
 											<th style="text-align: center">강의명</th>
@@ -109,22 +110,21 @@ input[type="checkbox"]::before {
 									<tbody class="classBody" style="text-align: center">
 										<tr th:each="classfile : ${ classFileList }">
 
-											<td><class th:text="${classfile.classDTO.clsName}"/></td>
-											<td><class th:text="${classfile.clfName}"/></td>
-											<td><class th:text="${classfile.member.name}"/></td>
+											<td><class th:text="${classfile.classDTO.clsName}" /></td>
+											<td><class th:text="${classfile.clfName}" /></td>
+											<td><class th:text="${classfile.member.name}" /></td>
 
 
 											<!-- 파일다운로드 -->
 											<td><a name="fileList"
-												th:href="@{/uploadFiles/classFiles/fileList/{fileSaveName}(fileSaveName=${classfile.fileList.fileSaveName})}"
+												th:href="@{/uploadFiles/classFiles/fileList2/{fileSaveName}(fileSaveName=${classfile.fileList.fileSaveName})}"
 												th:download="${classfile.fileList.fileOrginName}"> <i
 													class="bi bi-arrow-up-circle-fill"> <input
 														type="hidden"
 														th:value="${classfile.fileList.fileOrginName}"> <input
 														type="hidden" th:value="${classfile.fileList.fileId}">
 												</i>&nbsp;
-											</a> <!-- 강의첨부자료 수정--> <!-- <text th:onclick="'location.href=\'' + @{/admin/ClassFileUpdate(FileId=${classFile.FileId})} + '\';'"> -->
-												<i class="bi bi-pencil-square"></i>&nbsp;</text> <!-- 강의첨부자료 삭제 -->
+											</a> <i class="bi bi-pencil-square"></i>&nbsp;</text> <!-- 강의첨부자료 삭제 -->
 												<a class="" data-toggle="modal"
 												data-target="#classFiledelModal"
 												th:onclick="|deleteClassFile(${classfile.fileId})|"> <i
@@ -217,7 +217,7 @@ input[type="checkbox"]::before {
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">강의삭제</h5>
+						<h5 class="modal-title" id="exampleModalLabel">강의첨부자료삭제</h5>
 						<button class="close" type="button" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">×</span>

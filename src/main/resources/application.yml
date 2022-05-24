@@ -4,6 +4,9 @@ server:
   servlet:
    session:
     timeout: 32000
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
   
 # oracle driver config
 spring:
@@ -20,12 +23,13 @@ mybatis:
     jdbc-type-for-null: 'NULL'
     
 # file upload path
-custom:
-  path:
-    upload-files: C:/Users/jayeo/git/scon project/src/main/resources/uploadFiles/
-   
-    
-# file upload path / soyeong
 # custom:
 #  path:
-#    upload-files: C:\Users\thdud\git\scon\src\main\resources\uploadFiles/
+#    upload-files: C:/Users/jayeo/git/scon project/src/main/resources/uploadFiles/
+
+
+
+# file upload path / soyeong 
+custom:
+  path:
+    upload-files: C:/Users/thdud/git/scon/src/main/resources/uploadFiles/

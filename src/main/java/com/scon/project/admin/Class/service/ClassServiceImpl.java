@@ -74,11 +74,6 @@ public class ClassServiceImpl implements ClassService {
 		return classMapper.selectDayList();
 	}
 	
-	// 멤버가져오기
-	/*
-	 * @Override public List<MemberDTO> findAllmemberList(int clsId) { return
-	 * classMapper.findAllmemberList(clsId); }
-	 */
 
 	// 강의삭제
 	@Override
@@ -97,37 +92,11 @@ public class ClassServiceImpl implements ClassService {
 		int result = classMapper.classUpdate(classDTO);
 		
 		
-		 /*int result2 = classMapper.classUpdate(classDTO.getDayList()); 
-		 int result3 = classMapper.classUpdate(classDTO.getTime());*/
-		
-		
-		/*
-		 * int result2 = 0; for (DayDTO day : classDTO.getDayList()) { if
-		 * (day.getClsDayId() != 0) result2 += classMapper.updateDay(day,
-		 * classDTO.getClsId()); //dto에 id }
-		 * 
-		 * int result3 = 0; for (TimeDTO time : classDTO.getTime()) { if
-		 * (time.getClsTimeId() != 0) result3 += classMapper.updateTime(time,
-		 * classDTO.getClsId()); }
-		 * 
-		 * if (result <= 0 || result2 <= 0 || result3 <= 0) { throw new
-		 * Exception("강의 등록에 실패했습니다."); }
-		 */
+		 
 
 		return result;
 	}
 
-	/*
-	 * //요일
-	 * 
-	 * @Override public int updateDay(DayDTO dayList) { return
-	 * classMapper.updateDay(dayList); }
-	 * 
-	 * //교시
-	 * 
-	 * @Override public int updateTime(TimeDTO time) { return
-	 * classMapper.updateTime(time); }
-	 */
 
 
 	//강사

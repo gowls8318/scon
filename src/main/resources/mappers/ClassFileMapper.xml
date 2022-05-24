@@ -4,8 +4,9 @@
 
 	<!-- 강의첨부파일 테이블 -->
 	<resultMap id="classFileResultMap" type="com.scon.project.admin.classfile.dto.ClassFileDTO">
-		<id property = "fileId" column="FILE_ID"/>
+		<id property="fileId" column="FILE_ID"/>
 		<id property="clsId" column="CLS_ID"/>
+		<result property="clsName" column="CLS_NAME"/>
 		<result property="clfName" column="CLF_NAME"/>
 		<result property="clfStatus" column="CLF_STATUS"/>
 		<result property="memberName" column="MEMBER_NAME"/> 
@@ -46,7 +47,6 @@
 		<result property="clsNote" column="CLS_NOTE"/>
 		<result property="clsStatus" column="CLS_STATUS"/>
 		<result property="clfName" column="CLF_NAME"/>
-		
 		
 		<association property="member" resultMap="memberResultMap"/>
 	</resultMap>
@@ -123,14 +123,12 @@
 		    B.FILE_ORGNAME,
 		    B.FILE_SAVENAME,
 		    B.FILE_PATH,
-		    B.FILE_TYPE
+		    B.FILE_TYPE,
 		    FROM TB_REFRENCE A
 		    JOIN TB_FILE B ON(A.FILE_ID = B.FILE_ID)
 		    WHERE A.CLF_STATUS = 'Y'
 	</select> 
 
-
-	 
 	 <!-- 게시물 총 갯수 -->
 	<select id="total" resultType="_int">
 		SELECT
@@ -211,6 +209,6 @@
 		  SET CLF_STATUS = 'N'
 		 WHERE FILE_ID = #{fileId}
 	</update>
-
-
+	
+	
 </mapper>
