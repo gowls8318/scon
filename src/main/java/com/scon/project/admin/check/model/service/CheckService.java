@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.check.model.dto.CheckDTO;
+import com.scon.project.admin.check.model.dto.CheckListDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 
@@ -22,9 +23,9 @@ public interface CheckService {
 	List<LectureDTO> selectChkList(ClassDTO cls, LectureDTO lec, MemberDTO member) throws Exception;
 
 	/* 출석 등록하기 */
-	int insertChkList(CheckDTO chk) throws Exception;
+	int insertChkList(CheckListDTO chk) throws Exception;
 	
 	/* 출석 수정하기 */
-	int updateChkList(CheckDTO chk) throws Exception;
+	int updateChkList(CheckListDTO chk) throws Exception;
 
 }

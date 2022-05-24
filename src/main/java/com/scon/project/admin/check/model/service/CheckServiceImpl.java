@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
-import com.scon.project.admin.business.model.dto.BusinessDTO;
 import com.scon.project.admin.check.model.dao.CheckMapper;
 import com.scon.project.admin.check.model.dto.CheckDTO;
+import com.scon.project.admin.check.model.dto.CheckListDTO;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.member.model.dto.MemberDTO;
 
@@ -60,23 +60,49 @@ public class CheckServiceImpl implements CheckService {
 	
 	/* 출석 등록 */
 	@Override
-	public int insertChkList(CheckDTO chk) throws Exception {
+	public int insertChkList(CheckListDTO chk) throws Exception {
+		int result = 0;
+		for(int i = 0; i < chk.getLecNo().length; i++) {
+			CheckDTO check = new CheckDTO();
+			check.setLecNo(chk.getLecNo()[i]);
+			check.setChkDate(chk.getChkDate()[i]);
+			check.setChkStart(chk.getChkStart()[i]);
+			check.setChkFinish(chk.getChkFinish()[i]);
+			
+			result += checkMapper.insertChkList(check);
+		}
 		
-		int result = checkMapper.insertChkList(chk);
-		
-		return result;
+		return result == chk.getLecNo().length ? 1 : 0;
 	}
 	
 	
 	
 	/* 출석 수정 */
 	@Override
-	public int updateChkList(CheckDTO chk) throws Exception {
+	public int updateChkList(CheckListDTO chk) throws Exception {
 		
-		int result = checkMapper.updateChkList(chk);
+		int result = 0;
+		for(int i = 0; i < chk.getNo().length; i++) {
+			CheckDTO check = new CheckDTO();
+			check.setNo(chk.getNo()[i]);
+			check.setChkDate(chk.getChkDate()[i]);
+			check.setChkStart(chk.getChkStart()[i]);
+			check.setChkFinish(chk.getChkFinish()[i]);
+			
+			result += checkMapper.updateChkList(check);
+		}
 		
-		return result;
-	}
+		return result == chk.getNo().length ? 1 : 0;
+	}	
+	
+//	/* 출석 수정 */
+//	@Override
+//	public int updateChkList(CheckDTO chk) throws Exception {
+//		
+//		int result = checkMapper.updateChkList(chk);
+//		
+//		return result;
+//	}
 
 
 }

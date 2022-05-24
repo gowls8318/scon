@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.scon.project.admin.Class.dto.ClassDTO;
 import com.scon.project.admin.check.model.dto.CheckDTO;
+import com.scon.project.admin.check.model.dto.CheckListDTO;
 import com.scon.project.admin.check.model.service.CheckService;
 import com.scon.project.admin.lecture.model.dto.LectureDTO;
 import com.scon.project.member.model.dto.MemberDTO;
@@ -31,7 +32,7 @@ public class CheckController {
 	}
 	
 	
-	/* 출석부 조회 */
+	/* 출결 조회 */
 	@GetMapping("/chkViewClass")
 	public ModelAndView selectAllClassList(@ModelAttribute ClassDTO cls, @ModelAttribute CheckDTO chk, @ModelAttribute MemberDTO member, ModelAndView mv) throws Exception {
 	
@@ -54,7 +55,7 @@ public class CheckController {
 		return mv;
 	}
 	
-	/* 결석 학생 조회 */
+	/* 결석 조회 */
 	@GetMapping("/chkAbsent")
 	public ModelAndView selectAllAbsentList(@ModelAttribute ClassDTO cls, @ModelAttribute CheckDTO chk, @ModelAttribute MemberDTO member, ModelAndView mv) throws Exception {
 	
@@ -78,7 +79,7 @@ public class CheckController {
 	}
 
 	
-	/* 출석 등록 명단 조회 */
+	/* 출결 등록 명단 조회 */
 	@GetMapping("/chkInsertForm")
 	public ModelAndView selectChkList(@ModelAttribute ClassDTO cls, @ModelAttribute LectureDTO lec, @ModelAttribute MemberDTO member, @ModelAttribute CheckDTO chkDate, ModelAndView mv) throws Exception {
 		
@@ -98,22 +99,22 @@ public class CheckController {
 		
 		return mv;
 	}
-	
+
+	/* 출결 등록 */
 	@PostMapping("/chkInsertForm")
-	public String chkInsertForm(@ModelAttribute CheckDTO chk) throws Exception {
+	public String chkInsertForm(@ModelAttribute CheckListDTO chk) throws Exception {
 
 		log.info("넘기는 값 : {}", chk);
 		
 		
-		//checkService.insertChkList(chk);
+		checkService.insertChkList(chk);
 		
 		return "redirect:/admin/check/chkInsertForm";
 	}
 	
 	
-	
 
-	/* 출석 등록 명단 수정 */
+	/* 출결 수정 */
 	@GetMapping("/chkUpdateForm")
 	public ModelAndView selectUpdateList(@ModelAttribute ClassDTO cls, @ModelAttribute CheckDTO chk, @ModelAttribute MemberDTO member, ModelAndView mv) throws Exception {
 	
@@ -136,85 +137,24 @@ public class CheckController {
 		return mv;
 	}
 	
-	/* 수강 수정용 */
-	@PostMapping("/chkUpdateForm")
-	public String updateChkList(@ModelAttribute CheckDTO chk) throws Exception {
+	/* 출석 수정용 */
+	@RequestMapping("/chkUpdateForm")
+	public String updateChkList(@ModelAttribute CheckListDTO chk) throws Exception {
 		
 		checkService.updateChkList(chk);
 		
 		return "redirect:/admin/check/chkUpdateForm";
 	}
-
 	
-	
-//	/* 학생별 출석 조회 */
-//	@GetMapping("/chkViewStudent")
-//	public ModelAndView selectAllStudentList(ModelAndView mv) throws Exception {
+//	/* 출석 수정용 */
+//	@RequestMapping("/chkUpdateForm")
+//	public String updateChkList(@ModelAttribute CheckDTO chk) throws Exception {
 //		
-//		List<CheckDTO> checkStudentList = checkService.selectAllStudentList();
-//		List<ClassDTO> classList = checkService.selectClassList();
+//		checkService.updateChkList(chk);
 //		
-//		mv.addObject("checkStudentList", checkStudentList);
-//		mv.addObject("classList", classList);
-//		mv.setViewName("admin/check/chkViewStudent");
-//		
-//		return mv;
+//		return "redirect:/admin/check/chkUpdateForm";
 //	}
 
-//	
-//	@GetMapping("/chkRegist")
-//	public ModelAndView checkRegist(@ModelAttribute ClassDTO cls, @ModelAttribute CheckDTO chk, @ModelAttribute MemberDTO member, ModelAndView mv) throws Exception {
-//		
-//		List<CheckDTO> selectChkList = checkService.selectChkList(cls, chk, member);
-//		
-//		mv.addObject("selectChkList", selectChkList);
-//		mv.addObject("clsId", cls.getClsId());
-//		mv.addObject("chkDate", chk.getChkDate());
-//		mv.addObject("name", member.getName());
-//		mv.setViewName("admin/check/chkInsertForm");
-//		
-//		return mv;
-//	}
-	
 
-	/* 날짜별 반 출석 조회 */
-//	@GetMapping("/chkViewClass")
-//	public ModelAndView selectAllClassList(ModelAndView mv) throws Exception {
-//		
-//		List<CheckDTO> checkClassList = checkService.selectAllClassList();
-//	)	
-//		mv.addObject("checkClassList", checkClassList);
-//		mv.setViewName("admin/check/chkViewClass");
-//		
-//		log.info("checkClassList : {}" , mv);
-//		
-//		return mv;
-//	}
-
-//	@RequestMapping(value = "/chkViewClass")
-//	public ModelAndView selectAllClassList(@ModelAttribute ClassDTO clsId, @ModelAttribute CheckDTO chkDate, HttpServletRequest request, ModelAndView mv) throws Exception {
-//		
-//		String searchCls = request.getParameter("searchCls");
-//		String datePicker = request.getParameter("datePicker");
-//		
-//		HashMap<String,String> paraMap = new HashMap<String,String>();
-//		paraMap.put("searchCls", searchCls);
-//		paraMap.put("datePicker", datePicker);
-//		
-//		List<CheckDTO> checkClassList = checkService.selectAllClassList(clsId, chkDate);
-//		List<ClassDTO> classList = checkService.selectClassList(clsId);
-//		
-//		mv.addObject("checkClassList", checkClassList);
-//		mv.addObject("searchCls", searchCls);
-//		mv.addObject("datePicker", datePicker);
-//		mv.addObject("classList", classList);
-//		mv.setViewName("admin/check/chkViewClass");
-//		
-//		log.info("checkClassList : {}" , mv);
-//		
-//		
-//		
-//		return mv;
-//	}
 	
 }
