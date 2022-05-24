@@ -108,7 +108,7 @@
                                             <td th:text="${ conH.conHandle }" class="handle">처리 현황</td>
                                             <td>
                                                <button type="button" class="btn btn-primary btn-con"
-                                                	th:onclick="movePage(this, [[${conH.no}]], [[${page.cri.pageNo}]], [[${page.cri.type}]], [[${page.cri.keyword}]])">등록</button>
+                                                	th:onclick="movePage(this, [[${conH.no}]], [[${page.cri.pageNo}]], [[${#strings.defaultString(page.cri.type, '')}]], [[${#strings.defaultString(page.cri.keyword, '')}]])">등록</button>
                                                 <!-- th:onclick="'location.href=\'' + @{/admin/consultant/insertForm(no=${conH.no})} + '\';'" -->
                                             </td>
                                         </tr>
