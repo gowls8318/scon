@@ -136,7 +136,7 @@
 	
 	
 	
-	<!-- 출결 등록 -->
+	<!-- 출결 등록 목록 조회 -->
 	<select id="selectChkList" resultMap="lectureResultMap">
 	SELECT 
 		 A.LEC_NO
@@ -160,7 +160,7 @@
 	ORDER BY A.LEC_NO
 	</select>
 	
-	
+	<!-- 출결 등록 -->
 	<insert id="insertChkList">
 		INSERT
 			INTO TB_CHECK
@@ -173,7 +173,7 @@
 			)
 			VALUES
 			(
-			   SEQ_CHQ_NO.NEXTVAL
+			   CHQ_NO.NEXTVAL
 			 , #{ lecNo }
 			 , #{ chkDate }
 			 , #{ chkStart }
@@ -182,6 +182,7 @@
 			 
 	</insert>
 	
+	<!-- 출결 수정 -->
 	<update id="updateChkList">
 		UPDATE TB_CHECK
 		   SET CHQ_DATE = #{ chkDate }

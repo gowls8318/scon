@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>원생 출석 등록</title>
+    <title>출결 등록</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
@@ -29,6 +29,9 @@
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
+      <!-- 파비콘 -->
+	<link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    
     <style>
     .lecNoForm { border: none !important; margin:0 auto;width:30px };
     .lecNoBox { text-align : center !important; };
@@ -41,7 +44,7 @@
     border-spacing: 0 !important;
     }
     /* 정렬 */
-    .table thead th {
+    .table thead th { 
         vertical-align: middle;
         
         background-color: #f6f6f6;
@@ -72,15 +75,13 @@
             <!-- Main Content -->
             <div id="content">
                 <div th:replace="/common/adminTopbar.html"></div>
-                <!-- 채팅 -->
-                <!-- <div th:replace="/admin/chat/chatList.html"></div>  -->
-
+                
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">원생 출석 등록</h1>
+                        <h1 class="h3 mb-0 text-gray-800">출결 등록</h1>
                     </div>
                     <hr class="border-bottom-primary">
 
@@ -88,14 +89,14 @@
                     <div class="mx-auto stuformbox">
                     
                     <th:block class="mx-auto">
-                    <form name="insertForm" id="insertForm"  th:action="@{/admin/check/chkInsertForm}" method="get" role="form">
+                    <form name="insertSearchForm" id="insertSearchForm"  th:action="@{/admin/check/chkInsertForm}" method="get" role="form">
                     <div class="stusearchrow py-3 d-flex flex-row align-items-center justify-content-between">
                         <div class="col-0 selectclasstext">강의 선택</div>
 	                        <div class="col-2">
 	                            <select name="clsId" id="clsId" class="browser-default custom-select selectclassbox">
 	                            	<option disabled selected>강의 선택</option>
-	                                <th:block th:each="val : ${ classList }" >
-	                                <option th:value="${ val.clsId }" th:utext="${ val.clsName }"></option>
+	                                <th:block th:each="cls : ${ classList }" >
+	                                <option th:value="${ cls.clsId }" th:utext="${ cls.clsName }"></option>
 	                         		</th:block>
 	                             </select>
 	                        </div>
@@ -149,18 +150,18 @@
                                     </thead>
 
                                     <tbody>
-                                    <tr th:each="val:${ selectChkList }">
+                                    <tr th:each="chk:${ selectChkList }">
 	                                    <!-- 체크박스 -->
 	                                    <th class="stuCheck">
 	                                        <div class="form-check">
 	                                            <input class="form-check-input checkedStudent" type="checkbox" id="flexCheckDefault" name="flexCheckDefaultRow">
 	                                        </div>
 	                                    </th>
-                                        <td><div class="lecNoBox"><input th:value="${ val.no }" id="lecNo" class="lecNoForm" name="lecNo" readonly></div></td>
-                                        <td th:text="${ val.member.name }"></td>
-                                        <td th:text="${ val.cls.clsName }"></td>
+                                        <td><div class="lecNoBox"><input th:value="${ chk.no }" id="lecNo" class="lecNoForm" name="lecNo" readonly></div></td>
+                                        <td th:text="${ chk.member.name }"></td>
+                                        <td th:text="${ chk.cls.clsName }"></td>
                                         <td class="datepicker"><input type="date" name="chkDate" class="currentDate" th:value="${ chkDate }"></td>
-                                        <td colspan="3"><input type="text" class="attformbox form-control" aria-label="Username" aria-describedby="basic-addon1" id="chkStart" name="chkStart"></td>
+                                        <td colspan="3"><input type="text" class="attformbox form-control" aria-label="Username" aria-describedby="basic-addon1" id="chkStart" name="chkStart" ></td>
                                         <td colspan="3"><input type="text" class="attformbox form-control" aria-describedby="basic-addon1" id="chkFinish" name="chkFinish"></td>
                                     </tr>
                                     
@@ -172,7 +173,7 @@
 
                         <div class="row buttonbox">
                             <button class="resetbuttonbox col-1 w-10 btn btn-primary btn-sm" type="reset">취소</button>
-                            <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="submit">저장</button>
+                            <button class="submitbuttonbox col-1 w-10 btn btn-primary btn-sm" type="submit" id="chkInsertButton">저장</button>
                         </div>
                         </form>
                     </div>
@@ -195,9 +196,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
     
-    <script>
-    
-	</script>
+   
 
     
     <script>
@@ -205,7 +204,7 @@
 		 $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
 			 $(this).closest("tr").find("[name=chkStart]").val('출석');
 			 
-			 document.getElementById("chkStart").value = '출석';
+			 document.getElementsByClassName('chkStart').value = '출석';
 			});
 	}
 	
@@ -213,7 +212,7 @@
 		 $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
 			 $(this).closest("tr").find("[name=chkStart]").val('지각');
 			 
-			 document.getElementById("chkStart").value = '지각';
+			 document.getElementsByClassName('chkStart').value = '지각';
 			});
 	}
 	
@@ -221,7 +220,7 @@
 		 $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
 			 $(this).closest("tr").find("[name=chkStart]").val('결석');
 			 
-			 document.getElementById("chkStart").value = '결석';
+			 document.getElementsByClassName('chkStart').value = '결석';
 			});
 	}
 	
@@ -231,7 +230,7 @@
 		 $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
 			 $(this).closest("tr").find("[name=chkFinish]").val('귀가');
 			 
-			 document.getElementById("chkFinish").value = '귀가';
+			 document.getElementsByClassName('chkFinish').value = '귀가';
 			});
 	}
 	
@@ -239,15 +238,15 @@
 		 $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
 			 $(this).closest("tr").find("[name=chkFinish]").val('조퇴');
 			 
-			 document.getElementById("chkFinish").value = '조퇴';
+			 document.getElementsByClassName('chkFinish').value = '조퇴';
 			});
-	}
+	}  
 	
 	function input_Status6(){
 		 $("input:checkbox[name='flexCheckDefaultRow']:checked").each(function() {
 			 $(this).closest("tr").find("[name=chkFinish]").val('도망');
 			 
-			 document.getElementById("chkFinish").value = '도망';
+			 document.getElementsByClassName('chkFinish').value = '도망';
 			});
 	}
 	</script>

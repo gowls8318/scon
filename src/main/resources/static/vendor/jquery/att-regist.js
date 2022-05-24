@@ -6,8 +6,8 @@ $("#datePicker").datepicker({
     });
 
 
+
 $(function() {
-	$('#datePicker').datePicker();
 	$('#datePicker').datePicker('setDate','today');
 })
 
