@@ -126,6 +126,7 @@ public class ScheduleController {
 		return result; 
 	}
 	
+	// 스케쥴 삭제
 	@ResponseBody
 	@PostMapping("/deleteSchedule") 
 	public int deleteSchedule(@ModelAttribute ScheduleDTO sche, @AuthenticationPrincipal UserImpl user)  { 

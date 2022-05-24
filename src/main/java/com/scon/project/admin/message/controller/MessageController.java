@@ -15,7 +15,6 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Configuration
 @RequestMapping("/admin")
 public class MessageController {
@@ -59,5 +58,4 @@ public class MessageController {
 		return result;
 	}
 	
-
 }

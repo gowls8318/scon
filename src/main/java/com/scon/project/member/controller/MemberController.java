@@ -105,13 +105,13 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/newPwd")
 	public int newPwd(MemberDTO member) {
-		log.info("member확인 : {}", member);
+		
 		String encodePwd = pwd_encoder(member.getPassword());
 		member.setPassword(encodePwd);
 		
-		int count = memberService.updatePassword(member);
+		int result = memberService.updatePassword(member);
 
-		return count;
+		return result;
 	}
 
 	//아이디 중복 체크
@@ -119,9 +119,9 @@ public class MemberController {
 	@PostMapping("/checkId")
 	public int checkId(MemberDTO member) {
 		
-		int count = memberService.checkId(member);
+		int result = memberService.checkId(member);
 
-		return count;
+		return result;
 	}
 	
 	
@@ -162,7 +162,9 @@ public class MemberController {
 	//비밀번호 찾기 이메일 전송 메소드
 	@ResponseBody 
 	@PostMapping("/authPwd")
-	public int findPsssword(@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("id") String id) throws UnsupportedEncodingException, MessagingException {
+	public int findPsssword(@RequestParam("name") String name, 
+							@RequestParam("email") String email, 
+							@RequestParam("id") String id) throws UnsupportedEncodingException, MessagingException {
 		
 		int result = 0;
 		
@@ -178,8 +180,8 @@ public class MemberController {
 		int num = r.nextInt(999999); // 랜덤난수설정
 		
 		if(findMember != null) 
-			result = sendMail(findMember.getEmail(), num);
 			
+			result = sendMail(findMember.getEmail(), num); // 이메일 발송 메소드 호출 
 		
 		return result;
 	}
@@ -244,7 +246,7 @@ public class MemberController {
 	}
 
 	public int sendMail(String memberEmail, int num) throws UnsupportedEncodingException, MessagingException {
-		int result = 0 ;
+		int result = 0;
 				
 		String from ="scon.email.test@gmail.com";
 		String fromName = "Scon";
@@ -281,24 +283,21 @@ public class MemberController {
 	        Transport transport = session.getTransport();
 	        
 	        try {
-	            System.out.println("Sending...");
+	            log.info("Sending...");
 	            
 	            transport.connect(host, smtp_username, smtp_password);
 	            transport.sendMessage(msg, msg.getAllRecipients());
 	            
-	            System.out.println("Sending success!");
-	            
+	            log.info("Sending success!");
 	            result = num; // 결과로 인증 번호를 반환
 	            
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
-	            
 	            result = -1; //이메일 전송 실패시 결과 -1 반환
 	            
 	        } finally {
 	            transport.close();
 	        }
-	        
 			return result;
 	}
 	

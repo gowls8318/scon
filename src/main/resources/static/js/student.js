@@ -99,20 +99,22 @@ function checkAll() {
 	let path = form.path.value;
 	let alertName = "";
 
-	// 원생 등록 시 아이디 중복체크 필수
+	// 원생/강사 등록 시 아이디 중복체크 필수
 	if (path == '/admin/studentRegist' || path == '/admin/teacherRegist') {
 		alertName = "등록";
 		if (idck == 0) {
 			toast('warning', '아이디 중복 검사를 진행해주세요.');
 			return false;
 		}
-		// 원생 수정시 원생을 선택한 상태여야 함.
+		
+	// 원생 수정시 원생을 선택한 상태여야 함.
 	} else if (path == '/admin/updateStudent') {
 		alertName = "수정";
 		if (form.id.value == '') {
 			toast('warning', '원생을 선택해주세요!');
 			return false;
 		}
+	// 강사 수정시 강사를 선택한 상태여야 함.
 	} else if(path == '/admin/updateTeacher') {
 		alertName = "수정";
 
@@ -421,9 +423,8 @@ function studentDetail(mem) {
 	}
 
 	form.birthDay.value = mem.member.birthDay;
-
 	form.enrollDate.value = mem.member.enrollDate;
-
+	
 	let addr = mem.member.address.split('$');
 	form.zipCode.value = addr[0];
 	form.address.value = addr[1]
@@ -436,17 +437,14 @@ function studentDetail(mem) {
 	}
 	
 	if (findMemberPath == '/admin/findStudentById') {
-
 		if (mem.studentType != null) {
 			$("#studentType").val(mem.studentType).prop("selected", true);
 		} else {
 			$("#studentType option:eq(0)").prop("selected", true);
 		}
-
 		form.schoolName.value = mem.schoolName;
 		form.schoolGrade.value = mem.schoolGrade;
 		form.schoolClass.value = mem.schoolClass;
-
 		form.parentsName.value = mem.parents.parentsName;
 		form.parentsType.value = mem.parents.parentsType;
 		form.parentsPhone.value = mem.parents.parentsPhone;
@@ -586,18 +584,19 @@ btn.forEach((el, index) => {
 
 
 $('#updatePwd').click(function() {
-
-	let id = document.getElementById("id").value;
 	
+	let id = document.getElementById("id").value;
+	// 아이디 비워있는지 확인
 	 if( id == ''){
 		return false;
 	 }
-	
 	Swal.fire({
 		title: '비밀번호 변경',
 	  	html:
 		    '<input type="password" id="pwd" class="swal2-input" placeholder="현재 비밀번호">' +
-		    '<input type="password" id="pwd2" class="swal2-input" placeholder="새로운 비밀번호">',
+		    '<input type="password" id="pwd2" class="swal2-input" placeholder="새로운 비밀번호">' +
+		    '<input type="password" id="pwd3" class="swal2-input" placeholder="비밀번호 재확인">',
+		showCancelButton: true,
 		showCancelButton: true,
 		confirmButtonColor: '#6610f2',
 		cancelButtonColor: '#858796',
@@ -613,12 +612,14 @@ $('#updatePwd').click(function() {
 				toast('warning', '비밀번호를 입력하세요!');
 				 return false;
 			}
-		    
-		    if( pwd == pwd2){
+		    if( pwd == pwd2 ){
 				toast('warning', '새로운 비밀번호를 입력하세요!');
 				 return false;
 			}
-		    
+			if( pwd2 == pwd3 ){
+				toast('warning', '비밀번호 확인이 올바르지 않습니다.');
+				 return false;
+			}    
 		    var passwordRegExp = /^[a-zA-z0-9]{8,20}$/; //비밀번호 유효성 검사
 			if (!passwordRegExp.test(pwd2)) {
 				toast('warning', '비밀번호는 영문 대소문자와 숫자 8~20자리로 입력해야합니다!');
@@ -659,20 +660,15 @@ $('#updatePwd').click(function() {
 
 function sendMessage(){
 	
-
   let phoneArr = []
-	let checkArr = $('input[name=selectMember]:checked');
+  let checkArr = $('input[name=selectMember]:checked');
 	
 	//console.log(checkArr);
-	
-	
 	if(!checkArr[0]){
 		toast('warning', '원생을 먼저 선택해주세요!');
 		return false;
 	}
-	
 	checkArr.each(function(i) {
-
 				// checkbox.parent() : checkbox의 부모는 <td>이다.
 				// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
 				var tr = checkArr.parent().parent().parent().eq(i);
@@ -734,7 +730,6 @@ function sendMessage(){
 						text: '문자를 성공적으로 발송했습니다.',
 						icon: 'success'
 					})
-					
 						
 					} else {
 						toast('warning', '문자 발송에 실패했습니다.');

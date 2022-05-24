@@ -113,20 +113,15 @@
 	}
 
 	function updateModal(info) {
-
 		$("#calendarModal").modal("show"); // modal 나타내기
-
 		$("#addCalendar").addClass("d-none");
 		$("#upadteCalendar").removeClass("d-none");
 		$("#deleteCalendar").removeClass("d-none");
-
-		console.log(info);
+		// console.log(info);
 
 		let startDate = info.event._instance.range.start;
 		let endDate = info.event._instance.range.end;
-
 		let scheNo = info.event.id;
-
 		let start = startDate.toISOString().substring(0, 10);
 		let end = endDate.toISOString().substring(0, 10);
 
@@ -138,8 +133,7 @@
 		
 		if (start != end) {
 			let yy = endDate.getFullYear();
-			let mm;
-			let dd;
+			let mm, dd;
 			
 			// 만약 일정이 6월 1일인 경우 6월 00일이 아닌 5월 31일이 되도록 하기
 			if(endDate.getDate() == '01'){
@@ -150,16 +144,12 @@
 				mm = endDate.getMonth() + 1;
 				dd = endDate.getDate() - 1;
 			}
-			
 			end = yy + "-" + (("00" + mm.toString()).slice(-2)) + "-"
 					+ (("00" + dd.toString()).slice(-2));
-
-			console.log("확인2 : " + end);
-
+			// console.log("확인2 : " + end);
 		}
 
 		$("#calendar_end_date").val(end);
-
 		$("#upadteCalendar").on("click", function() { // modal의 수정 버튼 클릭 시
 
 			let content = $("#calendar_content").val();
@@ -205,7 +195,6 @@
 			}
 			
 		});
-			
 				// 삭제 버튼 클릭시 
 				$("#deleteCalendar").on("click", function() {
 
@@ -231,8 +220,6 @@
 						}
 					}); //<-- ajax
 				});
-
-
 	}
 
 	//alert창
