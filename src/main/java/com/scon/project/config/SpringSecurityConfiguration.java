@@ -31,20 +31,17 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/uploadFiles/**");
+		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
 	}
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-				.csrf().disable()
+		http	.csrf().disable()
 				.authorizeHttpRequests()
 				.antMatchers("/").authenticated()
-				.antMatchers("/student/**").authenticated()
-				.antMatchers("/schedule/**").authenticated()
-				.antMatchers("/admin/**").authenticated()
-				.antMatchers("/admin/**").hasAnyRole("ADMIN","DIRECTOR")
-				
+				.antMatchers("/student/**").authenticated()					
+				.antMatchers("/schedule/**").authenticated()				
+				.antMatchers("/admin/**").authenticated()					
+				.antMatchers("/admin/**").hasAnyRole("ADMIN","DIRECTOR")	
 				.and()
 				/* 로그인 설정 */
 				.formLogin()
@@ -78,16 +75,17 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		/* 사용자 인증을 위해서 사용할 MemberService 등록, 사용하는 비밀번호 인코딩 방식 설정 */
 		auth.userDetailsService(memberService).passwordEncoder(passwordEncoder);
 	}
+	
+	 /* 로그인 성공 핸들러 bean 등록*/
+	 @Bean
+	 public LoginSuccessHandler loginSuccessHandler() {
+		 return new LoginSuccessHandler();
+	 }
 
 	/* 로그인 실패 핸들러 bean 등록*/
 	 @Bean 
 	 public LoginFailHandler loginFailHandler() { 
 		 return new LoginFailHandler(); 
-	 }
-	 
-	 @Bean
-	 public LoginSuccessHandler loginSuccessHandler() {
-		 return new LoginSuccessHandler();
 	 }
 	
 }

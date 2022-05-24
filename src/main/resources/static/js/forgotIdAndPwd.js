@@ -1,6 +1,5 @@
 
 // 아이디 찾기 js
-
 function findId() {
 
 	let name = document.getElementById('name').value;
@@ -39,6 +38,7 @@ function findId() {
 
 	}); //<-- ajax 끝!
 }
+
 
 let auth_check = 0;
 let num = 0;
@@ -91,7 +91,6 @@ function send_injeung_num() {
 		}, error: function() {
 			toast('error', 'error! 다시 시도해주세요!');
 		}
-
 	}); //<-- ajax 끝!
 	
 }
@@ -149,7 +148,6 @@ msg1.onblur = function() {
 // 비밀번호 변경 js
 
 function newPassword(){
-
 	let frm = document.newPwd;
 	// 비밀번호 입력
 	let pwd = frm.pwd.value;
@@ -160,7 +158,7 @@ function newPassword(){
 		return false;
 	}
 	
-	// 앞에서 비밀번호 찾기한 id가 맞는지 확인
+	// 앞에서 이메일 인증한 id 저장
 	const id = localStorage.getItem("id_check");
 	
 	//비밀번호가 입력되었는지 확인하기
@@ -180,14 +178,14 @@ function newPassword(){
 		return false;
 	}
 	
-	// 비밀번호가 같은지 검사
+	// 변경할 비밀번호 재확인 검사
 	if(pwd != pwd2){
 		toast('warning', '비밀번호가 서로 다릅니다.');
 		frm.pwd2.value = "";
 		frm.pwd2.focus();
 	}
 	
-	localStorage.clear();
+	localStorage.clear();		// 로컬 스토리지 클리어
 	
 	Swal.fire({
       title: '비밀번호를 변경하시겠습니까?',

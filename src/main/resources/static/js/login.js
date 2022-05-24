@@ -52,7 +52,7 @@ $(document).ready(function() {
 			var end = cookieData.indexOf(';', start);
 			if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정 
 				end = cookieData.length;
-			console.log("end위치  : " + end);
+			//console.log("end위치  : " + end);
 			cookieValue = cookieData.substring(start, end);
 		}
 		return unescape(cookieValue);
@@ -60,6 +60,7 @@ $(document).ready(function() {
 
 
 });
+
 //아이디 비밀번호 유효성 검사 (공백일 경우 경고창 표시)
 function sendit() {
 	var frm = document.loginForm;
@@ -67,18 +68,18 @@ function sendit() {
 		toast('warning', '아이디를 입력하세요.');
 
 		frm.username.focus();
-		return;
+		return false;
 	}
 	if (!frm.password.value) { //패스워드를 입력하지 않으면.
 		toast('warning', '비밀번호를 입력하세요.');
 		frm.password.focus();
-		return;
+		return false;
 	}
 
 	document.loginForm.submit(); //유효성 검사가 통과되면 서버로 전송.
 }
 
-
+// sweetalert2 toast 
 function toast(icon, title) {
 	const Toast = Swal.mixin({
 		toast: true,
