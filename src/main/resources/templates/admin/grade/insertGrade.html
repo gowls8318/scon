@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    
-
     <title>성적 추가</title>
 
     <!-- Custom fonts for this template-->
@@ -18,20 +13,21 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- BootStrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
 	<!--  파비콘 -->
 	<link rel="icon" type="image/x-icon" href="/img/favicon.png">
 
 <style>
-    
-/*   #place-center{
-        padding-left: 5%;
-    } */
     
     #small-btn{
         width: 65px;
@@ -53,7 +49,7 @@
    
     
     #table-scroll{
-        height: 250px;
+        height: 400px;
         overflow: auto;
     }
 	
@@ -158,8 +154,7 @@
 		 </div> 
 	</div>
 
-
-	<script>	
+	<script>
 		
 	//성적 입력 여부 확인
 	function beforeCheck(){
@@ -171,9 +166,8 @@
 			}
 		});
 		return true;
-		
+	}
 	</script>
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -185,7 +179,8 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins --><script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
 
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <!-- Page level custom scripts -->
@@ -196,8 +191,7 @@
     <!-- Sweet Alert -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
+
 </body>
-
-
 
 </html>

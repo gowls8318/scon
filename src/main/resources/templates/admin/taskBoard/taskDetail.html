@@ -183,19 +183,22 @@
                          <h5 class="modal-title" id="exampleModalLabel">게시글 삭제</h5>
                          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                              <span aria-hidden="true">×</span>
+                         </button>
                              </div>
                                  <div class="modal-body">
                                      삭제 하시겠습니까?
-                                 </div>
-                                 <div class="modal-footer" th:each="detail : ${ detailList }">
+       							 </div>
+                                 <div class="modal-footer"> 
                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal();">취소</button>
-                                 <button type="button" class="btn btn-primary delete-btn" th:onclick="'location.href=\'' + @{/admin/deleteBoard(clsId=${param.clsId},taskId=${detail.taskId})} + '\';'">삭제</button>
-                             </div>
+                                 <button type="button" class="btn btn-primary delete-btn" th:onclick="'location.href=\'' + @{/admin/deleteBoard(clsId=${param.clsId},taskId=${param.taskId})} + '\';'">삭제</button>
+                            </div>
                          </div>
                      </div>
-                 </div>
-    	
+                 </div>	
+           
 
+                 
+			
     
 
     <!--  Ajax -->
@@ -246,7 +249,8 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
 
-    <!-- Page level plugins --><script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
